@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import { FaMapMarkerAlt, FaClock, FaCalendarAlt } from "react-icons/fa";
+import { FaLink } from "react-icons/fa6";
+import { FiExternalLink } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
 import { useState } from "react";
@@ -169,6 +171,65 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             </p>
           </div>
         </div>
+
+        {/* Delivery Details */}
+        {(activeModal === "toConfirm" || activeModal === "delivered" || currentRecord?.deliveryLink || currentRecord?.deliveryMessage) &&
+          (currentRecord?.deliveryLink || currentRecord?.deliveryMessage) && (
+            <div className="mb-5 border border-secondary-color/20 bg-secondary-color/5 rounded-xl p-4 text-left">
+              <h4 className="text-base sm:text-lg lg:text-xl text-secondary-color font-bold mb-3 flex items-center gap-2">
+                <FaLink className="text-secondary-color" />
+                {/* Delivery Details */}
+                Detaily doručenia
+              </h4>
+
+              {currentRecord?.deliveryDate && (
+                <p className="text-sm sm:text-sm lg:text-base mb-3">
+                  <span className="font-semibold">{/* Delivery Date : */}Dátum doručenia:</span>{" "}
+                  <span className="text-base-color font-medium">{formatDate(currentRecord?.deliveryDate)}</span>
+                </p>
+              )}
+
+              {currentRecord?.deliveryLink && (
+                <div className="mb-3">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold mb-1.5 text-secondary-color">
+                    {/* Delivery Link : */}Odkaz na doručenie:
+                  </p>
+                  <div className="flex items-center gap-2 flex-wrap bg-white border border-[#E1E1E1] rounded-lg p-2.5 shadow-sm">
+                    <FaLink className="text-secondary-color shrink-0 ml-1" />
+                    <a
+                      href={currentRecord?.deliveryLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base break-all flex-1"
+                    >
+                      {currentRecord?.deliveryLink}
+                    </a>
+                    <a
+                      href={currentRecord?.deliveryLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 bg-secondary-color hover:bg-secondary-color/90 text-white text-xs font-semibold rounded-md transition flex items-center gap-1.5 shrink-0 shadow-sm"
+                    >
+                      <FiExternalLink className="size-3.5" />
+                      {/* Open Link */}
+                      Otvoriť odkaz
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {currentRecord?.deliveryMessage && (
+                <div>
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold mb-1.5 text-secondary-color">
+                    {/* Delivery Message : */}Správa k doručeniu:
+                  </p>
+                  <div className="bg-white border border-[#E1E1E1] rounded-lg p-3 text-sm sm:text-base text-base-color/90 whitespace-pre-line break-words shadow-sm leading-relaxed">
+                    {currentRecord?.deliveryMessage}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
         {/* Professional Info */}
         <div className="mb-4">

@@ -4,7 +4,8 @@ import { Modal } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { FaClock } from "react-icons/fa6";
+import { FaClock, FaLink } from "react-icons/fa6";
+import { FiExternalLink } from "react-icons/fi";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IEventOrder } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
@@ -49,7 +50,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   const user = useGetUserData();
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
-  console.log(currentRecord?.date)
+  console.log("Current Order", currentRecord)
   console.log(formatDate(currentRecord?.date))
 
   const extensionLength = currentRecord?.extensionRequests?.length || 0;
@@ -284,7 +285,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                 currentRecord?.createdAt
               )}`}
             </p>
-            {currentRecord?.status !== "pending" && (
+            {(currentRecord?.status !== "pending" || activeTab === "toConfirm" || activeTab === "delivered") && currentRecord?.deliveryDate && (
               <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">{/* Delivery Date : */}Dátum doručenia:</span>{" "}
                 {`${formatDate(currentRecord?.deliveryDate)}`}
@@ -312,6 +313,65 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             )}
           </div>
         </div>
+
+        {/* Delivery Details */}
+        {(activeTab === "toConfirm" || activeTab === "delivered" || currentRecord?.deliveryLink || currentRecord?.deliveryMessage) &&
+          (currentRecord?.deliveryLink || currentRecord?.deliveryMessage) && (
+            <div className="mb-5 border border-secondary-color/20 bg-secondary-color/5 rounded-xl p-4 text-left">
+              <h4 className="text-base sm:text-lg lg:text-xl text-secondary-color font-bold mb-3 flex items-center gap-2">
+                <FaLink className="text-secondary-color" />
+                {/* Delivery Details */}
+                Detaily doručenia
+              </h4>
+
+              {currentRecord?.deliveryDate && (
+                <p className="text-sm sm:text-sm lg:text-base mb-3">
+                  <span className="font-semibold">{/* Delivery Date : */}Dátum doručenia:</span>{" "}
+                  <span className="text-base-color font-medium">{formatDate(currentRecord?.deliveryDate)}</span>
+                </p>
+              )}
+
+              {currentRecord?.deliveryLink && (
+                <div className="mb-3">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold mb-1.5 text-secondary-color">
+                    {/* Delivery Link : */}Odkaz na doručenie:
+                  </p>
+                  <div className="flex items-center gap-2 flex-wrap bg-white border border-[#E1E1E1] rounded-lg p-2.5 shadow-sm">
+                    <FaLink className="text-secondary-color shrink-0 ml-1" />
+                    <a
+                      href={currentRecord?.deliveryLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base break-all flex-1"
+                    >
+                      {currentRecord?.deliveryLink}
+                    </a>
+                    <a
+                      href={currentRecord?.deliveryLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 bg-secondary-color hover:bg-secondary-color/90 text-white text-xs font-semibold rounded-md transition flex items-center gap-1.5 shrink-0 shadow-sm"
+                    >
+                      <FiExternalLink className="size-3.5" />
+                      {/* Open Link */}
+                      Otvoriť odkaz
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {currentRecord?.deliveryMessage && (
+                <div>
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold mb-1.5 text-secondary-color">
+                    {/* Delivery Message : */}Správa k doručeniu:
+                  </p>
+                  <div className="bg-white border border-[#E1E1E1] rounded-lg p-3 text-sm sm:text-base text-base-color/90 whitespace-pre-line break-words shadow-sm leading-relaxed">
+                    {currentRecord?.deliveryMessage}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
         {/* Event Details */}
         <div className="mb-4">
@@ -454,6 +514,13 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             >
               Download Invoice with Admin
             </ReuseButton>
+          </div>
+        ) : activeTab === "toConfirm" ? (
+          <div className="mt-5 flex justify-center">
+            <p className="text-sm sm:text-base text-yellow-600 font-semibold">
+              {/* Waiting for client to confirm delivery */}
+              Čaká sa na potvrdenie doručenia klientom
+            </p>
           </div>
         ) : activeTab === "inProgress" ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">

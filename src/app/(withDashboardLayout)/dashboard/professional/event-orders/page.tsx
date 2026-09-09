@@ -12,6 +12,7 @@ const page = async ({
   const tab =
     (params?.tab as
       | "delivered"
+      | "toConfirm"
       | "inProgress"
       | "upcoming"
       | "pending"

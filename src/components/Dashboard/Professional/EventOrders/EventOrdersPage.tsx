@@ -39,6 +39,7 @@ const EventOrdersPage = ({
   };
   activeTab:
   | "delivered"
+  | "toConfirm"
   | "inProgress"
   | "upcoming"
   | "pending"
@@ -279,6 +280,21 @@ const EventOrdersPage = ({
               {
                 label: "Prebieha",
                 value: "inProgress",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
+              {
+                label: "Na potvrdenie",
+                value: "toConfirm",
                 content: (
                   <ProfessionalEventOrderTable
                     data={myEventData}

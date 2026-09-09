@@ -137,6 +137,8 @@ interface IEventOrder {
   couponDiscount?: number;
   couponCode?: string;
   paymentId?: string;
+  deliveryLink?: string;
+  deliveryMessage?: string;
 }
 
 export type { ICreateEventOrder, IEventOrder };

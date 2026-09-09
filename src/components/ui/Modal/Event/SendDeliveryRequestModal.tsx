@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal } from "antd";
+import React, { useEffect } from "react";
+import { Form, Modal } from "antd";
 import ReuseButton from "../../Button/ReuseButton";
+import ReusableForm from "../../Form/ReuseForm";
+import ReuseInput from "../../Form/ReuseInput";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { sendDeliveryRequest } from "@/services/EventOrderService/EventOrderServiceApi";
 
@@ -14,6 +17,11 @@ interface SendDeliveryRequestModalProps<T> {
   description?: string;
 }
 
+interface SendDeliveryRequestFormValues {
+  deliveryLink: string;
+  deliveryMessage: string;
+}
+
 const SendDeliveryRequestModal: React.FC<
   SendDeliveryRequestModalProps<any>
 > = ({
@@ -21,14 +29,31 @@ const SendDeliveryRequestModal: React.FC<
   handleCancel,
   currentRecord,
   setIsSendDeliveryRequestModalVisible,
-  description = " Are You Sure You want to Delivery This Event ?",
+  description = "Send Delivery Request",
 }) => {
-    //   const [blockUser] = useBlockUserMutation();
+    const [form] = Form.useForm<SendDeliveryRequestFormValues>();
 
-    const handleDelivery = async (data: any) => {
+    useEffect(() => {
+      if (isSendDeliveryRequestModalVisible) {
+        form.resetFields();
+      }
+    }, [isSendDeliveryRequestModalVisible, form]);
+
+    const handleClose = () => {
+      setIsSendDeliveryRequestModalVisible(false);
+      form.resetFields();
+    };
+
+    const submit = async (values: SendDeliveryRequestFormValues) => {
       const res = await tryCatchWrapper(
         sendDeliveryRequest,
-        { params: data?._id },
+        {
+          params: currentRecord?._id,
+          body: {
+            deliveryLink: values.deliveryLink,
+            deliveryMessage: values.deliveryMessage,
+          },
+        },
         {
           toastLoadingMessage: "Sending Delivery Request...",
           toastSuccessMessage: "Delivery Request Sent Successfully!",
@@ -37,53 +62,77 @@ const SendDeliveryRequestModal: React.FC<
       );
 
       if (res?.success) {
-        setIsSendDeliveryRequestModalVisible(false);
+        handleClose();
         handleCancel();
       }
     };
 
     return (
       <Modal
-        // title="Confirm Delete"
         open={isSendDeliveryRequestModalVisible}
-        onOk={() => handleDelivery(currentRecord)}
-        onCancel={() => {
-          setIsSendDeliveryRequestModalVisible(false);
-        }}
-        okText="Unblock"
-        cancelText="Cancel"
+        onCancel={handleClose}
         centered
-        style={{ textAlign: "center" }}
-        // styles.body={{ textAlign: "center" }}
-        footer={
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              paddingBottom: "40px",
-              marginTop: "30px",
-            }}
-          >
+        footer={null}
+      >
+        <p className="text-2xl font-semibold pt-4 pb-4 text-base-color">
+          {description}
+        </p>
+        <ReusableForm
+          form={form}
+          handleFinish={submit}
+          defaultValues={{
+            deliveryLink: "",
+            deliveryMessage: "",
+          }}
+        >
+          <ReuseInput
+            type="link"
+            name="deliveryLink"
+            label="Delivery Link"
+            placeholder="Enter delivery link"
+            rules={[
+              {
+                required: true,
+                message: "Delivery link is required",
+              },
+              {
+                type: "url",
+                message: "Please enter a valid link",
+              },
+            ]}
+          />
+
+          <ReuseInput
+            inputType="textarea"
+            name="deliveryMessage"
+            label="Delivery Message"
+            placeholder="Enter delivery message"
+            rows={4}
+            rules={[
+              {
+                required: true,
+                message: "Delivery message is required",
+              },
+            ]}
+          />
+
+          <div className="flex justify-end items-center gap-3 pt-4">
             <ReuseButton
               variant="highlight"
-              className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
-              onClick={() => setIsSendDeliveryRequestModalVisible(false)}
+              className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
+              onClick={handleClose}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
+              htmlType="submit"
               variant="secondary"
               className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
-              onClick={() => handleDelivery(currentRecord)}
             >
-              Confirm
+              Send Request
             </ReuseButton>
           </div>
-        }
-      >
-        <p className="text-3xl font-semibold pt-10 pb-4 text-base-color">
-          {description}
-        </p>
+        </ReusableForm>
       </Modal>
     );
   };

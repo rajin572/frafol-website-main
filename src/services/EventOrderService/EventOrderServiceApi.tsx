@@ -158,7 +158,7 @@ export const declineEventOrder = async (req: {
 };
 
 export const sendDeliveryRequest = async (req: {
-  body: ICreateEventOrder;
+  body?: any;
   params: any;
 }) => {
   try {
@@ -166,6 +166,10 @@ export const sendDeliveryRequest = async (req: {
       `/event-order/request-delivery/${req.params}`,
       {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: req.body ? JSON.stringify(req.body) : undefined,
       }
     );
     const result = await res.json();
