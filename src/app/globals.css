@@ -1,0 +1,350 @@
+@import "tailwindcss";
+
+@layer components {
+  .text-gradient-color {
+    @apply bg-gradient-to-b from-[#ad2b08] to-[#ffc700] inline-block text-transparent bg-clip-text;
+  }
+  .bg-gradient-color {
+    @apply bg-gradient-to-tl from-[#ffc700] to-[#ad2b08];
+  }
+}
+
+:root {
+  --font-nunito: "Nunito", sans-serif;
+}
+
+@theme {
+  --color-primary-color: #ffffff;
+  --color-background-color: #efefef;
+  --color-secondary-color: #ad2b08;
+  --color-base-color: #2c2c2c;
+  --color-secondbase-color: #28314e;
+  --color-third-color: #ffc700;
+  --color-highlight: #7d7f88;
+  --color-input-color: #5d5d5d;
+  --color-error: #e53935;
+  --color-success: #11c186;
+  --color-warning: #ffa500;
+}
+
+html,
+body {
+  font-family: var(--font-nunito);
+  scroll-behavior: smooth;
+  background-color: #ffffff !important;
+  overflow-x: hidden !important;
+  /* word-break: break-all !important; */
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ad2b08, #ad2b08);
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+/* ::-moz-selection {
+  color: #ffffff;
+  background: #273d62dd;
+}
+
+::selection {
+  color: #ffffff;
+  background: #273d62dd;
+} */
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #ad2b08 !important;
+}
+.swiper-pagination {
+  bottom: var(--swiper-pagination-bottom, -5px) !important;
+}
+
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  color: #ad2b08;
+  padding: 8px 12px;
+  font-size: 1.2rem !important;
+  background-color: #ad2b0800;
+  border-radius: 100%;
+  z-index: 100;
+  margin-right: -10px;
+}
+
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  color: #ad2b08;
+  padding: 8px 12px;
+  font-size: 1rem !important;
+  background-color: #ad2b0800;
+  border-radius: 100%;
+  z-index: 100;
+  margin-left: -10px;
+}
+
+/* Media query for screens larger than 768px */
+@media (max-width: 767px) {
+  .swiper-button-next:after,
+  .swiper-rtl .swiper-button-prev:after {
+    margin-right: 0px; /* Reset margin-right to 0px */
+  }
+
+  .swiper-button-prev:after,
+  .swiper-rtl .swiper-button-next:after {
+    margin-left: 0px; /* Reset margin-left to 0px */
+  }
+}
+
+/* Darken the Ant Design image preview mask */
+.ant-image-preview-root .ant-image-preview-mask {
+  background-color: rgba(0, 0, 0, 0.85) !important; /* darker */
+}
+
+.ant-image-preview-switch-left,
+.ant-image-preview-switch-right {
+  color: #ffffff !important;
+  background-color: #ad2b0855 !important;
+}
+.ant-image-preview-switch-left:hover,
+.ant-image-preview-switch-right:hover {
+  color: #ffffff !important;
+  background-color: #ad2b08 !important;
+}
+
+.ant-image-preview-close {
+  color: #ad2b08 !important;
+  background-color: #ffffff !important;
+}
+
+/** SIDEBAR: Only added a border to the left of the menu items and changed the background color of the selected item. */
+/* .ant-menu-item {
+  background-color: transparent !important;
+  border-left: 6px solid #ad2b0800 !important;
+  border-radius: 0px !important;
+  margin: 5px !important;
+}
+.ant-menu-item .ant-menu-item-title {
+  background-color: transparent !important;
+  border-left: 6px solid #ad2b0800 !important;
+  border-radius: 0px !important;
+  margin: 5px !important;
+}
+.ant-menu-item-selected {
+  background-color: transparent !important;
+  border-left: 6px solid #ad2b08 !important;
+  border-radius: 0px !important;
+  margin: 5px !important;
+}
+.ant-menu-submenu .ant-menu-submenu-title {
+  background-color: transparent !important;
+  border-left: 6px solid #ad2b0800 !important;
+  border-radius: 0px !important;
+  margin: 5px !important;
+}
+
+.ant-menu-submenu-selected .ant-menu-submenu-title {
+  background-color: transparent !important;
+  border-left: 6px solid #ad2b08 !important;
+  border-radius: 0px !important;
+}
+.ant-menu-submenu-selected .ant-menu-item {
+  border-left: 6px solid #ad2b0800 !important;
+  background-color: transparent !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  margin: 5px !important;
+  margin-bottom: 5px !important;
+  border-radius: 0px !important;
+}
+.ant-menu-submenu-selected .ant-menu-item-selected {
+  border-left: 6px solid #ad2b0800 !important;
+  background-color: transparent !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  margin: 5px !important;
+  margin-bottom: 5px !important;
+}
+.ant-menu-item-selected .ant-menu-title-content a {
+  color: #ad2b08 !important;
+  font-weight: 700 !important;
+}
+.ant-menu-submenu-selected .ant-menu-item-selected a {
+  color: #ad2b08 !important;
+}
+.ant-menu-submenu-selected .ant-menu-item-selected .ant-menu-item-icon {
+  color: #ad2b08 !important;
+} */
+
+.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  background-color: #ad2b08 !important;
+  color: #ffffff !important;
+}
+
+.ant-picker-now-btn {
+  color: #ad2b08 !important;
+}
+
+.ant-picker-ok button {
+  background-color: #ad2b08 !important;
+  color: #ffffff !important;
+}
+
+.ant-picker-calendar-mode-switch {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.ant-picker-calendar-header {
+  margin-bottom: 20px !important;
+  justify-content: flex-start !important;
+}
+
+.ant-badge-status-dot {
+  margin: 0px !important;
+  margin-top: 6px !important;
+  padding: 0px !important;
+  width: 7px !important;
+  height: 7px !important;
+}
+
+/* .ant-modal-mask {
+  z-index: 9999999 !important;
+}
+.ant-modal-wrap {
+  z-index: 9999999 !important;
+} */
+
+/* --- ReuseTimePicker (Event Time) touch / small-screen fixes --- */
+/* Keep the antd look, but stop the wheel scroll from leaking out and scrolling
+   the page behind, and make the rows easier to tap on tablets / phones. */
+.frafol-time-popup .ant-picker-time-panel-column {
+  /* antd only turns the column scrollable on :hover, which never fires on touch
+     (so you'd have to tap a cell first). Force it always scrollable. */
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scroll-behavior: smooth;
+  width: 72px !important;
+}
+
+.frafol-time-popup .ant-picker-time-panel-cell-inner {
+  height: 40px !important;
+  line-height: 40px !important;
+  font-size: 16px !important;
+}
+
+/* A little more breathing room / larger targets on touch-sized screens */
+@media (max-width: 640px) {
+  .frafol-time-popup .ant-picker-time-panel-column {
+    width: 64px !important;
+  }
+  .frafol-time-popup .ant-picker-time-panel-cell-inner {
+    height: 44px !important;
+    line-height: 44px !important;
+    font-size: 17px !important;
+  }
+}
+
+/* --- Rich text (RichTextEditor) output styles ---
+   These are the same rules RichTextEditor used to embed as a <style> block inside the
+   saved HTML. Stored HTML is now sanitized before rendering, and DOMPurify strips
+   <style> elements, so the stylesheet lives here instead. The `.rte-content` wrapper
+   div survives sanitization, so rendering is unchanged. Keep in sync with
+   EMBEDDED_STYLES in src/components/shared/RichTextEditor.tsx. */
+.rte-content {
+  color: #2c2c2c;
+  line-height: 1.6;
+}
+.rte-content a {
+  color: #ad2b08 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  cursor: pointer;
+}
+.rte-content a:hover {
+  color: #8d2306 !important;
+}
+.rte-content hr {
+  border: none !important;
+  border-top: 2px solid #ad2b08 !important;
+  margin: 20px 0 !important;
+}
+.rte-content ul {
+  list-style-type: disc !important;
+  padding-left: 28px !important;
+  margin: 10px 0 !important;
+}
+.rte-content ol {
+  list-style-type: decimal !important;
+  padding-left: 28px !important;
+  margin: 10px 0 !important;
+}
+.rte-content li {
+  margin: 6px 0 !important;
+}
+.rte-content .rte-table-wrap {
+  margin: 20px 0 !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+  border: 2px solid #ad2b08 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.rte-content .rte-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+}
+.rte-content .rte-th {
+  background: #ad2b08 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 12px !important;
+  border: 1px solid #28314e !important;
+  text-align: left !important;
+}
+.rte-content .rte-td {
+  border: 1px solid #e2e8f0 !important;
+  padding: 12px !important;
+  vertical-align: top !important;
+  word-wrap: break-word !important;
+}
+.rte-content .rte-row-even .rte-td {
+  background-color: #f8fafc !important;
+}
+.rte-content .rte-table tbody tr:not(.rte-row-even) .rte-td {
+  background-color: white !important;
+}
+.rte-content .rte-table tbody tr:hover .rte-td {
+  background-color: #fff3f0 !important;
+}
+.rte-content strong,
+.rte-content b {
+  font-weight: 700 !important;
+}
+.rte-content em,
+.rte-content i {
+  font-style: italic !important;
+}
+.rte-content u {
+  text-decoration: underline !important;
+}
+.rte-content p {
+  margin: 1em 0 !important;
+}
+.rte-content p:first-child {
+  margin-top: 0 !important;
+}
+.rte-content p:last-child {
+  margin-bottom: 0 !important;
+}
