@@ -2,6 +2,8 @@
 
 import { GoBellFill } from "react-icons/go";
 import { formatDateTime } from "../../../../utils/dateFormet";
+import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
+import Link from "next/link";
 
 const RecentNotification = ({
   notificationData,
@@ -20,12 +22,16 @@ const RecentNotification = ({
 
       <div className="flex flex-col gap-5 p-5 bg-primary-color">
         {notificationData?.map((activity: any, i: number) => (
-          <div key={i} className="flex items-center gap-2">
-            <div className=" p-1 bg-secondary-color rounded-full w-fit">
-              <GoBellFill className="text-lg cursor-pointer text-primary-color" />
+          <Link
+            key={i}
+            href={getNotificationRedirectUrl(activity, "user")}
+            className="flex items-center gap-3 p-1.5 rounded-lg hover:bg-gray-100/70 transition duration-200 cursor-pointer"
+          >
+            <div className=" p-1 bg-secondary-color rounded-full w-fit shrink-0">
+              <GoBellFill className="text-lg text-primary-color" />
             </div>
             <div>
-              <p className="text-[#242424] text-base font-medium">
+              <p className="text-[#242424] text-base font-medium line-clamp-2">
                 {activity?.message?.text}
               </p>
 
@@ -33,7 +39,7 @@ const RecentNotification = ({
                 {formatDateTime(activity?.createdAt)}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

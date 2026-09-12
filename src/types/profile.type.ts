@@ -61,16 +61,18 @@ interface NotificationMessage {
   _id: string;
 }
 
+import { NotificationType } from "@/utils/notificationRedirect";
+
 interface INotification {
   _id: string;
   userId: string;
   receiverId: string;
   message: NotificationMessage;
-  type: "DirectBookingRequest" | string;
+  type: NotificationType | string;
   isRead: boolean;
   createdAt: string;
   updatedAt: string;
   __v: number;
 }
 
-export type { IProfile, INotification };
+export type { IProfile, INotification, NotificationType };

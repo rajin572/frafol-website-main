@@ -30,6 +30,7 @@ import { useSocket } from "@/context/socket-context";
 import { toast } from "sonner";
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { clearSelectedChatUser } from "@/redux/features/conversation/conversationSlice";
+import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
 
 const NavItems = [
   /* { id: "1", name: "Photography", route: "/photography" }, */
@@ -141,17 +142,35 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
       style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
     >
       {allNotifications?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())?.slice(0, 6)?.map((notification: INotification) => (
-        <div className="test-start max-w-[300px]" key={notification?._id}>
+        <Link
+          href={getNotificationRedirectUrl(notification, userData?.role)}
+          className="test-start max-w-[300px] hover:bg-gray-50 p-1.5 rounded-lg transition duration-200 block"
+          key={notification?._id}
+        >
           <div className="flex items-start gap-2">
-            <div className="p-1 bg-secondary-color rounded-full w-fit h-fit mt-1">
-              <GoBellFill className="text-white cursor-pointer" />
-            </div>
+            {notification?.message?.image ? (
+              <Image
+                src={
+                  notification.message.image.startsWith("http")
+                    ? notification.message.image
+                    : `${serverUrl}${notification.message.image}`
+                }
+                alt="Avatar"
+                width={28}
+                height={28}
+                className="w-7 h-7 rounded-full object-cover shrink-0 mt-0.5 border border-gray-200"
+              />
+            ) : (
+              <div className="p-1 bg-secondary-color rounded-full w-fit h-fit mt-1 shrink-0">
+                <GoBellFill className="text-white cursor-pointer text-xs" />
+              </div>
+            )}
             <div className="flex flex-col items-start">
-              <p className="text-sm!">{notification?.message?.text}</p>
+              <p className="text-sm! text-gray-800 line-clamp-2">{notification?.message?.text}</p>
               <p className="text-sm! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt)}</p>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
       <Link
         href={`/notifications`}
@@ -193,7 +212,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
         userId: Math.random().toString(36).substring(2, 9),
         receiverId: Math.random().toString(36).substring(2, 9),
         message: notification?.message,
-        type: "",
+        type: notification?.type || "",
         isRead: false,
         createdAt: notification?.timestamp,
         updatedAt: notification?.timestamp,

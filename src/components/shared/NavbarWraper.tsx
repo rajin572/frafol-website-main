@@ -17,7 +17,7 @@ const NavbarWraper = async () => {
         const data = await res.json();
         notifications = data?.data?.notifications || [];
     }
-
+    console.log(notifications)
     return (
         <div>
             <Navbar notifications={notifications} />

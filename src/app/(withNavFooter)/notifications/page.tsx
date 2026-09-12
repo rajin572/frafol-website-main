@@ -4,6 +4,11 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { INotification } from "@/types";
 import { formatDateTime } from "@/utils/dateFormet";
 import { FiBell } from "react-icons/fi";
+import { getCurrentUser } from "@/services/AuthService";
+import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import Link from "next/link";
+import Image from "next/image";
 
 const Notifications = async ({
     searchParams,
@@ -13,9 +18,14 @@ const Notifications = async ({
     const params = await searchParams;
     const page = Number(params?.page) || 1;
     const limit = 10;
+    const serverUrl = getServerUrl();
 
-    const res = await fetchWithAuth(`/notifications/my-notifications?page=${page}&limit=10`);
+    const [res, currentUser] = await Promise.all([
+        fetchWithAuth(`/notifications/my-notifications?page=${page}&limit=10`),
+        getCurrentUser(),
+    ]);
     const data = await res.json();
+    const role = currentUser?.role;
 
     const notifications: INotification[] = data?.data?.notifications || [];
     const totalNotifications: number = data?.data?.meta?.total || 0;
@@ -26,42 +36,50 @@ const Notifications = async ({
                 className=" min-h-[88vh] pb-10 mt-10"
             >
                 <div className="flex items-center bg-primary-color gap-1 py-3 mb-3 rounded-tl-xl rounded-tr-xl">
-
-
                     <h1 className="text-3xl font-bold text-secondary-color">Notification</h1>
                 </div>
                 <div className=" space-y-4 mb-10 min-h-[78vh]">
                     {
-                        //             notificationFetching ? (
-                        //                 <div className=" isolate aspect-video h-[78vh] bg-primary-color/40 backdrop-blur w-full flex justify-center items-center">
-                        //                     <FadeLoader
-                        //                         color="#0c3188
-                        //   "
-                        //                     />
-                        //                 </div>
-                        //             ) : (
                         notifications?.map((notification: INotification) => (
-                            <div
+                            <Link
+                                href={getNotificationRedirectUrl(notification, role)}
                                 key={notification?._id}
-                                className="flex items-center space-x-3 p-2 border-b border-gray-300 last:border-none"
+                                className={`flex items-center space-x-3 p-3 border-b border-gray-300 last:border-none hover:bg-gray-50 rounded-lg transition duration-200 cursor-pointer block ${
+                                    !notification?.isRead ? "bg-orange-50/40" : ""
+                                }`}
                             >
-                                {/* Icon */}
-                                <div className="bg-[#b8c1c3] p-2 rounded-full">
-                                    <FiBell className="text-secondary-color w-6 h-6" />
-                                </div>
+                                <div className="flex items-center space-x-3">
+                                    {/* Icon or Profile Image */}
+                                    {notification?.message?.image ? (
+                                        <Image
+                                            src={
+                                                notification.message.image.startsWith("http")
+                                                    ? notification.message.image
+                                                    : `${serverUrl}${notification.message.image}`
+                                            }
+                                            alt="Notification Avatar"
+                                            width={44}
+                                            height={44}
+                                            className="w-11 h-11 rounded-full object-cover shrink-0 border border-gray-200"
+                                        />
+                                    ) : (
+                                        <div className="bg-[#b8c1c3] p-2 rounded-full shrink-0">
+                                            <FiBell className="text-secondary-color w-6 h-6" />
+                                        </div>
+                                    )}
 
-                                {/* Notification text */}
-                                <div className="flex flex-col">
-                                    <span className="text-lg font-medium text-gray-700">
-                                        {notification?.message?.text}
-                                    </span>
-                                    <span className="text-sm text-gray-500">
-                                        {formatDateTime(notification?.createdAt)}
-                                    </span>
+                                    {/* Notification text */}
+                                    <div className="flex flex-col">
+                                        <span className="text-base sm:text-lg font-medium text-gray-800">
+                                            {notification?.message?.text}
+                                        </span>
+                                        <span className="text-xs sm:text-sm text-gray-500 mt-0.5">
+                                            {formatDateTime(notification?.createdAt)}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))
-                        // )
                     }
                 </div>
                 <PaginationSection
