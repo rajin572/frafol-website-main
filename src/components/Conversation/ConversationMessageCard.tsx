@@ -56,7 +56,12 @@ const ConversationMessageCard = ({
                 : "justify-center"
               }`}
           >
-            <div>
+            <div className={`relative ${(msg as any)?.approvalStatus === "pending" ? "opacity-70" : ""}`}>
+              {(msg as any)?.approvalStatus === "pending" && (
+                <div className="text-[10px] text-gray-500 mb-1 text-right italic">
+                  Pending...
+                </div>
+              )}
               {msg?.images?.length > 0 && (
                 <div
                   className={`grid grid-cols-1  ${msg?.images?.length > 2 ? " md:grid-cols-2" : "grid-cols-1"

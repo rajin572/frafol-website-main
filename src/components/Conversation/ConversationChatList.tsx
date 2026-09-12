@@ -87,6 +87,15 @@ const ConversationChatList = ({
     }
 
     socket.on(`newMessage`, (message: any) => {
+      if (message?.approvalStatus === "rejected") return;
+
+      if (message?.approvalStatus === "pending") {
+        const senderId = message?.sender?._id || message?.sender;
+        if (senderId !== user?.userId) {
+          return;
+        }
+      }
+
       console.log("new massage", message);
       handleNewMessage(message);
     });

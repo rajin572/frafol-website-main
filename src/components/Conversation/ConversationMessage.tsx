@@ -158,6 +158,7 @@ const ConversationMessage = ({
 
   // New socket message handler
   const handleMessage = useCallback((message: any) => {
+    console.log(message);
     setMessages((prev) => [...prev, message]);
 
     setTimeout(() => {
@@ -183,11 +184,19 @@ const ConversationMessage = ({
     };
   }, [socket, selectedConversation?.chat?._id, handleMessage]);
 
-  const convertnewMessageFirst = [...messages].sort(
-    (a: IMessage, b: IMessage) =>
-      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
-
+  const convertnewMessageFirst = [...messages]
+    .filter((msg: any) => {
+      if (msg?.approvalStatus === "rejected") return false;
+      if (msg?.approvalStatus === "pending") {
+        const senderId = msg?.sender?._id || msg?.sender;
+        return senderId?.toString() === userData?.userId?.toString();
+      }
+      return true;
+    })
+    .sort(
+      (a: any, b: any) =>
+        new Date(a.createdAt || a.time).getTime() - new Date(b.createdAt || b.time).getTime()
+    );
   return (
     <div
       className={`w-full ${selectedConversation ? "block lg:block" : "hidden lg:block"
