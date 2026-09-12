@@ -1,10 +1,11 @@
 'use client';
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import { getServerUrl } from '@/helpers/config/envConfig';
 import Image, { StaticImageData } from 'next/image';
 import { IProfessional } from '@/types';
+import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 
 
@@ -103,12 +104,38 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
 
     // Poster shown instantly while the (heavy) video defers downloading until hover/play
     const posterCandidate =
-        displayGallery.find((m) => m.type === "image")?.src ?? item?.profileImage;
-    // item?.profileImage;
-    const posterSrc =
-        typeof posterCandidate === "string"
+        displayGallery.find((m) => m.type === "image")?.src || item?.profileImage;
+    const explicitPosterSrc =
+        typeof posterCandidate === "string" && posterCandidate
             ? (getImageSrc(posterCandidate) as string)
             : undefined;
+
+    // The banner/profile image field can be set but point at a file that no
+    // longer exists on the backend — confirm it actually loads before trusting
+    // it as the poster, otherwise fall back to a frame grabbed from the video.
+    const [explicitPosterFailed, setExplicitPosterFailed] = useState(false);
+    useEffect(() => {
+        if (!explicitPosterSrc) return;
+        setExplicitPosterFailed(false);
+        let cancelled = false;
+        const probe = new window.Image();
+        probe.onload = () => {
+            if (!cancelled) setExplicitPosterFailed(false);
+        };
+        probe.onerror = () => {
+            if (!cancelled) setExplicitPosterFailed(true);
+        };
+        probe.src = explicitPosterSrc;
+        return () => {
+            cancelled = true;
+        };
+    }, [explicitPosterSrc]);
+
+    const generatedVideoThumbnails = useVideoThumbnails(item?.introVideo ? [item.introVideo] : []);
+    const posterSrc =
+        explicitPosterSrc && !explicitPosterFailed
+            ? explicitPosterSrc
+            : (item?.introVideo ? generatedVideoThumbnails[item.introVideo] : undefined);
 
     const goToNext = () => {
         setCurrentIndex((prev) => (prev + 1) % displayGallery.length);

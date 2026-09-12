@@ -1,11 +1,13 @@
 "use client";
-import { getServerUrl } from '@/helpers/config/envConfig';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
+import GalleryVideoPlayer from '@/components/shared/GalleryVideoPlayer';
+import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 const ProfessionalPageVideoWorks = ({ galleryVideos }: { galleryVideos: string[] }) => {
 
-    const serverUrl = getServerUrl();
     const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+    const topVideos = useMemo(() => galleryVideos?.slice(0, 3) ?? [], [galleryVideos]);
+    const videoThumbnails = useVideoThumbnails(topVideos);
 
     const handlePlay = useCallback((currentIndex: number) => {
         videoRefs.current.forEach((video, idx) => {
@@ -18,23 +20,16 @@ const ProfessionalPageVideoWorks = ({ galleryVideos }: { galleryVideos: string[]
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {galleryVideos?.slice(0, 3)?.map((item, index) => (
-                <div key={index} className="relative group aspect-video bg-gray-200 rounded-lg overflow-hidden">
-                    <video
-                        ref={(el) => {
-                            videoRefs.current[index] = el;
-                        }}
-                        src={serverUrl + item}
-                        controls
-                        className="w-full h-full object-cover rounded-lg"
-                        preload="metadata"
-                        controlsList="nodownload noplaybackrate"
-                        onPlay={() => handlePlay(index)}
-
-                    >
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
+            {topVideos.map((item, index) => (
+                <GalleryVideoPlayer
+                    key={index}
+                    src={item}
+                    poster={videoThumbnails[item]}
+                    videoRef={(el) => {
+                        videoRefs.current[index] = el;
+                    }}
+                    onPlay={() => handlePlay(index)}
+                />
             ))}
         </div>
     );

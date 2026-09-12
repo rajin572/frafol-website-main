@@ -7,7 +7,8 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { IProfessionalUser } from "@/types";
 import { FiChevronDown } from "react-icons/fi";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import GalleryVideoPlayer from "@/components/shared/GalleryVideoPlayer";
+import useVideoThumbnails from "@/hook/useVideoThumbnails";
 
 const columnsCountBreakPoints = { 350: 1, 600: 2, 1024: 3 };
 
@@ -18,7 +19,6 @@ const ProfessionalAllImages = ({
   id: string;
   professionalUser: IProfessionalUser;
 }) => {
-  const serverUrl = getServerUrl();
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     images: true,
     videos: true
@@ -42,6 +42,8 @@ const ProfessionalAllImages = ({
 
     return { galleryImages: images, galleryVideos: videos };
   }, [professionalUser?.gallery]);
+
+  const videoThumbnails = useVideoThumbnails(galleryVideos);
 
 
   const toggleSection = (section: string) => {
@@ -130,23 +132,17 @@ const ProfessionalAllImages = ({
                 <div className="p-6 pt-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {galleryVideos.map((item, index) => (
-                      <div key={index} className="relative group w-full">
-                        <video
-                          ref={(el) => {
-                            if (el) {
-                              videoRefs.current[index] = el;
-                            }
-                          }}
-                          src={serverUrl + item}
-                          controls
-                          className="w-full h-full object-cover rounded-lg"
-                          preload="metadata"
-                          onPlay={() => handleVideoPlay(index)}
-                          controlsList="nodownload noplaybackrate"
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
+                      <GalleryVideoPlayer
+                        key={index}
+                        src={item}
+                        poster={videoThumbnails[item]}
+                        videoRef={(el) => {
+                          if (el) {
+                            videoRefs.current[index] = el;
+                          }
+                        }}
+                        onPlay={() => handleVideoPlay(index)}
+                      />
                     ))}
                   </div>
                 </div>

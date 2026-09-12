@@ -12,6 +12,8 @@ import DeleteModal from "@/components/ui/Modal/DeleteModal";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import ProfileProtfolioUploadImageModal from "@/components/ui/Modal/Profile/ProfileProtfolioUploadImageModal";
 import { IProfile } from '@/types';
+import GalleryVideoPlayer from '@/components/shared/GalleryVideoPlayer';
+import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 
 const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
@@ -44,6 +46,9 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
 
         return { galleryImages: images, galleryVideos: videos };
     }, [myData?.gallery]);
+
+
+    const videoThumbnails = useVideoThumbnails(galleryVideos);
 
 
     const showUploadModal = () => {
@@ -208,24 +213,18 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                             <div className="p-6 pt-10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {galleryVideos.map((item, index) => (
-                                        <div key={index} className="relative group w-full">
-                                            <video
-                                                ref={(el) => {
-                                                    if (el) {
-                                                        videoRefs.current[index] = el;
-                                                    }
-                                                }}
-                                                src={serverUrl + item}
-                                                controls
-                                                className="w-full h-full object-cover rounded-lg"
-                                                preload="metadata"
-                                                onPlay={() => handleVideoPlay(index)}
-                                                controlsList="nodownload noplaybackrate"
-
-                                            >
-                                                Your browser does not support the video tag.
-                                            </video>
-                                            <div className="flex items-center justify-end gap-2 absolute top-2 w-full px-2">
+                                        <GalleryVideoPlayer
+                                            key={index}
+                                            src={item}
+                                            poster={videoThumbnails[item]}
+                                            videoRef={(el) => {
+                                                if (el) {
+                                                    videoRefs.current[index] = el;
+                                                }
+                                            }}
+                                            onPlay={() => handleVideoPlay(index)}
+                                        >
+                                            <div className="flex items-center justify-end gap-2 absolute top-2 w-full px-2 z-10">
                                                 <div
                                                     onClick={() => showDeleteModal(item)}
                                                     className="flex items-center p-1 bg-secondary-color rounded-full cursor-pointer"
@@ -233,7 +232,7 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                                                     <MdDelete className="text-2xl text-primary-color" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </GalleryVideoPlayer>
                                     ))}
                                 </div>
                             </div>

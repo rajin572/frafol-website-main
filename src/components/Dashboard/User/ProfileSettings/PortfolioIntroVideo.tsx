@@ -1,12 +1,13 @@
 import ReuseButton from '@/components/ui/Button/ReuseButton';
 import ProfileProtfolioUploadImageModal from '@/components/ui/Modal/Profile/ProfileProtfolioUploadImageModal';
-import { getServerUrl } from '@/helpers/config/envConfig';
 import { IProfile } from '@/types';
 import React, { useState } from 'react';
+import GalleryVideoPlayer from '@/components/shared/GalleryVideoPlayer';
+import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
-    const serverUrl = getServerUrl();
     const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
+    const videoThumbnails = useVideoThumbnails([myData?.introVideo]);
 
     const showUploadModal = () => {
         setIsUploadModalVisible(true);
@@ -16,8 +17,6 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
         setIsUploadModalVisible(false);
     };
 
-
-    console.log(serverUrl + myData?.introVideo)
     return (
         <div>
             <div className="flex items-center justify-between mb-10">
@@ -35,14 +34,13 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
             </div>
             <div>
 
-                {myData?.introVideo && <div className="relative group w-full ">
-                    <video
-                        src={`${serverUrl}${myData?.introVideo}`}
-                        className="w-full max-w-[768px] aspect-video object-cover rounded-lg"
-                        controls
-                        controlsList="nodownload noplaybackrate"
+                {myData?.introVideo && (
+                    <GalleryVideoPlayer
+                        src={myData.introVideo}
+                        poster={videoThumbnails[myData.introVideo]}
+                        wrapperClassName="max-w-[768px] aspect-video bg-gray-200 rounded-lg"
                     />
-                </div>}
+                )}
 
             </div>
 
