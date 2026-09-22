@@ -39,6 +39,17 @@ const InvoiceGearFromAdminSide = ({ currentRecord }: { currentRecord: IGearOrder
   ].filter(Boolean);
   const sellerFullAddress = sellerAddressParts.length > 0 ? sellerAddressParts.join(", ") : "__________";
 
+  // Buyer's address: company registered address when ordering as a company, otherwise personal shipping address
+  const buyerAddress = currentRecord.loginAsCompany
+    ? currentRecord.companyAddress
+    : currentRecord.shippingAddress;
+  const buyerZipCode = currentRecord.loginAsCompany
+    ? currentRecord.companyPostCode
+    : currentRecord.postCode;
+  const buyerTown = currentRecord.loginAsCompany
+    ? currentRecord.companyTown
+    : currentRecord.town;
+
   return (
     <Document language="sk">
       <Page size="A4" style={styles.page}>
@@ -131,6 +142,12 @@ const InvoiceGearFromAdminSide = ({ currentRecord }: { currentRecord: IGearOrder
             <Text style={styles.textBold}>Dodacia adresa (Shipping Address):</Text>{" "}
             {currentRecord.shippingAddress}, {currentRecord.town}, {currentRecord.postCode}
           </Text>
+          {currentRecord.loginAsCompany && (
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Fakturačná adresa (Billing Address):</Text>{" "}
+              {buyerAddress}, {buyerTown}, {buyerZipCode}
+            </Text>
+          )}
         </View>
 
         {/* Table — commission only */}

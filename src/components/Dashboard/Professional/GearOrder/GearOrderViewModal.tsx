@@ -234,7 +234,11 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
         <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
           {/* <h3 className="font-semibold mb-2">Shipping Address</h3> */}
           <h3 className="font-semibold mb-2">Doručovacia adresa</h3>
-          <p className="text-sm ">{currentRecord?.shippingAddress}</p>
+          <p className="text-sm ">
+            {[currentRecord?.shippingAddress, currentRecord?.town, currentRecord?.postCode]
+              .filter(Boolean)
+              .join(", ")}
+          </p>
         </div>
 
         {/* Delivery Note */}

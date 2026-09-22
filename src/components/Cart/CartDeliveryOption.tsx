@@ -109,6 +109,18 @@ const otherFields: {
       placeholder: "Placeholder",
       rules: [{ required: true, message: "Company Address is required" }],
     },
+    {
+      name: "companyPostCode",
+      label: "Company Zip Code",
+      placeholder: "Placeholder",
+      rules: [{ required: true, message: "Company Zip Code is required" }],
+    },
+    {
+      name: "companyTown",
+      label: "Company Town",
+      placeholder: "Placeholder",
+      rules: [{ required: true, message: "Company Town is required" }],
+    },
   ];
 
 const CartDeliveryOption = ({
@@ -135,6 +147,8 @@ const CartDeliveryOption = ({
       dic: myData?.dic || "",
       ic_dph: myData?.ic_dph || "",
       companyAddress: myData?.address || "",
+      companyPostCode: myData?.zipCode || "",
+      companyTown: myData?.town || "",
       companyName: myData?.companyName || "",
       deliveryNote: "",
     });

@@ -38,6 +38,17 @@ const InvoiceGearFromClientSide = ({ currentRecord }: { currentRecord: IGearOrde
   ].filter(Boolean);
   const sellerFullAddress = sellerAddressParts.length > 0 ? sellerAddressParts.join(", ") : "____";
 
+  // Client's address: company registered address when ordering as a company, otherwise personal shipping address
+  const clientAddress = currentRecord.loginAsCompany
+    ? currentRecord.companyAddress
+    : currentRecord.shippingAddress;
+  const clientZipCode = currentRecord.loginAsCompany
+    ? currentRecord.companyPostCode
+    : currentRecord.postCode;
+  const clientTown = currentRecord.loginAsCompany
+    ? currentRecord.companyTown
+    : currentRecord.town;
+
   const gearPrice = gear.price || 0;
   const shippingPrice = gear.shippingCompany?.price || 0;
   const totalVatAmount = gear.totalVatAmount || 0;
@@ -104,13 +115,13 @@ const InvoiceGearFromClientSide = ({ currentRecord }: { currentRecord: IGearOrde
             </Text>
             <Text style={styles.text}>
               <Text style={styles.textBold}>Adresa / Address:</Text>{" "}
-              {currentRecord.shippingAddress || "__________"}
+              {clientAddress || "__________"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>PSČ / Zip code:</Text> {currentRecord.postCode || "____"}
+              <Text style={styles.textBold}>PSČ / Zip code:</Text> {clientZipCode || "____"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>Mesto / Town:</Text> {currentRecord.town || "____"}
+              <Text style={styles.textBold}>Mesto / Town:</Text> {clientTown || "____"}
             </Text>
             {currentRecord.loginAsCompany && (
               <>

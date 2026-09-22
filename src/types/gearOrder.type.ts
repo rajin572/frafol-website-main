@@ -81,6 +81,8 @@ interface IGearOrder {
     cancelledAt: string | null;
   };
   companyAddress: string;
+  companyPostCode?: string;
+  companyTown?: string;
   deliveryNote: string;
   isDeleted: boolean;
   createdAt: string;
