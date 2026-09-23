@@ -239,6 +239,16 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
               .filter(Boolean)
               .join(", ")}
           </p>
+          <p className="text-sm mt-1">
+            {/* <span className="font-semibold">Email:</span> */}
+            <span className="font-semibold">Email:</span>{" "}
+            {currentRecord?.email || "N/A"}
+          </p>
+          <p className="text-sm mt-1">
+            {/* <span className="font-semibold">Phone Number:</span> */}
+            <span className="font-semibold">Telefónne číslo:</span>{" "}
+            {currentRecord?.mobileNumber || "N/A"}
+          </p>
         </div>
 
         {/* Delivery Note */}

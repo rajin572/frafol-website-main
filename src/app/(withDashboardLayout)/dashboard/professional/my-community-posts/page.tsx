@@ -15,7 +15,7 @@ const page = async ({
   const search = (params?.search as string) || "";
 
   const gearOrderRes = await fetchWithAuth(
-    `/community/my?page=${page}&limit=${limit}&search=${search}`,
+    `/community/my?page=${page}&limit=${limit}&searchTerm=${search}`,
     {
       next: {
         tags: [TagTypes.communityForum],
@@ -24,7 +24,7 @@ const page = async ({
   );
 
   const communityData = await gearOrderRes.json();
-
+  console.log(communityData)
   const myCommunityPosts: ICommunityPost[] = communityData?.data?.result || [];
   const totalData = communityData?.data?.meta?.total;
 

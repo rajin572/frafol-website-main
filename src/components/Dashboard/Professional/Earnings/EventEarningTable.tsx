@@ -34,10 +34,10 @@ const EventEarningTable = ({
       render: (_: any, record: any) => <span className="font-medium">{record.userId?.name || "—"}</span>,
     },
     {
-      /* title: "Service Type", */
-      title: "Typ služby",
-      key: "serviceType",
-      render: (_: any, record: any) => capitalize(record.eventOrderId?.serviceType === "both" ? "Fotenie a natáčanie" : record.eventOrderId?.serviceType === "photography" ? "Fotenie" : "Natáčanie"),
+      /* title: "Package / Form Title", */
+      title: "Názov podujatia",
+      key: "eventTitle",
+      render: (_: any, record: any) => record.eventOrderId?.title || "—",
     },
     {
       title: "Order Type",
@@ -56,14 +56,8 @@ const EventEarningTable = ({
     },
     {
       /* title: "Amount", */
-      title: "Suma",
-      key: "amount",
-      render: (_: any, record: any) => <span>{record?.eventOrderId?.price?.toFixed(2)}€</span>,
-    },
-    {
-      /* title: "Amount", */
       title: "VAT",
-      key: "amount",
+      key: "vatAmount",
       render: (_: any, record: any) => <span>{record?.eventOrderId?.vatAmount?.toFixed(2)}€</span>,
     },
     {

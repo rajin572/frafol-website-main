@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Space, Tooltip } from "antd";
+import { Space, Tag, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import { IGearOrder } from "@/types";
-import { eventOrderStatus } from "@/utils/budgetLabels";
+import { gearOrderStatus } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface GearOrderTableProps {
@@ -62,9 +62,14 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
       dataIndex: "orderStatus",
       key: "orderStatus",
       render: (_: string, record: IGearOrder) => {
-        return (
-          eventOrderStatus[record?.orderStatus as string] || record?.orderStatus
-        );
+        const status = record?.orderStatus as string;
+        const color =
+          status === "delivered"
+            ? "green"
+            : status === "cancelled"
+            ? "red"
+            : "orange";
+        return <Tag color={color}>{gearOrderStatus[status] || status}</Tag>;
       },
     },
     {
