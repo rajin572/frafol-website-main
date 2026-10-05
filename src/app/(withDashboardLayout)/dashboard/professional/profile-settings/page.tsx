@@ -32,6 +32,7 @@ const page = async ({
 
   const myData: IProfile = data?.data;
 
+
   // const role = params?.sRol;
 
   // console.log(role)

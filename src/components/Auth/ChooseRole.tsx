@@ -16,6 +16,7 @@ const ChooseRole = () => {
 
   const storedInformation = Cookies.get("information");
 
+
   const parseData = JSON.parse(storedInformation || "{}");
 
   if (storedInformation) {

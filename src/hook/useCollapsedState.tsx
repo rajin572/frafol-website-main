@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 
 const useCollapsedState = () => {
+
   const getCollapsed = JSON.parse(localStorage.getItem("Collapsed") || "false");
   const [isCollapsed, setIsCollapsed] = useState(getCollapsed);
 

@@ -53,6 +53,7 @@ const AdditionalInformation = () => {
 
   const storedInformation = Cookies.get("information");
 
+
   const parseData = JSON.parse(storedInformation || "{}");
 
   if (storedInformation) {

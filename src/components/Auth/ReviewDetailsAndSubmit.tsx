@@ -16,8 +16,9 @@ const ReviewDetailsAndSubmit = () => {
 
   const storedInformation = Cookies.get("information");
 
+
   const parseData = JSON.parse(storedInformation || "{}");
-  console.log(parseData)
+
 
   const details = [
     {

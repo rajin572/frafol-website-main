@@ -115,6 +115,7 @@ const LegalInvoiceDetails = ({ townData }: { townData: ITown[] }) => {
   const [form] = Form.useForm();
 
   const storedInformation = Cookies.get("information");
+
   const parseData = JSON.parse(storedInformation || "{}");
 
   const allTownValues = townData?.map((t) => t.name) ?? [];

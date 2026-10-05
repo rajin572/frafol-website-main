@@ -47,6 +47,8 @@ const ProfessionalPageDetails = async ({
 
     const data = await res.json();
     myData = data?.data;
+
+    console.log("my data =>>> ", myData)
   }
 
   return (

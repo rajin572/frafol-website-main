@@ -19,6 +19,7 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
   };
 
   const storedInformation = Cookies.get("information");
+
   const parseData = JSON.parse(storedInformation || "{}");
 
   const router = useRouter();

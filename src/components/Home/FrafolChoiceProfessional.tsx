@@ -16,7 +16,7 @@ const FrafolChoiceProfessional = async () => {
     const data = await res.json();
     const professionals: IProfessional[] = data?.data?.result;
 
-    console.log(professionals)
+    console.log(professionals[1])
 
     if (!professionals || professionals.length === 0) {
         return null;
