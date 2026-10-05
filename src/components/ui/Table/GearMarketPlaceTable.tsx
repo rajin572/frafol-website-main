@@ -5,7 +5,7 @@ import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import Image from "next/image";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../../public/assets/AllImages";
 
 // Define the type for the props
@@ -30,7 +30,6 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
   total,
   limit,
 }) => {
-  const serverUrl = getServerUrl();
   const columns = [
     {
       title: "ID",
@@ -46,7 +45,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       key: "gallery",
       render: (text: string[]) => (
         <Image
-          src={text?.[0] ? serverUrl + text[0] : AllImages.dummyCover?.src}
+          src={text?.[0] ? getMediaUrl(text[0]) : AllImages.dummyCover?.src}
           alt="Item"
           width={50}
           height={50}

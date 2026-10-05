@@ -1,4 +1,4 @@
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { ICategory } from "@/types";
 import Image from "next/image";
 import React from "react";
@@ -10,13 +10,12 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
-  const serverUrl = getServerUrl();
   return (
     <div className="relative group w-full">
       <Image
         width={2000}
         height={2000}
-        src={serverUrl + item?.image || AllImages.dummyProfile}
+        src={getMediaUrl(item?.image) || AllImages.dummyProfile}
         alt={item?.title || "Category Image"}
         className="w-full !h-[360px] object-cover rounded-lg"
         fetchPriority="high"

@@ -3,7 +3,7 @@ import { BsEye } from "react-icons/bs";
 import { IoCalendarOutline, IoCheckmarkSharp } from "react-icons/io5";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IGearOrder } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate } from "@/utils/dateFormet";
 import Link from "next/link";
 
@@ -18,13 +18,12 @@ const UserGearOrderCard = ({
   openModal?: (record: IGearOrder) => void;
   showAcceptDeliverModal?: (record: IGearOrder) => void;
 }) => {
-  const serverUrl = getServerUrl();
   return (
     <div className="p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200 flex gap-2 items-center">
       <Image
         src={
           data?.gearMarketplaceId?.gallery?.[0]
-            ? serverUrl + data?.gearMarketplaceId?.gallery?.[0]
+            ? getMediaUrl(data?.gearMarketplaceId?.gallery?.[0])
             : AllImages?.dummyCover?.src
         }
         alt={data?.gearMarketplaceId?.name || "Product Image"}

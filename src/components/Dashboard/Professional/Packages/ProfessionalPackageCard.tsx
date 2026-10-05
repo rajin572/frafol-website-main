@@ -6,7 +6,7 @@ import { LuClock } from "react-icons/lu";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { MdDelete } from "react-icons/md";
 import { IPackage } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IoCalendarOutline } from "react-icons/io5";
 
 const ProfessionalPackageCard = ({
@@ -18,7 +18,6 @@ const ProfessionalPackageCard = ({
   showEditModal: (record: any) => void;
   showDeleteModal: (record: any) => void;
 }) => {
-  const serverUrl = getServerUrl();
   console.log(item)
 
   // vatAmount: 10,
@@ -38,7 +37,7 @@ const ProfessionalPackageCard = ({
           height={1000}
           src={
             item?.thumbnailImage
-              ? serverUrl + item?.thumbnailImage
+              ? getMediaUrl(item?.thumbnailImage)
               : AllImages?.dummyCover?.src
           }
           alt="workspace"

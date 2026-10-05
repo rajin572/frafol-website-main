@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
 import { MdDelete } from "react-icons/md";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IGear } from "@/types";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeFromCart } from "@/redux/features/cart/cartSlice";
@@ -11,7 +11,6 @@ import Link from "next/link";
 
 const CartCard = ({ product }: { product: IGear }) => {
   const dispatch = useAppDispatch();
-  const serverUrl = getServerUrl();
 
   const handleRemove = (id: string) => {
     dispatch(removeFromCart(id));
@@ -24,7 +23,7 @@ const CartCard = ({ product }: { product: IGear }) => {
         <Image
           src={
             product?.gallery?.[0]
-              ? serverUrl + product?.gallery?.[0]
+              ? getMediaUrl(product?.gallery?.[0])
               : AllImages?.dummyCover?.src
           }
           alt="product"

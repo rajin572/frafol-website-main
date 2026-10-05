@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { AllImages } from "../../../../public/assets/AllImages";
-import { getServerUrl } from '@/helpers/config/envConfig';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import Image, { StaticImageData } from 'next/image';
 import { IProfessional } from '@/types';
 import useVideoThumbnails from '@/hook/useVideoThumbnails';
@@ -11,7 +11,6 @@ import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 
 const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
-    const serverUrl = getServerUrl();
     const [currentIndex, setCurrentIndex] = useState(0);
 
 
@@ -24,35 +23,9 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
     const touchDelta = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
 
-    const getImageSrc = (src: string | StaticImageData): string | StaticImageData => {
-        // If it's a static import (not a string), return as-is
-        if (typeof src !== "string") {
-            return src;
-        }
-
-        // Check if it's already a full URL
-        if (src.startsWith("http://") || src.startsWith("https://")) {
-            return src;
-        }
-
-        // Check if it starts with /uploads and add server URL
-        if (src.startsWith("/uploads")) {
-            return serverUrl + src;
-        }
-
-        // Check if it starts with /assets (local assets)
-        if (src.startsWith("/assets")) {
-            return src;
-        }
-
-        // If no leading slash, prepend /uploads and server URL
-        if (!src.startsWith("/")) {
-            return serverUrl + "/uploads/" + src;
-        }
-
-        // Default case
-        return serverUrl + src;
-    };
+    // Static imports (not a string) pass through; strings resolve via the shared helper.
+    const getImageSrc = (src: string | StaticImageData): string | StaticImageData =>
+        typeof src === "string" ? getMediaUrl(src) : src;
 
 
     // ✅ CORRECTED GALLERY LOGIC WITH PROPER PRIORITY
@@ -261,7 +234,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             ) : (
                 <video
                     ref={videoRef}
-                    src={typeof currentMedia.src === 'string' ? serverUrl + currentMedia.src : ''} className="w-full h-full object-cover"
+                    src={typeof currentMedia.src === 'string' ? getMediaUrl(currentMedia.src) : ''} className="w-full h-full object-cover"
                     muted={isVideoMuted}
                     loop
                     playsInline

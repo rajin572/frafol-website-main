@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IGearOrder } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate } from "@/utils/dateFormet";
 import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
 import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
@@ -22,7 +22,6 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
   showCancelModal,
   showDeliverModal,
 }) => {
-  const serverUrl = getServerUrl();
 
   console.log(currentRecord);
 
@@ -57,7 +56,7 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
             <Image
               src={
                 currentRecord?.gearMarketplaceId?.gallery?.[0]
-                  ? serverUrl + currentRecord?.gearMarketplaceId?.gallery?.[0]
+                  ? getMediaUrl(currentRecord?.gearMarketplaceId?.gallery?.[0])
                   : AllImages?.product
               }
               alt={currentRecord?.gearMarketplaceId?.name || "Product Image"}

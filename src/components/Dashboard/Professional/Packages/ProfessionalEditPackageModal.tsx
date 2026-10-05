@@ -4,7 +4,7 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IPackage, ISignInUser } from "@/types";
 import { Form, Modal, Typography } from "antd";
 import Image from "next/image";
@@ -28,7 +28,6 @@ const ProfessionalEditPackageModal = ({
   serviceCharge: number;
   minServiceCharge: number
 }) => {
-  const serverUrl = getServerUrl();
 
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
@@ -264,7 +263,7 @@ const ProfessionalEditPackageModal = ({
           <Image
             src={
               (currentRecord?.thumbnailImage &&
-                serverUrl + currentRecord?.thumbnailImage) ||
+                getMediaUrl(currentRecord?.thumbnailImage)) ||
               AllImages.dummyCover.src
             }
             width={100}

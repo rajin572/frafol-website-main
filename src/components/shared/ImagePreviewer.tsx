@@ -6,15 +6,14 @@ import { saveAs } from "file-saver";
 import Image from "next/image";
 import { toast } from "sonner";
 import { Tooltip } from "antd";
+import { getMediaUrl } from "@/utils/mediaUrl";
 
 const ImagePreviewer = ({
-  imageUrl,
   image,
   msg,
   userData,
   imgHeight,
 }: {
-  imageUrl: string;
   image: string;
   msg: any;
   userData: any;
@@ -23,7 +22,7 @@ const ImagePreviewer = ({
   if (!image) return null;
 
   const filePath = image.replace(/\\/g, "/");
-  const fileUrl = `${imageUrl}${filePath}`;
+  const fileUrl = getMediaUrl(filePath);
   const isImage = /\.(jpeg|jpg|png|gif|webp|bmp|svg)$/i.test(filePath);
   const getFileName = (path: string) => path.split("/").pop() || "download";
 

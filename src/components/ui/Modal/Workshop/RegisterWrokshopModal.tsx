@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { createWorkshopOrder } from "@/services/WorkshopOrderService/WorkshopOrderServiceApi";
 import { useRouter } from "next/navigation";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import Image from "next/image";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock, LuUsers } from "react-icons/lu";
@@ -44,7 +44,6 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     const bolSom = Form.useWatch("bolSom", form);
 
     const router = useRouter();
-    const serverUrl = getServerUrl();
     const userData = useGetUserData();
 
 
@@ -129,7 +128,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                     <Image
                         width={1000}
                         height={1000}
-                        src={currentRecord?.image ? serverUrl + currentRecord?.image : AllImages?.dummyCover}
+                        src={currentRecord?.image ? getMediaUrl(currentRecord?.image) : AllImages?.dummyCover}
                         alt="workspace"
                         className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
                     />
@@ -146,7 +145,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 height={1000}
                                 src={
                                     currentRecord?.authorId?.profileImage
-                                        ? serverUrl + currentRecord?.authorId?.profileImage
+                                        ? getMediaUrl(currentRecord?.authorId?.profileImage)
                                         : AllImages?.dummyProfile
                                 }
                                 alt={currentRecord?.authorId?.name || "Profile Image"}

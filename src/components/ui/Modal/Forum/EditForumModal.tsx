@@ -9,7 +9,7 @@ import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateCommunityPost } from "@/services/CommunityForumService/CommunityForumServiceApi";
 import { ICommunityPost } from "@/types";
 import Image from "next/image";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import RichTextEditor from "@/components/shared/RichTextEditor";
 
@@ -24,7 +24,6 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
   currentRecord,
   handleCancel,
 }) => {
-  const serveUrl = getServerUrl();
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
 
@@ -122,7 +121,7 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
             <Image
               src={
                 currentRecord?.images[0]
-                  ? serveUrl + currentRecord?.images[0]
+                  ? getMediaUrl(currentRecord?.images[0])
                   : AllImages.dummyCover.src
               }
               alt="Image"

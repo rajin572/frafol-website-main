@@ -5,7 +5,7 @@ import { AllImages } from "../../../public/assets/AllImages";
 import Link from "next/link";
 import { ICommunityPost } from "@/types";
 import { formatDateTime } from "@/utils/dateFormet";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import ForumAllComents from "./ForumAllComents";
 import ForumPostLikeSection from "./ForumPostLikeSection";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
@@ -19,7 +19,6 @@ const ForumDetailsPage = ({
   id: string;
   page: number;
 }) => {
-  const serverUrl = getServerUrl();
   return (
     <div className="py-16">
       <Link href="/forums">
@@ -54,7 +53,7 @@ const ForumDetailsPage = ({
               draggable={false}
               src={
                 communityPosts?.authorId?.profileImage
-                  ? serverUrl + communityPosts?.authorId?.profileImage
+                  ? getMediaUrl(communityPosts?.authorId?.profileImage)
                   : AllImages?.dummyProfile
               }
               alt="user"
@@ -79,7 +78,7 @@ const ForumDetailsPage = ({
               height={1000}
               src={
                 communityPosts?.images?.[0]
-                  ? serverUrl + communityPosts?.images?.[0]
+                  ? getMediaUrl(communityPosts?.images?.[0])
                   : AllImages?.dummyCover?.src
               }
               alt="user"

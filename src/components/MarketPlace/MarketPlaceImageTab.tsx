@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../public/assets/AllImages";
 
 const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
@@ -11,7 +11,6 @@ const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
     setSelectedImage(images[0]);
   }, [images]);
 
-  const serverurl = getServerUrl();
   return (
     <div className="flex gap-4">
       <div className="flex flex-col gap-2">
@@ -20,7 +19,7 @@ const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
             width={80}
             height={80}
             key={item}
-            src={item ? serverurl + item : AllImages.dummyCover?.src}
+            src={item ? getMediaUrl(item) : AllImages.dummyCover?.src}
             alt="product"
             className={`object-cover cursor-pointer border-2 rounded-md ${
               item === selectedImage
@@ -39,7 +38,7 @@ const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
           height={1000}
           src={
             selectedImage
-              ? serverurl + selectedImage
+              ? getMediaUrl(selectedImage)
               : AllImages.dummyCover?.src
           }
           alt="selected product"

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal, Tag } from "antd";
 import Image from "next/image";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
 import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
@@ -22,7 +22,6 @@ interface Props {
 }
 
 const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type }) => {
-  const serverUrl = getServerUrl();
 
   console.log(record)
 
@@ -97,9 +96,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
   // Resolve client info per type
   const client = type === "event" ? record.userId : record.clientId;
-  const clientImage = client?.profileImage
-    ? `${serverUrl}${client.profileImage}`
-    : AllImages.dummyProfile;
+  const clientImage = getMediaUrl(client?.profileImage) || AllImages.dummyProfile;
 
   const renderEventContent = () => {
     const eventOrder = record.eventOrderId;

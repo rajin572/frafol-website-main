@@ -5,7 +5,7 @@ import { GoCommentDiscussion } from "react-icons/go";
 import { BsFillEyeFill, BsThreeDotsVertical } from "react-icons/bs";
 import Link from "next/link";
 import { ICommunityPost } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../public/assets/AllImages";
 import { formatDateTime } from "@/utils/dateFormet";
 import { Tooltip } from "antd";
@@ -22,7 +22,6 @@ const ForumCard = ({
   showDeleteModal?: (record: ICommunityPost) => void;
   showEditModal?: (record: ICommunityPost) => void;
 }) => {
-  const serverUrl = getServerUrl();
 
 
   const showEditAndDeleteOptions = () => {
@@ -52,7 +51,7 @@ const ForumCard = ({
             height={1000}
             src={
               item?.authorId?.profileImage
-                ? serverUrl + item?.authorId?.profileImage
+                ? getMediaUrl(item?.authorId?.profileImage)
                 : AllImages.dummyProfile.src
             }
             alt={item?.authorId?.name || "Profile Image"}

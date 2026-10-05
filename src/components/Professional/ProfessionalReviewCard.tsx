@@ -1,5 +1,5 @@
 "use client";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IReview } from "@/types";
 import { formatDateTime } from "@/utils/dateFormet";
 import { Rate } from "antd";
@@ -8,7 +8,6 @@ import { useState } from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 
 const ReviewCard = ({ review }: { review: IReview }) => {
-  const serverUrl = getServerUrl();
   const [expanded, setExpanded] = useState(false);
 
   const toggleReadMore = () => setExpanded((prev) => !prev);
@@ -32,7 +31,7 @@ const ReviewCard = ({ review }: { review: IReview }) => {
             src={
               review?.isAnonymous || !review?.userId?.profileImage
                 ? AllImages.dummyProfile
-                : serverUrl + review?.userId?.profileImage
+                : getMediaUrl(review?.userId?.profileImage)
             }
           />
           <div className="text-sm sm:text-sm lg:text-base xl:text-lg font-semibold">

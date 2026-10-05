@@ -6,7 +6,7 @@ import { formatDateTime } from "@/utils/dateFormet";
 import { FiBell } from "react-icons/fi";
 import { getCurrentUser } from "@/services/AuthService";
 import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -18,7 +18,6 @@ const Notifications = async ({
     const params = await searchParams;
     const page = Number(params?.page) || 1;
     const limit = 10;
-    const serverUrl = getServerUrl();
 
     const [res, currentUser] = await Promise.all([
         fetchWithAuth(`/notifications/my-notifications?page=${page}&limit=10`),
@@ -52,11 +51,7 @@ const Notifications = async ({
                                     {/* Icon or Profile Image */}
                                     {notification?.message?.image ? (
                                         <Image
-                                            src={
-                                                notification.message.image.startsWith("http")
-                                                    ? notification.message.image
-                                                    : `${serverUrl}${notification.message.image}`
-                                            }
+                                            src={getMediaUrl(notification.message.image)}
                                             alt="Notification Avatar"
                                             width={44}
                                             height={44}

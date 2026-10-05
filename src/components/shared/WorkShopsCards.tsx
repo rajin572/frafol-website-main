@@ -9,14 +9,13 @@ import { FaLocationDot } from "react-icons/fa6";
 import { LuUsers } from "react-icons/lu";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IWorkshop } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { useGetUserData } from "@/context/useGetUserData";
 import Link from "next/link";
 
 const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModalOpen: any }) => {
 
-  const serverUrl = getServerUrl();
   const userData = useGetUserData();
   console.log(data)
   return (
@@ -25,7 +24,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
         <Image
           width={1000}
           height={1000}
-          src={data?.image ? serverUrl + data?.image : AllImages?.dummyCover}
+          src={data?.image ? getMediaUrl(data?.image) : AllImages?.dummyCover}
           alt="workspace"
           className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
         />
@@ -54,7 +53,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
               height={1000}
               src={
                 data?.authorId?.profileImage
-                  ? serverUrl + data?.authorId?.profileImage
+                  ? getMediaUrl(data?.authorId?.profileImage)
                   : AllImages?.dummyProfile
               }
               alt={data?.authorId?.name || "Profile Image"}

@@ -4,7 +4,7 @@ import { AllImages } from "../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
 import { IPackage, IProfessionalUser, IProfile } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { LuClock } from "react-icons/lu";
 import { FaEuroSign } from "react-icons/fa6";
 
@@ -18,7 +18,6 @@ const ProfessionalServiceCard = ({
   professionalUser: IProfessionalUser;
 
 }) => {
-  const serverUrl = getServerUrl();
 
   return (
     <div className="p-1.5 rounded-xl border border-background-color relative flex flex-col justify-between h-full">
@@ -28,7 +27,7 @@ const ProfessionalServiceCard = ({
           height={1000}
           src={
             data?.thumbnailImage
-              ? serverUrl + data?.thumbnailImage
+              ? getMediaUrl(data?.thumbnailImage)
               : AllImages?.dummyCover
           }
           alt="workspace"

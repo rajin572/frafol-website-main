@@ -2,7 +2,7 @@ import { Modal } from "antd";
 
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IGearOrder } from "@/types";
 import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
 import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
@@ -23,7 +23,6 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
   activeModal,
   showAcceptDeliverModal,
 }) => {
-  const serverUrl = getServerUrl();
 
   // Gear orders are only created once paid, so the payment invoices exist for every
   // order that is not cancelled; the final ones after the customer accepted the delivery.
@@ -56,7 +55,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
             <Image
               src={
                 currentRecord?.gearMarketplaceId?.gallery?.[0]
-                  ? serverUrl + currentRecord?.gearMarketplaceId?.gallery?.[0]
+                  ? getMediaUrl(currentRecord?.gearMarketplaceId?.gallery?.[0])
                   : AllImages?.product
               }
               alt={currentRecord?.gearMarketplaceId?.name || "Product Image"}

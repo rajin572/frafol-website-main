@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { Image as AntdImage } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,13 +19,12 @@ const GalleryCard = ({
   arrayOfImages = false,
   photoView = false,
 }: GalleryCardProps) => {
-  const serverUrl = getServerUrl();
 
   const content = (
     <div className="relative group w-full">
       {photoView ? (
         <AntdImage
-          src={arrayOfImages ? serverUrl + gallery : serverUrl + gallery?.image}
+          src={arrayOfImages ? getMediaUrl(gallery) : getMediaUrl(gallery?.image)}
           alt={gallery?.name ? gallery?.name : gallery || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
         />
@@ -33,7 +32,7 @@ const GalleryCard = ({
         <Image
           width={2000}
           height={2000}
-          src={arrayOfImages ? serverUrl + gallery : serverUrl + gallery?.image}
+          src={arrayOfImages ? getMediaUrl(gallery) : getMediaUrl(gallery?.image)}
           alt={gallery?.name ? gallery?.name : gallery?.name || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
           fetchPriority="high"

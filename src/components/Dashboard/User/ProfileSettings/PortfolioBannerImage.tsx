@@ -2,7 +2,7 @@
 import ReuseButton from '@/components/ui/Button/ReuseButton';
 import DeleteModal from '@/components/ui/Modal/DeleteModal';
 import ProfileProtfolioUploadImageModal from '@/components/ui/Modal/Profile/ProfileProtfolioUploadImageModal';
-import { getServerUrl } from '@/helpers/config/envConfig';
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { updateBannerImage } from '@/services/ProfileService/ProfileServiceApi';
 import tryCatchWrapper from '@/utils/tryCatchWrapper';
 import React, { useState } from 'react';
@@ -14,7 +14,6 @@ import { IProfile } from '@/types';
 
 const PortfolioBannerImage = ({ myData }: { myData: IProfile }) => {
 
-    const serverUrl = getServerUrl();
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
     const [currentRecord, setCurrentRecord] = useState<any>(null);
@@ -85,9 +84,7 @@ const PortfolioBannerImage = ({ myData }: { myData: IProfile }) => {
                             {myData?.bannerImages?.map((item, index) => (
                                 <div key={index} className="relative group w-full ">
                                     <AntdImage
-                                        src={item.startsWith("/uploads")
-                                            ? serverUrl + item
-                                            : item || AllImages?.dummyCover?.src}
+                                        src={getMediaUrl(item) || AllImages?.dummyCover?.src}
                                         alt={"gallery Image"}
                                         className="w-full h-full object-cover rounded-lg"
                                     />

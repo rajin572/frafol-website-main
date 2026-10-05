@@ -11,7 +11,7 @@ import ProfessionalPageDetailsBookSession from "./ProfessionalPageDetailsBookSes
 import ProfessionalReviews from "./ProfessionalReviews";
 import Link from "next/link";
 import { IProfessionalUser, IProfile, ISignInUser } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { getAuthToken } from "@/lib/getAuthToken";
 import TagTypes from "@/helpers/config/TagTypes";
@@ -29,7 +29,6 @@ const ProfessionalPageDetails = async ({
   rating: string;
 }) => {
   const userData: ISignInUser = await getCurrentUser();
-  const serverUrl = getServerUrl();
 
   // Only fetch the logged-in user's profile when there is an access token. Guests have
   // no profile, so this authed call would just fail for them. Consumers below already
@@ -61,7 +60,7 @@ const ProfessionalPageDetails = async ({
             height={2000}
             src={
               professionalUser?.profileImage?.length > 0
-                ? serverUrl + professionalUser?.profileImage
+                ? getMediaUrl(professionalUser?.profileImage)
                 : AllImages?.dummyProfile
             }
             alt="user"

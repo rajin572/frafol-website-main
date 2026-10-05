@@ -14,7 +14,7 @@ import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateWrokshop } from "@/services/WorkshopService/WorkshopServiceApi";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 
 const ProfessionalEditWorkshop = ({
   isEditModalVisible,
@@ -29,7 +29,6 @@ const ProfessionalEditWorkshop = ({
   serviceCharge: number;
   minServiceCharge: number
 }) => {
-  const serverUrl = getServerUrl();
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
   const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
@@ -265,7 +264,7 @@ const ProfessionalEditWorkshop = ({
             <p>Aktuálny obrázok:</p>
             <Image
               src={
-                (currentRecord?.image && serverUrl + currentRecord?.image) ||
+                (currentRecord?.image && getMediaUrl(currentRecord?.image)) ||
                 AllImages.dummyCover.src
               }
               width={100}

@@ -3,13 +3,12 @@ import Image from "next/image";
 import React from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 import { ICommunityComment, IReply } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDateTime } from "@/utils/dateFormet";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
-  const serverUrl = getServerUrl();
   const [isReplyVisible, setIsReplyVisible] = React.useState(false);
 
   console.log(item)
@@ -41,7 +40,7 @@ const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
           height={1000}
           src={
             item?.user?.profileImage
-              ? serverUrl + item?.user?.profileImage
+              ? getMediaUrl(item?.user?.profileImage)
               : AllImages?.dummyProfile
           }
           alt="user"
@@ -88,7 +87,7 @@ const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
                   height={1000}
                   src={
                     reply?.user?.profileImage
-                      ? serverUrl + reply?.user?.profileImage
+                      ? getMediaUrl(reply?.user?.profileImage)
                       : AllImages?.dummyProfile
                   }
                   alt="user"

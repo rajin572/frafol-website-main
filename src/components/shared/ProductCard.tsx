@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { IGear } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import AddToCardButton from "../ui/AddToCardButton";
 import { AllImages } from "../../../public/assets/AllImages";
 
@@ -10,7 +10,6 @@ interface ProductCardProps {
   product: IGear;
 }
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const serverUrl = getServerUrl();
 
   return (
     <div className="!h-full flex flex-col justify-baseline">
@@ -23,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="w-full h-72 object-cover hover:scale-105 transform-3d transition-transform duration-300 ease-in-out"
               src={
                 product?.gallery[0]?.length > 0
-                  ? serverUrl + product?.gallery[0]
+                  ? getMediaUrl(product?.gallery[0])
                   : AllImages.dummyCover
               }
               alt="product"

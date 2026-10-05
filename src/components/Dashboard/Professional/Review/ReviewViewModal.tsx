@@ -2,7 +2,7 @@ import { Modal, Rate } from "antd";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import Image from "next/image";
 import { IProfessionalReview } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate } from "@/utils/dateFormet";
 
 const ReportViewModal = ({
@@ -15,13 +15,12 @@ const ReportViewModal = ({
   currentRecord: IProfessionalReview | null;
 }) => {
   if (!currentRecord) return null;
-  const serverUrl = getServerUrl();
 
   const { userId, rating, message, createdAt } = currentRecord;
   const userName = userId?.name || "Unknown User";
   const userEmail = userId?.email || "No Email";
   const userProfile =
-    serverUrl + userId?.profileImage || AllImages.dummyProfile;
+    getMediaUrl(userId?.profileImage) || AllImages.dummyProfile;
 
   return (
     <Modal

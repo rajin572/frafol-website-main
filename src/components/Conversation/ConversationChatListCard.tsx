@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import {
   selectSelectedChatUser,
   setSelectedChatUser,
@@ -26,7 +26,6 @@ const ConversationChatListCard = ({
   const pathName = usePathname();
   const router = useRouter();
   const { replace } = router;
-  const imageUrl = getServerUrl();
   const dispatch = useAppDispatch();
   const selectedConversation = useAppSelector(selectSelectedChatUser);
 
@@ -66,11 +65,7 @@ const ConversationChatListCard = ({
         <div className="flex items-center gap-2">
           <Image
             className="rounded-full aspect-square h-12 w-fit object-cover relative"
-            src={
-              imageUrlSrc
-                ? imageUrl + imageUrlSrc
-                : AllImages?.dummyProfile
-            }
+            src={getMediaUrl(imageUrlSrc) || AllImages?.dummyProfile}
             width={100}
             height={100}
             alt="Profile"

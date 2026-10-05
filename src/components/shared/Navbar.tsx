@@ -22,7 +22,7 @@ import Cookies from "js-cookie";
 import { INotification, ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { formatDateTime } from "@/utils/dateFormet";
@@ -49,7 +49,6 @@ const NavItems = [
 
 const Navbar = ({ notifications }: { notifications: INotification[] }) => {
   const router = useRouter();
-  const serverUrl = getServerUrl();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
   const socket = useSocket()?.socket;
@@ -150,11 +149,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
           <div className="flex items-start gap-2">
             {notification?.message?.image ? (
               <Image
-                src={
-                  notification.message.image.startsWith("http")
-                    ? notification.message.image
-                    : `${serverUrl}${notification.message.image}`
-                }
+                src={getMediaUrl(notification.message.image)}
                 alt="Avatar"
                 width={28}
                 height={28}
@@ -434,7 +429,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={userData?.profileImage ? serverUrl + userData?.profileImage : AllImages.dummyProfile}
+                    src={userData?.profileImage ? getMediaUrl(userData?.profileImage) : AllImages.dummyProfile}
                     alt="profile_img"
                     width={0}
                     height={0}
@@ -530,7 +525,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={userData?.profileImage ? serverUrl + userData?.profileImage : AllImages.dummyProfile}
+                    src={userData?.profileImage ? getMediaUrl(userData?.profileImage) : AllImages.dummyProfile}
                     alt="profile_img"
                     width={0}
                     height={0}

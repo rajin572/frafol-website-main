@@ -16,11 +16,9 @@ const isUrl = (text: string) => {
 const ConversationMessageCard = ({
   msg,
   userData,
-  imageUrl,
 }: {
   msg: IMessage;
   userData: ISignInUser;
-  imageUrl: string;
 }) => {
   return (
     <div>
@@ -75,7 +73,6 @@ const ConversationMessageCard = ({
                     <ImagePreviewer
                       key={index}
                       msg={msg}
-                      imageUrl={imageUrl}
                       image={item}
                       userData={userData}
                     />

@@ -4,7 +4,7 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { updateGear } from "@/services/GearService/GearServiceApi";
 import { ICategory } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
@@ -28,7 +28,6 @@ const GearMarketPlaceEditNewGear = ({
   serviceCharge: number;
   minServiceCharge: number
 }) => {
-  const serverUrl = getServerUrl();
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
   const vatAmountValue = Form.useWatch("VATAmount", form) || 0;
@@ -252,7 +251,7 @@ const GearMarketPlaceEditNewGear = ({
                   className="relative p-1 border border-secondary-color/20 rounded"
                 >
                   <Image
-                    src={serverUrl + img}
+                    src={getMediaUrl(img)}
                     className="w-[100px] h-[100px] object-cover"
                     alt={`gear-image-${index}`}
                     width={1000}

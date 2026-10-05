@@ -1,5 +1,5 @@
 "use client";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { ITestimonial } from "@/types/testimonial.type";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -14,7 +14,6 @@ interface TestimonialCardProps {
 const CHAR_LIMIT = 100;
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
-  const serverUrl = getServerUrl();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const text = testimonial?.text || "";
@@ -23,7 +22,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
 
   const profileImage =
     testimonial?.userId?.profileImage?.length > 0
-      ? serverUrl + testimonial?.userId?.profileImage
+      ? getMediaUrl(testimonial?.userId?.profileImage)
       : AllImages.dummyProfile;
 
   return (

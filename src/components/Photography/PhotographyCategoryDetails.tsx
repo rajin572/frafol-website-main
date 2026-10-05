@@ -6,7 +6,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import PhotographyCategorySeacrhFiltre from "./PhotographyCategorySeacrhFiltre";
 import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import NoResultFound from "../shared/NoResultFound";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
@@ -19,12 +19,11 @@ const PhotographyCategoryDetails = ({
   data: { id: string; title: string | string[]; src: string | string[] };
   townData: ITown[];
 }) => {
-  const serverUrl: string = getServerUrl() || "";
 
   return (
     <main className="pb-20">
       <SectionBanner
-        image={data?.src ? serverUrl + data?.src : AllImages.dummyCover?.src}
+        image={data?.src ? getMediaUrl(data?.src as string) : AllImages.dummyCover?.src}
         title={data?.title as string}
       />
 

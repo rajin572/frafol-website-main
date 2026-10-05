@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { getServerUrl } from '@/helpers/config/envConfig';
+import { getMediaUrl } from '@/utils/mediaUrl';
 
 // The backend serves /uploads/* as static files without CORS headers, so a
 // crossOrigin="anonymous" <video> (needed to read frames into a canvas for
@@ -9,11 +9,19 @@ import { getServerUrl } from '@/helpers/config/envConfig';
 export async function GET(request: NextRequest) {
     const src = request.nextUrl.searchParams.get('src');
 
-    if (!src || !src.startsWith('/') || src.startsWith('//') || src.includes('..')) {
+    // Only paths on our own file server: no scheme (http:, blob:, …), no protocol-relative
+    // "//host", no backslashes, no traversal, and not the app's own static files.
+    if (
+        !src ||
+        /^(?:[a-z][a-z\d+.-]*:|\/\/|\\)/i.test(src) ||
+        /^\/(?:assets|_next)\//.test(src) ||
+        src.includes('..')
+    ) {
         return new Response('Invalid src', { status: 400 });
     }
 
-    const upstreamUrl = `${getServerUrl()}${src}`;
+    // Accepts "/uploads/x.mp4" as well as a bare "profile/x.mp4" (same mapping as the UI).
+    const upstreamUrl = getMediaUrl(src);
     const range = request.headers.get('range');
 
     const upstreamRes = await fetch(upstreamUrl, {

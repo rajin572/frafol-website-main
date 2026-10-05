@@ -10,7 +10,7 @@ import SpinLoader from "../ui/SpinLoader";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { sendFiles } from "@/services/ConversationService/ConversationServiceApi";
 import Image from "next/image";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { AllImages } from "../../../public/assets/AllImages";
 
 const ConversationSendMessage = ({
@@ -20,7 +20,6 @@ const ConversationSendMessage = ({
   socket: any;
   room: string;
 }) => {
-  const serverUrl = getServerUrl();
   const selectedConversation = useAppSelector(selectSelectedChatUser);
   const [form] = Form.useForm();
   const [isUploadLoading, setIsUploadLoading] = useState<boolean>(false);
@@ -111,11 +110,7 @@ const ConversationSendMessage = ({
                     <Image
                       width={1000}
                       height={1000}
-                      src={
-                        serverUrl + fileUrl
-                          ? serverUrl + fileUrl
-                          : AllImages?.dummyCover?.src
-                      }
+                      src={getMediaUrl(fileUrl) || AllImages?.dummyCover?.src}
                       alt={fileName}
                       className="w-16 h-16 object-cover rounded"
                     />

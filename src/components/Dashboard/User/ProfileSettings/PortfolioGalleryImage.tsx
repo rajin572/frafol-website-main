@@ -9,7 +9,7 @@ import { AllImages } from "../../../../../public/assets/AllImages";
 import { MdDelete } from "react-icons/md";
 import { FiChevronDown } from "react-icons/fi";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import ProfileProtfolioUploadImageModal from "@/components/ui/Modal/Profile/ProfileProtfolioUploadImageModal";
 import { IProfile } from '@/types';
 import GalleryVideoPlayer from '@/components/shared/GalleryVideoPlayer';
@@ -17,7 +17,6 @@ import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 
 const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
-    const serverUrl = getServerUrl();
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
     const [currentRecord, setCurrentRecord] = useState<any>(null);
@@ -166,7 +165,7 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                                             {galleryImages?.map((item, index) => (
                                                 <div key={index} className="relative group w-full">
                                                     <AntdImage
-                                                        src={serverUrl + item || AllImages?.dummyCover?.src}
+                                                        src={getMediaUrl(item) || AllImages?.dummyCover?.src}
                                                         alt={`gallery image ${index + 1}`}
                                                         className="w-full h-full object-cover rounded-lg"
                                                         fetchPriority='high'

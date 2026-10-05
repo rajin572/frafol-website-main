@@ -17,7 +17,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
 import { BsCurrencyEuro } from "react-icons/bs";
 import { AllImages } from "../../../../../public/assets/AllImages";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 // import Link from "next/link";
 
 
@@ -33,7 +33,6 @@ interface ProfessionalServiceBookingModalProps {
 const ProfessionalServiceBookingModal: React.FC<
   ProfessionalServiceBookingModalProps
 > = ({ isModalVisible, handleCancel, packageData, myData, professionalUser }) => {
-  const serverUrl = getServerUrl();
   console.log("User Data:", myData);
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
@@ -113,7 +112,7 @@ const ProfessionalServiceBookingModal: React.FC<
             height={1000}
             src={
               packageData?.thumbnailImage
-                ? serverUrl + packageData?.thumbnailImage
+                ? getMediaUrl(packageData?.thumbnailImage)
                 : AllImages?.dummyCover
             }
             alt="workspace"

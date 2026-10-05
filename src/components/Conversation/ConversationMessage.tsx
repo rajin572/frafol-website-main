@@ -12,7 +12,7 @@ import {
 import ConversationMessageCard from "./ConversationMessageCard";
 import ConversationSendMessage from "./ConversationSendMessage";
 import Image from "next/image";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IMessage } from "@/types/conversation.type";
 import { ISignInUser } from "@/types";
 import { AllImages } from "../../../public/assets/AllImages";
@@ -44,7 +44,6 @@ const ConversationMessage = ({
   const router = useRouter();
   const { replace } = router;
 
-  const imageUrl = getServerUrl();
   const socket = useSocket()?.socket;
   const dispatch = useDispatch();
   const selectedConversation = useSelector(selectSelectedChatUser);
@@ -221,9 +220,8 @@ const ConversationMessage = ({
                   fetchPriority="high"
                   className="h-12 w-12 object-cover rounded-full"
                   src={
-                    selectedConversation?.chat?.users?.[0]?.profileImage
-                      ? `${imageUrl}${selectedConversation?.chat?.users?.[0]?.profileImage}`
-                      : AllImages?.dummyProfile
+                    getMediaUrl(selectedConversation?.chat?.users?.[0]?.profileImage) ||
+                    AllImages?.dummyProfile
                   }
                   alt="Profile"
                 />
@@ -270,7 +268,6 @@ const ConversationMessage = ({
                         key={msg._id}
                         msg={msg}
                         userData={userData}
-                        imageUrl={imageUrl as string}
                       />
                     ))}
                     <div ref={messagesEndRef} />

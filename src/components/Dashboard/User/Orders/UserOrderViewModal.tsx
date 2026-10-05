@@ -11,7 +11,7 @@ import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { budgetLabels } from "@/utils/budgetLabels";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
 import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
 import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
@@ -33,7 +33,6 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   activeModal,
   showCancelModal,
 }) => {
-  const serverUrl = getServerUrl();
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   const serviceFeeAmount: number = Number((currentRecord as any)?.priceWithServiceFee) - Number((currentRecord as any)?.price)
@@ -238,7 +237,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               <Image
                 src={
                   currentRecord?.serviceProviderId?.profileImage
-                    ? serverUrl + currentRecord?.serviceProviderId?.profileImage
+                    ? getMediaUrl(currentRecord?.serviceProviderId?.profileImage)
                     : AllImages.dummyProfile
                 }
                 // {/* alt="photographer" */}
@@ -406,4 +405,4 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   );
 };
 
-export default UserOrderViewModal;
+export default UserOrderViewModal;

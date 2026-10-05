@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Play } from 'lucide-react';
-import { getServerUrl } from '@/helpers/config/envConfig';
+import { getMediaUrl } from "@/utils/mediaUrl";
 
 interface GalleryVideoPlayerProps {
     src: string;
@@ -24,7 +24,6 @@ const GalleryVideoPlayer = ({
     children,
 }: GalleryVideoPlayerProps) => {
     console.log(src)
-    const serverUrl = getServerUrl();
     const internalRef = useRef<HTMLVideoElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -37,9 +36,7 @@ const GalleryVideoPlayer = ({
                     internalRef.current = el;
                     videoRef?.(el);
                 }}
-                src={src.startsWith("/uploads")
-                    ? serverUrl + src
-                    : src}
+                src={getMediaUrl(src)}
                 poster={poster}
                 controls={isPlaying}
                 playsInline

@@ -8,7 +8,7 @@ import { FaClock, FaLink } from "react-icons/fa6";
 import { FiExternalLink } from "react-icons/fi";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IEventOrder } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
@@ -44,7 +44,6 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   currentRecord,
   activeTab, // Default to "pending" if not provided
 }) => {
-  const serverUrl = getServerUrl();
   const user = useGetUserData();
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
@@ -162,7 +161,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             <Image
               src={
                 currentRecord?.userId?.profileImage
-                  ? serverUrl + currentRecord?.userId?.profileImage
+                  ? getMediaUrl(currentRecord?.userId?.profileImage)
                   : AllImages.dummyProfile
               }
               alt="fotograf" /* photographer */

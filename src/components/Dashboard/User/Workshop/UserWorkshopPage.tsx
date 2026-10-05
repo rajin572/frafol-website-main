@@ -7,7 +7,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
 import { FaLink, FaLocationDot } from "react-icons/fa6";
 import { IMyRegisteredWorkshop } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import Link from "next/link";
 import PaginationSection from "@/components/shared/PaginationSection";
@@ -30,7 +30,6 @@ const UserWorkshopPage = ({
   limit: number;
 }) => {
   console.log(workshops)
-  const serverUrl = getServerUrl();
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
   const buildInvoices = (workshop: IMyRegisteredWorkshop) => {
@@ -81,7 +80,7 @@ const UserWorkshopPage = ({
               height={1000}
               src={
                 workshop?.workshop?.image
-                  ? serverUrl + workshop?.workshop?.image
+                  ? getMediaUrl(workshop?.workshop?.image)
                   : AllImages?.dummyCover
               }
               alt="workspace"
@@ -114,7 +113,7 @@ const UserWorkshopPage = ({
                   height={1000}
                   src={
                     workshop?.workshop?.authorId?.profileImage
-                      ? serverUrl + workshop?.workshop?.authorId?.profileImage
+                      ? getMediaUrl(workshop?.workshop?.authorId?.profileImage)
                       : AllImages?.dummyProfile
                   }
                   alt={workshop?.workshop?.authorId?.name || "Profile Image"}

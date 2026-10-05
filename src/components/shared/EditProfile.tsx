@@ -8,7 +8,7 @@ import Image from "next/image";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { ICategory, IProfile } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { FaAddressCard, FaUser } from "react-icons/fa6";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
@@ -398,7 +398,6 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
 
   console.log(myData)
 
-  const serverUrl = getServerUrl() || "";
   const [form] = Form.useForm();
   const [selectedPhotographySpecializations, setSelectedPhotographySpecializations] = useState<string[]>([]);
   const [selectedVideographySpecializations, setSelectedVideographySpecializations] = useState<string[]>([]);
@@ -558,11 +557,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                 width={1000}
                 height={1000}
                 className="h-40 w-40 relative rounded-full border border-secondary-color object-contain"
-                src={
-                  imageUrl.startsWith("/uploads")
-                    ? serverUrl + imageUrl
-                    : imageUrl
-                }
+                src={getMediaUrl(imageUrl)}
                 alt=""
               />
               <Form.Item name="image">

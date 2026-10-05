@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { IEventOrder } from "@/types";
 import { budgetLabels } from "@/utils/budgetLabels";
 import { formatDate, formetTime } from "@/utils/dateFormet";
@@ -49,7 +49,6 @@ const UserOrderCard = ({
   const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
   const bolSom = Form.useWatch("bolSom", form);
   const user = useGetUserData();
-  const serverUrl = getServerUrl();
 
   const [couponStatus, setCouponStatus] = useState<any>(null);
 
@@ -138,7 +137,7 @@ const UserOrderCard = ({
             <Image
               src={
                 data?.serviceProviderId?.profileImage
-                  ? serverUrl + data?.serviceProviderId?.profileImage
+                  ? getMediaUrl(data?.serviceProviderId?.profileImage)
                   : AllImages.dummyProfile
               }
               width={1000}

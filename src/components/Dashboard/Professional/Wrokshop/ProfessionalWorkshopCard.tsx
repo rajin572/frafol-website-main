@@ -7,7 +7,7 @@ import { FaLink } from "react-icons/fa6";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { MdDelete, MdEdit, MdLocationPin } from "react-icons/md";
 import { IWorkshop } from "@/types";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import Link from "next/link";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
@@ -25,7 +25,6 @@ const ProfessionalWorkshopCard = ({
   showEditModal: (record: IWorkshop) => void;
   showViewParticipantModal: (record: IWorkshop) => void;
 }) => {
-  const serverUrl = getServerUrl();
   const [expanded, setExpanded] = useState(false);
 
   console.log(workshop)
@@ -37,7 +36,7 @@ const ProfessionalWorkshopCard = ({
           width={1000}
           height={1000}
           src={
-            workshop?.image ? serverUrl + workshop?.image : AllImages?.workspace
+            workshop?.image ? getMediaUrl(workshop?.image) : AllImages?.workspace
           }
           alt="workspace"
           className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
@@ -96,7 +95,7 @@ const ProfessionalWorkshopCard = ({
             height={1000}
             src={
               workshop?.authorId?.profileImage
-                ? serverUrl + workshop?.authorId?.profileImage
+                ? getMediaUrl(workshop?.authorId?.profileImage)
                 : AllImages?.dummyProfile
             }
             alt="user"
