@@ -39,15 +39,6 @@ const GearEarningTable = ({
       render: (_: any, record: any) => record.gearMarketplaceId?.name || "—",
     },
     {
-      title: "Commission",
-      key: "commission",
-      render: (_: any, record: any) => (
-        <span className="">
-          {record.gearMarketplaceId?.platformCommission?.toFixed(2)}€
-        </span>
-      ),
-    },
-    {
       title: "Net Earning",
       key: "netAmount",
       render: (_: any, record: any) => {

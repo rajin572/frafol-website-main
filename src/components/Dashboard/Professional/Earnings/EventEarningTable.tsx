@@ -55,19 +55,6 @@ const EventEarningTable = ({
       render: (_: any, record: any) => formatDate(record.eventOrderId?.date),
     },
     {
-      /* title: "Amount", */
-      title: "VAT",
-      key: "vatAmount",
-      render: (_: any, record: any) => <span>{record?.eventOrderId?.vatAmount?.toFixed(2)}€</span>,
-    },
-    {
-      title: "Commission",
-      key: "commission",
-      render: (_: any, record: any) => (
-        <span className=""> {record.commission?.toFixed(2)}€</span>
-      ),
-    },
-    {
       title: "Net Earning",
       key: "netAmount",
       render: (_: any, record: any) => (

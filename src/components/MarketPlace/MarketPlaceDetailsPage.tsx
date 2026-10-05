@@ -16,7 +16,7 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
               {data?.shippingCompany?.name}
               {" - "}
               <span className="text-secondary-color font-bold">
-                ${data?.shippingCompany?.price?.toFixed(2)}
+                {data?.shippingCompany?.price?.toFixed(2)}€
               </span>
             </p>
           </div>

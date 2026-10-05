@@ -51,18 +51,6 @@ const WorkshopEarningTable = ({
       render: (_: any, record: any) => <span>{record.workshopId?.price?.toFixed(2)}€</span>,
     },
     {
-      title: "VAT Amount",
-      key: "price",
-      render: (_: any, record: any) => <span>{record.workshopId?.vatAmount?.toFixed(2)}€</span>,
-    },
-    {
-      title: "Commission",
-      key: "mainPrice",
-      render: (_: any, record: any) => (
-        <span className="font-semibold">{(Number(record?.workshopId?.mainPrice) - Number(record?.netAmount))?.toFixed(2)}€</span>
-      ),
-    },
-    {
       title: "Net Earning",
       key: "netAmount",
       render: (_: any, record: any) => (

@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IGearOrder } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate } from "@/utils/dateFormet";
-import InvoiceGearFromClientSide from "@/utils/InvoiceGearFromClientSide";
-import InvoiceGearFromAdminSide from "@/utils/InvoiceGearFromAdminSide";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
+import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
+import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 
 interface GearOrderViewModalProps {
   isViewModalVisible: boolean;
@@ -29,44 +26,23 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
 
   console.log(currentRecord);
 
-  const handleClientGearInvoiceDownload = (currentRecord: IGearOrder) => {
-    const toastId = toast.loading("Downloading...", {
-      duration: 2000,
-    });
-    // Generate the PDF using @react-pdf/renderer's pdf function
-    pdf(
-      <InvoiceGearFromClientSide currentRecord={currentRecord as IGearOrder} />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        // Use file-saver to trigger the download
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success("Downloaded successfully!", { id: toastId });
-      })
-      .catch((error: any) => {
-        console.log(error);
-        toast.error("Download failed", { id: toastId });
-      });
-  };
-  const handleAdminGearInvoiceDownload = (currentRecord: IGearOrder) => {
-    const toastId = toast.loading("Downloading...", {
-      duration: 2000,
-    });
-    // Generate the PDF using @react-pdf/renderer's pdf function
-    pdf(
-      <InvoiceGearFromAdminSide currentRecord={currentRecord as IGearOrder} />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        // Use file-saver to trigger the download
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success("Downloaded successfully!", { id: toastId });
-      })
-      .catch((error: any) => {
-        console.log(error);
-        toast.error("Download failed", { id: toastId });
-      });
-  };
+  // The seller only gets their own (seller -> customer) invoices, one button each: the payment
+  // one for every order that is not cancelled, the final one once the order is delivered.
+  const hasPaymentInvoice = !!currentRecord && currentRecord.orderStatus !== "cancelled";
+  const hasFinalInvoice = currentRecord?.orderStatus === "delivered";
+
+  const handlePaymentInvoiceDownload = (record: IGearOrder) =>
+    downloadInvoices(
+      creatorPaymentInvoice(buildGearInvoices(record)),
+      `${record.orderId}-faktura-platba.pdf`
+    );
+
+  const handleFinalInvoiceDownload = (record: IGearOrder) =>
+    downloadInvoices(
+      creatorFinalInvoice(buildGearInvoices(record)),
+      `${record.orderId}-faktura-konecna.pdf`
+    );
+
   return (
     <Modal
       open={isViewModalVisible}
@@ -282,26 +258,22 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
             )}
         </div>
         <div className="flex gap-4">
-          {currentRecord?.orderStatus === "delivered" && (
+          {hasPaymentInvoice && (
             <button
-              onClick={() =>
-                handleClientGearInvoiceDownload(currentRecord as IGearOrder)
-              }
+              onClick={() => handlePaymentInvoiceDownload(currentRecord as IGearOrder)}
               className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer"
             >
-              {/* Download Invoice Client */}
-              Stiahnuť faktúru (klient)
+              {/* Download payment invoice */}
+              Stiahnuť faktúru (platba)
             </button>
           )}
-          {currentRecord?.orderStatus === "delivered" && (
+          {hasFinalInvoice && (
             <button
-              onClick={() =>
-                handleAdminGearInvoiceDownload(currentRecord as IGearOrder)
-              }
+              onClick={() => handleFinalInvoiceDownload(currentRecord as IGearOrder)}
               className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer"
             >
-              {/* Download Invoice Admin */}
-              Stiahnuť faktúru (admin)
+              {/* Download final settlement invoice */}
+              Stiahnuť konečnú faktúru
             </button>
           )}
         </div>

@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { IGearOrder } from "@/types";
-import InvoiceGearFromClientSide from "@/utils/InvoiceGearFromClientSide";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
+import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
+import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 
 interface UserGearViewModalProps {
   isViewModalVisible: boolean;
@@ -27,25 +25,23 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
 }) => {
   const serverUrl = getServerUrl();
 
-  const handleClientGearInvoiceDownload = (currentRecord: IGearOrder) => {
-    const toastId = toast.loading(/* "Downloading..." */ "Sťahuje sa...", {
-      duration: 2000,
-    });
-    // Generate the PDF using @react-pdf/renderer's pdf function
-    pdf(
-      <InvoiceGearFromClientSide currentRecord={currentRecord as IGearOrder} />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        // Use file-saver to trigger the download
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success(/* "Downloaded successfully!" */ "Úspešne stiahnuté!", { id: toastId });
-      })
-      .catch((error: any) => {
-        console.log(error);
-        toast.error(/* "Download failed" */ "Sťahovanie zlyhalo", { id: toastId });
-      });
-  };
+  // Gear orders are only created once paid, so the payment invoices exist for every
+  // order that is not cancelled; the final ones after the customer accepted the delivery.
+  const hasPaymentInvoices = !!currentRecord && activeModal !== "cancelled";
+  const hasFinalInvoices = !!currentRecord && activeModal === "delivered";
+
+  const handleDownloadPaymentInvoices = (record: IGearOrder) =>
+    downloadInvoices(
+      paymentInvoices(buildGearInvoices(record)),
+      `${record.orderId}-faktury-platba.pdf`
+    );
+
+  const handleDownloadFinalInvoices = (record: IGearOrder) =>
+    downloadInvoices(
+      finalInvoices(buildGearInvoices(record)),
+      `${record.orderId}-faktury-konecne.pdf`
+    );
+
   return (
     <Modal
       open={isViewModalVisible}
@@ -166,18 +162,29 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
               Accept Delivery
             </button>
           )}
-          {activeModal === "delivered" && (
-            <button
-              onClick={() =>
-                handleClientGearInvoiceDownload(currentRecord as IGearOrder)
-              }
-              className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer w-full"
-            >
-              {/* Download Invoice */}
-              Stiahnuť faktúru
-            </button>
-          )}
         </div>
+        {(hasPaymentInvoices || hasFinalInvoices) && (
+          <div className="flex flex-col gap-4">
+            {hasPaymentInvoices && (
+              <button
+                onClick={() => handleDownloadPaymentInvoices(currentRecord as IGearOrder)}
+                className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer w-full"
+              >
+                {/* Download payment invoices */}
+                Stiahnuť faktúry (platba)
+              </button>
+            )}
+            {hasFinalInvoices && (
+              <button
+                onClick={() => handleDownloadFinalInvoices(currentRecord as IGearOrder)}
+                className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer w-full"
+              >
+                {/* Download final settlement invoices */}
+                Stiahnuť konečné faktúry
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </Modal>
   );

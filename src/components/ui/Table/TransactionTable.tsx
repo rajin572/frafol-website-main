@@ -53,7 +53,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       title: "Suma",
       dataIndex: "amount",
       key: "amount",
-      render: () => <span>$500</span>,
+      render: () => <span>500€</span>,
     },
     {
       /* title: "Date", */

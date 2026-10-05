@@ -13,11 +13,9 @@ import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
-import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
-import InvoiceDocumentFromAdminSide from "@/utils/InvoiceDocumentFromAdminSide";
+import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
+import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 import { useGetUserData } from "@/context/useGetUserData";
 import Link from "next/link";
 import CreateConversionButton from "@/components/Professional/CreateConversionButton";
@@ -73,48 +71,23 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
     }
   };
 
-  const handleClientInvoiceDownload = (currentRecord: IEventOrder) => {
-    const toastId = toast.loading(/* "Downloading..." */ "Sťahuje sa...", {
-      duration: 2000,
-    });
-    // Generate the PDF using @react-pdf/renderer's pdf function
-    pdf(
-      <InvoiceDocumentFromClientSide
-        currentRecord={currentRecord as IEventOrder}
-      />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        // Use file-saver to trigger the download
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success(/* "Downloaded successfully!" */ "Úspešne stiahnuté!", { id: toastId });
-      })
-      .catch((error: any) => {
-        console.log(error)
-        toast.error(/* "Download failed" */ "Sťahovanie zlyhalo", { id: toastId });
-      });
-  };
-  const handleProfessionalInvoiceDownload = (currentRecord: IEventOrder) => {
-    const toastId = toast.loading(/* "Downloading..." */ "Sťahuje sa...", {
-      duration: 2000,
-    });
-    // Generate the PDF using @react-pdf/renderer's pdf function
-    pdf(
-      <InvoiceDocumentFromAdminSide
-        currentRecord={currentRecord as IEventOrder}
-      />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        // Use file-saver to trigger the download
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success(/* "Downloaded successfully!" */ "Úspešne stiahnuté!", { id: toastId });
-      })
-      .catch((error: any) => {
-        console.log(error)
-        toast.error(/* "Download failed" */ "Sťahovanie zlyhalo", { id: toastId });
-      });
-  };
+  // The creator only gets their own (creator -> customer) invoices, one button each. The order
+  // is paid once it is in progress; the final settlement invoice exists after the customer
+  // confirmed the delivery.
+  const hasPaymentInvoice = ["inProgress", "toConfirm", "delivered"].includes(activeTab);
+  const hasFinalInvoice = activeTab === "delivered";
+
+  const handlePaymentInvoiceDownload = (record: IEventOrder) =>
+    downloadInvoices(
+      creatorPaymentInvoice(buildEventInvoices(record)),
+      `${record.orderId}-faktura-platba.pdf`
+    );
+
+  const handleFinalInvoiceDownload = (record: IEventOrder) =>
+    downloadInvoices(
+      creatorFinalInvoice(buildEventInvoices(record)),
+      `${record.orderId}-faktura-konecna.pdf`
+    );
 
 
   const serviceFeeAmount: number = Number((currentRecord as any)?.priceWithServiceFee) - Number((currentRecord as any)?.price)
@@ -342,7 +315,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                       href={currentRecord?.deliveryLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base break-all flex-1"
+                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base  flex-1"
                     >
                       {currentRecord?.deliveryLink}
                     </a>
@@ -410,20 +383,22 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                     {/* Amount Without Service Fee: */}
                     Suma bez servisného poplatku:
                   </span>{" "}
-                  {Number(currentRecord?.totalPrice?.toFixed(2)) - Number(serviceFeeAmount?.toFixed(2))}€
+                  <span translate="no">
+                    {Number(currentRecord?.totalPrice?.toFixed(2)) - Number(serviceFeeAmount?.toFixed(2))}€
+                  </span>
                 </p>
                 <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
                     Service Fee Amount:
                   </span>{" "}
-                  {serviceFeeAmount?.toFixed(2)}€
+                  <span translate="no">{serviceFeeAmount?.toFixed(2)}€</span>
                 </p>
                 {couponDiscountAmount > 0 && (
                   <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                     <span className="font-semibold">
                       Coupon Discount ({currentRecord?.couponCode} - {couponDiscountAmount}):
                     </span>{" "}
-                    <span className="text-red-600">-{couponDiscountAmount.toFixed(2)}€</span>
+                    <span translate="no" className="text-red-600">-{couponDiscountAmount.toFixed(2)}€</span>
                   </p>
                 )}
               </>
@@ -440,10 +415,13 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               {/* {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} : */}
               {currentRecord?.totalPrice ? "Celková suma" : "Rozsah rozpočtu"} :
             </span>{" "}
-            {currentRecord?.totalPrice
-              ? effectiveTotalPrice.toFixed(2)
-              : budgetLabels[currentRecord?.budget_range as string] ||
-              currentRecord?.budget_range}€
+            {/* Budget ranges already carry their own € — only the exact total needs one appended. */}
+            <span translate="no">
+              {currentRecord?.totalPrice
+                ? `${effectiveTotalPrice.toFixed(2)}€`
+                : budgetLabels[currentRecord?.budget_range as string] ||
+                currentRecord?.budget_range}
+            </span>
           </p>
           {/* {currentRecord?.paymentStatus ? (
             <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
@@ -494,28 +472,31 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               </div>
             </div>
           )}
-        {activeTab === "delivered" ? (
+        {currentRecord && (hasPaymentInvoice || hasFinalInvoice) && (
           <div className="mt-5 flex flex-col items-center gap-5">
-            <ReuseButton
-              variant="secondary"
-              className="!w-fit"
-              onClick={() =>
-                handleClientInvoiceDownload(currentRecord as IEventOrder)
-              }
-            >
-              Download Invoice With Client
-            </ReuseButton>
-            <ReuseButton
-              variant="secondary"
-              className="!w-fit"
-              onClick={() =>
-                handleProfessionalInvoiceDownload(currentRecord as IEventOrder)
-              }
-            >
-              Download Invoice with Admin
-            </ReuseButton>
+            {hasPaymentInvoice && (
+              <ReuseButton
+                variant="secondary"
+                className="!w-fit"
+                onClick={() => handlePaymentInvoiceDownload(currentRecord)}
+              >
+                {/* Download payment invoice */}
+                Stiahnuť faktúru (platba)
+              </ReuseButton>
+            )}
+            {hasFinalInvoice && (
+              <ReuseButton
+                variant="secondary"
+                className="!w-fit"
+                onClick={() => handleFinalInvoiceDownload(currentRecord)}
+              >
+                {/* Download final settlement invoice */}
+                Stiahnuť konečnú faktúru
+              </ReuseButton>
+            )}
           </div>
-        ) : activeTab === "toConfirm" ? (
+        )}
+        {activeTab === "delivered" ? null : activeTab === "toConfirm" ? (
           <div className="mt-5 flex justify-center">
             <p className="text-sm sm:text-base text-yellow-600 font-semibold">
               {/* Waiting for client to confirm delivery */}

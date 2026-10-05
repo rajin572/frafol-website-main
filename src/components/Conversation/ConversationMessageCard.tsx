@@ -84,7 +84,7 @@ const ConversationMessageCard = ({
               )}
               {msg?.text?.length > 0 && (
                 <p
-                  className={`py-1 break-all px-3 mt-0.5 rounded-md ${msg?.sender?._id === userData?.userId ||
+                  className={`py-1  px-3 mt-0.5 rounded-md ${msg?.sender?._id === userData?.userId ||
                     msg?.sender?._id?.toString() === userData?.userId
                     ? `w-fit ml-auto text-right  text-white ${isUrl(msg.text) ? "bg-secondary-color/20" : "bg-secondary-color"} `
                     : "w-fit text-left text-base-color bg-[#F1F1F1]"
@@ -95,7 +95,7 @@ const ConversationMessageCard = ({
                       href={msg.text}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline break-all text-secondary-color!"
+                      className="underline  text-secondary-color!"
                     >
                       {msg.text}
                     </Link>

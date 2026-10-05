@@ -33,10 +33,10 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
           VAT Included: {data?.vatPercent}%
         </p>}
         <div className="px-1 flex flex-col justify-between">
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3 break-all">
+          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3 ">
             {data?.title}
           </p>
-          <p className="text-sm sm:text-sm lg:text-base mt-1 break-all">
+          <p className="text-sm sm:text-sm lg:text-base mt-1 ">
             {data?.description?.length > 100
               ? (
                 <>

@@ -1,3 +1,5 @@
+import type { IOrderInvoices } from "./invoice.type";
+
 interface Author {
   _id: string;
   name: string;
@@ -89,7 +91,11 @@ interface IWorkshopParticipants {
   country: string;
   isRegisterAsCompany: boolean;
   companyName?: string;
+  ICO?: string;
+  DIC?: string;
   IC_DPH: string;
+  paidAt?: string; // Customer payment date (issue date of the payment invoices)
+  invoices?: IOrderInvoices;
   couponDiscount?: number;
   name: string;
   isDeleted: boolean;
@@ -119,7 +125,11 @@ interface IMyRegisteredWorkshop {
   country?: string;
   isRegisterAsCompany?: boolean;
   companyName?: string;
+  ICO?: string;
+  DIC?: string;
   IC_DPH?: string;
+  paidAt?: string; // Customer payment date (issue date of the payment invoices)
+  invoices?: IOrderInvoices;
   couponDiscount?: number;
   isDeleted: boolean;
   joinedAt: string; // ISO format date string

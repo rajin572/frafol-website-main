@@ -71,7 +71,7 @@ export default function Error({
             {process.env.NODE_ENV === "development" && (
               <div className="bg-gray-50 rounded-lg p-3 mb-6 text-left">
                 <p className="text-sm text-gray-500 mb-1">Error Details:</p>
-                <p className="text-sm text-gray-700 font-mono break-all">
+                <p className="text-sm text-gray-700 font-mono ">
                   {error.message}
                 </p>
                 {error.digest && (

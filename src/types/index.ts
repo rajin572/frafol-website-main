@@ -11,3 +11,4 @@ export * from "./gear.type";
 export * from "./workshop.type";
 export * from "./testimonial.type";
 export * from "./payment.type";
+export * from "./invoice.type";

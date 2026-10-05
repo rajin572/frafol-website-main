@@ -1,3 +1,5 @@
+import type { IOrderInvoices } from "./invoice.type";
+
 interface ICreateEventOrder {
   title: string;
   orderType: "direct" | "custom"; // Can be either 'direct' or 'custom'
@@ -137,6 +139,8 @@ interface IEventOrder {
   couponDiscount?: number;
   couponCode?: string;
   paymentId?: string;
+  paidAt?: string; // Customer payment date (issue date of the payment invoices)
+  invoices?: IOrderInvoices;
   deliveryLink?: string;
   deliveryMessage?: string;
 }

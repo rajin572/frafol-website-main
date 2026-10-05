@@ -4,15 +4,12 @@ import { Modal, Tag } from "antd";
 import Image from "next/image";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { AllImages } from "../../../../../public/assets/AllImages";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
-import InvoiceEarningEventClientSide from "@/utils/InvoiceEarningEventClientSide";
-import InvoiceEarningEventAdminSide from "@/utils/InvoiceEarningEventAdminSide";
-import InvoiceGearFromClientSide from "@/utils/InvoiceGearFromClientSide";
-import InvoiceGearFromAdminSide from "@/utils/InvoiceGearFromAdminSide";
-import InvoiceWorkshopFromClientSide from "@/utils/InvoiceWorkshopFromClientSide";
-import InvoiceWorkshopFromAdminSide from "@/utils/InvoiceWorkshopFromAdminSide";
+import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
+import { buildGearInvoices } from "@/utils/invoice/gearInvoices";
+import { buildWorkshopInvoices } from "@/utils/invoice/workshopInvoices";
+import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
+import { IEventOrder } from "@/types";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 
 type EarningType = "event" | "gear" | "workshop";
@@ -31,16 +28,51 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
   if (!record) return null;
 
-  const handleInvoiceDownload = async (invoiceElement: React.ReactElement<any>, filename: string) => {
-    const toastId = toast.loading("Downloading...", { duration: 3000 });
-    try {
-      const blob = await pdf(invoiceElement).toBlob();
-      saveAs(blob, filename);
-      toast.success("Downloaded successfully!", { id: toastId });
-    } catch {
-      toast.error("Download failed", { id: toastId });
+  // The earning record carries the order, the creator and the customer separately; put them
+  // together so the invoices are built exactly like on the event orders screen.
+  const earningEventOrder = () =>
+    ({
+      ...record.eventOrderId,
+      serviceProviderId: record.serviceProviderId,
+      userId: record.userId,
+      // Payment date: the order's own, else when it went in progress, else when the payment was made.
+      paidAt:
+        record.eventOrderId?.paidAt ||
+        record.eventOrderId?.statusTimestamps?.inProgressAt ||
+        record.createdAt,
+    }) as IEventOrder;
+
+  // The final settlement invoice of this earning. It is always offered here: the earnings data
+  // does not reliably say whether the order is completed, so the creator can always download it.
+  const getFinalInvoice = () => {
+    if (type === "event") {
+      const order = earningEventOrder();
+      return {
+        invoices: creatorFinalInvoice(buildEventInvoices(order)),
+        filename: `${order.orderId || record._id}-faktura-konecna.pdf`,
+      };
     }
+    if (type === "gear") {
+      return {
+        invoices: creatorFinalInvoice(buildGearInvoices(record)),
+        filename: `${record.orderId}-faktura-konecna.pdf`,
+      };
+    }
+    return {
+      invoices: creatorFinalInvoice(buildWorkshopInvoices(record, record.instructorId)),
+      filename: `${record.orderId}-faktura-konecna.pdf`,
+    };
   };
+  const finalInvoice = getFinalInvoice();
+
+  // Workshop earnings also offer the payment invoice, next to the final one.
+  const paymentInvoice =
+    type === "workshop"
+      ? {
+          invoices: creatorPaymentInvoice(buildWorkshopInvoices(record, record.instructorId)),
+          filename: `${record.orderId}-faktura-platba.pdf`,
+        }
+      : null;
 
   const formatDate = (dateStr: string) =>
     dateStr
@@ -74,7 +106,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
     return (
       <>
         <Row /* label="Event Name" */ label="Názov podujatia" value={eventOrder?.title} />
-        <Row /* label="Transaction ID" */ label="ID transakcie" value={<span className="text-xs break-all">{record.transactionId}</span>} />
+        <Row /* label="Transaction ID" */ label="ID transakcie" value={<span className="text-xs ">{record.transactionId}</span>} />
         <Row /* label="Payment Method" */ label="Spôsob platby" value={capitalize(record.paymentMethod)} />
         <Row
           label="Payment Status"
@@ -87,8 +119,21 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
         />
         <Row /* label="Event Date" */ label="Dátum" value={formatDate(eventOrder?.date)} />
         <Row label="Created At" value={formatDate(record.createdAt)} />
+        {/* Price = amount - VAT - commission */}
+        <Row
+          label="Price"
+          value={
+            <span>
+              {((record.amount || 0) - (eventOrder?.vatAmount || 0) - (record.commission || 0)).toFixed(2)} €
+            </span>
+          }
+        />
+        {eventOrder?.vatAmount ? (
+          <Row label="VAT" value={<span>{eventOrder.vatAmount.toFixed(2)} €</span>} />
+        ) : null}
+        <Row label="Commission" value={<span>{record.commission?.toFixed(2)} €</span>} />
+
         <Row /* label="Total Amount" */ label="Celková suma" value={<span>{record.amount?.toFixed(2)} €</span>} />
-        <Row label="Commission" value={<span className="text-red-500">- {record.commission?.toFixed(2)} €</span>} />
         {record.couponDiscount > 0 && (
           <Row label="Coupon Discount" value={<span className="text-orange-500">- {record.couponDiscount?.toFixed(2)} €</span>} />
         )}
@@ -144,7 +189,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
         {gear?.totalVatAmount > 0 && (
           <Row label="VAT Amount" value={<span>{gear.totalVatAmount?.toFixed(2)} €</span>} />
         )}
-        <Row label="Platform Commission" value={<span className="text-red-500">- {gear?.platformCommission?.toFixed(2)} €</span>} />
+        <Row label="Platform Commission" value={<span>{gear?.platformCommission?.toFixed(2)} €</span>} />
         {gear?.shippingCompany?.name && (
           <Row label="Shipping Company" value={`${gear.shippingCompany.name} — ${gear.shippingCompany.price?.toFixed(2)} €`} />
         )}
@@ -242,94 +287,26 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           {type === "workshop" && renderWorkshopContent()}
         </div>
 
-        {/* Invoice download buttons */}
+        {/* Invoice download: the final settlement invoice (workshops also get the payment one) */}
         <div className="mt-6 flex flex-col items-center gap-3">
-          {type === "event" && (
-            <>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceEarningEventClientSide record={record} />,
-                    `${record._id}-client-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Client)
-              </ReuseButton>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceEarningEventAdminSide record={record} />,
-                    `${record._id}-admin-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Admin)
-              </ReuseButton>
-            </>
+          {paymentInvoice && (
+            <ReuseButton
+              variant="secondary"
+              className="!w-fit"
+              onClick={() => downloadInvoices(paymentInvoice.invoices, paymentInvoice.filename)}
+            >
+              {/* Download payment invoice */}
+              Stiahnuť faktúru (platba)
+            </ReuseButton>
           )}
-
-          {type === "gear" && (
-            <>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceGearFromClientSide currentRecord={record as any} />,
-                    `${record.orderId}-client-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Client)
-              </ReuseButton>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceGearFromAdminSide currentRecord={record as any} />,
-                    `${record.orderId}-admin-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Admin)
-              </ReuseButton>
-            </>
-          )}
-
-          {type === "workshop" && (
-            <>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceWorkshopFromClientSide record={record} professional={record.instructorId} />,
-                    `${record.orderId}-client-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Client)
-              </ReuseButton>
-              <ReuseButton
-                variant="secondary"
-                className="!w-fit"
-                onClick={() =>
-                  handleInvoiceDownload(
-                    <InvoiceWorkshopFromAdminSide record={record} professional={record.instructorId} />,
-                    `${record.orderId}-admin-invoice.pdf`
-                  )
-                }
-              >
-                Download Invoice (Admin)
-              </ReuseButton>
-            </>
-          )}
+          <ReuseButton
+            variant="secondary"
+            className="!w-fit"
+            onClick={() => downloadInvoices(finalInvoice.invoices, finalInvoice.filename)}
+          >
+            {/* Download final settlement invoice */}
+            Stiahnuť konečnú faktúru
+          </ReuseButton>
         </div>
       </div>
     </Modal>

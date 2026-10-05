@@ -23,6 +23,7 @@ const GalleryVideoPlayer = ({
     videoRef,
     children,
 }: GalleryVideoPlayerProps) => {
+    console.log(src)
     const serverUrl = getServerUrl();
     const internalRef = useRef<HTMLVideoElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -36,7 +37,9 @@ const GalleryVideoPlayer = ({
                     internalRef.current = el;
                     videoRef?.(el);
                 }}
-                src={serverUrl + src}
+                src={src.startsWith("/uploads")
+                    ? serverUrl + src
+                    : src}
                 poster={poster}
                 controls={isPlaying}
                 playsInline

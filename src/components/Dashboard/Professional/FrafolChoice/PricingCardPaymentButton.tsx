@@ -73,7 +73,7 @@ const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: IS
                         </div>
                     </Checkbox>
                 </Form.Item>
-                <ReuseButton htmlType="submit" variant="secondary" className="cursor-pointer" > €{pack.price?.toFixed(2)}</ReuseButton>
+                <ReuseButton htmlType="submit" variant="secondary" className="cursor-pointer" > {pack.price?.toFixed(2)}€</ReuseButton>
             </ReusableForm>
         </div>
     );

@@ -5,16 +5,15 @@ import { useState } from "react";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
-import { FaEuroSign, FaLink, FaLocationDot } from "react-icons/fa6";
+import { FaLink, FaLocationDot } from "react-icons/fa6";
 import { IMyRegisteredWorkshop } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import Link from "next/link";
 import PaginationSection from "@/components/shared/PaginationSection";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
-import InvoiceWorkshopFromClientSide from "@/utils/InvoiceWorkshopFromClientSide";
+import { buildWorkshopInvoices, isWorkshopCompleted } from "@/utils/invoice/workshopInvoices";
+import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 import React from "react";
 
 const DESCRIPTION_LIMIT = 100;
@@ -34,22 +33,23 @@ const UserWorkshopPage = ({
   const serverUrl = getServerUrl();
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
-  const handleDownloadInvoice = async (workshop: IMyRegisteredWorkshop) => {
-    const toastId = toast.loading("Sťahuje sa...", { duration: 3000 });
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const record = { ...workshop, workshopId: (workshop as any).workshopId };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const professional = (workshop as any).workshopId?.authorId || (workshop as any).workshop?.authorId;
-      const blob = await pdf(
-        <InvoiceWorkshopFromClientSide record={record} professional={professional} />
-      ).toBlob();
-      saveAs(blob, `${workshop.orderId}-client-invoice.pdf`);
-      toast.success("Úspešne stiahnuté!", { id: toastId });
-    } catch {
-      toast.error("Sťahovanie zlyhalo", { id: toastId });
-    }
+  const buildInvoices = (workshop: IMyRegisteredWorkshop) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instructor = (workshop as any).workshopId?.authorId || (workshop as any).workshop?.authorId;
+    return buildWorkshopInvoices(workshop, instructor);
   };
+
+  const handleDownloadPaymentInvoices = (workshop: IMyRegisteredWorkshop) =>
+    downloadInvoices(
+      paymentInvoices(buildInvoices(workshop)),
+      `${workshop.orderId}-faktury-platba.pdf`
+    );
+
+  const handleDownloadFinalInvoices = (workshop: IMyRegisteredWorkshop) =>
+    downloadInvoices(
+      finalInvoices(buildInvoices(workshop)),
+      `${workshop.orderId}-faktury-konecne.pdf`
+    );
 
   const toggleDescription = (id: string) => {
     setExpandedIds((prev) => {
@@ -163,18 +163,26 @@ const UserWorkshopPage = ({
               )}
 
               <div className="flex items-center gap-2 mt-1">
-                <FaEuroSign className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                  {workshop?.workshop?.mainPrice?.toFixed(2)}
+                  {workshop?.workshop?.mainPrice?.toFixed(2)}€
                 </p>
               </div>
               <button
-                onClick={() => handleDownloadInvoice(workshop)}
+                onClick={() => handleDownloadPaymentInvoices(workshop)}
                 className="mt-4 w-full py-2 text-sm font-semibold text-white bg-secondary-color rounded-lg hover:opacity-90 transition"
               >
-                {/* Download Invoice */}
-                Stiahnuť faktúru
+                {/* Download payment invoices */}
+                Stiahnuť faktúry (platba)
               </button>
+              {isWorkshopCompleted(workshop) && (
+                <button
+                  onClick={() => handleDownloadFinalInvoices(workshop)}
+                  className="mt-2 w-full py-2 text-sm font-semibold text-white bg-secondary-color rounded-lg hover:opacity-90 transition"
+                >
+                  {/* Download final settlement invoices */}
+                  Stiahnuť konečné faktúry
+                </button>
+              )}
             </div>
           </div>
         ))}

@@ -85,7 +85,9 @@ const PortfolioBannerImage = ({ myData }: { myData: IProfile }) => {
                             {myData?.bannerImages?.map((item, index) => (
                                 <div key={index} className="relative group w-full ">
                                     <AntdImage
-                                        src={serverUrl + item || AllImages?.dummyCover?.src}
+                                        src={item.startsWith("/uploads")
+                                            ? serverUrl + item
+                                            : item || AllImages?.dummyCover?.src}
                                         alt={"gallery Image"}
                                         className="w-full h-full object-cover rounded-lg"
                                     />

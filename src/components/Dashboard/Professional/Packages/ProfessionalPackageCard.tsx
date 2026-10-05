@@ -64,11 +64,11 @@ const ProfessionalPackageCard = ({
         <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
           {item?.category}
         </span>
-        <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-1.5 break-all">
+        <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-1.5 ">
           {item?.title}
         </p>
 
-        <p className="text-sm sm:text-sm lg:text-base mt-1.5 break-all">
+        <p className="text-sm sm:text-sm lg:text-base mt-1.5 ">
           {item?.description}
         </p>
 

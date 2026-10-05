@@ -39,17 +39,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             )}
           </div>
           <div className="mt-4 p-1">
-            <p className="text-base sm:text-lg xl:text-xl font-bold text-secondary-color break-all mb-2">
+            <p className="text-base sm:text-lg xl:text-xl font-bold text-secondary-color  mb-2">
               {product?.name}
             </p>
 
-            <p className=" mb-2 break-all">
+            <p className=" mb-2 ">
               {product?.description?.slice(0, 75)}{" "}
               {product?.description?.length > 75 && "..."}
             </p>
             <p className=" mb-2">
               Category:{" "}
-              <span className="font-medium break-all">{product?.categoryId?.title}</span>
+              <span className="font-medium ">{product?.categoryId?.title}</span>
             </p>
             <p className=" mb-2">
               Seller:{" "}

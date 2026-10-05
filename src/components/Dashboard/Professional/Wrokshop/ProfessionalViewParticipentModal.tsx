@@ -1,14 +1,11 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IWorkshopParticipants } from "@/types";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import ReuseTable from "@/utils/ReuseTable";
-import InvoiceWorkshopFromClientSide from "@/utils/InvoiceWorkshopFromClientSide";
-import InvoiceWorkshopFromAdminSide from "@/utils/InvoiceWorkshopFromAdminSide";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
+import { buildWorkshopInvoices, isWorkshopCompleted } from "@/utils/invoice/workshopInvoices";
+import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 import { Modal } from "antd";
-import { toast } from "sonner";
 import React from "react";
 
 const ProfessionalViewParticipentModal = ({
@@ -20,19 +17,19 @@ const ProfessionalViewParticipentModal = ({
   handleCancel: () => void;
   participantsData: IWorkshopParticipants[] | undefined;
 }) => {
-  const handleInvoiceDownload = async (
-    invoiceElement: React.ReactElement<any>,
-    filename: string
-  ) => {
-    const toastId = toast.loading("Sťahuje sa...", { duration: 3000 });
-    try {
-      const blob = await pdf(invoiceElement).toBlob();
-      saveAs(blob, filename);
-      toast.success("Úspešne stiahnuté!", { id: toastId });
-    } catch {
-      toast.error("Sťahovanie zlyhalo", { id: toastId });
-    }
-  };
+  // The instructor only gets their own (instructor -> participant) invoices, one button each:
+  // the payment one, and the final one once the workshop has taken place.
+  const handlePaymentInvoiceDownload = (record: IWorkshopParticipants) =>
+    downloadInvoices(
+      creatorPaymentInvoice(buildWorkshopInvoices(record, record.instructorId)),
+      `${record.orderId}-faktura-platba.pdf`
+    );
+
+  const handleFinalInvoiceDownload = (record: IWorkshopParticipants) =>
+    downloadInvoices(
+      creatorFinalInvoice(buildWorkshopInvoices(record, record.instructorId)),
+      `${record.orderId}-faktura-konecna.pdf`
+    );
 
   console.log("participantsData", participantsData);
 
@@ -75,35 +72,21 @@ const ProfessionalViewParticipentModal = ({
           <ReuseButton
             variant="secondary"
             className="!text-xs !py-1 !px-2 !h-auto"
-            onClick={() =>
-              handleInvoiceDownload(
-                <InvoiceWorkshopFromClientSide
-                  record={record}
-                  professional={record.instructorId}
-                />,
-                `${record.orderId}-client-invoice.pdf`
-              )
-            }
+            onClick={() => handlePaymentInvoiceDownload(record)}
           >
-            {/* Client */}
-            Klient
+            {/* Download payment invoice */}
+            Faktúra (platba)
           </ReuseButton>
-          <ReuseButton
-            variant="secondary"
-            className="!text-xs !py-1 !px-2 !h-auto"
-            onClick={() =>
-              handleInvoiceDownload(
-                <InvoiceWorkshopFromAdminSide
-                  record={record}
-                  professional={record.instructorId}
-                />,
-                `${record.orderId}-admin-invoice.pdf`
-              )
-            }
-          >
-            {/* Admin */}
-            Admin
-          </ReuseButton>
+          {isWorkshopCompleted(record) && (
+            <ReuseButton
+              variant="secondary"
+              className="!text-xs !py-1 !px-2 !h-auto"
+              onClick={() => handleFinalInvoiceDownload(record)}
+            >
+              {/* Download final settlement invoice */}
+              Konečná faktúra
+            </ReuseButton>
+          )}
         </div>
       ),
     },

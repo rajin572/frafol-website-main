@@ -15,7 +15,7 @@ import { companyInputStructure, userInputStructure } from "./ProfessionalBooking
 import Image from "next/image";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
-import { BsCurrencyDollar } from "react-icons/bs";
+import { BsCurrencyEuro } from "react-icons/bs";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
 // import Link from "next/link";
@@ -141,12 +141,12 @@ const ProfessionalServiceBookingModal: React.FC<
             <div className="flex flex-col gap-1 mt-3">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                  <BsCurrencyEuro className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                   <p className="text-sm sm:text-sm lg:text-base font-semibold">
                     Price:
                   </p>
                 </div>
-                <p className="text-sm sm:text-sm lg:text-base">{packageData?.mainPrice?.toFixed(2)} </p>
+                <p className="text-sm sm:text-sm lg:text-base">{packageData?.mainPrice?.toFixed(2)}€</p>
               </div>
 
               <div className="flex items-center gap-3">

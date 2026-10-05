@@ -7,10 +7,8 @@ import { ISubscription, ISubscriptionData } from "@/app/(withDashboardLayout)/da
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { formatDate } from "@/utils/dateFormet";
 import { IProfile } from "@/types";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
-import InvoiceFrafolChoiceFromClientSide from "@/utils/InvoiceFrafolChoiceFromClientSide";
+import { buildSubscriptionInvoice } from "@/utils/invoice/subscriptionInvoice";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 
 export interface IPricingPlan {
     id: number;
@@ -39,24 +37,11 @@ export default function PricingCard({
 
     const isSubscribed = subscriptionData?.hasActiveSubscription && subscriptionData?.subscriptionDays === plan?.id;
 
-    const handleDownloadInvoice = () => {
-        const toastId = toast.loading("Generating invoice...", { duration: 5000 });
-        pdf(
-            <InvoiceFrafolChoiceFromClientSide
-                myData={myData}
-                subscriptionData={subscriptionData}
-                pack={pack}
-            />
-        )
-            .toBlob()
-            .then((blob: Blob) => {
-                saveAs(blob, `frafol-choice-invoice-${pack._id.slice(-8)}.pdf`);
-                toast.success("Invoice downloaded!", { id: toastId });
-            })
-            .catch(() => {
-                toast.error("Download failed. Please try again.", { id: toastId });
-            });
-    };
+    const handleDownloadInvoice = () =>
+        downloadInvoices(
+            [buildSubscriptionInvoice(myData, subscriptionData, pack)],
+            `frafol-choice-invoice-${pack._id.slice(-8)}.pdf`
+        );
 
     return (
         <div

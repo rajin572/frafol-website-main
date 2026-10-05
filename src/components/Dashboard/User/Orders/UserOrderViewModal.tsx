@@ -12,10 +12,9 @@ import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { budgetLabels } from "@/utils/budgetLabels";
 import { getServerUrl } from "@/helpers/config/envConfig";
-import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
-import { saveAs } from "file-saver";
-import { pdf } from "@react-pdf/renderer";
-import { toast } from "sonner";
+import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
+import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
+import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
 import Link from "next/link";
 import CreateConversionButton from "@/components/Professional/CreateConversionButton";
 
@@ -41,25 +40,22 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   const couponDiscountAmount: number = (currentRecord as any)?.couponDiscount || 0
   const effectiveTotalPrice: number = (currentRecord?.totalPrice || 0) - couponDiscountAmount
 
-  const handleDownload = (currentRecord: IEventOrder) => {
-    const toastId = toast.loading("Sťahuje sa...", {
-      duration: 2000,
-    });
-    pdf(
-      <InvoiceDocumentFromClientSide
-        currentRecord={currentRecord as IEventOrder}
-      />
-    )
-      .toBlob()
-      .then((blob: any) => {
-        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
-        toast.success("Úspešne stiahnuté!", { id: toastId });
-      })
-      .catch((error: any) => {
-        toast.error("Sťahovanie zlyhalo", { id: toastId });
-        console.log(error)
-      });
-  };
+  // The order is paid once it is in progress, so the payment invoices exist from then on;
+  // the final settlement invoices only after the customer confirmed the delivery.
+  const hasPaymentInvoices = ["currentOrder", "toConfirm", "delivered"].includes(activeModal);
+  const hasFinalInvoices = activeModal === "delivered";
+
+  const handleDownloadPaymentInvoices = (record: IEventOrder) =>
+    downloadInvoices(
+      paymentInvoices(buildEventInvoices(record)),
+      `${record.orderId}-faktury-platba.pdf`
+    );
+
+  const handleDownloadFinalInvoices = (record: IEventOrder) =>
+    downloadInvoices(
+      finalInvoices(buildEventInvoices(record)),
+      `${record.orderId}-faktury-konecne.pdf`
+    );
 
   return (
     <Modal
@@ -200,7 +196,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
                       href={currentRecord?.deliveryLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base break-all flex-1"
+                      className="text-secondary-color hover:underline font-medium text-sm sm:text-base  flex-1"
                     >
                       {currentRecord?.deliveryLink}
                     </a>
@@ -310,7 +306,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                 {/* <span className="font-semibold">Amount Without Service Fee:</span> */}
                 <span className="font-semibold">Suma bez servisného poplatku:</span>{" "}
-                {(currentRecord.totalPrice - serviceFeeAmount).toFixed(2)}€
+                <span translate="no">{(currentRecord.totalPrice - serviceFeeAmount).toFixed(2)}€</span>
               </p>
             </>
           )}
@@ -321,10 +317,13 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               {currentRecord?.totalPrice ? "Celková suma" : "Rozsah rozpočtu"}
             </span>
             :{" "}
-            {currentRecord?.totalPrice
-              ? effectiveTotalPrice.toFixed(2)
-              : budgetLabels[currentRecord?.budget_range as string] ||
-              currentRecord?.budget_range}€
+            {/* Budget ranges already carry their own € — only the exact total needs one appended. */}
+            <span translate="no">
+              {currentRecord?.totalPrice
+                ? `${effectiveTotalPrice.toFixed(2)}€`
+                : budgetLabels[currentRecord?.budget_range as string] ||
+                currentRecord?.budget_range}
+            </span>
           </p>
         </div>
 
@@ -341,6 +340,29 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
                 {currentRecord?.cancelReason}
               </p>
             </div>
+          </div>
+        )}
+
+        {currentRecord && (hasPaymentInvoices || hasFinalInvoices) && (
+          <div className="mt-5 flex flex-col gap-3">
+            {hasPaymentInvoices && (
+              <ReuseButton
+                variant="secondary"
+                onClick={() => handleDownloadPaymentInvoices(currentRecord)}
+              >
+                {/* Download payment invoices */}
+                Stiahnuť faktúry (platba)
+              </ReuseButton>
+            )}
+            {hasFinalInvoices && (
+              <ReuseButton
+                variant="secondary"
+                onClick={() => handleDownloadFinalInvoices(currentRecord)}
+              >
+                {/* Download final settlement invoices */}
+                Stiahnuť konečné faktúry
+              </ReuseButton>
+            )}
           </div>
         )}
 
@@ -376,14 +398,6 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             >
               {/* Cancle Order */}
               Zrušiť objednávku
-            </ReuseButton>
-          ) : activeModal === "delivered" ? (
-            <ReuseButton
-              variant="secondary"
-              onClick={() => handleDownload(currentRecord as IEventOrder)}
-            >
-              {/* Download Invoice */}
-              Stiahnuť faktúru
             </ReuseButton>
           ) : null}
         </div>

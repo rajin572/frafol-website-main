@@ -1,3 +1,5 @@
+import type { IOrderInvoices } from "./invoice.type";
+
 interface Client {
   name: string;
   companyName: string;
@@ -62,6 +64,8 @@ interface IGearOrder {
   paymentId: PaymentId;
   orderStatus: string;
   paymentStatus: string;
+  paidAt?: string; // Customer payment date (issue date of the payment invoices)
+  invoices?: IOrderInvoices;
   name: string;
   shippingAddress: string;
   postCode: string;
