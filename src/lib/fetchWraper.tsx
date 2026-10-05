@@ -8,9 +8,9 @@ import { logout } from "@/services/AuthService";
 const baseUrl = getBaseUrl();
 
 // 401/403 → access token expired/invalid, try to refresh it.
+// Deliberately NOT 404: that's a normal "nothing found" answer for data endpoints
+// (e.g. an empty /marketPlace list on the home page) and must not end the session.
 const REFRESH_STATUSES = [401, 403];
-// 404 → treat as an unrecoverable auth failure: log the user out.
-const LOGOUT_STATUS = 404;
 
 // Best-effort server-side logout. cookies() is only writable inside a Server Action;
 // during a page render (Server Component) it is read-only and logout() throws, so this
@@ -86,7 +86,17 @@ const refreshAccessToken = async (): Promise<string | null> => {
   }
 };
 
-export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
+type FetchWithAuthConfig = {
+  // Set to false for non-critical, layout-level fetches (e.g. navbar notifications) so a
+  // failing auth response doesn't log the user out and bounce them to /sign-in.
+  logoutOnAuthFailure?: boolean;
+};
+
+export const fetchWithAuth = async (
+  url: string,
+  options: RequestInit = {},
+  { logoutOnAuthFailure = true }: FetchWithAuthConfig = {}
+) => {
   try {
     const accessToken = await getAuthToken();
 
@@ -114,13 +124,11 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
           },
         });
       }
+      if (!logoutOnAuthFailure) return response;
       // Refresh failed (no/expired refresh token) — session is unrecoverable, log out.
+      console.warn(`[fetchWithAuth] ${response.status} on ${url}, refresh failed → logging out`);
       await safeLogout(); // best-effort cookie clear (only works from a Server Action)
       redirect("/logout"); // /logout Route Handler clears cookies + → /sign-in (works from renders too)
-    } else if (response.status === LOGOUT_STATUS) {
-      // Unrecoverable auth failure — log the user out.
-      await safeLogout();
-      redirect("/logout");
     }
 
     return response; // Return the response
