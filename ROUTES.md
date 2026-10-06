@@ -296,7 +296,7 @@ Určené pre zákazníkov/klientov (`role: "user" | "company"`). Všetky trasy s
 ### 4.5 Moje platby (`/dashboard/my-account/payments`)
 - **Súbor:** `src/app/(withDashboardLayout)/dashboard/my-account/payments/page.tsx`
 - **Query parametre:** `?page=`, `?limit=12`
-- **Súčasti:** Štatistika celkových platieb a objednávok, kompletná história transakcií, generovanie a sťahovanie PDF faktúr (`InvoiceDocumentFromClientSide`).
+- **Súčasti:** Štatistika celkových platieb a objednávok, kompletná história transakcií, generovanie a sťahovanie PDF faktúr (`src/utils/invoice/`).
 
 ---
 
