@@ -20,6 +20,7 @@ const page = async () => {
   console.log(overviewData)
   const overview = overviewData?.data || [];
 
+  console.log(overview)
   return (
     <div>
       <Overview overview={overview} />

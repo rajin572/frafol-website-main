@@ -13,6 +13,13 @@ const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
       link: "/dashboard/my-account/orders?tab=accepted",
     },
     {
+      /* title: "Payment Pending (Order Offer)", */
+      title: "Čaká sa na platbu (návrh objednávky)",
+      message: `${actionData?.totalPaymentPendingCustom} návrh(y) objednávky čaká na platbu.`,
+      count: actionData?.totalPaymentPendingCustom,
+      link: "/dashboard/my-account/orders?tab=orderOffer",
+    },
+    {
       /* title: "Delivery Confirmation", */
       title: "Potvrdenie doručenia",
       /* message: `${actionData?.totalDeliveryConfirmation} order(s) waiting for delivery confirmation.`, */

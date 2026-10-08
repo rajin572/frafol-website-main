@@ -17,6 +17,7 @@ export interface IDashboardStats {
 
 export interface IActionRequired {
   totalPaymentPending: number;
+  totalPaymentPendingCustom: number;
   totalDeliveryConfirmation: number;
   totalCancelRequestConfirmation: number;
 }
