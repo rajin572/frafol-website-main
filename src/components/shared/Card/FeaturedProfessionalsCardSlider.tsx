@@ -12,7 +12,7 @@ import useVideoThumbnails from '@/hook/useVideoThumbnails';
 
 const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
+    console.log("Professional", item)
 
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(true);

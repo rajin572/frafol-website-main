@@ -29,7 +29,7 @@ const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
       link: "/dashboard/my-account/orders?tab=cancelRequest",
     },
   ]; // only show items that need action
-
+  console.log(list)
   return (
     <div
       className="w-full max-h-[300px] xl:max-h-[600px] overflow-y-auto rounded-xl relative border border-[#E1E1E1] bg-primary-color"

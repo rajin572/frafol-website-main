@@ -78,9 +78,9 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 zipCode: values.zipCode,
                 country: values.country,
                 companyName: values.companyName,
-                ICO: values.ICO,
-                DIC: values.DIC,
-                IC_DPH: values.IC_DPH || "",
+                ICO: values.ico,
+                DIC: values.dic,
+                IC_DPH: values.ic_dph || "",
             };
 
             if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
@@ -120,7 +120,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
             footer={
                 null
             }
-            className="max-w-[1000px] lg:min-w-[800px]"
+            className="max-w-[1000px] lg:min-w-[800px] max-h-[90vh] overflow-y-auto rounded"
         // styles.body={{ textAlign: "center" }}
         >
             <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between mt-5">

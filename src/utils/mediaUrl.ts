@@ -11,6 +11,7 @@ const PASS_THROUGH = /^(?:[a-z][a-z\d+.-]*:|\/\/|\/assets\/|\/_next\/)/i;
 // (NEXT_PUBLIC_SERVER_API ends with "/").
 // Returns "" for empty input so callers can keep using `getMediaUrl(x) || fallback`.
 export const getMediaUrl = (path?: string | null): string => {
+  console.log(path)
   if (!path) return "";
   if (PASS_THROUGH.test(path)) return path;
   const base = (getServerUrl() ?? "").replace(/\/+$/, "");
