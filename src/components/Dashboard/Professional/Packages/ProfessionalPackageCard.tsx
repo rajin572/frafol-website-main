@@ -48,7 +48,7 @@ const ProfessionalPackageCard = ({
         <div className="flex items-center justify-between gap-2 absolute top-2  w-full px-2">
           {item?.vatAmount > 0 ? (
             <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
-              VAT Included: {item?.vatAmount}%
+              Vrátane DPH: {item?.vatAmount}%
             </span>
           ) : (
             <span></span>

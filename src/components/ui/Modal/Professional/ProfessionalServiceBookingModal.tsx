@@ -80,8 +80,8 @@ const ProfessionalServiceBookingModal: React.FC<
       createEventOrder,
       { body: data },
       {
-        toastLoadingMessage: "Adding new Order...",
-        toastSuccessMessage: "Order Placed successfully!",
+        toastLoadingMessage: "Odosiela sa nezáväzný dopyt...",
+        toastSuccessMessage: "Nezáväzný dopyt bol úspešne odoslaný!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );
@@ -121,7 +121,7 @@ const ProfessionalServiceBookingModal: React.FC<
           <div className="flex items-center justify-start gap-2 absolute top-3 w-full px-2">
             {packageData?.vatAmount > 0 ? (
               <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
-                VAT Included: {packageData?.vatAmount}%
+                Vrátane DPH: {packageData?.vatAmount}%
               </span>
             ) : (
               <span></span>

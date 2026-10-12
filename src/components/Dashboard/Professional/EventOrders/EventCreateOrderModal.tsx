@@ -78,7 +78,7 @@ const EventCreateOrderModal = ({
       },
       {
         toastLoadingMessage: "Adding new package...",
-        toastSuccessMessage: "Package added successfully!",
+        toastSuccessMessage: "Cenová ponuka bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );
@@ -101,10 +101,10 @@ const EventCreateOrderModal = ({
       className="lg:!w-[600px]"
     >
       <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold mb-2">
-        Create Order for Lívia Nováková
+        Vytvoriť objednávku pre {currentRecord?.companyName || currentRecord?.name || currentRecord?.userId?.name}
       </h3>
       <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
-        Fill in the pricing and delivery details for this booking.
+        Vyplňte cenu, termín odovzdania a podrobnosti objednávky.
       </h3>
 
       <ReusableForm form={form} handleFinish={onSubmit}>
@@ -112,21 +112,21 @@ const EventCreateOrderModal = ({
           <ReuseInput
             name="price"
             /* label="Total Price (€)" */
-            label="Celková cena (€)"
-            placeholder="Enter Total Price"
-            rules={[{ required: true, message: "Total Price is required" }]}
+            label="Cena služby (€)"
+            placeholder="Zadajte celkovú cenu"
+            rules={[{ required: true, message: "Zadajte celkovú cenu" }]}
             labelClassName="!font-semibold"
           />
           <ReuseInput
             name="vatAmount"
-            label="VAT Amount (%) (Optional)"
-            placeholder="Enter VAT Amount"
+            label="DPH (%) – nepovinné"
+            placeholder="Zadajte sadzbu DPH"
             // rules={[{ required: true, message: "VAT Amount is required" }]}
             labelClassName="!font-semibold"
           />
           <ReuseInput
             name="totalPrice"
-            label="Package Price After Adding Service Fee and VAT"
+            label="Celková cena vrátane servisného poplatku a DPH"
             placeholder="Enter Package Price"
             disabled
             type="number"
@@ -135,8 +135,8 @@ const EventCreateOrderModal = ({
           />{" "}
           <ReuseDatePicker
             name="date "
-            label="Delivery Date"
-            rules={[{ required: true, message: "Delivery Date is required" }]}
+            label="Termín odovzdania"
+            rules={[{ required: true, message: "Vyberte termín odovzdania" }]}
             labelClassName="!font-semibold"
           />
         </div>
@@ -146,13 +146,13 @@ const EventCreateOrderModal = ({
           name="description"
           /* label="Description" */
           label="Popis"
-          placeholder="Enter Description"
+          placeholder="Opíšte, na čom ste sa s klientom dohodli, rozsah fotenia alebo natáčania, počet výsledných fotografií či videí a všetko, čo je zahrnuté v cene."
           /* rules={[{ required: true, message: "Description is required" }]} */
           rules={[{ required: true, message: "Popis je povinný" }]}
           labelClassName="!font-semibold mt-4"
         />
         <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-          Create Order
+          Vytvoriť objednávku
         </ReuseButton>
       </ReusableForm>
     </Modal>

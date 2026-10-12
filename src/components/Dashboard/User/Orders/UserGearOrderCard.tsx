@@ -67,7 +67,7 @@ const UserGearOrderCard = ({
                 className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-[#00C566] rounded bg-[#00C56633] text-sm transition cursor-pointer"
               >
                 <IoCheckmarkSharp size={16} />
-                Accept Delivery
+                Potvrdiť prevzatie
               </button>
               <button
                 onClick={() => openModal(data)}

@@ -108,13 +108,13 @@ const GearMarketPlaceAddNewGear = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="p-2 rounded border border-[#E1E1E1]">
             <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
-              Gear Information
+              Informácie o príslušenstve
             </h3>
             <ReuseInput
               name="name"
               /* label="Product Name" */
               label="Názov príslušenstva"
-              placeholder="Enter Product Name"
+              placeholder="Zadajte názov príslušenstva"
               /* rules={[{ required: true, message: "Product Name is required" }]} */
               rules={[{ required: true, message: "Názov príslušenstva je povinný" }]}
               labelClassName="!font-semibold"
@@ -123,7 +123,7 @@ const GearMarketPlaceAddNewGear = ({
               name="categoryId"
               /* label="Product Category" */
               label="Kategória"
-              placeholder="Select Category"
+              placeholder="Vyberte kategóriu"
               /* rules={[{ required: true, message: "Category is required" }]} */
               rules={[{ required: true, message: "Kategória je povinná" }]}
               labelClassName="!font-semibold"
@@ -135,8 +135,8 @@ const GearMarketPlaceAddNewGear = ({
             <ReuseInput
               name="price"
               /* label="Item Price" */
-              label="Cena"
-              placeholder="Enter Item Price"
+              label="Cena (€)"
+              placeholder="Zadajte cenu príslušenstva"
               type="number"
               /* rules={[{ required: true, message: "Item Price is required" }]} */
               rules={[{ required: true, message: "Cena je povinná" }]}
@@ -144,14 +144,14 @@ const GearMarketPlaceAddNewGear = ({
             />
             <ReuseInput
               name="VATAmount"
-              label="VAT Amount % (optional) "
-              placeholder="Enter VAT Amount"
+              label="DPH (%) – nepovinné"
+              placeholder="Zadajte sadzbu DPH"
               type="number"
               labelClassName="!font-semibold"
             />
             <ReuseInput
               name="mainPrice"
-              label="Package Price After Adding Service Fee and VAT"
+              label="Celková cena vrátane servisného poplatku a DPH"
               placeholder="Enter Package Price"
               disabled
               type="number"
@@ -164,7 +164,7 @@ const GearMarketPlaceAddNewGear = ({
               name="description"
               /* label="Product Description" */
               label="Popis"
-              placeholder="Enter Description"
+              placeholder="Zadajte popis príslušenstva"
               /* rules={[{ required: true, message: "Description is required" }]} */
               rules={[{ required: true, message: "Popis je povinný" }]}
               labelClassName="!font-semibold mt-4"
@@ -173,7 +173,7 @@ const GearMarketPlaceAddNewGear = ({
               name="condition"
               /* label="Condition" */
               label="Stav"
-              placeholder="Select Condition"
+              placeholder="Vyberte stav príslušenstva"
               /* rules={[{ required: true, message: "Condition is required" }]} */
               rules={[{ required: true, message: "Vyberte stav" }]}
               labelClassName="!font-semibold"
@@ -184,20 +184,20 @@ const GearMarketPlaceAddNewGear = ({
             />
             <ReuseInput
               name="shippingCompany"
-              label="Shipping Company"
-              placeholder="Enter Shipping Company"
+              label="Dopravca"
+              placeholder="Zadajte názov dopravcu"
               rules={[
-                { required: true, message: "Shipping Company is required" },
+                { required: true, message: "Zadajte názov dopravcu" },
               ]}
               labelClassName="!font-semibold"
             />
             <ReuseInput
               name="shippingPrice"
-              label="Shipping Price"
+              label="Cena dopravy (€)"
               type="number"
-              placeholder="Enter Shipping Price"
+              placeholder="Zadajte cenu dopravy"
               rules={[
-                { required: true, message: "Shipping Price is required" },
+                { required: true, message: "Zadajte cenu dopravy" },
               ]}
               labelClassName="!font-semibold"
             />
@@ -207,7 +207,7 @@ const GearMarketPlaceAddNewGear = ({
               /* label="Upload Image" */
               label="Obrázok"
               name="image"
-              buttonText="Upload Image"
+              buttonText="Nahrať fotografiu"
               accept="image/png, image/jpeg"
               maxCount={5}
               multiple={true}

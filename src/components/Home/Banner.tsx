@@ -30,7 +30,7 @@ export default function Banner() {
               <Revel>
                 <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 w-[90%] sm:w-[80%] md:w-[70%] mx-auto leading-8 lg:leading-12 xl:leading-14 text-secondary-color">
                   {/* Capture Your Moments with the Best in the Industry */}
-                  Zachyťte svoje výnimočné momenty s tými najlepšími
+                  Nájdite si fotografa alebo kameramana na každú príležitosť
                 </h1>
               </Revel>
 
@@ -38,9 +38,7 @@ export default function Banner() {
                 <p className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-8 text-base-color">
                   {/* Find skilled photographers and videographers, check their */}
                   {/* portfolios, and book your next shoot easily */}
-                  Nájdite skúsených fotografov a videografov,
-                  pozrite si ich portfóliá,
-                  a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie
+                  Objavte skúsených fotografov a kameramanov z celého Slovenska. Prezrite si ich portfóliá a jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
                 </p>
               </Revel>
 
@@ -86,7 +84,7 @@ export default function Banner() {
             <Revel>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 w-[90%] sm:w-[80%] md:w-[70%] mx-auto leading-8 lg:leading-12 xl:leading-14 text-secondary-color">
                 {/* Capture Your Moments with the Best in the Industry */}
-                Zachyťte svoje výnimočné momenty s tými najlepšími
+                Nájdite si fotografa alebo kameramana na každú príležitosť
               </h1>
             </Revel>
 
@@ -94,9 +92,7 @@ export default function Banner() {
               <p className="text-base sm:text-lg lg:text-xl font-semibold mb-8 text-primary-color">
                 {/* Find skilled photographers and videographers, check their */}
                 {/* portfolios, and book your next shoot easily */}
-                Nájdite skúsených fotografov a videografov,
-                pozrite si ich portfóliá,
-                a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie
+                Objavte skúsených fotografov a kameramanov z celého Slovenska. Prezrite si ich portfóliá a jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
               </p>
             </Revel>
 

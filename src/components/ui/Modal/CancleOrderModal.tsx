@@ -17,7 +17,7 @@ const CancleOrderModal: React.FC<CancleOrderModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleCancelOrder,
-  description = "Are You Sure You want to Cancle This Order ?",
+  description = "Naozaj chcete zrušiť túto objednávku?",
 }) => {
   const [form] = Form.useForm();
   //   const [blockUser] = useBlockUserMutation();
@@ -48,9 +48,9 @@ const CancleOrderModal: React.FC<CancleOrderModalProps<any>> = ({
         <ReuseInput
           inputType="textarea"
           name="reason"
-          label="Reason"
-          placeholder="Enter Reason"
-          rules={[{ required: true, message: "Reason is required" }]}
+          label="Dôvod zrušenia"
+          placeholder="Uveďte dôvod zrušenia"
+          rules={[{ required: true, message: "Uveďte dôvod zrušenia" }]}
         />
 
         <ReuseButton
@@ -58,7 +58,7 @@ const CancleOrderModal: React.FC<CancleOrderModalProps<any>> = ({
           variant="error"
           className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
         >
-          Cancle Order
+          Zrušiť objednávku
         </ReuseButton>
       </ReusableForm>
     </Modal>

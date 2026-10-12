@@ -29,7 +29,7 @@ const ReviewCard = ({
                   : data?.eventOrderId?.title ? data?.eventOrderId?.title : "Custom Order"}{" "}
               </h3>{" "}
               <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize text-sm">
-                {data?.eventOrderId?.orderType}
+                {data?.eventOrderId?.orderType === "custom" ? "Formulár" : "Balík"}
               </p>
               {activeTab !== "extension" && (
                 <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize text-sm">
@@ -40,20 +40,20 @@ const ReviewCard = ({
                       ? "Prebieha"
                       : data?.status === "cancelRequest"
                         ? "Žiadosť o zrušenie odoslaná"
-                        : data?.status}
+                        : data?.status === "pending" ? "Čakajúca" : data?.status}
                 </p>
               )}
             </div>
             <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              By {data?.serviceProviderId?.name}{" "}
+              Tvorca: {data?.serviceProviderId?.name}{" "}
             </p>
             <div className="flex items-center text-nowrap gap-1 my-2">
               <FaClock className="!text-[#5D5D5D]" />
-              Event Data: {formatDate(data?.eventOrderId?.date)}
+              Dátum: {formatDate(data?.eventOrderId?.date)}
             </div>
             <div className="flex items-center text-nowrap gap-1 my-2">
               <FaClock className="!text-[#5D5D5D]" />
-              Completed on:{" "}
+              Dokončené:{" "}
               {formatDate(data?.eventOrderId?.statusTimestamps?.deliveredAt)}
             </div>
             <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-2">
@@ -90,7 +90,7 @@ const ReviewCard = ({
                 onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-secondary-color rounded bg-secondary-color text-white text-sm transition cursor-pointer"
               >
-                Write Review
+                Napísať recenziu
               </button>
             )}
           </div>

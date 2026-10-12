@@ -125,6 +125,7 @@ const GearOrderPage = ({
           isModalVisible={isDeliverModalVisible}
           handleCancel={() => setIsDeliverModalVisible(false)}
           description="Ste si istí, že chcete túto objednávku označiť ako doručenú?"
+          confirmText="Potvrdiť"
           currentRecord={currentRecord}
           handleConfirm={handleDeliverGearOrder}
         />

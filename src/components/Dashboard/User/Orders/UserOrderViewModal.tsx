@@ -86,7 +86,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           </div>
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {/* {currentRecord?.serviceType === "both" ? "Photography & Videography" : currentRecord?.serviceType} */}
-            {currentRecord?.serviceType === "both" ? "Fotografia a Video" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
+            {currentRecord?.serviceType === "both" ? "Fotenie a natáčanie" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
           </p>
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             {/* By */}

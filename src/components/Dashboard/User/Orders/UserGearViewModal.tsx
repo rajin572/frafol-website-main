@@ -80,7 +80,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Order Summary */}
           <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
-            <h3 className="font-semibold mb-4">Order Summary</h3>
+            <h3 className="font-semibold mb-4">Zhrnutie objednávky</h3>
             <div className="space-y-2 text-sm text-gray-600">
               <div className="flex justify-between">
                 <span>Sub Total :</span>
@@ -128,7 +128,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
 
         {/* Shipping Method */}
         <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
-          <h3 className="font-semibold mb-2">Preferred Shipping Method</h3>
+          <h3 className="font-semibold mb-2">Doprava</h3>
           <p className="text-sm ">
             {currentRecord?.gearMarketplaceId?.shippingCompany?.name} -{" "}
             {currentRecord?.gearMarketplaceId?.shippingCompany?.price?.toFixed(2)}€
@@ -137,7 +137,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
 
         {/* Shipping Address */}
         <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
-          <h3 className="font-semibold mb-2">Shipping Address</h3>
+          <h3 className="font-semibold mb-2">Doručovacia adresa</h3>
           <p className="text-sm ">
             {[currentRecord?.shippingAddress, currentRecord?.town, currentRecord?.postCode]
               .filter(Boolean)
@@ -147,7 +147,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
 
         {/* Delivery Note */}
         <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
-          <h3 className="font-semibold mb-2">Delivery Note</h3>
+          <h3 className="font-semibold mb-2">Poznámka k doručeniu</h3>
           <p className="text-sm ">{currentRecord?.deliveryNote || "N/A"}</p>
         </div>
 
@@ -158,7 +158,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
               onClick={() => showAcceptDeliverModal?.(currentRecord!)}
               className="!bg-success hover:!bg-success text-white px-4 py-2 rounded !cursor-pointer"
             >
-              Accept Delivery
+              Potvrdiť prevzatie
             </button>
           )}
         </div>

@@ -235,8 +235,8 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       createEventOrder,
       { body: data },
       {
-        toastLoadingMessage: "Adding new Order...",
-        toastSuccessMessage: "Order Placed successfully!",
+        toastLoadingMessage: "Odosiela sa nezáväzný dopyt...",
+        toastSuccessMessage: "Nezáväzný dopyt bol úspešne odoslaný!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );
@@ -511,7 +511,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
             </Checkbox>
           </Form.Item> */}
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Odoslať žiadosť o rezerváciu
+            Odoslať nezáväzný dopyt
           </ReuseButton>
         </ReusableForm>
       </div>

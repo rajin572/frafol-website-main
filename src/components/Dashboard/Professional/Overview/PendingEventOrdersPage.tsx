@@ -153,7 +153,7 @@ const PendingEventOrdersPage = ({
         <div className=" w-full rounded-tl-xl rounded-tr-xl">
           <div className=" flex items-center justify-between">
             <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-5 text-secondary-color">
-              Pending Event Orders
+              Nové žiadosti na potvrdenie
             </h1>
           </div>
         </div>

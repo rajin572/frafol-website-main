@@ -21,7 +21,7 @@ const GearMarketViewModal: React.FC<GearMarketViewModalProps> = ({
     >
       <div className="p-5 text-[#1a1a1a]">
         <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-5">
-          Gear Details
+          Informácie o príslušenstve
         </h3>
 
         <div>
@@ -88,7 +88,7 @@ const GearMarketViewModal: React.FC<GearMarketViewModalProps> = ({
               </div>
               <div>
                 <h4 className="text-sm sm:text-sm lg:text-base font-medium mb-1">
-                  Shipping Details
+                  Doprava
                 </h4>
                 <p className="text-sm sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
                   {currentRecord?.shippingCompany?.name} -

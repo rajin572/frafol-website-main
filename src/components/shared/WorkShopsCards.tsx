@@ -29,7 +29,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
           className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
         />
         {data?.vatPercent > 0 && <p className="absolute top-3 left-3 bg-secondary-color px-1 py-0.5 text-primary-color rounded">
-          VAT Included: {data?.vatPercent}%
+          Vrátane DPH: {data?.vatPercent}%
         </p>}
         <div className="px-1 flex flex-col justify-between">
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3 ">

@@ -70,7 +70,7 @@ const UserOrderCard = ({
       { body: value },
       {
         toastLoadingMessage: "Prosím, počkajte...",
-        toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+        toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );
@@ -130,7 +130,7 @@ const UserOrderCard = ({
         </div>
         <h4 className="text-sm sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
           {/* {data?.serviceType === "both" ? "Photography & Videography" : data?.serviceType} */}
-          {data?.serviceType === "both" ? "Fotografia a Video" : serviceTypeLabels[data?.serviceType as string] || data?.serviceType}
+          {data?.serviceType === "both" ? "Fotenie a natáčanie" : serviceTypeLabels[data?.serviceType as string] || data?.serviceType}
         </h4>
         <Link href={`/professionals/${data?.serviceProviderId?._id}`} className="w-fit! inline-block  my-3">
           <div className="text-sm sm:text-base lg:text-lg text-gray-700 flex items-center gap-1">

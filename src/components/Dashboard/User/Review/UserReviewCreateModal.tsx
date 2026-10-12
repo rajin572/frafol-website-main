@@ -32,7 +32,7 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
       { body: data, params: currentRecord?._id },
       {
         toastLoadingMessage: "Saving your changes...",
-        toastSuccessMessage: "Changes saved successfully!",
+        toastSuccessMessage: "Zmeny boli úspešne uložené!",
         toastErrorMessage: "Failed to save changes",
       }
     );
@@ -54,7 +54,7 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
       <div className="p-5">
         <div className="text-base-color">
           <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-secondary-color">
-            Share Your Experience
+            Podeľte sa o svoju skúsenosť
           </h3>
         </div>
         <ReusableForm
@@ -70,7 +70,7 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
               {/* Rating */}
               Hodnotenie
             </Typography.Title>
-            <Form.Item name={"review"} rules={[{ required: true }]}>
+            <Form.Item name={"review"} rules={[{ required: true, message: "Vyberte počet hviezdičiek" }]}>
               <Rate
                 className="!text-3xl"
                 allowHalf
@@ -89,10 +89,10 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
             label="Recenzia"
             name="message"
             type="text"
-            placeholder="Enter Review"
+            placeholder="Napíšte svoju recenziu"
           />
           <Form.Item name="isAnonymous" valuePropName="checked">
-            <Checkbox>Review Annonimously</Checkbox>
+            <Checkbox>Hodnotiť anonymne</Checkbox>
           </Form.Item>
 
           <ReuseButton variant="secondary" htmlType="submit">

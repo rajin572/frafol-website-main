@@ -171,6 +171,7 @@ const GearMarketplacePage = ({
           handleCancel={handleCancel}
           currentRecord={currentRecord}
           handleDelete={handleDelete}
+          description="Naozaj chcete odstrániť tento inzerát?"
         />
       </div>
     </div>

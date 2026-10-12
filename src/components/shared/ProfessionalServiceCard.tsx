@@ -37,7 +37,7 @@ const ProfessionalServiceCard = ({
         <div className="flex items-center justify-start gap-2 absolute top-3 w-full px-2">
           {data?.vatAmount > 0 ? (
             <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
-              VAT Included: {data?.vatAmount}%
+              Vrátane DPH: {data?.vatAmount}%
             </span>
           ) : (
             <span></span>

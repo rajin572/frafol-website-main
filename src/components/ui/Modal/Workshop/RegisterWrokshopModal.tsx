@@ -93,7 +93,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 { body: data },
                 {
                     toastLoadingMessage: "Registering for workshop...",
-                    toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+                    toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
                     toastErrorMessage: "Something went wrong! Please try again.",
                 }
             );

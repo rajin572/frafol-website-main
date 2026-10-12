@@ -47,7 +47,7 @@ const ProfessionalEventOrderTable: React.FC<
       title: "Typ služby",
       dataIndex: "serviceType",
       key: "serviceType",
-      render: (text: string) => <span className="capitalize">{text === "both" ? /* "Photography & Videography" */ "Fotografia a video" : serviceTypeLabels[text] || text}</span>,
+      render: (text: string) => <span className="capitalize">{text === "both" ? /* "Photography & Videography" */ "Fotenie a natáčanie" : serviceTypeLabels[text] || text}</span>,
     },
     {
       /* title: "Event Name", */

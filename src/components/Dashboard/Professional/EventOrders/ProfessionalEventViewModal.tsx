@@ -124,7 +124,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
 
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {/* {currentRecord?.serviceType === "both" ? "Photography & Videography" : ...} */}
-            {currentRecord?.serviceType === "both" ? "Fotografia a video" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
+            {currentRecord?.serviceType === "both" ? "Fotenie a natáčanie" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
           </p>
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             Tvorca: <Link className="text-secondary-color!" href={`/professionals/${currentRecord?.serviceProviderId?._id}`}>{currentRecord?.serviceProviderId?.companyName || currentRecord?.serviceProviderId?.name}</Link>

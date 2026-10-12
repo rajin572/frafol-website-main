@@ -16,14 +16,14 @@ const UserReviewOverview = async () => {
     {
       id: 3,
       background: "#ffffff",
-      name: "Total Reviews",
+      name: "Celkový počet recenzií",
       icon: <FaStar className="size-6 text-secondary-color" />,
       count: allReviewsStates?.totalReviews,
     },
     {
       id: 2,
       background: "#ffffff",
-      name: "Pending Reviews",
+      name: "Čakajúce na hodnotenie",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
       count: allReviewsStates?.pendingReviews,
     },

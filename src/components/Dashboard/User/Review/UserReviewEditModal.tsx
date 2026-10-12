@@ -83,7 +83,7 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
               {/* Rating */}
               Hodnotenie
             </Typography.Title>
-            <Form.Item name={"review"} rules={[{ required: true }]}>
+            <Form.Item name={"review"} rules={[{ required: true, message: "Vyberte počet hviezdičiek" }]}>
               <Rate className="!text-3xl" allowHalf onChange={(value) => {
                 const clamped = Math.min(5, Math.max(1, value)); // 1–5, can be 0.5 steps
                 form.setFieldsValue({ review: clamped });
@@ -97,10 +97,10 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
             label="Recenzia"
             name="message"
             type="text"
-            placeholder="Enter Review"
+            placeholder="Napíšte svoju recenziu"
           />
           <Form.Item name="isAnonymous" valuePropName="checked">
-            <Checkbox>Review Annonimously</Checkbox>
+            <Checkbox>Hodnotiť anonymne</Checkbox>
           </Form.Item>
           <ReuseButton variant="secondary" htmlType="submit">
             {/* Submit */}

@@ -52,8 +52,8 @@ const Bar_Chart = ({ data }: { data: ChartData[] }) => {
             borderRadius: "5px",
           }}
         >
-          <p style={{ margin: 0, color: "#202020" }}>{`Month: ${label}`}</p>
-          <p style={{ margin: 0, color: "#0a0a08" }}>{`Earnings: ${value}€`}</p>
+          <p style={{ margin: 0, color: "#202020" }}>{`Mesiac: ${label}`}</p>
+          <p style={{ margin: 0, color: "#0a0a08" }}>{`Zárobky: ${value}€`}</p>
         </div>
       );
     }

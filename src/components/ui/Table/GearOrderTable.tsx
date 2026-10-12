@@ -51,14 +51,14 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
       render: (price: number, record: any) => `${(price - record?.gearMarketplaceId?.platformCommission)?.toFixed(2)}€`,
     },
     {
-      title: "Shipping Details",
+      title: "Doprava",
       dataIndex: ["gearMarketplaceId", "shippingCompany"],
       key: "shippingDetails",
       render: (shippingCompany: { name: string; price: number }) =>
         `${shippingCompany?.name} - ${shippingCompany?.price?.toFixed(2)}€`,
     },
     {
-      title: "Order Status",
+      title: "Stav objednávky",
       dataIndex: "orderStatus",
       key: "orderStatus",
       render: (_: string, record: IGearOrder) => {

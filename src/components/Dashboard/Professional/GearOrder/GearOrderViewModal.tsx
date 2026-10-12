@@ -110,7 +110,9 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
             <p>
               {/* <span className="font-semibold">Payment By Admin:</span> */}
               <span className="font-semibold">Platba od administrátora:</span>{" "}
-              {currentRecord?.paymentStatus
+              {currentRecord?.paymentStatus === "pending"
+                ? "Čakajúca"
+                : currentRecord?.paymentStatus
                 ? currentRecord?.paymentStatus?.charAt(0).toUpperCase() +
                 currentRecord?.paymentStatus?.slice(1)
                 : "N/A"}

@@ -44,7 +44,7 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
       {
         showToast: false,
         toastLoadingMessage: "Saving your changes...",
-        toastSuccessMessage: "Changes saved successfully!",
+        toastSuccessMessage: "Zmeny boli úspešne uložené!",
         toastErrorMessage: "Failed to save changes",
       }
     );

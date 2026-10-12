@@ -23,7 +23,7 @@ export const serviceTypeLabels: { [key: string]: string } = {
 export const gearOrderStatus: { [key: string]: string } = {
   inProgress: "In Progress",
   toConfirm: "To Confirm",
-  deliveryRequest: "Delivery Request",
+  deliveryRequest: "Čaká na odoslanie",
   delivered: "Delivered",
   cancelled: "Cancelled",
 };

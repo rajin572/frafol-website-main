@@ -165,7 +165,7 @@ const CartDeliveryOption = ({
       { body: data },
       {
         toastLoadingMessage: "Prosím, počkajte...",
-        toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+        toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );

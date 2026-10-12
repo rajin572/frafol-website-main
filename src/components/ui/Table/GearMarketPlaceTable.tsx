@@ -68,7 +68,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       render: (price: number) => `${price?.toFixed(2)}€`,
     },
     {
-      title: "Approval Status",
+      title: "Stav schválenia",
       dataIndex: "approvalStatus",
       key: "approvalStatus",
       render: (status: string) => (
@@ -81,10 +81,10 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
             }`}
         >
           {status === "approved"
-            ? "Approved"
+            ? "Schválené"
             : status === "cancelled"
-              ? "Rejected"
-              : "Pending"}
+              ? "Zamietnuté"
+              : "Čaká na schválenie"}
         </span>
       ),
     },
@@ -94,6 +94,8 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       dataIndex: "status",
       key: "status",
       align: "center",
+      render: (status: string) =>
+        status === "In Stock" ? "Na sklade" : status === "Sold Out" ? "Vypredané" : status,
     },
     {
       /* title: "Action", */
