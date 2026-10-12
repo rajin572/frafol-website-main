@@ -7,6 +7,8 @@ import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { MdDelete } from "react-icons/md";
 import { IPackage } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
+import { serviceTypeLabels } from "@/utils/budgetLabels";
+import { formatDuration, formatWeeks } from "@/utils/durationLabels";
 import { IoCalendarOutline } from "react-icons/io5";
 
 const ProfessionalPackageCard = ({
@@ -61,7 +63,7 @@ const ProfessionalPackageCard = ({
       </div>
       <div className="px-1  mt-3">
         <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
-          {item?.category}
+          {serviceTypeLabels[item?.category as string] || item?.category}
         </span>
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-1.5 ">
           {item?.title}
@@ -76,7 +78,7 @@ const ProfessionalPackageCard = ({
             <div className="flex items-center gap-1">
               <BsCurrencyEuro className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                Price Without Service Fee:
+                Cena bez servisného poplatku:
               </p>
             </div>
             <p className="text-sm sm:text-sm lg:text-base">
@@ -87,7 +89,7 @@ const ProfessionalPackageCard = ({
             <div className="flex items-center gap-1">
               <BsCurrencyEuro className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                Service Fee:
+                Servisný poplatok:
               </p>
             </div>
             <p className="text-sm sm:text-sm lg:text-base">
@@ -114,17 +116,17 @@ const ProfessionalPackageCard = ({
                 Trvanie:
               </p>
             </div>
-            <p className="text-sm sm:text-sm lg:text-base">{item?.duration}</p>
+            <p className="text-sm sm:text-sm lg:text-base">{formatDuration(item?.duration)}</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                Delivery Time:
+                Dodacia lehota:
               </p>
             </div>
             <p className="text-sm sm:text-sm lg:text-base">
-              {item?.deliveryTime / 7} Week
+              {formatWeeks(item?.deliveryTime / 7)}
             </p>
           </div>
         </div>
@@ -135,7 +137,7 @@ const ProfessionalPackageCard = ({
             variant="secondary"
             className="!text-base !py-4 !w-fit"
           >
-            Edit Package
+            Upraviť balík
           </ReuseButton>
         </div>
       </div>

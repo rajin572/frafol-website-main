@@ -5,6 +5,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
 import { IPackage, IProfessionalUser, IProfile } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
+import { formatDuration, formatWeeks } from "@/utils/durationLabels";
 import { LuClock } from "react-icons/lu";
 import { FaEuroSign } from "react-icons/fa6";
 
@@ -70,7 +71,7 @@ const ProfessionalServiceCard = ({
                   Trvanie:
                 </p>
               </div>
-              <p className="text-sm sm:text-sm lg:text-base">{data?.duration}</p>
+              <p className="text-sm sm:text-sm lg:text-base">{formatDuration(data?.duration)}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
@@ -80,7 +81,7 @@ const ProfessionalServiceCard = ({
                 </p>
               </div>
               <p className="text-sm sm:text-sm lg:text-base">
-                {data?.deliveryTime / 7} Week
+                {formatWeeks(data?.deliveryTime / 7)}
               </p>
             </div>
           </div>

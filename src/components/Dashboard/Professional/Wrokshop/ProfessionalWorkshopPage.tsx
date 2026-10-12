@@ -113,7 +113,7 @@ const ProfessionalWorkshopPage = ({
           <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
             Kurzy
           </h1>
-          <SearchInput placeholder="Search ..." />
+          <SearchInput placeholder="Hľadať..." />
         </div>
       </div>
       <div className="flex justify-end mb-5">

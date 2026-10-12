@@ -64,7 +64,7 @@ const PackagesPage = ({
         { params: record?._id },
         {
           toastLoadingMessage: "Deleting Package...",
-          toastSuccessMessage: "Package deleted successfully!",
+          toastSuccessMessage: "Balík bol úspešne odstránený!",
           toastErrorMessage: "Something went wrong! Please try again.",
         }
       );
@@ -96,7 +96,7 @@ const PackagesPage = ({
         </div>
       </div>
       <div className="flex justify-end mb-5">
-        <SearchInput placeholder="Search ..." />
+        <SearchInput placeholder="Hľadať..." />
       </div>
       <ReusableTabs
         activeTab={tab}
@@ -121,8 +121,8 @@ const PackagesPage = ({
               ) : (
                 <div className="py-10">
                   <NoResultFound
-                    title="No Active Packages"
-                    description="create a new package or show all pending packages on pending tab"
+                    title="Zatiaľ nemáte žiadne aktívne balíky"
+                    description="Vytvorte nový balík alebo si pozrite balíky čakajúce na schválenie v záložke „Čakajúce“."
                   />
                 </div>
               ),
@@ -145,8 +145,8 @@ const PackagesPage = ({
               ) : (
                 <div className="py-10">
                   <NoResultFound
-                    title="No Pending Packages"
-                    description="create a new package or show all packages on active tab"
+                    title="Žiadne balíky čakajúce na schválenie"
+                    description="Vytvorte nový balík alebo si pozrite schválené balíky v záložke „Aktívne“."
                   />
                 </div>
               ),
@@ -186,6 +186,7 @@ const PackagesPage = ({
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         handleDelete={handleDelete}
+        description="Naozaj chcete odstrániť tento balík?"
       />
     </div>
   );

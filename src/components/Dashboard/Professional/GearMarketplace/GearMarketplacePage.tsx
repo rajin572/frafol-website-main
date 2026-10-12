@@ -134,7 +134,7 @@ const GearMarketplacePage = ({
               { value: "Sold Out", label: "Vypredané" },
             ]}
           />
-          <SearchInput placeholder="Search ..." />
+          <SearchInput placeholder="Hľadať..." />
         </div>
         <GearMarketPlaceTable
           data={myGears}

@@ -30,25 +30,25 @@ const ProfessionalAddNewPackageModal = ({
     userData?.role === "both"
       ? [
         {
-          label: "Photography",
+          label: "Fotenie",
           value: "photography",
         },
         {
-          label: "Videography",
+          label: "Natáčanie",
           value: "videography",
         },
       ]
       : userData?.role === "photographer"
         ? [
           {
-            label: "Photography",
+            label: "Fotenie",
             value: "photography",
           },
         ]
         : userData?.role === "videographer"
           ? [
             {
-              label: "Videography",
+              label: "Natáčanie",
               value: "videography",
             },
           ]
@@ -99,8 +99,8 @@ const ProfessionalAddNewPackageModal = ({
       addNewPackage,
       { body: formData },
       {
-        toastLoadingMessage: "Adding new package...",
-        toastSuccessMessage: "Package added successfully!",
+        toastLoadingMessage: "Pridáva sa nový balík...",
+        toastSuccessMessage: "Balík bol úspešne pridaný!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
     );
@@ -125,13 +125,13 @@ const ProfessionalAddNewPackageModal = ({
 
       <ReusableForm form={form} handleFinish={onSubmit}>
         <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
-          Package Information
+          Informácie o balíku
         </h3>
         <ReuseInput
           name="title"
           /* label="Title" */
           label="Názov balíka"
-          placeholder="Enter Title"
+          placeholder="Zadajte názov balíka"
           /* rules={[{ required: true, message: "Title is required" }]} */
           rules={[{ required: true, message: "Názov balíka je povinný" }]}
           labelClassName="!font-semibold"
@@ -142,24 +142,24 @@ const ProfessionalAddNewPackageModal = ({
           name="description"
           /* label="Description" */
           label="Popis"
-          placeholder="Enter Description"
+          placeholder="Zadajte popis balíka"
           /* rules={[{ required: true, message: "Description is required" }]} */
           rules={[{ required: true, message: "Popis je povinný" }]}
           labelClassName="!font-semibold mt-4"
         />
         <ReuseSelect
           name="category"
-          label="Select Category"
-          placeholder="Select Category"
-          rules={[{ required: true, message: "Category is required" }]}
+          label="Vyberte kategóriu"
+          placeholder="Vyberte kategóriu"
+          rules={[{ required: true, message: "Vyberte kategóriu" }]}
           labelClassName="!font-semibold"
           options={categoryOptions}
         />
         <ReuseInput
           name="price"
           /* label="Package Price" */
-          label="Cena"
-          placeholder="Enter Package Price"
+          label="Cena (€)"
+          placeholder="Zadajte cenu balíka"
           type="number"
           /* rules={[{ required: true, message: "Package Price is required" }]} */
           rules={[{ required: true, message: "Cena je povinná" }]}
@@ -167,15 +167,15 @@ const ProfessionalAddNewPackageModal = ({
         />
         <ReuseInput
           name="vatAmount"
-          label="VAT Amount % (optional) "
-          placeholder="Enter VAT Amount"
+          label="DPH (%) – nepovinné"
+          placeholder="Zadajte sadzbu DPH"
           type="number"
           labelClassName="!font-semibold"
         />
         <ReuseInput
           name="mainPrice"
-          label="Package Price After Adding Service Fee and VAT"
-          placeholder="Enter Package Price"
+          label="Celková cena balíka vrátane servisného poplatku a DPH"
+          placeholder="Zadajte cenu balíka"
           disabled
           type="number"
           rules={[{ required: true, message: "Package Price is required" }]}
@@ -183,51 +183,51 @@ const ProfessionalAddNewPackageModal = ({
         />
         <ReuseSelect
           name="deliveryTime"
-          label="Delivery Time (Weekly)"
-          placeholder="Select Delivery Time"
-          rules={[{ required: true, message: "Delivery Time is required" }]}
+          label="Dodacia lehota (v týždňoch)"
+          placeholder="Vyberte dodaciu lehotu"
+          rules={[{ required: true, message: "Vyberte dodaciu lehotu" }]}
           labelClassName="!font-semibold"
           options={[
-            { label: "1 Week", value: 7 },
-            { label: "2 Weeks", value: 14 },
-            { label: "3 Weeks", value: 21 },
-            { label: "4 Weeks", value: 28 },
-            { label: "5 Weeks", value: 35 },
-            { label: "6 Weeks", value: 42 },
-            { label: "7 Weeks", value: 49 },
+            { label: "1 týždeň", value: 7 },
+            { label: "2 týždne", value: 14 },
+            { label: "3 týždne", value: 21 },
+            { label: "4 týždne", value: 28 },
+            { label: "5 týždňov", value: 35 },
+            { label: "6 týždňov", value: 42 },
+            { label: "7 týždňov", value: 49 },
           ]}
         />
         <Typography.Title
           level={5}
           className="!font-semibold !text-base-color !mt-4"
         >
-          Duration
+          Dĺžka fotenia/natáčania
         </Typography.Title>
         <div className="grid grid-cols-2 gap-4">
           <ReuseInput
             name="durationUnit"
-            placeholder="Enter Duration"
+            placeholder="Zadajte dĺžku"
             type="number"
-            rules={[{ required: true, message: "Duration is required" }]}
+            rules={[{ required: true, message: "Zadajte dĺžku fotenia/natáčania" }]}
           />
           <ReuseSelect
             name="durationType"
-            placeholder="Select Duration Type"
-            rules={[{ required: true, message: "Duration Type is required" }]}
+            placeholder="Vyberte jednotku času"
+            rules={[{ required: true, message: "Vyberte jednotku času" }]}
             options={[
-              { label: "Hours", value: "Hours" },
-              { label: "Days", value: "Days" },
+              { label: "Hodiny", value: "Hours" },
+              { label: "Dni", value: "Days" },
             ]}
           />
         </div>
         <ReuseUpload
-          label="Upload Image"
+          label="Nahrať fotografiu"
           name="image"
-          buttonText="Upload Image"
+          buttonText="Nahrať fotografiu"
           accept="image/png, image/jpeg"
           maxCount={1}
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Package Image is required" }]}
+          rules={[{ required: true, message: "Nahrajte fotografiu balíka" }]}
 
         />
         <ReuseButton htmlType="submit" variant="secondary" className="mt-2">

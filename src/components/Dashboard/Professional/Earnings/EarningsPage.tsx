@@ -75,7 +75,7 @@ const EarningsPage = ({ data, totalData, activeTab, page, limit }: EarningsPageP
         {/* <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold">Earning</h1> */}
         <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold">Zárobky</h1>
         <div className="h-fit">
-          <SearchInput placeholder="Search ..." />
+          <SearchInput placeholder="Hľadať..." />
         </div>
       </div>
 
