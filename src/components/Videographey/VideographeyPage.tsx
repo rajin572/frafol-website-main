@@ -42,7 +42,7 @@ const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
               {filteredCategories?.map((item, index) => (
                 <Link
                   key={index}
-                  href={`/videography/${item?._id}?role=videographer&title=${item?.title}&src=${item?.image}`}
+                  href={`/videography/${item?._id}?role=videographer&title=${encodeURIComponent(item?.title ?? "")}&src=${encodeURIComponent(item?.image ?? "")}&subTitle=${encodeURIComponent(item?.subTitle ?? "")}`}
                 >
                   <CategoryCard item={item} />
                 </Link>

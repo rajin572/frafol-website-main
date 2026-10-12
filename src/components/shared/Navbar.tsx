@@ -31,6 +31,7 @@ import { toast } from "sonner";
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { clearSelectedChatUser } from "@/redux/features/conversation/conversationSlice";
 import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
+import { getMyNotifications } from "@/services/Others/NotificationApi";
 
 const NavItems = [
   /* { id: "1", name: "Photography", route: "/photography" }, */
@@ -68,25 +69,44 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
 
   useOutsideClick(navbarWrapperRef, () => setMobileMenuOpen(false));
 
+  // The navbar lives in the root layout, which is NOT re-rendered on client-side navigation,
+  // so the server-provided list goes stale. Seed from it, then keep it fresh below.
   useEffect(() => {
     setAllNotifications(notifications);
+    setNotificationCount(notifications.filter((n) => !n.isRead).length);
   }, [notifications]);
+
+  // Reload the latest notifications. `updateCount` also recomputes the unread badge.
+  const refreshNotifications = useCallback(async (updateCount: boolean) => {
+    const fresh = await getMyNotifications();
+    if (!fresh) return;
+    setAllNotifications(fresh);
+    if (updateCount) setNotificationCount(fresh.filter((n) => !n.isRead).length);
+  }, []);
+
+  // Page change (client navigation) → pick up notifications that arrived meanwhile.
+  useEffect(() => {
+    if (!token) return;
+    refreshNotifications(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path]);
 
 
 
   const isDashboard = path.includes("dashboard");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-    if (
-      previous !== undefined &&
-      latest > previous &&
-      latest > 150 &&
-      !isDashboard &&
-      !mobileMenuOpen
-    ) {
+    const previous = scrollY.getPrevious() ?? latest;
+    const delta = latest - previous;
+
+    // Hide while scrolling DOWN, show again as soon as the user scrolls UP (or is near the
+    // top). Events with no real movement are ignored: treating them as "not down" made the
+    // bar flip straight back to visible right after it hid.
+    if (isDashboard || mobileMenuOpen || latest <= 150) {
+      setHidden(false);
+    } else if (delta > 2) {
       setHidden(true);
-    } else {
+    } else if (delta < -2) {
       setHidden(false);
     }
 
@@ -215,8 +235,10 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
       }
       setAllNotifications((prev) => [...prev, newNotification]);
       setNotificationCount((prev) => prev + 1);
+      // Replace the placeholder with the stored record (real id, correct order).
+      refreshNotifications(false);
     }
-  }, []);
+  }, [refreshNotifications]);
 
   // Unread message count from socket. res: { statusCode, success, unreadCount }
   const handleMessageCount = useCallback((data: any) => {
@@ -397,7 +419,8 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                 <Dropdown
                   overlay={notificationMenu}
                   trigger={["hover"]}
-                  onOpenChange={() => {
+                  onOpenChange={(open) => {
+                    if (open) refreshNotifications(false);
                     handleResetNotification();
                   }}
                   placement="bottomRight"
@@ -497,7 +520,8 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                 <Dropdown
                   overlay={notificationMenu}
                   trigger={["hover"]}
-                  onOpenChange={() => {
+                  onOpenChange={(open) => {
+                    if (open) refreshNotifications(false);
                     handleResetNotification();
                   }}
                   placement="bottomRight"

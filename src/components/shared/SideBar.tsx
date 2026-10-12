@@ -52,11 +52,17 @@ const SideBar = () => {
       style={{
         position: "sticky",
         top: 0,
-        height: "calc(100vh - 3rem)",
+        // dvh = the visible viewport. 100vh is taller than the screen on phones (browser bars),
+        // which hid the bottom menu items and made them unreachable.
+        height: "calc(100dvh - 52px)",
         overflowY: "auto",
+        // Keep the scroll inside the menu: without this, scrolling past its end scrolls the
+        // page behind it, so the dashboard "jumps" while the menu is being scrolled.
+        overscrollBehavior: "contain",
+        WebkitOverflowScrolling: "touch",
         backgroundColor: "#ffffff",
       }}
-      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12 mb-20! ${isCollapsed ? "!left-[-300px]" : "!left-0"
+      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-[52px] mb-20! ${isCollapsed ? "!left-[-300px]" : "!left-0"
         }`}
     >
       <div className="flex items-center justify-end my-5 px-4">
@@ -75,6 +81,8 @@ const SideBar = () => {
         }}
         items={menuItems}
       />
+      {/* Spacer so the last items can be scrolled clear of the bottom edge / browser bar */}
+      <div className="h-24" aria-hidden="true" />
     </Sider>
   );
 };

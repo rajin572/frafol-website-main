@@ -13,7 +13,7 @@ const ExplorePhotographyCategory = ({
     <div className="mt-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
         {categories?.map((item, index) => (
-          <Link key={index} href={`/photography/${item?._id}`}>
+          <Link key={index} href={`/photography/${item?._id}?role=photographer&title=${encodeURIComponent(item?.title ?? "")}&src=${encodeURIComponent(item?.image ?? "")}&subTitle=${encodeURIComponent(item?.subTitle ?? "")}`}>
             <CategoryCard key={index} item={item} />
           </Link>
         ))}

@@ -8,6 +8,7 @@ import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import NoResultFound from "../shared/NoResultFound";
+import SectionHeader from "../ui/SectionHeader";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const PhotographyCategoryDetails = ({
@@ -16,7 +17,7 @@ const PhotographyCategoryDetails = ({
   townData,
 }: {
   categories: any[];
-  data: { id: string; title: string | string[]; src: string | string[] };
+  data: { id: string; title: string | string[]; src: string | string[]; subTitle?: string | string[] };
   townData: ITown[];
 }) => {
 
@@ -25,9 +26,17 @@ const PhotographyCategoryDetails = ({
       <SectionBanner
         image={data?.src ? getMediaUrl(data?.src as string) : AllImages.dummyCover?.src}
         title={data?.title as string}
+        description={data?.subTitle as string}
+        showTitle
       />
 
       <Container>
+        {/* Phones have no banner (it is md+ only), so the title + subtitle go here instead */}
+        <SectionHeader
+          title={data?.title as string}
+          description={data?.subTitle as string}
+          className="mt-10 !mb-0 md:hidden"
+        />
         <div className="mt-10 flex flex-col lg:flex-row justify-between lg:items-center gap-5">
           <ReuseButton
             url="/photography"

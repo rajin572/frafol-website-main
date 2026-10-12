@@ -9,11 +9,15 @@ interface SectionBannerProps {
   image: string;
   title: string;
   description?: string;
+  // Render the title on the image (off by default: most banners are decorative only).
+  showTitle?: boolean;
 }
 
 const SectionBanner: React.FC<SectionBannerProps> = ({
   image,
+  title,
   description = "",
+  showTitle = false,
 }) => {
   return (
     <section>
@@ -35,9 +39,11 @@ const SectionBanner: React.FC<SectionBannerProps> = ({
               <div className="flex justify-between items-center gap-2 mb-[4%]">
                 <div className="">
                   <Revel>
-                    {/* <h1 className="lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-extrabold text-start text-primary-color tracking-wider">
-                      {title}
-                    </h1> */}
+                    {showTitle && title && (
+                      <h1 className="lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-extrabold text-start text-primary-color tracking-wider">
+                        {title}
+                      </h1>
+                    )}
                     <p className="text-primary-color mt-2">{description}</p>
                   </Revel>
                 </div>

@@ -1,4 +1,5 @@
 import { Modal } from "antd";
+import CreateConversionButton from "@/components/Professional/CreateConversionButton";
 
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
@@ -74,6 +75,20 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
               {currentRecord?.gearMarketplaceId?.mainPrice?.toFixed(2) || 0}€
             </p>
           </div>
+        </div>
+
+        {/* Contact the seller */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4 flex items-center justify-between gap-3">
+          <p className="text-sm">
+            <span className="font-semibold">Predajca:</span>{" "}
+            {currentRecord?.sellerId?.name}
+          </p>
+          <CreateConversionButton
+            userId={currentRecord?.sellerId?._id}
+            name={currentRecord?.sellerId?.name}
+            label="Napísať predajcovi"
+            className="!w-fit"
+          />
         </div>
 
         {/* Summary & Payment */}

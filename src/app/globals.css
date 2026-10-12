@@ -32,8 +32,15 @@ body {
   font-family: var(--font-nunito);
   scroll-behavior: smooth;
   background-color: #ffffff !important;
-  overflow-x: hidden !important;
   /* word-break: break-all !important; */
+}
+
+/* Horizontal overflow is hidden on <html> (the viewport) only. Putting `overflow-x: hidden` on
+   <body> as well turns <body> into its own scroll container, and then every
+   `position: sticky` element (navbar, dashboard header) sticks to a body that never scrolls —
+   it does not stick at all and just scrolls away with the page. */
+html {
+  overflow-x: hidden !important;
 }
 
 ::-webkit-scrollbar {

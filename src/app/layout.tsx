@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
 import Providers from "@/providers/Providers";
+import ModalScrollLock from "@/components/shared/ModalScrollLock";
 import NavbarWraper from "@/components/shared/NavbarWraper";
 import "./globals.css";
 
@@ -79,6 +80,7 @@ export default function RootLayout({
       >
         <Providers>
           <Toaster position="top-center" richColors />
+          <ModalScrollLock />
           <AntdRegistry>
             <ConfigProvider theme={mainTheme} locale={{ locale: "en", Image: { preview: "Náhľad" } }}>
               <div className="sticky top-0 w-full z-[100]!">

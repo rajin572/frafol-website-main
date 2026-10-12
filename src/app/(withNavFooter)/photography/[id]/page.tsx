@@ -20,6 +20,7 @@ const PhotographyCategoryDetailsPage = async ({
   const role = (paramsData?.role as string) || "";
   const title = (paramsData?.title as string) || "";
   const src = (paramsData?.src as string) || "";
+  const subTitle = (paramsData?.subTitle as string) || "";
   const search = (paramsData?.search as string) || "";
   const minPrice = (paramsData?.min as string) || null;
   const maxPrice = (paramsData?.max as string) || null;
@@ -31,11 +32,13 @@ const PhotographyCategoryDetailsPage = async ({
     role: string;
     title: string;
     src: string;
+    subTitle: string;
   } = {
     id,
     role,
     title,
     src,
+    subTitle,
   };
 
   const res = await fetchWithAuth(

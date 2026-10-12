@@ -1,4 +1,5 @@
 import { Modal } from "antd";
+import CreateConversionButton from "@/components/Professional/CreateConversionButton";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IGearOrder } from "@/types";
@@ -118,6 +119,20 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
                 : "N/A"}
             </p>
           </div>
+        </div>
+
+        {/* Contact the buyer */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4 flex items-center justify-between gap-3">
+          <p className="text-sm">
+            <span className="font-semibold">Kupujúci:</span>{" "}
+            {currentRecord?.clientId?.name}
+          </p>
+          <CreateConversionButton
+            userId={currentRecord?.clientId?._id}
+            name={currentRecord?.clientId?.name}
+            label="Napísať kupujúcemu"
+            className="!w-fit"
+          />
         </div>
 
         {/* Summary & Payment */}

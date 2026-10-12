@@ -39,7 +39,7 @@ const PhotographyPage = async ({ searchParams }: { searchParams: any }) => {
               {filteredCategories?.map((item, index) => (
                 <Link
                   key={index}
-                  href={`/photography/${item?._id}?role=photographer&title=${item?.title}&src=${item?.image}`}
+                  href={`/photography/${item?._id}?role=photographer&title=${encodeURIComponent(item?.title ?? "")}&src=${encodeURIComponent(item?.image ?? "")}&subTitle=${encodeURIComponent(item?.subTitle ?? "")}`}
                 >
                   <CategoryCard item={item} />
                 </Link>

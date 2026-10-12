@@ -120,7 +120,18 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
             footer={
                 null
             }
-            className="max-w-[1000px] lg:min-w-[800px] max-h-[90vh] overflow-y-auto rounded"
+            className="max-w-[1000px] lg:min-w-[800px] rounded"
+            styles={{
+                // The body is the scroller: the viewport-sized cap keeps the whole popup
+                // reachable on phones, and overscroll containment stops the page behind
+                // it from taking over the gesture.
+                body: {
+                    maxHeight: "calc(100dvh - 8rem)",
+                    overflowY: "auto",
+                    overscrollBehavior: "contain",
+                    WebkitOverflowScrolling: "touch",
+                },
+            }}
         // styles.body={{ textAlign: "center" }}
         >
             <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between mt-5">

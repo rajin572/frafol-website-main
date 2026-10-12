@@ -12,12 +12,34 @@ import {
 import ConversationMessageCard from "./ConversationMessageCard";
 import ConversationSendMessage from "./ConversationSendMessage";
 import Image from "next/image";
+import Link from "next/link";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { IMessage } from "@/types/conversation.type";
 import { ISignInUser } from "@/types";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SpinLoader from "../ui/SpinLoader";
+
+// Wraps the header user (picture + name) in a link when a public profile exists.
+const HeaderUserLink = ({
+  userId,
+  isLink,
+  children,
+}: {
+  userId?: string;
+  isLink: boolean;
+  children: React.ReactNode;
+}) =>
+  isLink && userId ? (
+    <Link
+      href={`/professionals/${userId}`}
+      className="flex justify-center items-center gap-2 cursor-pointer !text-secondary-color"
+    >
+      {children}
+    </Link>
+  ) : (
+    <div className="flex justify-center items-center gap-2 text-secondary-color">{children}</div>
+  );
 
 const ConversationMessage = ({
   allMessages,
@@ -212,7 +234,11 @@ const ConversationMessage = ({
                   className="text-2xl cursor-pointer text-secondary-color"
                 />
               </div>
-              <div className="flex justify-center items-center gap-2">
+              {/* Clients can open the professional's public profile from the chat header. */}
+              <HeaderUserLink
+                userId={selectedConversation?.chat?.users?.[0]?._id}
+                isLink={userData?.role === "user" || userData?.role === "company"}
+              >
                 <Image
                   width={2000}
                   height={2000}
@@ -237,7 +263,7 @@ const ConversationMessage = ({
                     </Tooltip>
                   </span>
                 </div>
-              </div>
+              </HeaderUserLink>
             </div>
           </div>
 

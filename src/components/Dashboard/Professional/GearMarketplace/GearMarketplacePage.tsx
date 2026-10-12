@@ -105,16 +105,16 @@ const GearMarketplacePage = ({
     <div>
       <div className=" min-h-[80vh] rounded-xl px-4">
         <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
-          <div className=" flex items-center justify-between">
+          <div className=" flex flex-col items-start gap-3 mb-5 sm:mb-0 sm:flex-row sm:items-center sm:justify-between">
             {/* <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
               Gear Marketplace
             </h1> */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-0 sm:mb-5">
               Bazár
             </h1>
             <ReuseButton
               variant="secondary"
-              className="!w-fit"
+              className="!w-fit !text-sm sm:!text-base lg:!text-lg !px-3 sm:!px-5 lg:!px-8 !py-4 lg:!py-5"
               onClick={showAddModal}
             >
               <FaPlus className="mr-2" />

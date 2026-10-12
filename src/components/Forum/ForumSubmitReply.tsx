@@ -73,6 +73,7 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
         rows={4}
         /* placeholder="Write your reply here..." */
         placeholder="Napíšte svoju odpoveď tu..."
+        rules={[{ required: true, whitespace: true, message: "Napíšte komentár" }]}
       />
 
       <div className="flex justify-end">

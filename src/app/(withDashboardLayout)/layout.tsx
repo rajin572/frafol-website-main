@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
           <SideBar />
           <Layout className="!bg-[#F9FAFB]">
             <Header
-              className="!m-0 !py-0 !px-4 !w-fit lg:!sticky lg:!top-16 lg:!z-50 !bg-[#F9FAFB]"
+              className="!m-0 !py-0 !px-4 !w-fit lg:!sticky lg:!top-[52px] lg:!z-50 !bg-[#F9FAFB]"
               style={{
                 background: "#F9FAFB",
                 position: "sticky",

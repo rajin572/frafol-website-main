@@ -74,7 +74,7 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
               <div className="mt-10 flex justify-end">
                 <ReuseButton
                   variant="secondary"
-                  url="/marketplace"
+                  url="/dashboard/professional/gear-marketPlace"
                   className="w-fit  mt-5 !text-sm sm:!text-base lg:!text-lg !py-4.5"
                 >
                   <PlusIcon className="mr-2" />
