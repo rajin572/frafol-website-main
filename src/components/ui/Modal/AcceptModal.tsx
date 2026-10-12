@@ -9,6 +9,7 @@ interface AcceptModalProps<T> {
 
   handleConfirm: any;
   description?: string;
+  confirmText?: string;
 }
 
 const AcceptModal: React.FC<AcceptModalProps<any>> = ({
@@ -17,6 +18,7 @@ const AcceptModal: React.FC<AcceptModalProps<any>> = ({
   currentRecord,
   handleConfirm,
   description = " Are You Sure You want to Delivery This Event ?",
+  confirmText = "Confirm",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 
@@ -45,14 +47,14 @@ const AcceptModal: React.FC<AcceptModalProps<any>> = ({
             className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
             onClick={handleCancel}
           >
-            Cancel
+            Zrušiť
           </ReuseButton>
           <ReuseButton
             variant="secondary"
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             onClick={() => handleConfirm(currentRecord)}
           >
-            Confirm
+            {confirmText}
           </ReuseButton>
         </div>
       }

@@ -194,7 +194,7 @@ const ProfessionalServiceBookingModal: React.FC<
               name="location"
               label="Miesto"
               placeholder="Miesto fotenia/natáčania"
-              rules={[{ required: true, message: "Zadajte miesto fotenia/natáčania" }]}
+              rules={[{ required: true, message: "Zadajte miesto" }]}
               labelClassName="!font-semibold"
             />
 
@@ -213,7 +213,7 @@ const ProfessionalServiceBookingModal: React.FC<
               date={selectedDate ? selectedDate.toISOString() : null}
               label="Čas začiatku"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Vyberte čas začiatku" }]}
+              rules={[{ required: true, message: "Vyberte čas" }]}
               placeholder="Vyberte čas"
               disabled={!selectedDate}
             />

@@ -234,7 +234,9 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  scroll-behavior: smooth;
+  /* NOT `smooth`: antd animates scrollTop itself every frame, and CSS smooth-scrolling on
+     top of that turns each step into another delayed animation (wheel/scroll felt very slow). */
+  scroll-behavior: auto;
   width: 72px !important;
 }
 

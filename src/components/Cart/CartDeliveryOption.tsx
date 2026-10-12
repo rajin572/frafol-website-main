@@ -164,7 +164,7 @@ const CartDeliveryOption = ({
       gearOrder,
       { body: data },
       {
-        toastLoadingMessage: "Please wait...",
+        toastLoadingMessage: "Prosím, počkajte...",
         toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
         toastErrorMessage: "Something went wrong! Please try again.",
       }

@@ -65,7 +65,7 @@ const UserConfirmOrder = ({
       },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again. ",
       }
     );
@@ -82,7 +82,7 @@ const UserConfirmOrder = ({
       { params: data?._id },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again. ",
       }
     );
@@ -128,7 +128,8 @@ const UserConfirmOrder = ({
         handleCancel={() => setIsConfirmModalVisible(false)}
         currentRecord={currentRecord}
         handleConfirm={handleConfirmDelivery}
-        description=" Are You Sure You want to Confirm This Delivery ?"
+        description="Naozaj chcete potvrdiť prevzatie hotovej práce?"
+        confirmText="Potvrdiť prevzatie"
       />
     </div>
   );

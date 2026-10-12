@@ -4,7 +4,7 @@ import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import { IEventOrder } from "@/types";
 import { formatDate } from "@/utils/dateFormet";
-import { budgetLabels } from "@/utils/budgetLabels";
+import { budgetLabels, serviceTypeLabels } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface ProfessionalEventOrderTableProps {
@@ -47,7 +47,7 @@ const ProfessionalEventOrderTable: React.FC<
       title: "Typ služby",
       dataIndex: "serviceType",
       key: "serviceType",
-      render: (text: string) => <span className="capitalize">{text === "both" ? /* "Photography & Videography" */ "Fotografia a video" : text}</span>,
+      render: (text: string) => <span className="capitalize">{text === "both" ? /* "Photography & Videography" */ "Fotografia a video" : serviceTypeLabels[text] || text}</span>,
     },
     {
       /* title: "Event Name", */
@@ -62,7 +62,7 @@ const ProfessionalEventOrderTable: React.FC<
               {
                 record?.status === "deliveryRequest" ?
                   (<p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">
-                    Delivery Requested
+                    Čaká na potvrdenie
                   </p>)
                   : record?.extensionRequests?.[record?.extensionRequests?.length > 0 ? record?.extensionRequests?.length - 1 : 0]?.status === "pending" && (
                     <p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">
@@ -77,7 +77,7 @@ const ProfessionalEventOrderTable: React.FC<
               {
                 record?.status === "deliveryRequest" ?
                   (<p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">
-                    Delivery Requested
+                    Čaká na potvrdenie
                   </p>)
                   : record?.extensionRequests?.[record?.extensionRequests?.length > 0 ? record?.extensionRequests?.length - 1 : 0]?.status === "pending" && (
                     <p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">

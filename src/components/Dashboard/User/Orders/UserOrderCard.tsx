@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { IEventOrder } from "@/types";
-import { budgetLabels } from "@/utils/budgetLabels";
+import { budgetLabels, eventOrderStatus, serviceTypeLabels } from "@/utils/budgetLabels";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import Image from "next/image";
 import { BsEye } from "react-icons/bs";
@@ -61,7 +61,7 @@ const UserOrderCard = ({
     };
 
     if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
-      toast.error("Please accept all terms and conditions");
+      toast.error("Prosím, odsúhlaste všetky obchodné podmienky");
       return;
     }
 
@@ -69,7 +69,7 @@ const UserOrderCard = ({
       completePayment,
       { body: value },
       {
-        toastLoadingMessage: "Please wait...",
+        toastLoadingMessage: "Prosím, počkajte...",
         toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
         toastErrorMessage: "Something went wrong! Please try again.",
       }
@@ -94,7 +94,7 @@ const UserOrderCard = ({
           <div className="flex items-center gap-2">
             <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
               {/* {data?.orderType} */}
-              <span className="capitalize">{data?.orderType}</span>
+              <span className="capitalize">{data?.orderType === "custom" ? "Formulár" : "Balík"}</span>
             </p>
             {activeTab !== "extension" && (
               <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
@@ -115,7 +115,7 @@ const UserOrderCard = ({
                       ? "Prebieha"
                       : data?.status === "cancelRequest"
                         ? "Žiadosť o zrušenie odoslaná"
-                        : data?.status}
+                        : eventOrderStatus[data?.status as string] || data?.status}
               </p>
             )}
             {
@@ -130,7 +130,7 @@ const UserOrderCard = ({
         </div>
         <h4 className="text-sm sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
           {/* {data?.serviceType === "both" ? "Photography & Videography" : data?.serviceType} */}
-          {data?.serviceType === "both" ? "Fotografia a Video" : data?.serviceType}
+          {data?.serviceType === "both" ? "Fotografia a Video" : serviceTypeLabels[data?.serviceType as string] || data?.serviceType}
         </h4>
         <Link href={`/professionals/${data?.serviceProviderId?._id}`} className="w-fit! inline-block  my-3">
           <div className="text-sm sm:text-base lg:text-lg text-gray-700 flex items-center gap-1">
@@ -355,7 +355,7 @@ const UserOrderCard = ({
               >
                 <IoCheckmarkSharp size={16} />
                 {/* Complete */}
-                Dokončiť
+                Potvrdiť prevzatie
               </button>
               <button
                 onClick={() => openModal(data)}
@@ -393,7 +393,7 @@ const UserOrderCard = ({
               >
                 <FaEuroSign size={16} />
                 {/* Pay */}
-                Zaplatiť
+                Objednať s povinnosťou platby
               </button>
               <button
                 onClick={() => openModal(data)}

@@ -12,7 +12,7 @@ import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
+import { budgetLabels, eventOrderStatus, serviceTypeLabels } from "@/utils/budgetLabels";
 import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
 import { creatorFinalInvoice, creatorPaymentInvoice } from "@/utils/invoice/assembleInvoices";
 import { downloadInvoices } from "@/utils/invoice/downloadInvoices";
@@ -124,10 +124,10 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
 
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {/* {currentRecord?.serviceType === "both" ? "Photography & Videography" : ...} */}
-            {currentRecord?.serviceType === "both" ? "Fotografia a video" : currentRecord?.serviceType}
+            {currentRecord?.serviceType === "both" ? "Fotografia a video" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
           </p>
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
-            By <Link className="text-secondary-color!" href={`/professionals/${currentRecord?.serviceProviderId?._id}`}>{currentRecord?.serviceProviderId?.companyName || currentRecord?.serviceProviderId?.name}</Link>
+            Tvorca: <Link className="text-secondary-color!" href={`/professionals/${currentRecord?.serviceProviderId?._id}`}>{currentRecord?.serviceProviderId?.companyName || currentRecord?.serviceProviderId?.name}</Link>
           </p>
           {(() => {
             const desc = currentRecord?.description || currentRecord?.packageId?.description;
@@ -155,7 +155,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         {/* Client Info */}
         <div className="mb-4">
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Client Information
+            Informácie o klientovi
           </h4>
           <div className="flex flex-col gap-1 my-2 ">
             <Image
@@ -176,7 +176,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                   currentRecord?.userId?.name}
               </p>
               <p className="text-base font-semibold text-gray-600">
-                {currentRecord?.isRegisterAsCompany ? "Company" : "Personal"}
+                {currentRecord?.isRegisterAsCompany ? "Firma" : "Súkromná osoba"}
               </p>
 
               {/* <p className="text-sm text-gray-600">Wedding Photographer</p> */}
@@ -271,10 +271,10 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             </p>
             {activeTab === "inProgress" && (
               <p className="text-sm sm:text-sm lg:text-base mt-1">
-                <span className="font-semibold">Extension Status :</span>{" "}
+                <span className="font-semibold">Stav predĺženia termínu:</span>{" "}
                 <span className="font-semibold capitalize">
                   {(currentRecord?.extensionRequests?.length ?? 0) < 1
-                    ? "Request Not Sent"
+                    ? "Žiadosť nebola odoslaná"
                     : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "pending"
                       ? "Request On Pending"
                       : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "accepted"
@@ -349,10 +349,10 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         <div className="mb-4">
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             {/* Event Details */}
-            Detaily podujatia
+            Informácie o fotení/natáčaní
           </h4>
           <p className="text-sm sm:text-sm lg:text-base mt-1 flex items-center gap-2 mb-2">
-            <FaCalendarAlt className="shrink-0" /> <span>{/* Event Date : */}Dátum podujatia: </span>
+            <FaCalendarAlt className="shrink-0" /> <span>{/* Event Date : */}Dátum: </span>
             {formatDate(currentRecord?.date)}
           </p>
           <div className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
@@ -388,7 +388,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                 </p>
                 <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
-                    Service Fee Amount:
+                    Servisný poplatok:
                   </span>{" "}
                   <span translate="no">{serviceFeeAmount?.toFixed(2)}€</span>
                 </p>
@@ -509,7 +509,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               variant="secondary"
               className="!text-white !bg-success !border-success !w-fit"
             >
-              Deliver Order
+              Označiť ako dokončené
             </ReuseButton>
             <ReuseButton
               onClick={() => showCancelModal(currentRecord)}
@@ -527,7 +527,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                 variant="secondary"
                 className="!text-white !bg-[#2529FF] !border-[#2529FF] !w-fit"
               >
-                Request Extension
+                Požiadať o predĺženie termínu
               </ReuseButton>
             ) : (
               <h4 className="text-sm sm:text-base lg:text-lg xl:text-xl text-yellow-600 font-bold">

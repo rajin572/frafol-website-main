@@ -82,7 +82,7 @@ const UserOrdersPage = ({
             },
             {
               /* label: "Delivered", */
-              label: "Doručené",
+              label: "Dokončené",
               value: "delivered",
               content: (
                 <UserDeliveriedOrder

@@ -6,15 +6,19 @@ export const budgetLabels: { [key: string]: string } = {
   over1000: "Nad 1000€",
 };
 export const eventOrderStatus: { [key: string]: string } = {
-  pending: "Pending",
+  pending: "Čaká na schválenie",
   declined: "Declined",
-  accepted: "Waiting for Payment",
-  inProgress: "In Progress",
-  deliveryRequestDeclined: "In Progress",
-  deliveryRequest: "Delivery Request",
-  delivered: "Delivered",
+  accepted: "Čaká sa na platbu",
+  inProgress: "Prebieha",
+  deliveryRequestDeclined: "Prebieha",
+  deliveryRequest: "Čaká na potvrdenie",
+  delivered: "Dokončené",
   cancelRequest: "Cancel Requested",
   cancelled: "Cancelled",
+};
+export const serviceTypeLabels: { [key: string]: string } = {
+  photography: "Fotenie",
+  videography: "Natáčanie",
 };
 export const gearOrderStatus: { [key: string]: string } = {
   inProgress: "In Progress",

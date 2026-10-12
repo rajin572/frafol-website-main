@@ -24,7 +24,7 @@ const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: IS
             completePayment,
             { body: value },
             {
-                toastLoadingMessage: "Please wait...",
+                toastLoadingMessage: "Prosím, počkajte...",
                 toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
                 toastErrorMessage: "Something went wrong! Please try again.",
             }

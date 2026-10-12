@@ -124,7 +124,7 @@ const EventOrdersPage = ({
       { body: values, params: data?._id },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again. ",
       }
     );
@@ -160,7 +160,7 @@ const EventOrdersPage = ({
       },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again. ",
       }
     );
@@ -201,7 +201,7 @@ const EventOrdersPage = ({
       },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again. ",
       }
     );
@@ -308,7 +308,7 @@ const EventOrdersPage = ({
                 ),
               },
               {
-                label: "Doručené",
+                label: "Dokončené",
                 value: "delivered",
                 content: (
                   <ProfessionalEventOrderTable

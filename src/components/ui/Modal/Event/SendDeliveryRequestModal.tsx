@@ -29,7 +29,7 @@ const SendDeliveryRequestModal: React.FC<
   handleCancel,
   currentRecord,
   setIsSendDeliveryRequestModalVisible,
-  description = "Send Delivery Request",
+  description = "Odovzdať hotovú prácu",
 }) => {
     const [form] = Form.useForm<SendDeliveryRequestFormValues>();
 
@@ -88,12 +88,12 @@ const SendDeliveryRequestModal: React.FC<
           <ReuseInput
             type="link"
             name="deliveryLink"
-            label="Delivery Link"
-            placeholder="Enter delivery link"
+            label="Odkaz na hotové fotografie/video"
+            placeholder="Vložte odkaz"
             rules={[
               {
                 required: true,
-                message: "Delivery link is required",
+                message: "Vložte odkaz",
               },
               {
                 type: "url",
@@ -105,13 +105,13 @@ const SendDeliveryRequestModal: React.FC<
           <ReuseInput
             inputType="textarea"
             name="deliveryMessage"
-            label="Delivery Message"
-            placeholder="Enter delivery message"
+            label="Správa pre klienta"
+            placeholder="Napíšte správu pre klienta"
             rows={4}
             rules={[
               {
                 required: true,
-                message: "Delivery message is required",
+                message: "Napíšte správu pre klienta",
               },
             ]}
           />
@@ -122,14 +122,14 @@ const SendDeliveryRequestModal: React.FC<
               className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
               onClick={handleClose}
             >
-              Cancel
+              Zrušiť
             </ReuseButton>
             <ReuseButton
               htmlType="submit"
               variant="secondary"
               className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             >
-              Send Request
+              Odoslať na schválenie
             </ReuseButton>
           </div>
         </ReusableForm>

@@ -23,6 +23,22 @@ interface ReuseTimePickerProps {
   date: string | null; // Optional date prop to pass the selected date
 }
 
+// rc-picker eases the selected time into view by 1/3 of the remaining distance per frame
+// (~15 frames) when the popup opens and after every pick, which feels sluggish. Jumping
+// straight to the selected cell makes it instant: rc then sees it is already at the target
+// and stops its own animation. Runs a frame later so the "selected" class is up to date.
+const jumpToSelectedTime = () => {
+  requestAnimationFrame(() => {
+    document
+      .querySelectorAll<HTMLElement>(".frafol-time-popup .ant-picker-time-panel-column")
+      .forEach((column) => {
+        const selected = column.querySelector<HTMLElement>(".ant-picker-time-panel-cell-selected");
+        const first = column.querySelector<HTMLElement>("li");
+        if (selected && first) column.scrollTop = selected.offsetTop - first.offsetTop;
+      });
+  });
+};
+
 const ReuseTimePicker = ({
   label,
   name,
@@ -38,6 +54,22 @@ const ReuseTimePicker = ({
   wrapperClassName,
   date, // If no date is provided, we treat it as null
 }: ReuseTimePickerProps) => {
+  // After picking an hour/minute (or "Now"), skip rc-picker's slow scroll animation.
+  React.useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target?.closest(
+          ".frafol-time-popup .ant-picker-time-panel-cell, .frafol-time-popup .ant-picker-now-btn"
+        )
+      ) {
+        jumpToSelectedTime();
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
   // Function to disable times before current time if date is today
   const disabledTime = () => {
     if (!date) return {}; // If no date is selected, allow all times
@@ -111,6 +143,13 @@ const ReuseTimePicker = ({
           placeholder={placeholder}
           // Prevent the mobile keyboard from opening (it covers the panel on tablets/phones)
           inputReadOnly
+          // Opening: put the columns on the selected time right away instead of easing in.
+          onOpenChange={(open) => {
+            if (open) {
+              jumpToSelectedTime();
+              setTimeout(jumpToSelectedTime, 60); // popup may mount a tick later
+            }
+          }}
           // Scoped popup class: bigger touch targets + stops scroll from leaking to the page (see globals.css)
           popupClassName="frafol-time-popup"
           disabledTime={date ? disabledTime : undefined} // Disable time selection logic based on the date

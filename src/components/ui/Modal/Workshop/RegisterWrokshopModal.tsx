@@ -84,7 +84,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
             };
 
             if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
-                toast.error("Please accept all terms and conditions");
+                toast.error("Prosím, odsúhlaste všetky obchodné podmienky");
                 return;
             }
 

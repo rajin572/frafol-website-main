@@ -10,7 +10,7 @@ import { AllImages } from "../../../../../public/assets/AllImages";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
-import { budgetLabels } from "@/utils/budgetLabels";
+import { budgetLabels, eventOrderStatus, serviceTypeLabels } from "@/utils/budgetLabels";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
 import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
@@ -86,7 +86,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           </div>
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {/* {currentRecord?.serviceType === "both" ? "Photography & Videography" : currentRecord?.serviceType} */}
-            {currentRecord?.serviceType === "both" ? "Fotografia a Video" : currentRecord?.serviceType}
+            {currentRecord?.serviceType === "both" ? "Fotografia a Video" : serviceTypeLabels[currentRecord?.serviceType as string] || currentRecord?.serviceType}
           </p>
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             {/* By */}
@@ -139,7 +139,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             </p>
             <p className="text-sm sm:text-sm lg:text-base">
               {/* <span className="font-semibold">Event Date :</span> */}
-              <span className="font-semibold">Dátum podujatia:</span>{" "}
+              <span className="font-semibold">Dátum:</span>{" "}
               {formatDate(currentRecord?.date)}
             </p>
             {currentRecord?.status !== "cancelled" && (
@@ -161,7 +161,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               {/* <span className="font-semibold">Status :</span> */}
               <span className="font-semibold">Stav:</span>{" "}
               <span className="capitalize font-semibold text-secondary-color">
-                {currentRecord?.status}
+                {eventOrderStatus[currentRecord?.status as string] || currentRecord?.status}
               </span>
             </p>
           </div>
@@ -270,7 +270,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         <div className="mb-4">
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             {/* Event Details */}
-            Detaily podujatia
+            Informácie o fotení/natáčaní
           </h4>
           <div className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
             <div className="flex items-center gap-2 text-nowrap">

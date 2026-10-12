@@ -47,7 +47,7 @@ const UserDeliveriedOrder = ({
       { body: values, params: data?._id },
       {
         toastLoadingMessage: "Sending request... ",
-        toastSuccessMessage: "Request Sent Successfully! ",
+        toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
         toastErrorMessage: "Something went wrong! Please try again ",
       }
     );

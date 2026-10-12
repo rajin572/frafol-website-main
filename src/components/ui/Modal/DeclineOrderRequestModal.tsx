@@ -19,7 +19,7 @@ const DeclineOrderRequestModal: React.FC<
   handleCancel,
   currentRecord,
   handleDeclineOrder,
-  description = "Are You Sure You want to Reject This Order ?",
+  description = "Naozaj chcete odmietnuť túto objednávku?",
 }) => {
     const [form] = Form.useForm();
     //   const [blockUser] = useBlockUserMutation();
@@ -50,9 +50,9 @@ const DeclineOrderRequestModal: React.FC<
           <ReuseInput
             inputType="textarea"
             name="reason"
-            label="Reason"
-            placeholder="Enter Reason"
-            rules={[{ required: true, message: "Reason is required" }]}
+            label="Dôvod odmietnutia"
+            placeholder="Uveďte dôvod odmietnutia"
+            rules={[{ required: true, message: "Uveďte dôvod odmietnutia" }]}
           />
 
           <ReuseButton
@@ -60,7 +60,7 @@ const DeclineOrderRequestModal: React.FC<
             variant="error"
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
           >
-            Decline Request
+            Odmietnuť žiadosť
           </ReuseButton>
         </ReusableForm>
       </Modal>
