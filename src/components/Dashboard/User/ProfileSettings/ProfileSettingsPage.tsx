@@ -52,7 +52,7 @@ const ProfileSettingsPage = ({
             },
             {
               /* label: "Account Credentials", */
-              label: "Prihlasovacie údaje",
+              label: "Bankové údaje",
               value: "accountCredentials",
               content: <AccountCredentialPage myData={myData} />, // Placeholder for account credentials content
             },

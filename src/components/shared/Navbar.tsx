@@ -114,20 +114,20 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
       key: "1",
       label:
         userData?.role === "user" || userData?.role === "company" ? (
-          <Link href="/dashboard/my-account/overview">Dashboard</Link>
+          <Link href="/dashboard/my-account/overview">Môj účet</Link>
         ) : userData?.role === "photographer" ||
           userData?.role === "videographer" ||
           userData?.role === "both" ? (
-          <Link href="/dashboard/professional/overview">Dashboard</Link>
+          <Link href="/dashboard/professional/overview">Môj účet</Link>
         ) : (
-          <Link href="/">Dashboard</Link>
+          <Link href="/">Môj účet</Link>
         ),
       icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
     },
     ...(isProfessional ? [
       {
         key: "2",
-        label: <Link href="/helpful-documents">Documents</Link>,
+        label: <Link href="/helpful-documents">Užitočné dokumenty</Link>,
         icon: (
           <IoDocumentTextOutline className="text-secondary-color !text-base" />
         ),

@@ -22,17 +22,17 @@ const PortfolioPage = ({ activeTab, myData }: {
         align="left"
         tabs={[
           {
-            label: "Intro Video",
+            label: "Úvodné video",
             value: "introVideo",
             content: <PortfolioIntroVideo myData={myData} />,
           },
           {
-            label: "Banner Image",
+            label: "Titulné fotografie",
             value: "bannerImage",
             content: <PortfolioBannerImage myData={myData} />, // Placeholder for portfolio content
           },
           {
-            label: "Gallery Image",
+            label: "Portfólio",
             value: "galleryImage",
             content: <PortfolioGalleryImage myData={myData} />, // Placeholder for account credentials content
           },

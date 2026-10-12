@@ -7,6 +7,10 @@ import { Rule } from "antd/es/form";
 import { cn } from "@/lib/utils";
 import { CiCalendarDate } from "react-icons/ci";
 import dayjs from "dayjs";
+import enUS from "antd/es/date-picker/locale/en_US";
+
+// antd's default picker locale with only the "Today" button translated.
+const locale = { ...enUS, lang: { ...enUS.lang, today: "Dnes" } };
 
 interface ReuseDatePickerProps {
   label?: React.ReactNode;
@@ -82,6 +86,7 @@ const ReuseDatePicker = ({
             className
           )}
           style={style}
+          locale={locale}
           placeholder={placeholder}
           disabledDate={shouldDisableDate ? disabledDate : undefined} // Disable previous dates, months, and years
         />

@@ -39,8 +39,8 @@ const ProfileProtfolioUploadImageModal: React.FC<
         updateGallery,
         { body: formData },
         {
-          toastLoadingMessage: "Uploading Image...",
-          toastSuccessMessage: "Gallery updated successfully!",
+          toastLoadingMessage: isVideoUpload ? "Nahráva sa video..." : "Nahráva sa fotografia...",
+          toastSuccessMessage: "Portfólio bolo úspešne aktualizované!",
           toastErrorMessage: "Something went wrong! Please try again.",
         }
       );
@@ -58,8 +58,8 @@ const ProfileProtfolioUploadImageModal: React.FC<
         updateIntroVIdeo,
         { body: formData },
         {
-          toastLoadingMessage: "Uploading Intro Video...",
-          toastSuccessMessage: "Intro Video updated successfully!",
+          toastLoadingMessage: "Nahráva sa úvodné video...",
+          toastSuccessMessage: "Úvodné video bolo úspešne aktualizované!",
           toastErrorMessage: "Something went wrong! Please try again.",
         }
       );
@@ -76,8 +76,8 @@ const ProfileProtfolioUploadImageModal: React.FC<
         updateBannerImage,
         { body: formData },
         {
-          toastLoadingMessage: "Uploading Image...",
-          toastSuccessMessage: "Banner updated successfully!",
+          toastLoadingMessage: "Nahráva sa fotografia...",
+          toastSuccessMessage: "Titulné fotografie boli úspešne aktualizované!",
           toastErrorMessage: "Something went wrong! Please try again.",
         }
       );
@@ -106,11 +106,11 @@ const ProfileProtfolioUploadImageModal: React.FC<
     >
       <div className="p-5 text-base-color">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-5">
-          Protfolio Upload
+          {type === "both" ? "Portfólio" : type === "video" ? "Úvodné video" : "Titulné fotografie"}
         </h1>
 
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-5">
-          Upload your {type === "both" ? "Gallery Images and Video" : type === "video" ? "Intro Video" : "Banner Image"}
+          {type === "both" ? "Nahrajte fotografie a videá do portfólia" : type === "video" ? "Nahrajte svoje úvodné video" : "Nahrajte titulné fotografie"}
         </p>
 
         <ReusableForm form={form} handleFinish={onSubmit}>
@@ -118,7 +118,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
           {type === "both" && (
             <div className="mb-4">
               <Typography.Title level={5} className="!font-semibold">
-                Upload Type
+                Typ súboru
               </Typography.Title>
               <Select
                 value={mediaType}
@@ -129,7 +129,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
                 }}
                 className="!w-40 !h-10"
                 options={[
-                  { value: "image", label: "Photo" },
+                  { value: "image", label: "Fotografia" },
                   { value: "video", label: "Video" },
                 ]}
               />
@@ -140,16 +140,16 @@ const ProfileProtfolioUploadImageModal: React.FC<
             // Remount when switching photo/video so the upload UI resets cleanly.
             key={isVideoUpload ? "video" : "image"}
             name="image"
-            buttonText={isVideoUpload ? "Upload Video (Max 100mb)" : "Upload Max 10"}
-            label={isVideoUpload ? "Video" : "Image"}
+            buttonText={isVideoUpload ? "Nahrať video (max. 100 MB)" : type === "both" ? "Nahrať maximálne 10 fotografií naraz" : "Nahrať maximálne 10 fotografií"}
+            label={isVideoUpload ? "Video" : "Fotografia"}
             labelClassName="!font-semibold"
             maxCount={isVideoUpload ? 1 : 10}
             accept={isVideoUpload ? "video/*" : "image/*"}
             multiple={isVideoUpload ? false : true}
-            rules={[{ required: true, message: isVideoUpload ? "Video is required" : "Image is required" }]}
+            rules={[{ required: true, message: isVideoUpload ? "Vyberte video" : "Vyberte fotografiu" }]}
           />
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Upload
+            Nahrať
           </ReuseButton>
         </ReusableForm>
       </div>

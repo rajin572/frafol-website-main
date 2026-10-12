@@ -94,38 +94,37 @@ const DeleteAccountPage = ({
       {/* Warning box */}
       <div className="mb-8 p-4 rounded-lg bg-red-50 border border-red-200">
         <h3 className="text-red-700 font-semibold text-base mb-2">
-          Warning: This action is irreversible
+          Upozornenie: Túto akciu nie je možné vrátiť späť
         </h3>
         <ul className="text-red-600 text-sm list-disc list-inside space-y-1">
           <li>
-            All your profile data, bookings, and history will be permanently
-            deleted.
+            Všetky údaje z vášho profilu, objednávky a história budú natrvalo odstránené.
           </li>
           <li>
-            You will lose access to all services associated with this account.
+            Stratíte prístup ku všetkým službám spojeným s týmto účtom.
           </li>
           <li>
-            Your request will be reviewed by our team before it is processed.
+            Pred spracovaním vašu žiadosť skontroluje náš tím.
           </li>
         </ul>
       </div>
 
       {/* Form */}
       <h2 className="text-lg font-semibold text-base-color mb-4">
-        Request Account Deletion
+        Požiadať o odstránenie účtu
       </h2>
       <ReusableForm form={form} handleFinish={onFinish}>
         <ReuseInput
           name="reason"
           inputType="textarea"
           rows={5}
-          label="Reason for deletion"
-          placeholder="Please describe why you want to delete your account..."
+          label="Dôvod odstránenia účtu"
+          placeholder="Uveďte dôvod, prečo chcete odstrániť svoj účet..."
           labelClassName="!font-medium"
           rules={[
             {
               required: true,
-              message: "Please provide a reason for account deletion",
+              message: "Uveďte dôvod odstránenia účtu",
             },
           ]}
           disabled={reqStatus === "pending"}
@@ -135,11 +134,11 @@ const DeleteAccountPage = ({
           Typolevel={5}
           inputType="password"
           type="password"
-          label="Confirm your password to proceed"
-          placeholder="Enter your current password"
+          label="Pre pokračovanie potvrďte svoje heslo"
+          placeholder="Zadajte svoje aktuálne heslo"
           labelClassName="!font-medium"
           inputClassName="!py-2"
-          rules={[{ required: true, message: "Please confirm your password" }]}
+          rules={[{ required: true, message: "Potvrďte svoje heslo" }]}
           disabled={reqStatus === "pending"}
         />
         <ReuseButton
@@ -150,7 +149,7 @@ const DeleteAccountPage = ({
         >
           {reqStatus === "pending"
             ? "Request Already Pending"
-            : "Request Account Deletion"}
+            : "Požiadať o odstránenie účtu"}
         </ReuseButton>
       </ReusableForm>
     </div>

@@ -50,7 +50,7 @@ const PortfolioBannerImage = ({ myData }: { myData: IProfile }) => {
             { body: formData },
             {
                 toastLoadingMessage: "Deleting Image...",
-                toastSuccessMessage: "Gallery updated successfully!",
+                toastSuccessMessage: "Portfólio bolo úspešne aktualizované!",
                 toastErrorMessage: "Something went wrong! Please try again.",
             }
         );
@@ -66,15 +66,15 @@ const PortfolioBannerImage = ({ myData }: { myData: IProfile }) => {
         <div>
             <div className="flex items-center justify-between mb-10">
                 <div>
-                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Portfolio Banner</h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-base-color/80 font-medium">Your identity headline. Keep it bold and simple.</p>
+                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Titulné fotografie</h2>
+                    <p className="text-sm sm:text-base lg:text-lg text-base-color/80 font-medium">Vyberte svoje najlepšie fotografie, ktoré si klienti môžu prezrieť priamo na karte Vášho profilu, ešte pred jeho otvorením. Zobrazia sa hneď po úvodnom videu, ak ho nahráte.</p>
                 </div>
                 <ReuseButton
                     variant="secondary"
                     className="!w-fit"
                     onClick={showUploadModal}
                 >
-                    Upload New Photo
+                    Nahrať novú fotografiu
                 </ReuseButton>
             </div>
             <div>

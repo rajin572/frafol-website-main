@@ -26,17 +26,17 @@ const MyAccountProfile = ({
           align="left"
           tabs={[
             {
-              label: "Edit Profile",
+              label: "Upraviť profil",
               value: "profile",
               content: <EditProfile myData={myData} towns={townData} />,
             },
             {
-              label: "Change Password",
+              label: "Zmeniť heslo",
               value: "changePassword",
               content: <ChangePassword />,
             },
             {
-              label: "Delete Account",
+              label: "Odstrániť účet",
               value: "deleteAccount",
               content: <DeleteAccountPage deleteStatus={deleteStatus} />,
             },

@@ -43,7 +43,7 @@ const ReuseUpload = ({
         variant="secondary"
         className="!text-sm sm:!text-base lg:!text-lg !py-4 w-fit "
       >
-        Browse File
+        Vybrať súbor
       </ReuseButton>
     </div>
   ),

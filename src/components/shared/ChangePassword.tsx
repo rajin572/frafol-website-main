@@ -12,22 +12,22 @@ const inputStructure = [
     name: "currentPassword",
     type: "password",
     inputType: "password",
-    label: "Current password",
-    placeholder: "Enter your current password",
+    label: "Aktuálne heslo",
+    placeholder: "Zadajte svoje aktuálne heslo",
     labelClassName: "!font-medium",
     inputClassName: "!py-2",
-    rules: [{ required: true, message: "Current password is required" }],
+    rules: [{ required: true, message: "Zadajte aktuálne heslo" }],
     showPasswordToggle: true,
   },
   {
     name: "newPassword",
     type: "password",
     inputType: "password",
-    label: "New password",
-    placeholder: "Enter your new password",
+    label: "Nové heslo",
+    placeholder: "Zadajte nové heslo",
     labelClassName: "!font-medium",
     inputClassName: "!py-2",
-    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
+    rules: [{ required: true, message: "Zadajte heslo" }, { min: 8, message: "Password must be at least 8 characters" },
     {
       pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
       message: "Password must include at least one uppercase letter and one special character",
@@ -38,12 +38,12 @@ const inputStructure = [
     name: "confirmNewPassword",
     type: "password",
     inputType: "password",
-    label: "Confirm New password",
-    placeholder: "Enter your new password again",
+    label: "Potvrdenie nového hesla",
+    placeholder: "Zadajte nové heslo znova",
     labelClassName: "!font-medium",
     inputClassName: "!py-2",
     rules: [
-      { required: true, message: "Confirm Password is required" },
+      { required: true, message: "Potvrďte heslo" },
       ({
         getFieldValue,
       }: {
@@ -108,7 +108,7 @@ const ChangePassword = () => {
           variant="secondary"
           className="w-full mt-4"
         >
-          Change Password
+          Zmeniť heslo
         </ReuseButton>
       </ReusableForm>
     </div>

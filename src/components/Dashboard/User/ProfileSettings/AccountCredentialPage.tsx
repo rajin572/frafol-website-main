@@ -39,27 +39,27 @@ const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
   return (
     <div className="p-5 text-base-color">
       <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-5">
-        Account Credentials
+        Bankové údaje
       </h1>
 
       <ReusableForm form={form} handleFinish={onSubmit}>
         <ReuseInput
           name="bankName"
-          label="Bank Name"
-          placeholder="Enter Bank Name"
-          rules={[{ required: true, message: "Bank Name is required" }]}
+          label="Názov banky"
+          placeholder="Zadajte názov banky"
+          rules={[{ required: true, message: "Zadajte názov banky" }]}
           labelClassName="!font-semibold"
         />
         <ReuseInput
           name="accountNumber"
-          label="Account Number"
-          placeholder="Enter Account Number"
-          rules={[{ required: true, message: "Account Number is required" }]}
+          label="IBAN"
+          placeholder="Zadajte IBAN"
+          rules={[{ required: true, message: "Zadajte IBAN" }]}
           labelClassName="!font-semibold"
         />
 
         <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-          Update
+          Uložiť zmeny
         </ReuseButton>
       </ReusableForm>
     </div>

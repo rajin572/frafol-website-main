@@ -64,7 +64,7 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
   );
 
   const renderDays = () => {
-    const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+    const days = ["Po", "Ut", "St", "Št", "Pi", "So", "Ne"];
     return (
       <div className="grid grid-cols-7 text-center text-sm font-semibold text-red-800 mb-2">
         {days.map((day, index) => (
@@ -147,7 +147,7 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
   return (
     <div className="bg-white rounded-lg p-4">
       <h2 className="text-center text-red-800 font-semibold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl ">
-        My Unavailable Dates
+        Dni, keď nie som dostupný/á
       </h2>
       {renderHeader()}
       {renderDays()}
@@ -159,7 +159,7 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
           className="mt-2"
           onClick={handleUpdate}
         >
-          Update
+          Uložiť zmeny
         </ReuseButton>
       </div>
     </div>

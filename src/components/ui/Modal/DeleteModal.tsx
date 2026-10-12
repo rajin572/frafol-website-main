@@ -16,8 +16,8 @@ const DeleteModal: React.FC<DeleteModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleDelete,
-  buttonText = "Delete",
-  description = " Are You Sure You want to Delete This?",
+  buttonText = "Odstrániť",
+  description = "Naozaj chcete odstrániť túto položku?",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 
@@ -46,7 +46,7 @@ const DeleteModal: React.FC<DeleteModalProps<any>> = ({
             className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
             onClick={handleCancel}
           >
-            Cancel
+            Zrušiť
           </ReuseButton>
           <ReuseButton
             variant="error"

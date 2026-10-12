@@ -96,7 +96,7 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
             { body: formData },
             {
                 toastLoadingMessage: "Deleting...",
-                toastSuccessMessage: "Gallery updated successfully!",
+                toastSuccessMessage: "Portfólio bolo úspešne aktualizované!",
                 toastErrorMessage: "Something went wrong! Please try again.",
             }
         );
@@ -122,9 +122,9 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
         <div>
             <div className="flex items-center justify-between mb-10">
                 <div>
-                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Gallery</h2>
+                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Portfólio</h2>
                     <p className="text-sm sm:text-base lg:text-lg text-base-color/80 font-medium">
-                        Show your strongest work first. Consistent crops look premium.
+                        Vytvorte si portfólio z Vašich najlepších fotografií a videí, ktoré si klienti môžu prezrieť po otvorení Vášho profilu.
                     </p>
                 </div>
                 <ReuseButton
@@ -132,7 +132,7 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                     className="!w-fit"
                     onClick={showUploadModal}
                 >
-                    Upload New Photo/Video
+                    Nahrať fotografiu/video
                 </ReuseButton>
             </div>
 

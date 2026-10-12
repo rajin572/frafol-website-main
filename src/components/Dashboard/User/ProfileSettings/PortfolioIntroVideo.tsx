@@ -21,15 +21,15 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
         <div>
             <div className="flex items-center justify-between mb-10">
                 <div>
-                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Intro Video</h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-base-color/80 font-medium">A short intro that explains your style and services.</p>
+                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1.5">Úvodné video</h2>
+                    <p className="text-sm sm:text-base lg:text-lg text-base-color/80 font-medium">Úvodné video je prvá vec, ktorú klient uvidí pri vyhľadávaní fotografov a kameramanov. Môžete v ňom krátko predstaviť seba a svoje služby alebo ukázať to najlepšie zo svojej tvorby.</p>
                 </div>
                 <ReuseButton
                     variant="secondary"
                     className="!w-fit"
                     onClick={showUploadModal}
                 >
-                    Upload New Video
+                    Nahrať nové video
                 </ReuseButton>
             </div>
             <div>

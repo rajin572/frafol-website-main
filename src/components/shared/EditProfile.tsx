@@ -65,7 +65,7 @@ const userInputStructure = [
     name: "address",
     type: "text",
     inputType: "tel",
-    label: "Street Address",
+    label: "Ulica a číslo",
     placeholder: "Enter your Street Address",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -88,7 +88,7 @@ const userInputStructure = [
     name: "country",
     type: "text",
     inputType: "text",
-    label: "Country",
+    label: "Krajina",
     placeholder: "Enter your Country",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -99,7 +99,7 @@ const userInputStructure = [
     name: "zipCode",
     type: "text",
     inputType: "normal",
-    label: "Zip Code",
+    label: "PSČ",
     placeholder: "Enter Zip Code Name",
     labelClassName: "!font-semibold !text-secondary-color",
     rules: [{ required: true, message: "Zip Code is required" }],
@@ -124,7 +124,7 @@ const companyInputStructure = [
     name: "companyName",
     type: "text",
     inputType: "normal",
-    label: " Company Name",
+    label: "Názov firmy",
     placeholder: "Enter Full Company Name",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -161,7 +161,7 @@ const companyInputStructure = [
     name: "address",
     type: "text",
     inputType: "normal",
-    label: "Street Address",
+    label: "Ulica a číslo",
     placeholder: "Enter Street Address",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -186,7 +186,7 @@ const companyInputStructure = [
     name: "country",
     type: "text",
     inputType: "normal",
-    label: "Country",
+    label: "Krajina",
     placeholder: "Enter Country Name",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -250,7 +250,7 @@ const professionalInputStructure = [
     name: "companyName",
     type: "text",
     inputType: "normal",
-    label: " Company Name",
+    label: "Názov firmy",
     placeholder: "Enter Full Company Name",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -301,7 +301,7 @@ const professionalInputStructure = [
     name: "minHourlyRate",
     type: "number",
     inputType: "number",
-    label: "Min  Rate",
+    label: "Minimálna cena (€)",
     placeholder: "Enter Min  Rate",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -313,7 +313,7 @@ const professionalInputStructure = [
     name: "maxHourlyRate",
     type: "number",
     inputType: "number",
-    label: "Max  Rate",
+    label: "Maximálna cena (€)",
     placeholder: "Enter Max  Rate",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -363,7 +363,7 @@ const professionalInputStructure = [
     name: "address",
     type: "text",
     inputType: "normal",
-    label: "Street Address",
+    label: "Ulica a číslo",
     placeholder: "Enter Street Address",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -375,7 +375,7 @@ const professionalInputStructure = [
     name: "zipCode",
     type: "text",
     inputType: "normal",
-    label: "Zip Code",
+    label: "PSČ",
     placeholder: "Enter Zip Code Name",
     labelClassName: "!font-semibold !text-secondary-color",
     rules: [{ required: true, message: "Zip Code is required" }],
@@ -384,7 +384,7 @@ const professionalInputStructure = [
     name: "country",
     type: "text",
     inputType: "normal",
-    label: "Country",
+    label: "Krajina",
     placeholder: "Enter Country Name",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
@@ -628,7 +628,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
             />
             <ReuseDatePicker
               name="dateOfBirth"
-              label="Date of Birth"
+              label="Dátum narodenia"
               rules={[{ required: true, message: "Date of Birth is required" }]}
               labelClassName="!font-semibold !text-secondary-color"
               shouldDisableDate={false}
@@ -642,7 +642,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                 showSearch={true}
                 mode="multiple"
                 name="travelTowns"
-                label="Towns I Can Travel To"
+                label="Mestá, do ktorých môžem cestovať"
                 placeholder="Select towns you can travel to"
                 labelClassName="!text-secondary-color !font-semibold"
                 rules={[{ required: true, message: "Please select at least one travel town" }]}
@@ -660,7 +660,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
               {/* Role Select */}
               <ReuseSelect
                 name="role"
-                label="Professional Role"
+                label="Typ služby"
                 placeholder="Select your role"
                 labelClassName="!text-secondary-color !font-semibold"
                 rules={[{ required: true, message: "Please select your role" }]}
@@ -690,7 +690,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                 {showPhotography && (
                   <div>
                     <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
-                      Photography Specializations
+                      Kategórie foto služieb
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       {photographyCategories.map((category, index) => (
