@@ -55,9 +55,9 @@ const SendDeliveryRequestModal: React.FC<
           },
         },
         {
-          toastLoadingMessage: "Sending Delivery Request...",
-          toastSuccessMessage: "Delivery Request Sent Successfully!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastLoadingMessage: "Odovzdáva sa hotová práca...",
+          toastSuccessMessage: "Hotová práca bola úspešne odovzdaná!",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -97,7 +97,7 @@ const SendDeliveryRequestModal: React.FC<
               },
               {
                 type: "url",
-                message: "Please enter a valid link",
+                message: "Zadajte platný odkaz",
               },
             ]}
           />

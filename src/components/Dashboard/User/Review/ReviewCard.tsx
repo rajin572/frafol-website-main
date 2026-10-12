@@ -26,7 +26,7 @@ const ReviewCard = ({
               <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
                 {data?.eventOrderId?.packageId?.title
                   ? data?.eventOrderId?.packageId?.title
-                  : data?.eventOrderId?.title ? data?.eventOrderId?.title : "Custom Order"}{" "}
+                  : data?.eventOrderId?.title ? data?.eventOrderId?.title : "Objednávka z formulára"}{" "}
               </h3>{" "}
               <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize text-sm">
                 {data?.eventOrderId?.orderType === "custom" ? "Formulár" : "Balík"}

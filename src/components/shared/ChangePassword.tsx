@@ -27,10 +27,10 @@ const inputStructure = [
     placeholder: "Zadajte nové heslo",
     labelClassName: "!font-medium",
     inputClassName: "!py-2",
-    rules: [{ required: true, message: "Zadajte heslo" }, { min: 8, message: "Password must be at least 8 characters" },
+    rules: [{ required: true, message: "Zadajte heslo" }, { min: 8, message: "Heslo musí mať aspoň 8 znakov" },
     {
       pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
-      message: "Password must include at least one uppercase letter and one special character",
+      message: "Heslo musí obsahovať aspoň jedno veľké písmeno a jeden špeciálny znak",
     },],
     showPasswordToggle: true,
   },
@@ -53,7 +53,7 @@ const inputStructure = [
           if (!value || getFieldValue("newPassword") === value) {
             return Promise.resolve();
           }
-          return Promise.reject(new Error("Password does not match!"));
+          return Promise.reject(new Error("Heslá sa nezhodujú!"));
         },
       }),
     ],
@@ -77,8 +77,8 @@ const ChangePassword = () => {
         body: data,
       },
       {
-        toastLoadingMessage: "wait a moment...",
-        toastSuccessMessage: "Password changed successfully!",
+        toastLoadingMessage: "Chvíľu počkajte...",
+        toastSuccessMessage: "Heslo bolo úspešne zmenené!",
       }
     );
 

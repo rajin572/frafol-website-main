@@ -41,11 +41,11 @@ const userInputStructure = [
     inputType: "email",
     /* label: "Email", */
     label: "E-mail",
-    placeholder: "Enter your email",
+    placeholder: "Zadajte svoj e-mail",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName:
       "!py-2 !w-full disabled:!text-base-color disabled:!border-input-color/60 disabled:!bg-input-color/10",
-    rules: [{ required: true, message: "Email is required" }],
+    rules: [{ required: true, message: "E-mail je povinný" }],
     disable: true,
   },
 
@@ -55,10 +55,10 @@ const userInputStructure = [
     inputType: "tel",
     /* label: "Phone number", */
     label: "Telefónne číslo",
-    placeholder: "Enter your phone number",
+    placeholder: "Zadajte svoje telefónne číslo",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Phone number is required" }],
+    rules: [{ required: true, message: "Telefónne číslo je povinné" }],
     disable: false,
   },
   {
@@ -66,10 +66,10 @@ const userInputStructure = [
     type: "text",
     inputType: "tel",
     label: "Ulica a číslo",
-    placeholder: "Enter your Street Address",
+    placeholder: "Zadajte ulicu a číslo",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
     disable: false,
   },
   {
@@ -78,10 +78,10 @@ const userInputStructure = [
     inputType: "tel",
     /* label: "Town", */
     label: "Mesto",
-    placeholder: "Enter your Town",
+    placeholder: "Zadajte mesto",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Town is required" }],
+    rules: [{ required: true, message: "Mesto je povinné" }],
     disable: false,
   },
   {
@@ -89,10 +89,10 @@ const userInputStructure = [
     type: "text",
     inputType: "text",
     label: "Krajina",
-    placeholder: "Enter your Country",
+    placeholder: "Zadajte krajinu",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Country is required" }],
+    rules: [{ required: true, message: "Krajina je povinná" }],
     disable: false,
   },
   {
@@ -100,9 +100,9 @@ const userInputStructure = [
     type: "text",
     inputType: "normal",
     label: "PSČ",
-    placeholder: "Enter Zip Code Name",
+    placeholder: "Zadajte PSČ",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Zip Code is required" }],
+    rules: [{ required: true, message: "PSČ je povinné" }],
   },
 ];
 const companyInputStructure = [
@@ -125,12 +125,12 @@ const companyInputStructure = [
     type: "text",
     inputType: "normal",
     label: "Názov firmy",
-    placeholder: "Enter Full Company Name",
+    placeholder: "Zadajte názov firmy",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Company Name is required" }],
+    rules: [{ required: true, message: "Názov firmy je povinný" }],
   },
   {
     name: "email",
@@ -138,12 +138,12 @@ const companyInputStructure = [
     inputType: "normal",
     /* label: "Email", */
     label: "E-mail",
-    placeholder: "Enter Email Name",
+    placeholder: "Zadajte e-mail",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Email is required" }],
+    rules: [{ required: true, message: "E-mail je povinný" }],
   },
   {
     name: "phone",
@@ -151,10 +151,10 @@ const companyInputStructure = [
     inputType: "tel",
     /* label: "Phone number", */
     label: "Telefónne číslo",
-    placeholder: "Enter your phone number",
+    placeholder: "Zadajte svoje telefónne číslo",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Phone number is required" }],
+    rules: [{ required: true, message: "Telefónne číslo je povinné" }],
     disable: false,
   },
   {
@@ -162,12 +162,12 @@ const companyInputStructure = [
     type: "text",
     inputType: "normal",
     label: "Ulica a číslo",
-    placeholder: "Enter Street Address",
+    placeholder: "Zadajte ulicu a číslo",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
     name: "town",
@@ -175,31 +175,31 @@ const companyInputStructure = [
     inputType: "normal",
     /* label: "Town", */
     label: "Mesto",
-    placeholder: "Enter Town Name",
+    placeholder: "Zadajte mesto",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Town is required" }],
+    rules: [{ required: true, message: "Mesto je povinné" }],
   },
   {
     name: "country",
     type: "text",
     inputType: "normal",
     label: "Krajina",
-    placeholder: "Enter Country Name",
+    placeholder: "Zadajte krajinu",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Country is required" }],
+    rules: [{ required: true, message: "Krajina je povinná" }],
   },
   {
     name: "ico",
     type: "text",
     inputType: "normal",
     label: "IČO",
-    placeholder: "Enter IČO",
+    placeholder: "Zadajte IČO",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
@@ -210,24 +210,24 @@ const companyInputStructure = [
     type: "text",
     inputType: "normal",
     label: "DIČ",
-    placeholder: "Enter DIČ",
+    placeholder: "Zadajte DIČ",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "DIČ is required" }],
+    rules: [{ required: true, message: "DIČ je povinné" }],
   },
   {
     name: "ic_dph",
     type: "text",
     inputType: "normal",
-    label: "IČ DPH (Optional)",
-    placeholder: "Enter IČ DPH",
+    label: "IČ DPH (Nepovinné)",
+    placeholder: "Zadajte IČ DPH",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: false, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH je povinné" }],
   },
 ];
 
@@ -251,12 +251,12 @@ const professionalInputStructure = [
     type: "text",
     inputType: "normal",
     label: "Názov firmy",
-    placeholder: "Enter Full Company Name",
+    placeholder: "Zadajte názov firmy",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Company Name is required" }],
+    rules: [{ required: true, message: "Názov firmy je povinný" }],
   },
   {
     name: "phone",
@@ -264,10 +264,10 @@ const professionalInputStructure = [
     inputType: "tel",
     /* label: "Phone number", */
     label: "Telefónne číslo",
-    placeholder: "Enter your phone number",
+    placeholder: "Zadajte svoje telefónne číslo",
     labelClassName: "!font-medium  !text-secondary-color",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "Phone number is required" }],
+    rules: [{ required: true, message: "Telefónne číslo je povinné" }],
     disable: false,
   },
   {
@@ -276,12 +276,12 @@ const professionalInputStructure = [
     inputType: "normal",
     /* label: "Email", */
     label: "E-mail",
-    placeholder: "Enter Email Name",
+    placeholder: "Zadajte e-mail",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Email is required" }],
+    rules: [{ required: true, message: "E-mail je povinný" }],
   },
   {
     name: "about",
@@ -289,12 +289,12 @@ const professionalInputStructure = [
     inputType: "textarea",
     /* label: "About Me", */
     label: "O mne",
-    placeholder: "Enter About Yourself",
+    placeholder: "Napíšte niečo o sebe",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Company Name is required" }],
+    rules: [{ required: true, message: "Názov firmy je povinný" }],
   },
 
   {
@@ -302,24 +302,24 @@ const professionalInputStructure = [
     type: "number",
     inputType: "number",
     label: "Minimálna cena (€)",
-    placeholder: "Enter Min  Rate",
+    placeholder: "Zadajte minimálnu cenu",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
     name: "maxHourlyRate",
     type: "number",
     inputType: "number",
     label: "Maximálna cena (€)",
-    placeholder: "Enter Max  Rate",
+    placeholder: "Zadajte maximálnu cenu",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
 
   {
@@ -327,36 +327,36 @@ const professionalInputStructure = [
     type: "text",
     inputType: "normal",
     label: "IČO",
-    placeholder: "Enter IČO",
+    placeholder: "Zadajte IČO",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "IČO is required" }],
+    rules: [{ required: true, message: "IČO je povinné" }],
   },
   {
     name: "dic",
     type: "text",
     inputType: "normal",
     label: "DIČ",
-    placeholder: "Enter DIČ",
+    placeholder: "Zadajte DIČ",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "DIČ is required" }],
+    rules: [{ required: true, message: "DIČ je povinné" }],
   },
   {
     name: "ic_dph",
     type: "text",
     inputType: "normal",
     label: "IČ DPH",
-    placeholder: "Enter IČ DPH",
+    placeholder: "Zadajte IČ DPH",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: false, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH je povinné" }],
   },
 
   {
@@ -364,33 +364,33 @@ const professionalInputStructure = [
     type: "text",
     inputType: "normal",
     label: "Ulica a číslo",
-    placeholder: "Enter Street Address",
+    placeholder: "Zadajte ulicu a číslo",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
     name: "zipCode",
     type: "text",
     inputType: "normal",
     label: "PSČ",
-    placeholder: "Enter Zip Code Name",
+    placeholder: "Zadajte PSČ",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Zip Code is required" }],
+    rules: [{ required: true, message: "PSČ je povinné" }],
   },
   {
     name: "country",
     type: "text",
     inputType: "normal",
     label: "Krajina",
-    placeholder: "Enter Country Name",
+    placeholder: "Zadajte krajinu",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Country is required" }],
+    rules: [{ required: true, message: "Krajina je povinná" }],
   },
 ];
 
@@ -527,7 +527,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
         toastLoadingMessage: "Čakajte, prosím...",
         /* toastSuccessMessage: "Profile updated successfully!", */
         toastSuccessMessage: "Profil bol úspešne aktualizovaný!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -618,7 +618,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
               /* placeholder="Select your town" */
               placeholder="Vyberte svoje mesto"
               labelClassName="!text-secondary-color !font-semibold"
-              rules={[{ required: true, message: "Please select your town" }]}
+              rules={[{ required: true, message: "Vyberte svoje mesto" }]}
               options={
                 towns?.map((town) => ({
                   value: town.name,
@@ -629,7 +629,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
             <ReuseDatePicker
               name="dateOfBirth"
               label="Dátum narodenia"
-              rules={[{ required: true, message: "Date of Birth is required" }]}
+              rules={[{ required: true, message: "Dátum narodenia je povinný" }]}
               labelClassName="!font-semibold !text-secondary-color"
               shouldDisableDate={false}
             />
@@ -643,14 +643,14 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                 mode="multiple"
                 name="travelTowns"
                 label="Mestá, do ktorých môžem cestovať"
-                placeholder="Select towns you can travel to"
+                placeholder="Vyberte mestá, do ktorých môžete cestovať"
                 labelClassName="!text-secondary-color !font-semibold"
-                rules={[{ required: true, message: "Please select at least one travel town" }]}
+                rules={[{ required: true, message: "Vyberte aspoň jedno mesto, do ktorého môžete cestovať" }]}
                 allowClear={true}
                 onChange={handleTravelTownsChange}
                 selectClassName="!h-auto !min-h-10"
                 options={[
-                  { value: "__all__", label: "Select All Towns" },
+                  { value: "__all__", label: "Vybrať všetky mestá" },
                   ...towns?.map((town) => ({
                     value: town.name,
                     label: town.name,
@@ -661,23 +661,23 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
               <ReuseSelect
                 name="role"
                 label="Typ služby"
-                placeholder="Select your role"
+                placeholder="Vyberte typ služby"
                 labelClassName="!text-secondary-color !font-semibold"
-                rules={[{ required: true, message: "Please select your role" }]}
+                rules={[{ required: true, message: "Vyberte typ služby" }]}
                 options={[
                   {
                     value: "photographer",
-                    label: "Photographer",
+                    label: "Fotograf",
                     icon: <LuUser />,
                   },
                   {
                     value: "videographer",
-                    label: "Videographer",
+                    label: "Videograf",
                     icon: <IoCamera />,
                   },
                   {
                     value: "both",
-                    label: "Both",
+                    label: "Fotograf aj Kameraman",
                     icon: <IoCamera />,
                   },
                 ]}
@@ -714,7 +714,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                 {showVideography && (
                   <div>
                     <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
-                      Videography Specializations
+                      Kategórie video služieb
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       {videographyCategories.map((category, index) => (

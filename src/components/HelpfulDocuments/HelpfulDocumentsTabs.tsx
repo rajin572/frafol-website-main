@@ -4,22 +4,22 @@ import HelpfulDocumentsCards from "./HelpfulDocumentsCards";
 
 const creativeDocuments = [
   {
-    title: "Storyboard Template",
-    description: "Printable storyboard template.",
+    title: "Šablóna storyboardu",
+    description: "Šablóna storyboardu na tlač.",
     fileInfo: "2.7 MB PDF",
     downloadUrl: "/documents/Storyboard.pdf",
     fileName: "Storyboard.pdf",
   },
   {
-    title: "Shot List",
-    description: "Shot list template for planning each scene and take.",
+    title: "Zoznam záberov",
+    description: "Šablóna zoznamu záberov na plánovanie každej scény a záberu.",
     fileInfo: "2.8 MB PDF",
     downloadUrl: "/documents/Shot List.pdf",
     fileName: "Shot List.pdf",
   },
   {
-    title: "Script Breakdown Sheet",
-    description: "Script breakdown worksheet for production planning.",
+    title: "Rozpis scenára",
+    description: "Pracovný list s rozpisom scenára na plánovanie produkcie.",
     fileInfo: "2.7 MB PDF",
     downloadUrl: "/documents/Script Breakdown Sheet.pdf",
     fileName: "Script Breakdown Sheet.pdf",
@@ -28,9 +28,9 @@ const creativeDocuments = [
 
 const legalDocuments = [
   {
-    title: "Legal document 1 — Client appearing in photos and videos",
+    title: "Právny dokument 1 — Klient na fotografiách a videách",
     description:
-      "Consent for creating and using photographs and audiovisual recordings (client).",
+      "Súhlas so zhotovením a použitím fotografií a audiovizuálnych záznamov (klient).",
     fileInfo: "18 KB DOCX",
     downloadUrl:
       "/documents/Legal document _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu.docx",
@@ -38,9 +38,9 @@ const legalDocuments = [
       "Legal document _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu.docx",
   },
   {
-    title: "Legal document 2 — Child appearing in photos and videos",
+    title: "Právny dokument 2 — Dieťa na fotografiách a videách",
     description:
-      "Consent for creating and using photographs and audiovisual recordings (child, signed by legal guardian).",
+      "Súhlas so zhotovením a použitím fotografií a audiovizuálnych záznamov (dieťa, podpisuje zákonný zástupca).",
     fileInfo: "18 KB DOCX",
     downloadUrl:
       "/documents/Legal document_ child _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu_ zákonný zástupca.docx",
@@ -64,7 +64,7 @@ const HelpfulDocumentsTabs = () => {
               } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group min-w-[200px] shrink-0`}
             onClick={() => setActiveTab("creativeDocuments")}
           >
-            Creative Documents
+            Kreatívne dokumenty
           </button>
           <button
             className={`${activeTab === "legalDocument"
@@ -73,7 +73,7 @@ const HelpfulDocumentsTabs = () => {
               } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group min-w-[200px] shrink-0`}
             onClick={() => setActiveTab("legalDocument")}
           >
-            Legal Document
+            Právne dokumenty
           </button>
         </div>
       </div>

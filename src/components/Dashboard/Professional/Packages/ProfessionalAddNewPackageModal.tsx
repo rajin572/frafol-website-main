@@ -101,7 +101,7 @@ const ProfessionalAddNewPackageModal = ({
       {
         toastLoadingMessage: "Pridáva sa nový balík...",
         toastSuccessMessage: "Balík bol úspešne pridaný!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -178,7 +178,7 @@ const ProfessionalAddNewPackageModal = ({
           placeholder="Zadajte cenu balíka"
           disabled
           type="number"
-          rules={[{ required: true, message: "Package Price is required" }]}
+          rules={[{ required: true, message: "Celková cena je povinná" }]}
           labelClassName="!font-semibold"
         />
         <ReuseSelect

@@ -44,9 +44,9 @@ const UserConfirmGearOrder = ({
       acceptGearDeliveryRequest,
       { params: data?._id },
       {
-        toastLoadingMessage: "Accepting Delivery Request...",
-        toastSuccessMessage: "Delivery Request Accepted Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Potvrdzuje sa prevzatie...",
+        toastSuccessMessage: "Prevzatie bolo úspešne potvrdené!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -82,7 +82,7 @@ const UserConfirmGearOrder = ({
       <AcceptModal
         isModalVisible={isDeliverModalVisible}
         handleCancel={() => setIsDeliverModalVisible(false)}
-        description="Are you sure you want to mark this order as delivered?"
+        description="Ste si istí, že chcete túto objednávku označiť ako doručenú?"
         currentRecord={currentRecord}
         handleConfirm={handleDeliverGearOrder}
       />

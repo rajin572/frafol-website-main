@@ -28,8 +28,8 @@ const DeleteAccountPage = ({
       requestDeleteAccount,
       { body: { reason: values.reason, password: values.password } },
       {
-        toastLoadingMessage: "Submitting request...",
-        toastSuccessMessage: "Account deletion request submitted!",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
+        toastSuccessMessage: "Žiadosť o odstránenie účtu bola odoslaná!",
       }
     );
     if (res?.success) {
@@ -84,7 +84,7 @@ const DeleteAccountPage = ({
                 reqStatus === "pending" ? "text-yellow-700" : "text-red-700"
               }`}
             >
-              <span className="font-medium">Your reason:</span>{" "}
+              <span className="font-medium">Váš dôvod:</span>{" "}
               {deleteStatus.deleteRequestReason}
             </p>
           )}

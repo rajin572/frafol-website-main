@@ -35,7 +35,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
               onClick={() => setIsModalOpen(true)}
               className="ml-1 text-secondary-color font-semibold hover:underline cursor-pointer"
             >
-              Show more
+              Zobraziť viac
             </button>
           )}
         </p>

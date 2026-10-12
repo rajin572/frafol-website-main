@@ -28,7 +28,7 @@ const DeleteModal: React.FC<DeleteModalProps<any>> = ({
       onOk={() => handleDelete(currentRecord)}
       onCancel={handleCancel}
       okText="delete"
-      cancelText="Cancel"
+      cancelText="Zrušiť"
       centered
       style={{ textAlign: "center" }}
       // styles.body={{ textAlign: "center" }}

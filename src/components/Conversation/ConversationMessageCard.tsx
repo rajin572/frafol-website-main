@@ -57,7 +57,7 @@ const ConversationMessageCard = ({
             <div className={`relative ${(msg as any)?.approvalStatus === "pending" ? "opacity-70" : ""}`}>
               {(msg as any)?.approvalStatus === "pending" && (
                 <div className="text-[10px] text-gray-500 mb-1 text-right italic">
-                  Pending...
+                  Čaká na schválenie...
                 </div>
               )}
               {msg?.images?.length > 0 && (

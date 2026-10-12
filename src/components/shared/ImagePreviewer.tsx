@@ -27,17 +27,17 @@ const ImagePreviewer = ({
   const getFileName = (path: string) => path.split("/").pop() || "download";
 
   const handleDownload = async (url: string, filename: string) => {
-    const toastId = toast.loading("Downloading...", {
+    const toastId = toast.loading("Sťahuje sa...", {
       duration: 2000,
     });
     try {
       const response = await fetch(url);
       const blob = await response.blob();
       saveAs(blob, filename);
-      toast.success("Downloaded successfully!", { id: toastId });
+      toast.success("Súbor bol úspešne stiahnutý!", { id: toastId });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      toast.error("Download failed", { id: toastId });
+      toast.error("Sťahovanie zlyhalo", { id: toastId });
     }
   };
   return isImage ? (

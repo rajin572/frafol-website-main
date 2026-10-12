@@ -91,9 +91,9 @@ const PendingEventOrdersPage = ({
       cancelEventOrder,
       { body: values, params: data?._id },
       {
-        toastLoadingMessage: "Sending request...",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -111,9 +111,9 @@ const PendingEventOrdersPage = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Sending request...",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -134,9 +134,9 @@ const PendingEventOrdersPage = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 

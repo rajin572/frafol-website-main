@@ -8,7 +8,7 @@ import Link from "next/link";
 const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
   const generalData = [
     {
-      title: "Shipping",
+      title: "Doprava",
       content: (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="bg-zinc-200 p-4 rounded-lg">

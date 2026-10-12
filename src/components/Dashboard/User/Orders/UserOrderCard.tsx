@@ -71,7 +71,7 @@ const UserOrderCard = ({
       {
         toastLoadingMessage: "Prosím, počkajte...",
         toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 

@@ -57,7 +57,7 @@ const CartCard = ({ product }: { product: IGear }) => {
             </Link>
           </div>
           <h2 className="text-sm sm:text-sm lg:text-base mb-2">
-            Price: <span className="font-semibold">{product?.mainPrice?.toFixed(2)}€</span>
+            Cena: <span className="font-semibold">{product?.mainPrice?.toFixed(2)}€</span>
           </h2>
         </div>
       </div>

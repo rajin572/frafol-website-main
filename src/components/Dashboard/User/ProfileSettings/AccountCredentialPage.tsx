@@ -26,9 +26,9 @@ const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
       updateProfile,
       { body: formData },
       {
-        toastLoadingMessage: "Updating Account Information...",
-        toastSuccessMessage: "Account Information updated successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Aktualizujú sa bankové údaje...",
+        toastSuccessMessage: "Bankové údaje boli úspešne aktualizované!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 

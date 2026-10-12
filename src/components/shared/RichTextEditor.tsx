@@ -203,7 +203,7 @@ export function RichTextRenderer({
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
     content,
     setContent,
-    placeholder = "Start typing...",
+    placeholder = "Začnite písať...",
     minHeight = "500px",
     className = "",
 }) => {
@@ -814,12 +814,12 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         type="button"
                     >
                         <Eye size={18} />
-                        <span>Preview</span>
+                        <span>Náhľad</span>
                     </button>
 
                     <div className="flex gap-1.5 pr-3 border-r border-gray-300">
-                        <ToolbarButton onClick={undo} icon={<Undo size={18} />} title="Undo (Ctrl+Z)" />
-                        <ToolbarButton onClick={redo} icon={<Redo size={18} />} title="Redo (Ctrl+Y)" />
+                        <ToolbarButton onClick={undo} icon={<Undo size={18} />} title="Späť (Ctrl+Z)" />
+                        <ToolbarButton onClick={redo} icon={<Redo size={18} />} title="Znova (Ctrl+Y)" />
                     </div>
 
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
@@ -829,7 +829,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             value={currentFontSize}
                             onChange={(e) => applyFontSizePx(parseInt(e.target.value))}
                             className="px-3 py-2.5 border border-gray-300 rounded-md bg-white hover:border-[#ad2b08] focus:outline-none focus:ring-2 focus:ring-[#ad2b08] text-sm font-medium text-[#2c2c2c]"
-                            title="Text Size"
+                            title="Veľkosť textu"
                         >
                             {![12, 14, 16, 18, 20, 24, 28, 32, 40, 48].includes(
                                 currentFontSize
@@ -853,7 +853,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
                     {/* Line Height Control */}
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
-                        <span className="text-xs font-semibold text-gray-600">Line:</span>
+                        <span className="text-xs font-semibold text-gray-600">Riadok:</span>
                         <select
                             onChange={(e) => {
                                 applyLineHeight(e.target.value);
@@ -861,7 +861,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             }}
                             className="px-3 py-2.5 border border-gray-300 rounded-md bg-white hover:border-[#ad2b08] focus:outline-none focus:ring-2 focus:ring-[#ad2b08] text-sm font-medium text-[#2c2c2c]"
                             defaultValue=""
-                            title="Line Height"
+                            title="Výška riadku"
                         >
                             <option value="" disabled>
                                 1.6
@@ -886,7 +886,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                                 onMouseDown={saveSelection}
                                 onChange={(e) => changeTextColor(e.target.value)}
                                 className="w-8 h-8 cursor-pointer"
-                                title="Text Color"
+                                title="Farba textu"
                             />
                         </label>
                     </div>
@@ -894,14 +894,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
                         <Highlighter size={16} className="text-gray-600" />
                         <label className="flex items-center gap-2 px-2 py-1 border border-gray-300 rounded-md bg-white hover:border-[#ad2b08] cursor-pointer">
-                            <span className="text-sm font-medium text-[#2c2c2c]">Highlight</span>
+                            <span className="text-sm font-medium text-[#2c2c2c]">Zvýrazniť</span>
                             <input
                                 type="color"
                                 defaultValue="#fff3a3"
                                 onMouseDown={saveSelection}
                                 onChange={(e) => applyHighlightColor(e.target.value)}
                                 className="w-8 h-8 cursor-pointer"
-                                title="Highlight Color"
+                                title="Farba zvýraznenia"
                             />
                         </label>
                         <button
@@ -909,44 +909,44 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             onMouseDown={(e) => e.preventDefault()}
                             onClick={removeHighlight}
                             className="px-3 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 text-sm font-semibold"
-                            title="Remove Highlight"
+                            title="Odstrániť zvýraznenie"
                         >
-                            Clear
+                            Vymazať
                         </button>
                     </div>
 
                     <div className="flex gap-1.5 px-3 border-r border-gray-300">
-                        <ToolbarButton onClick={() => executeCommand("bold")} icon={<Bold size={18} />} title="Bold (Ctrl+B)" />
-                        <ToolbarButton onClick={() => executeCommand("italic")} icon={<Italic size={18} />} title="Italic (Ctrl+I)" />
-                        <ToolbarButton onClick={() => executeCommand("underline")} icon={<Underline size={18} />} title="Underline (Ctrl+U)" />
+                        <ToolbarButton onClick={() => executeCommand("bold")} icon={<Bold size={18} />} title="Tučné (Ctrl+B)" />
+                        <ToolbarButton onClick={() => executeCommand("italic")} icon={<Italic size={18} />} title="Kurzíva (Ctrl+I)" />
+                        <ToolbarButton onClick={() => executeCommand("underline")} icon={<Underline size={18} />} title="Podčiarknuté (Ctrl+U)" />
                     </div>
 
                     <div className="flex gap-1.5 px-3 border-r border-gray-300">
-                        <ToolbarButton onClick={() => executeCommand("justifyLeft")} icon={<AlignLeft size={18} />} title="Align Left" />
-                        <ToolbarButton onClick={() => executeCommand("justifyCenter")} icon={<AlignCenter size={18} />} title="Align Center" />
-                        <ToolbarButton onClick={() => executeCommand("justifyRight")} icon={<AlignRight size={18} />} title="Align Right" />
-                        <ToolbarButton onClick={() => executeCommand("justifyFull")} icon={<AlignJustify size={18} />} title="Justify" />
+                        <ToolbarButton onClick={() => executeCommand("justifyLeft")} icon={<AlignLeft size={18} />} title="Zarovnať vľavo" />
+                        <ToolbarButton onClick={() => executeCommand("justifyCenter")} icon={<AlignCenter size={18} />} title="Zarovnať na stred" />
+                        <ToolbarButton onClick={() => executeCommand("justifyRight")} icon={<AlignRight size={18} />} title="Zarovnať vpravo" />
+                        <ToolbarButton onClick={() => executeCommand("justifyFull")} icon={<AlignJustify size={18} />} title="Zarovnať do bloku" />
                     </div>
 
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
-                        <span className="text-xs font-semibold text-gray-600">Table Align:</span>
-                        <ToolbarButton onClick={() => setTableAlign("left")} icon={<AlignLeft size={18} />} title="Table Start" />
-                        <ToolbarButton onClick={() => setTableAlign("center")} icon={<AlignCenter size={18} />} title="Table Center" />
-                        <ToolbarButton onClick={() => setTableAlign("right")} icon={<AlignRight size={18} />} title="Table End" />
+                        <span className="text-xs font-semibold text-gray-600">Zarovnanie tabuľky:</span>
+                        <ToolbarButton onClick={() => setTableAlign("left")} icon={<AlignLeft size={18} />} title="Zarovnať tabuľku vľavo" />
+                        <ToolbarButton onClick={() => setTableAlign("center")} icon={<AlignCenter size={18} />} title="Zarovnať tabuľku na stred" />
+                        <ToolbarButton onClick={() => setTableAlign("right")} icon={<AlignRight size={18} />} title="Zarovnať tabuľku vpravo" />
                     </div>
 
                     <div className="flex gap-1.5 px-3 border-r border-gray-300">
-                        <ToolbarButton onClick={() => toggleList("ul")} icon={<List size={18} />} title="Bullet List" />
-                        <ToolbarButton onClick={() => toggleList("ol")} icon={<ListOrdered size={18} />} title="Numbered List" />
+                        <ToolbarButton onClick={() => toggleList("ul")} icon={<List size={18} />} title="Odrážkový zoznam" />
+                        <ToolbarButton onClick={() => toggleList("ol")} icon={<ListOrdered size={18} />} title="Číslovaný zoznam" />
                     </div>
 
                     <div className="flex gap-1.5 px-3 border-x border-gray-300">
-                        <ToolbarButton onClick={insertLink} icon={<LinkIcon size={18} />} title="Insert Link" />
-                        <ToolbarButton onClick={() => setTableDialog({ ...tableDialog, show: true })} icon={<TableIcon size={18} />} title="Insert Table" />
-                        <ToolbarButton onClick={insertHorizontalLine} icon={<Minus size={18} />} title="Insert Horizontal Line" />
+                        <ToolbarButton onClick={insertLink} icon={<LinkIcon size={18} />} title="Vložiť odkaz" />
+                        <ToolbarButton onClick={() => setTableDialog({ ...tableDialog, show: true })} icon={<TableIcon size={18} />} title="Vložiť tabuľku" />
+                        <ToolbarButton onClick={insertHorizontalLine} icon={<Minus size={18} />} title="Vložiť vodorovnú čiaru" />
                     </div>
 
-                    <ToolbarButton onClick={clearFormatting} icon={<Trash2 size={18} />} title="Clear Formatting" />
+                    <ToolbarButton onClick={clearFormatting} icon={<Trash2 size={18} />} title="Vymazať formátovanie" />
                 </div>
 
                 {selectedColumnIndex !== null && (
@@ -996,14 +996,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             <div className="bg-gradient-to-r from-[#efefef] to-white px-6 py-4 border-t border-gray-200 text-sm text-[#2c2c2c]">
                 <div className="flex justify-between items-center">
                     <span className="font-medium">
-                        Characters: <span className="text-[#ad2b08] font-bold">{plainTextLength}</span>
+                        Znaky: <span className="text-[#ad2b08] font-bold">{plainTextLength}</span>
                     </span>
                     <span className="font-medium">
-                        Words: <span className="text-[#ad2b08] font-bold">{wordsCount}</span>
+                        Slová: <span className="text-[#ad2b08] font-bold">{wordsCount}</span>
                     </span>
                     <span className="font-semibold flex items-center gap-2 text-[#ad2b08]">
                         <Edit size={16} />
-                        Edit Mode
+                        Režim úprav
                     </span>
                 </div>
             </div>
@@ -1019,7 +1019,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         <div className="flex items-center justify-between p-5 border-b">
                             <div className="flex items-center gap-2">
                                 <Eye size={18} className="text-[#ad2b08]" />
-                                <h3 className="text-lg font-bold text-[#2c2c2c]">Preview</h3>
+                                <h3 className="text-lg font-bold text-[#2c2c2c]">Náhľad</h3>
                             </div>
                             <button
                                 onClick={() => setIsPreviewOpen(false)}
@@ -1049,18 +1049,18 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9998]" />
                     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-[9999] w-[520px] rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
                         <div className="flex items-center justify-between p-5 border-b">
-                            <div className="font-bold text-[#2c2c2c]">Paste options</div>
+                            <div className="font-bold text-[#2c2c2c]">Možnosti vloženia</div>
                             <button onClick={() => setPasteDialog({ show: false, html: "", text: "" })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X /></button>
                         </div>
                         <div className="p-5 text-sm text-gray-700">
-                            Choose how you want to paste:
+                            Vyberte, ako chcete vložiť text:
                             <div className="mt-3 p-3 rounded-xl bg-gray-50 border text-xs text-gray-600">
                                 &quot;Keep formatting&quot; will keep Google Docs styles (bold, headings, lists, links, tables, etc.)
                             </div>
                         </div>
                         <div className="p-5 pt-0 flex gap-3 justify-end">
-                            <button className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 font-semibold text-[#2c2c2c]" onClick={pastePlainText} type="button">Paste as plain text</button>
-                            <button className="px-5 py-2.5 rounded-xl bg-[#ad2b08] hover:bg-[#8d2306] font-semibold text-white" onClick={pasteKeepFormatting} type="button">Keep formatting</button>
+                            <button className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 font-semibold text-[#2c2c2c]" onClick={pastePlainText} type="button">Vložiť ako obyčajný text</button>
+                            <button className="px-5 py-2.5 rounded-xl bg-[#ad2b08] hover:bg-[#8d2306] font-semibold text-white" onClick={pasteKeepFormatting} type="button">Zachovať formátovanie</button>
                         </div>
                     </div>
                 </>
@@ -1071,14 +1071,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]" onClick={() => setLinkDialog({ show: false, url: "" })} />
                     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] border border-gray-200">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-bold text-[#2c2c2c]">Insert Link</h3>
+                            <h3 className="text-xl font-bold text-[#2c2c2c]">Vložiť odkaz</h3>
                             <button onClick={() => setLinkDialog({ show: false, url: "" })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X size={20} /></button>
                         </div>
-                        <label className="block text-sm font-semibold text-[#2c2c2c] mb-2">Enter URL</label>
+                        <label className="block text-sm font-semibold text-[#2c2c2c] mb-2">Zadajte adresu URL</label>
                         <input type="text" value={linkDialog.url} onChange={(e) => setLinkDialog({ ...linkDialog, url: e.target.value })} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } }} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#ad2b08] focus:ring-4 focus:ring-[#fff3f0] transition-all text-[#2c2c2c] font-medium" autoFocus placeholder="https://example.com" />
                         <div className="flex gap-3 justify-end mt-6">
-                            <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setLinkDialog({ show: false, url: "" })} type="button">Cancel</button>
-                            <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={applyLink} type="button">Insert Link</button>
+                            <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setLinkDialog({ show: false, url: "" })} type="button">Zrušiť</button>
+                            <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={applyLink} type="button">Vložiť odkaz</button>
                         </div>
                     </div>
                 </>
@@ -1089,28 +1089,28 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]" onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} />
                     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] border border-gray-200">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-bold text-[#2c2c2c]">Insert Table</h3>
+                            <h3 className="text-xl font-bold text-[#2c2c2c]">Vložiť tabuľku</h3>
                             <button onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X size={20} /></button>
                         </div>
                         <div className="space-y-5 mb-6">
                             <div>
                                 <div className="flex justify-between mb-2">
-                                    <label className="text-sm font-semibold text-[#2c2c2c]">Rows</label>
+                                    <label className="text-sm font-semibold text-[#2c2c2c]">Riadky</label>
                                     <span className="font-bold text-[#ad2b08]">{tableDialog.rows}</span>
                                 </div>
                                 <input type="range" min="1" max="20" value={tableDialog.rows} onChange={(e) => setTableDialog({ ...tableDialog, rows: parseInt(e.target.value) })} className="w-full accent-[#ad2b08]" />
                             </div>
                             <div>
                                 <div className="flex justify-between mb-2">
-                                    <label className="text-sm font-semibold text-[#2c2c2c]">Columns</label>
+                                    <label className="text-sm font-semibold text-[#2c2c2c]">Stĺpce</label>
                                     <span className="font-bold text-[#ad2b08]">{tableDialog.cols}</span>
                                 </div>
                                 <input type="range" min="2" max="10" value={tableDialog.cols} onChange={(e) => setTableDialog({ ...tableDialog, cols: parseInt(e.target.value) })} className="w-full accent-[#ad2b08]" />
                             </div>
                         </div>
                         <div className="flex gap-3 justify-end">
-                            <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} type="button">Cancel</button>
-                            <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={insertTable} type="button">Insert Table</button>
+                            <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} type="button">Zrušiť</button>
+                            <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={insertTable} type="button">Vložiť tabuľku</button>
                         </div>
                     </div>
                 </>

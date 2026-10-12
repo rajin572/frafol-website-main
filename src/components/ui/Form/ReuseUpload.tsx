@@ -28,7 +28,7 @@ const ReuseUpload = ({
   label,
   name,
   rules = [],
-  buttonText = "Upload",
+  buttonText = "Nahrať",
   accept = "image/*",
   maxCount = 1,
   maxFileSize = 100, // 25 MB default
@@ -56,7 +56,7 @@ const ReuseUpload = ({
     const fileSizeInMB = file.size / 1024 / 1024; // Convert bytes to MB
 
     if (fileSizeInMB > maxFileSize) {
-      toast.error(`File size must be less than ${maxFileSize}MB! Current size: ${fileSizeInMB.toFixed(2)}MB`);
+      toast.error(`Veľkosť súboru musí byť menšia ako ${maxFileSize} MB! Aktuálna veľkosť: ${fileSizeInMB.toFixed(2)} MB`);
       return Upload.LIST_IGNORE;
     }
 

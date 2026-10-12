@@ -47,9 +47,9 @@ const ConversationSendMessage = ({
       sendFiles,
       { body: formData },
       {
-        toastLoadingMessage: "Uploading...",
-        toastSuccessMessage: "Uploaded successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Nahráva sa...",
+        toastSuccessMessage: "Úspešne nahrané!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -145,7 +145,7 @@ const ConversationSendMessage = ({
               <Form.Item className="w-full !p-0 !m-0" name="message">
                 <Input
                   onChange={(e) => setTextValue(e.target.value)}
-                  placeholder="Send your message..."
+                  placeholder="Napíšte správu..."
                   className="!border-none !ring-0 !outline-none !bg-transparent text-black"
                 />
               </Form.Item>
@@ -174,7 +174,7 @@ const ConversationSendMessage = ({
                     // Check if the file is of a valid type
                     if (!validTypes.includes(file.type)) {
                       toast.error(
-                        "Invalid file type. Please upload a valid file."
+                        "Neplatný typ súboru. Nahrajte platný súbor."
                       );
                       return Upload.LIST_IGNORE; // Ignore invalid file type
                     }

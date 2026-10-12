@@ -105,7 +105,7 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
 
           <div className="mt-16 flex justify-center items-center">
             {totalData !== 0 && (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div>Načítava sa...</div>}>
                 <PaginationSection
                   page={page}
                   limit={limit}

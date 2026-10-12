@@ -92,9 +92,9 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 createWorkshopOrder,
                 { body: data },
                 {
-                    toastLoadingMessage: "Registering for workshop...",
+                    toastLoadingMessage: "Prebieha registrácia na kurz...",
                     toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
-                    toastErrorMessage: "Something went wrong! Please try again.",
+                    toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
                 }
             );
             console.log(res)
@@ -114,8 +114,8 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 handleCancel();
                 form.resetFields();
             }}
-            okText="Unblock"
-            cancelText="Cancel"
+            okText="Potvrdiť"
+            cancelText="Zrušiť"
             centered
             footer={
                 null
@@ -215,7 +215,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 }
                             }}
                         >
-                            Register as a company
+                            Registrovať sa ako firma
                         </Checkbox>
                     </div>
                     {type !== "company"
@@ -271,10 +271,10 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         >
                             <div>
                                 <p className="text-sm">
-                                    Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
-                                        Terms of Service Conceptural
+                                    Súhlasím s našimi <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                                        Všeobecné obchodné podmienky Zmluvné vzťahy
                                     </Link>{" "}
-                                    and{" "}
+                                    a{" "}
                                     <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                                         Všeobecné obchodné podmienky Online trh.
                                     </Link>
@@ -359,7 +359,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
                                 htmlType="submit"
                             >
-                                Register Now
+                                Zaregistrovať sa
                             </ReuseButton>
                         )}
                     </div>

@@ -74,9 +74,9 @@ const ProfessionalAddNewWorkshop = ({
       addNewWrokshop,
       { body: formData },
       {
-        toastLoadingMessage: "Adding new workshop...",
-        toastSuccessMessage: "Workshop added successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Pridáva sa nový kurz...",
+        toastSuccessMessage: "Kurz bol úspešne pridaný!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -209,7 +209,7 @@ const ProfessionalAddNewWorkshop = ({
             placeholder="Zadajte konečnú cenu"
             disabled
             type="number"
-            rules={[{ required: true, message: "Package Price is required" }]}
+            rules={[{ required: true, message: "Celková cena je povinná" }]}
             labelClassName="!font-semibold"
           />
 

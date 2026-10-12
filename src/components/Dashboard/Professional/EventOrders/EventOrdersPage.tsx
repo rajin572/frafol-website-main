@@ -123,9 +123,9 @@ const EventOrdersPage = ({
       cancelEventOrder,
       { body: values, params: data?._id },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -139,9 +139,9 @@ const EventOrdersPage = ({
       acceptCancelRequest,
       { params: data?._id },
       {
-        toastLoadingMessage: "Cancelling... ",
-        toastSuccessMessage: "Cancelled Successfully! ",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastLoadingMessage: "Ruší sa...",
+        toastSuccessMessage: "Úspešne zrušené!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -159,9 +159,9 @@ const EventOrdersPage = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -177,9 +177,9 @@ const EventOrdersPage = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Rejecting... ",
-        toastSuccessMessage: "Rejected Successfully! ",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastLoadingMessage: "Odmieta sa...",
+        toastSuccessMessage: "Úspešne odmietnuté!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -200,9 +200,9 @@ const EventOrdersPage = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -411,7 +411,7 @@ const EventOrdersPage = ({
             isDeleteModalVisible={isDeclineOrderRequestModalVisible}
             handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
             currentRecord={currentRecord}
-            buttonText="Decline"
+            buttonText="Odmietnuť"
             handleDelete={handleRejectCancelOrder}
           />
         )}

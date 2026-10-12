@@ -77,9 +77,9 @@ const EventCreateOrderModal = ({
         body: data,
       },
       {
-        toastLoadingMessage: "Adding new package...",
+        toastLoadingMessage: "Odosiela sa cenová ponuka...",
         toastSuccessMessage: "Cenová ponuka bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -127,10 +127,10 @@ const EventCreateOrderModal = ({
           <ReuseInput
             name="totalPrice"
             label="Celková cena vrátane servisného poplatku a DPH"
-            placeholder="Enter Package Price"
+            placeholder="Zadajte cenu"
             disabled
             type="number"
-            rules={[{ required: true, message: "Package Price is required" }]}
+            rules={[{ required: true, message: "Celková cena je povinná" }]}
             labelClassName="!font-semibold"
           />{" "}
           <ReuseDatePicker

@@ -26,7 +26,7 @@ const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: IS
             {
                 toastLoadingMessage: "Prosím, počkajte...",
                 toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
-                toastErrorMessage: "Something went wrong! Please try again.",
+                toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
             }
         );
 
@@ -61,10 +61,10 @@ const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: IS
                     >
                         <div>
                             <p className="text-sm">
-                                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
-                                    Terms of Service Conceptural
+                                Súhlasím s našimi <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                                    Všeobecné obchodné podmienky Zmluvné vzťahy
                                 </Link>{" "}
-                                and{" "}
+                                a{" "}
                                 <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                                     Všeobecné obchodné podmienky Online trh.
                                 </Link>

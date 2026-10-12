@@ -25,9 +25,9 @@ const ForumPostLikeSection = ({
         { params: { id } },
         {
           showToast: false,
-          toastLoadingMessage: "Removing Like...",
-          toastSuccessMessage: "Removed Like Successfully!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastLoadingMessage: "Odstraňuje sa označenie Páči sa mi...",
+          toastSuccessMessage: "Označenie Páči sa mi bolo odstránené!",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -41,9 +41,9 @@ const ForumPostLikeSection = ({
         { params: { id } },
         {
           showToast: false,
-          toastLoadingMessage: "Adding Like...",
-          toastSuccessMessage: "Added Like Successfully!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastLoadingMessage: "Pridáva sa označenie Páči sa mi...",
+          toastSuccessMessage: "Označenie Páči sa mi bolo pridané!",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 

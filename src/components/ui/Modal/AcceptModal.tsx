@@ -17,7 +17,7 @@ const AcceptModal: React.FC<AcceptModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleConfirm,
-  description = " Are You Sure You want to Delivery This Event ?",
+  description = "Naozaj chcete túto objednávku označiť ako dokončenú?",
   confirmText = "Confirm",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
@@ -28,8 +28,8 @@ const AcceptModal: React.FC<AcceptModalProps<any>> = ({
       open={isModalVisible}
       onOk={() => handleConfirm(currentRecord)}
       onCancel={handleCancel}
-      okText="Unblock"
-      cancelText="Cancel"
+      okText="Potvrdiť"
+      cancelText="Zrušiť"
       centered
       style={{ textAlign: "center" }}
       // styles.body={{ textAlign: "center" }}

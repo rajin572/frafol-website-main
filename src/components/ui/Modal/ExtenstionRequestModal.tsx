@@ -18,7 +18,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleExtenstion,
-  description = "Send Extension Request",
+  description = "Požiadať o predĺženie termínu",
 }) => {
   const [form] = Form.useForm();
   //   const [blockUser] = useBlockUserMutation();
@@ -50,7 +50,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
         handleCancel();
         form.resetFields();
       }}
-      okText="Cancle Order"
+      okText="Odoslať žiadosť"
       centered
       // styles.body={{ textAlign: "center" }}
       footer={null}
@@ -63,7 +63,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
           level={5}
           className=" pb-2 pt-6 text-lg font-semibold text-secondary-color"
         >
-          Date
+          Dátum
         </Typography.Title>
 
         <Form.Item
@@ -71,7 +71,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
           rules={[
             {
               required: true,
-              message: "Please select a date",
+              message: "Vyberte dátum",
             },
           ]}
         >
@@ -79,7 +79,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
             className="!py-1.5 !px-3 !text-lg !bg-[#EFEFEF] border !border-[#EFEFEF]  !text-base-color rounded-lg w-full"
             /* Day-Month-Year, matching ReuseDatePicker across the app (default was YYYY-MM-DD) */
             format="DD-MM-YYYY"
-            placeholder="Select date"
+            placeholder="Vyberte dátum"
             disabledDate={disabledDate}
           />
         </Form.Item>
@@ -87,9 +87,9 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
         <ReuseInput
           inputType="textarea"
           name="reason"
-          label="Reason"
-          placeholder="Enter Reason"
-          rules={[{ required: true, message: "Reason is required" }]}
+          label="Dôvod predĺženia"
+          placeholder="Uveďte dôvod predĺženia"
+          rules={[{ required: true, message: "Uveďte dôvod predĺženia" }]}
         />
 
         <ReuseButton
@@ -97,7 +97,7 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
           variant="error"
           className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
         >
-          Send Request
+          Odoslať žiadosť
         </ReuseButton>
       </ReusableForm>
     </Modal>

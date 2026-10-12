@@ -60,9 +60,9 @@ const UserCancleOrder = ({
       acceptCancelRequest,
       { params: data?._id },
       {
-        toastLoadingMessage: "Cancelling...",
-        toastSuccessMessage: "Cancelled Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again",
+        toastLoadingMessage: "Ruší sa...",
+        toastSuccessMessage: "Úspešne zrušené!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova",
       }
     );
 
@@ -78,9 +78,9 @@ const UserCancleOrder = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Rejecting...",
-        toastSuccessMessage: "Rejected Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again",
+        toastLoadingMessage: "Odmieta sa...",
+        toastSuccessMessage: "Úspešne odmietnuté!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova",
       }
     );
 
@@ -118,7 +118,7 @@ const UserCancleOrder = ({
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         handleConfirm={handleAcceptCancel}
-        description="Are You Sure You want to Accept This Cancel Request ?"
+        description="Naozaj chcete prijať žiadosť o zrušenie?"
       />
 
       <DeleteModal
@@ -126,8 +126,8 @@ const UserCancleOrder = ({
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         handleDelete={handleRejectCancelOrder}
-        buttonText="Decline"
-        description="Are You Sure You want to Reject This Cancel Request ?"
+        buttonText="Odmietnuť"
+        description="Naozaj chcete odmietnuť žiadosť o zrušenie?"
       />
     </div>
   );

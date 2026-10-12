@@ -50,7 +50,7 @@ const GalleryVideoPlayer = ({
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
             >
-                Your browser does not support the video tag.
+                Váš prehliadač nepodporuje prehrávanie videa.
             </video>
 
             {!isPlaying && (
@@ -58,7 +58,7 @@ const GalleryVideoPlayer = ({
                     type="button"
                     onClick={() => internalRef.current?.play()}
                     className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors cursor-pointer"
-                    aria-label="Play video"
+                    aria-label="Prehrať video"
                 >
                     <span className="flex items-center justify-center w-12 h-12 rounded-full bg-white/85 shadow-lg transition-transform duration-200 group-hover:scale-110">
                         <Play className="w-5 h-5 text-gray-900 fill-current ml-0.5" />

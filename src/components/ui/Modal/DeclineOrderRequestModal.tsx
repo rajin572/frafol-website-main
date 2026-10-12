@@ -38,7 +38,7 @@ const DeclineOrderRequestModal: React.FC<
           handleCancel();
           form.resetFields();
         }}
-        okText="Cancle Order"
+        okText="Odmietnuť žiadosť"
         centered
         // styles.body={{ textAlign: "center" }}
         footer={null}

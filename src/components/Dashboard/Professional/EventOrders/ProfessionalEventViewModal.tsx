@@ -59,9 +59,9 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         params: record?._id,
       },
       {
-        toastLoadingMessage: "Accepting Order...",
-        toastSuccessMessage: "Order accepted successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Prijíma sa objednávka...",
+        toastSuccessMessage: "Objednávka bola úspešne prijatá!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -460,7 +460,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           currentRecord?.deliveryRequestDeclinedReason && (
             <div className="mb-4">
               <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-                Delivery Decline Reason
+                Dôvod odmietnutia odovzdania
               </h4>
               <div className="mt-2">
                 {" "}
@@ -531,7 +531,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               </ReuseButton>
             ) : (
               <h4 className="text-sm sm:text-base lg:text-lg xl:text-xl text-yellow-600 font-bold">
-                Extension Request On Pending
+                Žiadosť o predĺženie termínu čaká na vybavenie
               </h4>
             )}
           </div>

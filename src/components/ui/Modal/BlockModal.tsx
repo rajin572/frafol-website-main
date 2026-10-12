@@ -15,7 +15,7 @@ const BlockModal: React.FC<BlockModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleBlock,
-  description = " Are You Sure You want to Block ?",
+  description = "Naozaj chcete používateľa zablokovať?",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 
@@ -25,8 +25,8 @@ const BlockModal: React.FC<BlockModalProps<any>> = ({
       open={isBlockModalVisible}
       onOk={handleBlock}
       onCancel={handleCancel}
-      okText="Block"
-      cancelText="Cancel"
+      okText="Zablokovať"
+      cancelText="Zrušiť"
       centered
       style={{ textAlign: "center" }}
       // styles.body={{ textAlign: "center" }}
@@ -44,14 +44,14 @@ const BlockModal: React.FC<BlockModalProps<any>> = ({
             className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
             onClick={handleCancel}
           >
-            Cancel
+            Zrušiť
           </ReuseButton>
           <ReuseButton
             variant="error"
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             onClick={() => handleBlock(currentRecord)}
           >
-            Block
+            Zablokovať
           </ReuseButton>
         </div>
       }

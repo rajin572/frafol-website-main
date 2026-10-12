@@ -95,9 +95,9 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
             updateGallery,
             { body: formData },
             {
-                toastLoadingMessage: "Deleting...",
+                toastLoadingMessage: "Odstraňuje sa...",
                 toastSuccessMessage: "Portfólio bolo úspešne aktualizované!",
-                toastErrorMessage: "Something went wrong! Please try again.",
+                toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
             }
         );
 
@@ -166,7 +166,7 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                                                 <div key={index} className="relative group w-full">
                                                     <AntdImage
                                                         src={getMediaUrl(item) || AllImages?.dummyCover?.src}
-                                                        alt={`gallery image ${index + 1}`}
+                                                        alt={`Fotografia z galérie ${index + 1}`}
                                                         className="w-full h-full object-cover rounded-lg"
                                                         fetchPriority='high'
                                                     />

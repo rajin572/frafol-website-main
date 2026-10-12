@@ -300,10 +300,10 @@ const ConversationMessage = ({
               </svg>
             </div>
             <h3 className="text-xl font-medium text-gray-900 mb-2">
-              Welcome to Messages
+              Vitajte v správach
             </h3>
             <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
-              Select a conversation from the sidebar to start messaging.
+              Vyberte konverzáciu v bočnom paneli a začnite písať.
             </p>
           </div>
         </div>

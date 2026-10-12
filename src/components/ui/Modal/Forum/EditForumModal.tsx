@@ -57,9 +57,9 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
       updateCommunityPost,
       { body: formData, params: currentRecord?._id },
       {
-        toastLoadingMessage: "Uploading Your Post...",
-        toastSuccessMessage: "Your post uploaded successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Nahráva sa váš príspevok...",
+        toastSuccessMessage: "Váš príspevok bol úspešne nahraný!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -78,14 +78,14 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
     >
       <div className="p-5 text-base-color">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-5">
-          Update Topic
+          Upraviť tému
         </h1>
         <ReusableForm form={form} handleFinish={onSubmit}>
           <ReuseInput
             name="title"
-            label="Titles"
-            placeholder="Enter Titles"
-            rules={[{ required: true, message: "Titles is required" }]}
+            label="Názov témy"
+            placeholder="Zadajte názov témy"
+            rules={[{ required: true, message: "Názov témy je povinný" }]}
             labelClassName="!font-semibold"
           />
           {/* <ReuseInput
@@ -103,21 +103,21 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
             <RichTextEditor
               content={content}
               setContent={setContent}
-              placeholder="Type something amazing..."
+              placeholder="Napíšte niečo skvelé..."
               minHeight="500px"
             />
           </div>
           <ReuseUpload
-            label="Upload Image (Optional)"
+            label="Nahrať fotografiu (nepovinné)"
             name="image"
-            buttonText="Upload Image"
+            buttonText="Nahrať fotografiu"
             accept="image/png, image/jpeg"
             maxCount={1}
             labelClassName="!font-semibold"
           />
 
           <div>
-            <p className="font-semibold">Preview Image</p>
+            <p className="font-semibold">Náhľad fotografie</p>
             <Image
               src={
                 currentRecord?.images[0]
@@ -132,7 +132,7 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
           </div>
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Update
+            Uložiť zmeny
           </ReuseButton>
         </ReusableForm>
       </div>

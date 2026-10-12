@@ -17,9 +17,9 @@ const InsuranceForm = () => {
       registerInsurance,
       { body: values },
       {
-        toastLoadingMessage: "Sending request...",
-        toastSuccessMessage: "Insurance Registered Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
+        toastSuccessMessage: "Poistenie bolo úspešne zaregistrované!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -37,25 +37,25 @@ const InsuranceForm = () => {
         <ReuseInput
           name="fullName"
           inputType="text"
-          placeholder="Enter your full name"
-          label="Full Name"
+          placeholder="Zadajte svoje meno a priezvisko"
+          label="Meno a priezvisko"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Full name is required" }]}
+          rules={[{ required: true, message: "Meno a priezvisko je povinné" }]}
         />
         <ReuseInput
           name="companyName"
           inputType="text"
-          placeholder="Enter your Company name"
-          label="Company Name"
+          placeholder="Zadajte názov firmy"
+          label="Názov firmy"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Company name is required" }]}
+          rules={[{ required: true, message: "Názov firmy je povinný" }]}
         />
         <ReuseSelect
           name="businessType"
-          label="Business Type"
+          label="Typ podnikania"
           labelClassName="!font-semibold"
-          placeholder="Select Business Type"
-          rules={[{ required: true, message: "Business Type is required" }]}
+          placeholder="Vyberte typ podnikania"
+          rules={[{ required: true, message: "Typ podnikania je povinný" }]}
           options={[
             { value: "živnosť", label: "živnosť" },
             { value: "s.r.o.", label: "s.r.o." },
@@ -64,7 +64,7 @@ const InsuranceForm = () => {
         <ReuseInput
           name="ico"
           inputType="text"
-          placeholder="Enter your IČO"
+          placeholder="Zadajte IČO"
           label="IČO"
           labelClassName="!font-semibold"
         />
@@ -72,64 +72,64 @@ const InsuranceForm = () => {
           type="email"
           name="email"
           inputType="text"
-          placeholder="Enter your Email"
-          label="Email"
+          placeholder="Zadajte svoj e-mail"
+          label="E-mail"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Email is required" }]}
+          rules={[{ required: true, message: "E-mail je povinný" }]}
         />
         <ReuseInput
           name="phoneNumber"
           inputType="text"
-          placeholder="Enter your phone number"
-          label="Phone Number"
+          placeholder="Zadajte svoje telefónne číslo"
+          label="Telefónne číslo"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Phone number is required" }]}
+          rules={[{ required: true, message: "Telefónne číslo je povinné" }]}
         />
         <ReuseInput
           name="address"
           inputType="text"
-          placeholder="Enter your address"
-          label="Address"
+          placeholder="Zadajte svoju adresu"
+          label="Adresa"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Address is required" }]}
+          rules={[{ required: true, message: "Adresa je povinná" }]}
         />
         <ReuseInput
           name="estimatedValue"
           inputType="number"
           type="number"
-          placeholder="Enter your estimated value"
-          label="Estimated value"
+          placeholder="Zadajte odhadovanú hodnotu"
+          label="Odhadovaná hodnota"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Estimated value is required" }]}
+          rules={[{ required: true, message: "Odhadovaná hodnota je povinná" }]}
         />
         <ReuseSelect
           name="anyPreviousEquipment"
-          label="Any Previous Equipment"
+          label="Predchádzajúce vybavenie"
           labelClassName="!font-semibold"
-          placeholder="Select Any Previous Equipment"
+          placeholder="Vyberte možnosť"
           rules={[
-            { required: true, message: "Any Previous Equipment is required" },
+            { required: true, message: "Predchádzajúce vybavenie je povinné" },
           ]}
           options={[
-            { value: "yes", label: "Yes" },
-            { value: "no", label: "No" },
+            { value: "yes", label: "Áno" },
+            { value: "no", label: "Nie" },
           ]}
         />
         <ReuseInput
           name="additionalNotes"
           inputType="number"
           type="number"
-          placeholder="Enter your Additional Notes"
-          label="Additional Notes"
+          placeholder="Zadajte ďalšie poznámky"
+          label="Ďalšie poznámky"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "Additional Notes is required" }]}
+          rules={[{ required: true, message: "Ďalšie poznámky sú povinné" }]}
         />
         <ReuseButton
           variant="secondary"
           htmlType="submit"
           className="w-full lg:!col-span-2"
         >
-          Submit
+          Odoslať
         </ReuseButton>
       </ReusableForm>
     </div>

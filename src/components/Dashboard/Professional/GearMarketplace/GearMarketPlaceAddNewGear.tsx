@@ -76,10 +76,10 @@ const GearMarketPlaceAddNewGear = ({
       addNewGear,
       { body: formData },
       {
-        toastLoadingMessage: "Adding new gear...",
+        toastLoadingMessage: "Pridáva sa nové príslušenstvo...",
         /* toastSuccessMessage: "New gear added successfully!", */
         toastSuccessMessage: "Inzerát na príslušenstvo bol vytvorený a čaká na schválenie.",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -152,10 +152,10 @@ const GearMarketPlaceAddNewGear = ({
             <ReuseInput
               name="mainPrice"
               label="Celková cena vrátane servisného poplatku a DPH"
-              placeholder="Enter Package Price"
+              placeholder="Zadajte cenu"
               disabled
               type="number"
-              rules={[{ required: true, message: "Package Price is required" }]}
+              rules={[{ required: true, message: "Celková cena je povinná" }]}
               labelClassName="!font-semibold"
             />
             <ReuseInput

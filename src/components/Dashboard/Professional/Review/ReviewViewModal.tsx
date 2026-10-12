@@ -32,7 +32,7 @@ const ReportViewModal = ({
     >
       <div className="p-5">
         <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-secondary-color text-center">
-          User Feedback
+          Recenzia používateľa
         </h3>
         <p className="text-sm sm:text-base lg:text-lg text-center mt-2">
           See full feedback from {userName}
@@ -54,7 +54,7 @@ const ReportViewModal = ({
         <div className="mt-8">
           <div className="text-lg">
             <div className="flex items-center gap-2 mb-2">
-              <span className="font-medium">Name:</span>
+              <span className="font-medium">Meno:</span>
               <span className="text-secondary-color">{userName}</span>
             </div>
 

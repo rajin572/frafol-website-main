@@ -106,7 +106,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
         )}
 
         <div className="mt-16 flex justify-center items-center">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Načítava sa...</div>}>
             <PaginationSection
               page={page}
               limit={limit}

@@ -82,7 +82,7 @@ const ProfessionalServiceBookingModal: React.FC<
       {
         toastLoadingMessage: "Odosiela sa nezáväzný dopyt...",
         toastSuccessMessage: "Nezáväzný dopyt bol úspešne odoslaný!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -103,7 +103,7 @@ const ProfessionalServiceBookingModal: React.FC<
       <div className="p-5 text-base-color  max-h-[90vh] overflow-y-auto">
 
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-5">
-          Book Now
+          Objednať teraz
         </h1>
 
         <div className="relative">
@@ -142,7 +142,7 @@ const ProfessionalServiceBookingModal: React.FC<
                 <div className="flex items-center gap-2">
                   <BsCurrencyEuro className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                   <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                    Price:
+                    Cena:
                   </p>
                 </div>
                 <p className="text-sm sm:text-sm lg:text-base">{packageData?.mainPrice?.toFixed(2)}€</p>
@@ -152,7 +152,7 @@ const ProfessionalServiceBookingModal: React.FC<
                 <div className="flex items-center gap-1">
                   <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                   <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                    Duration:
+                    Trvanie:
                   </p>
                 </div>
                 <p className="text-sm sm:text-sm lg:text-base">{packageData?.duration}</p>
@@ -161,7 +161,7 @@ const ProfessionalServiceBookingModal: React.FC<
                 <div className="flex items-center gap-1">
                   <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                   <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                    Delivery Time:
+                    Dodacia lehota:
                   </p>
                 </div>
                 <p className="text-sm sm:text-sm lg:text-base">

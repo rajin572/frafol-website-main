@@ -133,9 +133,9 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
         },
       },
       {
-        toastLoadingMessage: "Updating Unavailable Dates...",
-        toastSuccessMessage: "Unavailable Dates Updated Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Aktualizujú sa nedostupné dni...",
+        toastSuccessMessage: "Nedostupné dni boli úspešne aktualizované!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 

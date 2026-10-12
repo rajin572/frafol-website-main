@@ -49,7 +49,7 @@ const ReuseTimePicker = ({
   className,
   style,
   format = "HH:mm",
-  placeholder = "Select time",
+  placeholder = "Vyberte čas",
   labelClassName,
   wrapperClassName,
   date, // If no date is provided, we treat it as null

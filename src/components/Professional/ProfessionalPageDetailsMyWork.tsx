@@ -60,8 +60,8 @@ const ProfessionalPageDetailsMyWork = ({
         </div>
       ) : (
         <NoResultFound
-          title="No Work Found"
-          description="This professional has not uploaded any work"
+          title="Nenašla sa žiadna tvorba"
+          description="Tento profesionál zatiaľ nenahral žiadnu tvorbu"
         />
       )}
     </div>

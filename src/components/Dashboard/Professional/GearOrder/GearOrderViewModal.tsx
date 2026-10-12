@@ -218,7 +218,7 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
           </p>
           <p className="text-sm mt-1">
             {/* <span className="font-semibold">Email:</span> */}
-            <span className="font-semibold">Email:</span>{" "}
+            <span className="font-semibold">E-mail:</span>{" "}
             {currentRecord?.email || "N/A"}
           </p>
           <p className="text-sm mt-1">

@@ -32,7 +32,7 @@ const DownloadAppModal = () => {
             className="h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] md:h-[40px] md:w-[40px]"
           />
           <div>
-            <p className="text-sm text-primary-color mb-1">Download on the</p>
+            <p className="text-sm text-primary-color mb-1">Stiahnuť z</p>
             <h4 className="text-primary-color text-sm sm:text-lg md:text-xl">
               Apple Store
             </h4>
@@ -53,7 +53,7 @@ const DownloadAppModal = () => {
             className="h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] md:h-[40px] md:w-[40px]"
           />
           <div>
-            <p className="text-sm text-primary-color mb-1">Download on the</p>
+            <p className="text-sm text-primary-color mb-1">Stiahnuť z</p>
             <h4 className="text-primary-color text-sm sm:text-lg md:text-xl">
               Google Play
             </h4>

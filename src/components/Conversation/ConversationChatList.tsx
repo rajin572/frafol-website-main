@@ -143,7 +143,7 @@ const ConversationChatList = ({
         </div>
         <div className="mt-3 w-full">
           <SearchInput
-            placeholder="Search Conversations"
+            placeholder="Hľadať konverzácie"
             className="!w-full gap-0 "
             isPage={false}
             formClassName="!w-full !-mb-2 !h-fit"

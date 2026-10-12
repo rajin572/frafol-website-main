@@ -63,9 +63,9 @@ const PackagesPage = ({
         deletePackage,
         { params: record?._id },
         {
-          toastLoadingMessage: "Deleting Package...",
+          toastLoadingMessage: "Odstraňuje sa balík...",
           toastSuccessMessage: "Balík bol úspešne odstránený!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -156,7 +156,7 @@ const PackagesPage = ({
 
       {totalData > 0 && (
         <div className="mt-16 flex justify-center items-center">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Načítava sa...</div>}>
             <PaginationSection
               page={page}
               limit={limit}

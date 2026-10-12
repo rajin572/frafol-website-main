@@ -30,7 +30,7 @@ const MarketPlaceTab = ({ categories }: { categories: ICategory[] }) => {
             : "bg-transparent text-secondary-color border-base-color/30"
         } px-4 py-1.5 cursor-pointer rounded-md transition-all duration-300 border text-sm sm:text-base`}
       >
-        All
+        Všetko
       </div>
       {categories?.map((category) => (
         <div

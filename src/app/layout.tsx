@@ -18,12 +18,12 @@ export const metadata = {
   title: "Frafol",
   template: "%s - Frafol",
   description:
-    "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily",
+    "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie",
   keywords: ["Frafol"],
   openGraph: {
     title: "Frafol",
     description:
-      "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily",
+      "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie",
     images: [
       {
         url: "./opengraph-image.png",
@@ -50,7 +50,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Frafol",
     description:
-      "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily.",
+      "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie.",
     images: ["./opengraph-image.png"],
     creator: "@Frafol",
   },

@@ -104,9 +104,9 @@ const ProfessionalEditWorkshop = ({
       updateWrokshop,
       { body: formData, params: currentRecord?._id },
       {
-        toastLoadingMessage: "Updating workshop...",
-        toastSuccessMessage: "Workshop updated successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Aktualizuje sa kurz...",
+        toastSuccessMessage: "Kurz bol úspešne aktualizovaný!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
     if (res?.success) {
@@ -237,7 +237,7 @@ const ProfessionalEditWorkshop = ({
             placeholder="Zadajte konečnú cenu"
             disabled
             type="number"
-            rules={[{ required: true, message: "Package Price is required" }]}
+            rules={[{ required: true, message: "Celková cena je povinná" }]}
             labelClassName="!font-semibold"
           />
 

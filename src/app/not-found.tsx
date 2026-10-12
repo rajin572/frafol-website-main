@@ -129,7 +129,7 @@ const NotFoundPage = () => {
                 transition: { duration: 0.3, ease: "easeOut" },
               }}
             >
-              Page Not Found
+              Stránka sa nenašla
             </motion.div>
           </motion.div>
 
@@ -149,7 +149,7 @@ const NotFoundPage = () => {
                 ease: "easeInOut",
               }}
             >
-              OOPS!
+              Ups!
             </motion.span>
             <span className="inline-block relative">
               <motion.span
@@ -178,8 +178,7 @@ const NotFoundPage = () => {
             animate={{ scale: [0.9, 1] }}
             transition={{ duration: 5, ease: "easeInOut" }}
           >
-            The page you are looking for might have been removed, had its name
-            changed, or is temporarily unavailable.
+            Stránka, ktorú hľadáte, mohla byť odstránená, premenovaná alebo je dočasne nedostupná.
           </motion.p>
 
           <motion.div className="mt-5" variants={itemVariants}>
@@ -202,7 +201,7 @@ const NotFoundPage = () => {
                   className="absolute w-0 group-hover:w-full h-full bg-secondary-color rounded-lg -z-10 left-0 top-0 transition-all duration-700 ease-in-out"
                   layoutId="bg"
                 />
-                Back To Home
+                Späť na domovskú stránku
                 <svg
                   className="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
                   viewBox="0 0 16 19"

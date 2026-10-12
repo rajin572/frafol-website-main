@@ -24,9 +24,9 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
       addFeedback,
       { body: values },
       {
-        toastLoadingMessage: "Wait a moment...",
-        toastSuccessMessage: "Feedback submitted successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Chvíľu počkajte...",
+        toastSuccessMessage: "Spätná väzba bola úspešne odoslaná!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -44,22 +44,22 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
         handleCancel();
         form.resetFields();
       }}
-      okText="Cancle Order"
+      okText="Odoslať"
       centered
       // styles.body={{ textAlign: "center" }}
       footer={null}
     >
       <p className="text-3xl font-semibold py-5 text-base-color">
-        Give Feedback
+        Poskytnúť spätnú väzbu
       </p>
       <ReusableForm handleFinish={submit} form={form}>
         <ReuseInput
           inputType="textarea"
           name="text"
-          label="Feedback"
+          label="Spätná väzba"
           rows={5}
-          placeholder="Enter Feedback"
-          rules={[{ required: true, message: "Feedback is required" }]}
+          placeholder="Zadajte spätnú väzbu"
+          rules={[{ required: true, message: "Spätná väzba je povinná" }]}
         />
 
         <ReuseButton
@@ -67,7 +67,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
           variant="secondary"
           className="!px-6 !py-5 w-full flex items-center justify-center gap-2"
         >
-          Submit
+          Odoslať
         </ReuseButton>
       </ReusableForm>
     </Modal>

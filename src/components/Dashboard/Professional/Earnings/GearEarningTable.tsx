@@ -34,12 +34,12 @@ const GearEarningTable = ({
       ),
     },
     {
-      title: "Gear Item",
+      title: "Príslušenstvo",
       key: "gear",
       render: (_: any, record: any) => record.gearMarketplaceId?.name || "—",
     },
     {
-      title: "Net Earning",
+      title: "Čistý zárobok",
       key: "netAmount",
       render: (_: any, record: any) => {
         const gear = record.gearMarketplaceId;
@@ -49,11 +49,11 @@ const GearEarningTable = ({
       },
     },
     {
-      title: "Admin Paid",
+      title: "Vyplatené administrátorom",
       key: "adminPaid",
       render: (_: any, record: any) => (
         <Tag color={record.adminPaid ? "green" : ""}>
-          {record.adminPaid ? "Paid" : "Pending"}
+          {record.adminPaid ? "Vyplatené" : "Čakajúce"}
         </Tag>
       ),
       align: "center",

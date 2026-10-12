@@ -15,7 +15,7 @@ const SwitchRoleModal: React.FC<SwitchRoleModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleUnblock,
-  description = " Are You Sure You want to Switch Your Role ?",
+  description = "Naozaj chcete zmeniť svoju rolu?",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 
@@ -25,8 +25,8 @@ const SwitchRoleModal: React.FC<SwitchRoleModalProps<any>> = ({
       open={isSwitchRoleModalVisible}
       onOk={handleUnblock}
       onCancel={handleCancel}
-      okText="Unblock"
-      cancelText="Cancel"
+      okText="Potvrdiť"
+      cancelText="Zrušiť"
       centered
       style={{ textAlign: "center" }}
       // styles.body={{ textAlign: "center" }}
@@ -44,14 +44,14 @@ const SwitchRoleModal: React.FC<SwitchRoleModalProps<any>> = ({
             className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
             onClick={handleCancel}
           >
-            Cancel
+            Zrušiť
           </ReuseButton>
           <ReuseButton
             variant="secondary"
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             onClick={() => handleUnblock(currentRecord)}
           >
-            Unblock
+            Potvrdiť
           </ReuseButton>
         </div>
       }

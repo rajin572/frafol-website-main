@@ -35,12 +35,12 @@ const WorkshopEarningTable = ({
       render: (_: any, record: any) => <span className="font-medium">{record.clientId?.name || "—"}</span>,
     },
     {
-      title: "Workshop",
+      title: "Kurz",
       key: "workshop",
       render: (_: any, record: any) => record.workshopId?.title || "—",
     },
     {
-      title: "Workshop Date",
+      title: "Dátum kurzu",
       key: "workshopDate",
       render: (_: any, record: any) => formatDate(record.workshopId?.date),
     },
@@ -51,14 +51,14 @@ const WorkshopEarningTable = ({
       render: (_: any, record: any) => <span>{record.workshopId?.price?.toFixed(2)}€</span>,
     },
     {
-      title: "Net Earning",
+      title: "Čistý zárobok",
       key: "netAmount",
       render: (_: any, record: any) => (
         <span className="text-green-600 font-semibold">{record.netAmount?.toFixed(2)}€</span>
       ),
     },
     {
-      title: "Admin Paid",
+      title: "Vyplatené administrátorom",
       key: "instructorPaid",
       render: (_: any, record: any) => (
         <Tag color={record.instructorPayment?.status === "received" ? "green" : "orange"}>

@@ -40,7 +40,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
               ? (
                 <>
                   {data.description.substring(0, 100)}...
-                  <span className="font-medium text-secondary-color cursor-pointer" onClick={() => handleModalOpen(data)}> Show More</span>
+                  <span className="font-medium text-secondary-color cursor-pointer" onClick={() => handleModalOpen(data)}> Zobraziť viac</span>
                 </>
               )
               : data?.description
@@ -119,7 +119,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
             className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
             onClick={() => handleModalOpen(data)}
           >
-            Register Now
+            Zaregistrovať sa
           </ReuseButton>
         )}
       </div>

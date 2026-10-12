@@ -68,7 +68,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             ? finalGallery
             : (item?.profileImage && item.profileImage.length > 0
                 ? [{ type: "image", src: item.profileImage, alt: "Profile" }]
-                : [{ type: "image", src: AllImages.dummyProfile, alt: "Dummy Profile" }]);
+                : [{ type: "image", src: AllImages.dummyProfile, alt: "Profilová fotografia" }]);
 
     const currentMedia = displayGallery[currentIndex];
     const hasMultipleItems = displayGallery.length > 1;
@@ -222,7 +222,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                     <button
                         onClick={handlePlayPause}
                         className="bg-white/80 hover:bg-white text-gray-900 p-1 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-110"
-                        aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+                        aria-label={isVideoPlaying ? "Pause video" : "Prehrať video"}
                     >
                         {isVideoPlaying ? (
                             <Pause className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
@@ -252,7 +252,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                 <button
                     onClick={handlePrev}
                     className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-100 lg:opacity-0 group-hover:opacity-100"
-                    aria-label="Previous media"
+                    aria-label="Predchádzajúce médium"
                 >
                     <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
@@ -263,7 +263,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                 <button
                     onClick={handleNext}
                     className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-100 lg:opacity-0 group-hover:opacity-100"
-                    aria-label="Next media"
+                    aria-label="Ďalšie médium"
                 >
                     <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
@@ -284,7 +284,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                                 ? "bg-white w-1.5 h-1.5 sm:w-2 sm:h-2"
                                 : "bg-white/50 w-1.5 h-1.5 sm:w-2 sm:h-2"
                                 }`}
-                            aria-label={`Go to slide ${index + 1}`}
+                            aria-label={`Prejsť na snímku ${index + 1}`}
                         />
                     ))}
                 </div>

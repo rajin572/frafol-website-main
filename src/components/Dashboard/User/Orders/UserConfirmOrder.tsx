@@ -64,9 +64,9 @@ const UserConfirmOrder = ({
         params: data?._id,
       },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -81,9 +81,9 @@ const UserConfirmOrder = ({
       acceptDeliveryRequest,
       { params: data?._id },
       {
-        toastLoadingMessage: "Sending request... ",
+        toastLoadingMessage: "Odosiela sa žiadosť...",
         toastSuccessMessage: "Žiadosť bola úspešne odoslaná!",
-        toastErrorMessage: "Something went wrong! Please try again. ",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -121,7 +121,7 @@ const UserConfirmOrder = ({
         handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
         currentRecord={currentRecord}
         handleDeclineOrder={handleDeclineOrder}
-        description="Are You Sure You want to Decline This Delivery Request ?"
+        description="Naozaj chcete odmietnuť odovzdanie hotovej práce?"
       />
       <AcceptModal
         isModalVisible={isConfirmModalVisible}

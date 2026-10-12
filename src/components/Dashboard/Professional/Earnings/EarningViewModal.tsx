@@ -106,19 +106,19 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
         <Row /* label="Transaction ID" */ label="ID transakcie" value={<span className="text-xs ">{record.transactionId}</span>} />
         <Row /* label="Payment Method" */ label="Spôsob platby" value={capitalize(record.paymentMethod)} />
         <Row
-          label="Payment Status"
+          label="Stav platby"
           value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus)}</Tag>}
         />
         <Row /* label="Service Type" */ label="Typ služby" value={capitalize(eventOrder?.serviceType)} />
         <Row
-          label="Order Type"
+          label="Typ objednávky"
           value={<Tag color={eventOrder?.orderType === "direct" ? "blue" : "purple"}>{capitalize(eventOrder?.orderType)}</Tag>}
         />
         <Row /* label="Event Date" */ label="Dátum" value={formatDate(eventOrder?.date)} />
-        <Row label="Created At" value={formatDate(record.createdAt)} />
+        <Row label="Dátum vytvorenia" value={formatDate(record.createdAt)} />
         {/* Price = amount - VAT - commission */}
         <Row
-          label="Price"
+          label="Cena"
           value={
             <span>
               {((record.amount || 0) - (eventOrder?.vatAmount || 0) - (record.commission || 0)).toFixed(2)} €
@@ -126,29 +126,29 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           }
         />
         {eventOrder?.vatAmount ? (
-          <Row label="VAT" value={<span>{eventOrder.vatAmount.toFixed(2)} €</span>} />
+          <Row label="DPH" value={<span>{eventOrder.vatAmount.toFixed(2)} €</span>} />
         ) : null}
-        <Row label="Commission" value={<span>{record.commission?.toFixed(2)} €</span>} />
+        <Row label="Provízia" value={<span>{record.commission?.toFixed(2)} €</span>} />
 
         <Row /* label="Total Amount" */ label="Celková suma" value={<span>{record.amount?.toFixed(2)} €</span>} />
         {record.couponDiscount > 0 && (
-          <Row label="Coupon Discount" value={<span className="text-orange-500">- {record.couponDiscount?.toFixed(2)} €</span>} />
+          <Row label="Zľava z kupónu" value={<span className="text-orange-500">- {record.couponDiscount?.toFixed(2)} €</span>} />
         )}
-        {record.couponCode && <Row label="Coupon Code" value={record.couponCode} />}
+        {record.couponCode && <Row label="Kód kupónu" value={record.couponCode} />}
         <Row
-          label="Net Earning"
+          label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{record.netAmount?.toFixed(2)} €</span>}
         />
         <Row
-          label="Provider Paid"
+          label="Vyplatené poskytovateľovi"
           value={
             <Tag color={record.serviceProviderPaid ? "green" : "red"}>
-              {record.serviceProviderPaid ? "Paid" : "Pending"}
+              {record.serviceProviderPaid ? "Vyplatené" : "Čakajúce"}
             </Tag>
           }
         />
         {record.serviceProviderPaid && record.serviceProviderPaidAt && (
-          <Row label="Paid At" value={formatDate(record.serviceProviderPaidAt)} />
+          <Row label="Dátum vyplatenia" value={formatDate(record.serviceProviderPaidAt)} />
         )}
       </>
     );
@@ -161,10 +161,10 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
     return (
       <>
-        <Row label="Order ID" value={<span className="text-xs">{record.orderId}</span>} />
-        <Row label="Gear Item" value={gear?.name || "—"} />
+        <Row label="ID objednávky" value={<span className="text-xs">{record.orderId}</span>} />
+        <Row label="Príslušenstvo" value={gear?.name || "—"} />
         <Row
-          label="Order Status"
+          label="Stav objednávky"
           value={
             <Tag color={record.orderStatus === "delivered" ? "green" : record.orderStatus === "cancelled" ? "red" : "orange"}>
               {capitalize(record.orderStatus)}
@@ -172,7 +172,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           }
         />
         <Row
-          label="Payment Status"
+          label="Stav platby"
           value={
             <Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>
               {capitalize(record.paymentStatus)}
@@ -180,34 +180,34 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           }
         />
         {gear?.vatAmount > 0 && (
-          <Row label="VAT %" value={`${gear.vatAmount}%`} />
+          <Row label="DPH (%)" value={`${gear.vatAmount}%`} />
         )}
-        <Row label="Selling Price" value={<span>{gear?.price?.toFixed(2)} €</span>} />
+        <Row label="Predajná cena" value={<span>{gear?.price?.toFixed(2)} €</span>} />
         {gear?.totalVatAmount > 0 && (
-          <Row label="VAT Amount" value={<span>{gear.totalVatAmount?.toFixed(2)} €</span>} />
+          <Row label="Suma DPH" value={<span>{gear.totalVatAmount?.toFixed(2)} €</span>} />
         )}
-        <Row label="Platform Commission" value={<span>{gear?.platformCommission?.toFixed(2)} €</span>} />
+        <Row label="Provízia platformy" value={<span>{gear?.platformCommission?.toFixed(2)} €</span>} />
         {gear?.shippingCompany?.name && (
-          <Row label="Shipping Company" value={`${gear.shippingCompany.name} — ${gear.shippingCompany.price?.toFixed(2)} €`} />
+          <Row label="Dopravca" value={`${gear.shippingCompany.name} — ${gear.shippingCompany.price?.toFixed(2)} €`} />
         )}
         <Row
-          label="Net Earning"
+          label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{netEarning?.toFixed(2)} €</span>}
         />
-        <Row label="Shipping Address" value={record.shippingAddress} />
-        <Row label="Town" value={record.town} />
-        <Row label="Post Code" value={record.postCode} />
-        <Row label="Mobile" value={record.mobileNumber} />
-        <Row label="Order Date" value={formatDate(record.createdAt)} />
+        <Row label="Doručovacia adresa" value={record.shippingAddress} />
+        <Row label="Mesto" value={record.town} />
+        <Row label="PSČ" value={record.postCode} />
+        <Row label="Mobil" value={record.mobileNumber} />
+        <Row label="Dátum objednávky" value={formatDate(record.createdAt)} />
         {record.statusTimestamps?.deliveredAt && (
-          <Row label="Delivered At" value={formatDate(record.statusTimestamps.deliveredAt)} />
+          <Row label="Dátum doručenia" value={formatDate(record.statusTimestamps.deliveredAt)} />
         )}
         <Row
-          label="Admin Paid"
-          value={<Tag color={record.adminPaid ? "green" : "red"}>{record.adminPaid ? "Paid" : "Pending"}</Tag>}
+          label="Vyplatené administrátorom"
+          value={<Tag color={record.adminPaid ? "green" : "red"}>{record.adminPaid ? "Vyplatené" : "Čakajúce"}</Tag>}
         />
         {record.adminPaid && record.adminPaidAt && (
-          <Row label="Admin Paid At" value={formatDate(record.adminPaidAt)} />
+          <Row label="Dátum vyplatenia administrátorom" value={formatDate(record.adminPaidAt)} />
         )}
       </>
     );
@@ -217,41 +217,41 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
     const workshop = record.workshopId;
     return (
       <>
-        <Row label="Order ID" value={record.orderId} />
+        <Row label="ID objednávky" value={record.orderId} />
         <Row /* label="Workshop Title" */ label="Názov kurzu" value={workshop?.title} />
-        <Row label="Workshop Date" value={formatDate(workshop?.date)} />
-        <Row label="Workshop Price" value={<span>{workshop?.price?.toFixed(2)} €</span>} />
+        <Row label="Dátum kurzu" value={formatDate(workshop?.date)} />
+        <Row label="Cena kurzu" value={<span>{workshop?.price?.toFixed(2)} €</span>} />
         {workshop?.vatAmount > 0 && (
-          <Row label="VAT" value={<span>{workshop?.vatAmount?.toFixed(2)} €</span>} />
+          <Row label="DPH" value={<span>{workshop?.vatAmount?.toFixed(2)} €</span>} />
         )}
-        <Row label="Total (with VAT)" value={<span>{workshop?.mainPrice?.toFixed(2)} €</span>} />
-        <Row label="Commission" value={<span className="text-error">{(record.netAmount - workshop?.mainPrice)?.toFixed(2)} €</span>} />
+        <Row label="Celkom (s DPH)" value={<span>{workshop?.mainPrice?.toFixed(2)} €</span>} />
+        <Row label="Provízia" value={<span className="text-error">{(record.netAmount - workshop?.mainPrice)?.toFixed(2)} €</span>} />
         <Row
-          label="Net Earning"
+          label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{record.netAmount?.toFixed(2)} €</span>}
         />
         <Row
-          label="Payment Status"
+          label="Stav platby"
           value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus)}</Tag>}
         />
         <Row
-          label="Instructor Payment"
+          label="Platba lektorovi"
           value={
             <Tag color={record.instructorPayment?.status === "received" ? "green" : "orange"}>
               {capitalize(record.instructorPayment?.status || "pending")}
             </Tag>
           }
         />
-        <Row label="Joined At" value={formatDate(record.joinedAt)} />
+        <Row label="Dátum registrácie" value={formatDate(record.joinedAt)} />
         <Row
-          label="Admin Paid"
-          value={<Tag color={record.adminPaid ? "green" : "red"}>{record.adminPaid ? "Paid" : "Pending"}</Tag>}
+          label="Vyplatené administrátorom"
+          value={<Tag color={record.adminPaid ? "green" : "red"}>{record.adminPaid ? "Vyplatené" : "Čakajúce"}</Tag>}
         />
         {record.adminPaid && record.adminPaidAt && (
-          <Row label="Admin Paid At" value={formatDate(record.adminPaidAt)} />
+          <Row label="Dátum vyplatenia administrátorom" value={formatDate(record.adminPaidAt)} />
         )}
         {record.instructorPayment?.paidAt && (
-          <Row label="Instructor Paid At" value={formatDate(record.instructorPayment.paidAt)} />
+          <Row label="Dátum vyplatenia lektorovi" value={formatDate(record.instructorPayment.paidAt)} />
         )}
         <Row /* label="Location" */ label="Lokalita" value={`${record.town}, ${record.country}`} />
       </>

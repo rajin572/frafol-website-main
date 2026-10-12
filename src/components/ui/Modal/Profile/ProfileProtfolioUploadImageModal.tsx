@@ -41,7 +41,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
         {
           toastLoadingMessage: isVideoUpload ? "Nahráva sa video..." : "Nahráva sa fotografia...",
           toastSuccessMessage: "Portfólio bolo úspešne aktualizované!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -60,7 +60,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
         {
           toastLoadingMessage: "Nahráva sa úvodné video...",
           toastSuccessMessage: "Úvodné video bolo úspešne aktualizované!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -78,7 +78,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
         {
           toastLoadingMessage: "Nahráva sa fotografia...",
           toastSuccessMessage: "Titulné fotografie boli úspešne aktualizované!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 

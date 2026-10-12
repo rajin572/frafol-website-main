@@ -89,9 +89,9 @@ const GearMarketplacePage = ({
         deleteGear,
         { params: record?._id },
         {
-          toastLoadingMessage: "Deleting Gear...",
-          toastSuccessMessage: "Gear deleted successfully!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastLoadingMessage: "Odstraňuje sa príslušenstvo...",
+          toastSuccessMessage: "Príslušenstvo bolo úspešne odstránené!",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 

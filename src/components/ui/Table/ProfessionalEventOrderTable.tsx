@@ -66,7 +66,7 @@ const ProfessionalEventOrderTable: React.FC<
                   </p>)
                   : record?.extensionRequests?.[record?.extensionRequests?.length > 0 ? record?.extensionRequests?.length - 1 : 0]?.status === "pending" && (
                     <p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">
-                      Extension Pending
+                      Predĺženie čaká na vybavenie
                     </p>
                   )
               }
@@ -81,7 +81,7 @@ const ProfessionalEventOrderTable: React.FC<
                   </p>)
                   : record?.extensionRequests?.[record?.extensionRequests?.length > 0 ? record?.extensionRequests?.length - 1 : 0]?.status === "pending" && (
                     <p className="px-1 py-0.5 rounded-full bg-yellow-600 text-primary-color w-fit capitalize text-xs">
-                      Extension Pending
+                      Predĺženie čaká na vybavenie
                     </p>
                   )
               }

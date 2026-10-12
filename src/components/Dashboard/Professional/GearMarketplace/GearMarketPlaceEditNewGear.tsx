@@ -104,9 +104,9 @@ const GearMarketPlaceEditNewGear = ({
       updateGear,
       { body: formData, params: currentRecord?._id },
       {
-        toastLoadingMessage: "Updating gear...",
-        toastSuccessMessage: "Gear updated successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Aktualizuje sa príslušenstvo...",
+        toastSuccessMessage: "Príslušenstvo bolo úspešne aktualizované!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -124,7 +124,7 @@ const GearMarketPlaceEditNewGear = ({
       className="lg:!w-[1000px]"
     >
       <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold mb-10">
-        Update Gear
+        Upraviť príslušenstvo
       </h3>
 
       <ReusableForm form={form} handleFinish={onSubmit}>
@@ -175,10 +175,10 @@ const GearMarketPlaceEditNewGear = ({
             <ReuseInput
               name="mainPrice"
               label="Celková cena vrátane servisného poplatku a DPH"
-              placeholder="Enter Package Price"
+              placeholder="Zadajte cenu"
               disabled
               type="number"
-              rules={[{ required: true, message: "Package Price is required" }]}
+              rules={[{ required: true, message: "Celková cena je povinná" }]}
               labelClassName="!font-semibold"
             />
             <ReuseInput

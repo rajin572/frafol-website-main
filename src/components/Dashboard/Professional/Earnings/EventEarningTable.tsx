@@ -40,7 +40,7 @@ const EventEarningTable = ({
       render: (_: any, record: any) => record.eventOrderId?.title || "—",
     },
     {
-      title: "Order Type",
+      title: "Typ objednávky",
       key: "orderType",
       render: (_: any, record: any) => (
         <Tag color={record.eventOrderId?.orderType === "direct" ? "blue" : "purple"}>
@@ -55,18 +55,18 @@ const EventEarningTable = ({
       render: (_: any, record: any) => formatDate(record.eventOrderId?.date),
     },
     {
-      title: "Net Earning",
+      title: "Čistý zárobok",
       key: "netAmount",
       render: (_: any, record: any) => (
         <span className="text-green-600 font-semibold">{record.netAmount?.toFixed(2)}€</span>
       ),
     },
     {
-      title: "Paid",
+      title: "Vyplatené",
       key: "paid",
       render: (_: any, record: any) => (
         <Tag color={record.serviceProviderPaid ? "green" : "red"}>
-          {record.serviceProviderPaid ? "Paid" : "Pending"}
+          {record.serviceProviderPaid ? "Vyplatené" : "Čakajúce"}
         </Tag>
       ),
       align: "center",

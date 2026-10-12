@@ -15,7 +15,7 @@ const ExploreCategoryTab = () => {
               } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
             onClick={() => setActiveTab("photography")}
           >
-            Photography
+            Fotografia
           </button>
           <button
             className={`${activeTab === "videography"
@@ -24,7 +24,7 @@ const ExploreCategoryTab = () => {
               } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
             onClick={() => setActiveTab("videography")}
           >
-            Videography
+            Video
           </button>
         </div>
       </div>

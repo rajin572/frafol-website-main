@@ -93,7 +93,7 @@ const ProfessionalWorkshopPage = ({
         {
           toastLoadingMessage: "Odstraňuje sa kurz...",
           toastSuccessMessage: "Kurz bol úspešne odstránený!",
-          toastErrorMessage: "Something went wrong! Please try again.",
+          toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
         }
       );
 
@@ -169,7 +169,7 @@ const ProfessionalWorkshopPage = ({
       />
 
       <div className="mt-16 flex justify-center items-center">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Načítava sa...</div>}>
           <PaginationSection page={page} limit={limit} totalData={totalData} />
         </Suspense>
       </div>

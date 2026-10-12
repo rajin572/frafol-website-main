@@ -33,7 +33,7 @@ const ComingSoonModal: React.FC<ComingSoonModalProps> = ({
         >
           <div className="text-center p-4">
             <h2 className="text-site-color text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4">
-              Coming Soon...
+              Čoskoro...
             </h2>
             <p className="mb-4 md:text-lg lg:text-xl text-site-color">
               {message}

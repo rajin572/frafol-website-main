@@ -46,7 +46,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       render: (text: string[]) => (
         <Image
           src={text?.[0] ? getMediaUrl(text[0]) : AllImages.dummyCover?.src}
-          alt="Item"
+          alt="Položka"
           width={50}
           height={50}
           className="rounded w-10 h-10 object-cover"

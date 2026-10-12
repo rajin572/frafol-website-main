@@ -38,7 +38,7 @@ const HelpfulDocumentsCards = ({
             className="mt-2 !text-base !py-4 !w-fit"
             variant="secondary"
           >
-            <MdFileDownload className="mr-2" /> Download
+            <MdFileDownload className="mr-2" /> Stiahnuť
           </ReuseButton>
         </a>
       </div>

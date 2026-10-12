@@ -35,7 +35,7 @@ const Notifications = async ({
                 className=" min-h-[88vh] pb-10 mt-10"
             >
                 <div className="flex items-center bg-primary-color gap-1 py-3 mb-3 rounded-tl-xl rounded-tr-xl">
-                    <h1 className="text-3xl font-bold text-secondary-color">Notification</h1>
+                    <h1 className="text-3xl font-bold text-secondary-color">Upozornenia</h1>
                 </div>
                 <div className=" space-y-4 mb-10 min-h-[78vh]">
                     {
@@ -52,7 +52,7 @@ const Notifications = async ({
                                     {notification?.message?.image ? (
                                         <Image
                                             src={getMediaUrl(notification.message.image)}
-                                            alt="Notification Avatar"
+                                            alt="Profilová fotografia"
                                             width={44}
                                             height={44}
                                             className="w-11 h-11 rounded-full object-cover shrink-0 border border-gray-200"

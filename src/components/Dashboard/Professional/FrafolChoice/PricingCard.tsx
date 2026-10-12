@@ -98,7 +98,7 @@ export default function PricingCard({
             {isSubscribed && (
                 <div className="px-4 py-2.5 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-center text-sm">
-                        <span className="font-semibold text-green-700">Active until: </span>
+                        <span className="font-semibold text-green-700">Aktívne do: </span>
                         <span className="text-green-600">{formatDate(subscriptionData?.subscriptionExpiryDate)}</span>
                     </p>
                 </div>

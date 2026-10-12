@@ -48,9 +48,9 @@ const MyCommunityPostsPage = ({
       deleteCommunityPost,
       { params: data?._id },
       {
-        toastLoadingMessage: "Deleting...",
-        toastSuccessMessage: "Deleted Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Odstraňuje sa...",
+        toastSuccessMessage: "Úspešne odstránené!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -82,7 +82,7 @@ const MyCommunityPostsPage = ({
         <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
           <div className=" flex items-center justify-between">
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
-              My Community Posts
+              Moje príspevky
             </h1>
             <SearchInput placeholder="Hľadať..." />
           </div>
@@ -101,7 +101,7 @@ const MyCommunityPostsPage = ({
         </div>
         <div className="mt-16 flex justify-center items-center">
           {totalData !== 0 && (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Načítava sa...</div>}>
               <PaginationSection
                 page={page}
                 limit={limit}

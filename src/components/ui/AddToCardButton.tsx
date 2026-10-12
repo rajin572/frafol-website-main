@@ -30,7 +30,7 @@ const AddToCardButton = ({ gear }: { gear: IGear }) => {
             onClick={() => handleAddToCart(gear)}
           >
             <IoCartOutline className="text-2xl" />
-            <p>Add To Cart</p>
+            <p>Pridať do košíka</p>
           </ReuseButton>
         ))}
     </>

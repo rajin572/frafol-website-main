@@ -83,13 +83,13 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
             <h3 className="font-semibold mb-4">Zhrnutie objednávky</h3>
             <div className="space-y-2 text-sm text-gray-600">
               <div className="flex justify-between">
-                <span>Sub Total :</span>
+                <span>Medzisúčet:</span>
                 <span className="text-black font-medium">
                   {currentRecord?.gearMarketplaceId?.mainPrice?.toFixed(2)}€
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Shipping Charge :</span>
+                <span>Poštovné:</span>
                 <span className="text-black font-medium">
                   {currentRecord?.gearMarketplaceId?.shippingCompany?.price?.toFixed(
                     2
@@ -98,7 +98,7 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
                 </span>
               </div>
               <div className="border-t pt-2 flex justify-between font-semibold text-black">
-                <span>Total :</span>
+                <span>Celková suma:</span>
                 {(
                   (currentRecord?.gearMarketplaceId?.mainPrice || 0) +
                   (currentRecord?.gearMarketplaceId?.shippingCompany?.price ||

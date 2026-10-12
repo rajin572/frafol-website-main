@@ -50,9 +50,9 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
       addNewCommunityPost,
       { body: formData },
       {
-        toastLoadingMessage: "Uploading Your Post...",
-        toastSuccessMessage: "Your post uploaded successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Nahráva sa váš príspevok...",
+        toastSuccessMessage: "Váš príspevok bol úspešne nahraný!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -70,14 +70,14 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
     >
       <div className="p-5 text-base-color">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-5">
-          Create New Topic
+          Vytvoriť novú tému
         </h1>
         <ReusableForm form={form} handleFinish={onSubmit}>
           <ReuseInput
             name="title"
-            label="Titles"
-            placeholder="Enter Titles"
-            rules={[{ required: true, message: "Titles is required" }]}
+            label="Názov témy"
+            placeholder="Zadajte názov témy"
+            rules={[{ required: true, message: "Názov témy je povinný" }]}
             labelClassName="!font-semibold"
           />
           {/* <ReuseInput
@@ -95,23 +95,23 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
             <RichTextEditor
               content={content}
               setContent={setContent}
-              placeholder="Type something amazing..."
+              placeholder="Napíšte niečo skvelé..."
               minHeight="500px"
             />
 
           </div>
           <ReuseUpload
-            label="Upload Image (Optional)"
+            label="Nahrať fotografiu (nepovinné)"
             name="image"
-            buttonText="Upload Image"
+            buttonText="Nahrať fotografiu"
             accept="image/png, image/jpeg"
             maxCount={1}
             labelClassName="!font-semibold"
-            rules={[{ required: false, message: "Image is required" }]}
+            rules={[{ required: false, message: "Fotografia je povinná" }]}
           />
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Add
+            Pridať
           </ReuseButton>
         </ReusableForm>
       </div>

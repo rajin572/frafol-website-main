@@ -45,9 +45,9 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
       updateReview,
       { body: data, params: currentRecord?._id },
       {
-        toastLoadingMessage: "Updating Review...",
-        toastSuccessMessage: "Review Updated Successfully!",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastLoadingMessage: "Aktualizuje sa recenzia...",
+        toastSuccessMessage: "Recenzia bola úspešne aktualizovaná!",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
 
@@ -67,7 +67,7 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
       <div className="p-5">
         <div className="text-base-color">
           <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-secondary-color">
-            Update Review
+            Upraviť recenziu
           </h3>
         </div>
         <ReusableForm

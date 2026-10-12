@@ -28,26 +28,26 @@ const RegisterWorkshopModal: React.FC<RegisterWorkshopModalProps> = ({
     >
       <div className="p-5 text-base-color">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-5">
-          Register Workshop
+          Registrácia na kurz
         </h1>
         <ReusableForm form={form} handleFinish={onSubmit}>
           <ReuseInput
             name="fullNamee"
-            label="Full Name"
-            placeholder="Enter Full Name"
-            rules={[{ required: true, message: "Full Name is required" }]}
+            label="Meno a priezvisko"
+            placeholder="Zadajte meno a priezvisko"
+            rules={[{ required: true, message: "Meno a priezvisko je povinné" }]}
             labelClassName="!font-semibold"
           />
           <ReuseInput
             name="email"
-            label="Email"
-            placeholder="Enter Email"
-            rules={[{ required: true, message: "Email is required" }]}
+            label="E-mail"
+            placeholder="Zadajte e-mail"
+            rules={[{ required: true, message: "E-mail je povinný" }]}
             labelClassName="!font-semibold"
           />
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Register
+            Registrovať
           </ReuseButton>
         </ReusableForm>
       </div>

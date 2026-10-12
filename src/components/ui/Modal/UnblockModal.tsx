@@ -15,7 +15,7 @@ const UnblockModal: React.FC<UnblockModalProps<any>> = ({
   handleCancel,
   currentRecord,
   handleUnblock,
-  description = " Are You Sure You want to Unblock ?",
+  description = "Naozaj chcete používateľa odblokovať?",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 
@@ -25,8 +25,8 @@ const UnblockModal: React.FC<UnblockModalProps<any>> = ({
       open={isUnblockModalVisible}
       onOk={handleUnblock}
       onCancel={handleCancel}
-      okText="Unblock"
-      cancelText="Cancel"
+      okText="Odblokovať"
+      cancelText="Zrušiť"
       centered
       style={{ textAlign: "center" }}
       // styles.body={{ textAlign: "center" }}
@@ -44,14 +44,14 @@ const UnblockModal: React.FC<UnblockModalProps<any>> = ({
             className="!px-6 !py-5 mr-4 w-fit flex items-center justify-center gap-2"
             onClick={handleCancel}
           >
-            Cancel
+            Zrušiť
           </ReuseButton>
           <ReuseButton
             variant="secondary"
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             onClick={() => handleUnblock(currentRecord)}
           >
-            Unblock
+            Odblokovať
           </ReuseButton>
         </div>
       }

@@ -36,7 +36,7 @@ const CancleOrderModal: React.FC<CancleOrderModalProps<any>> = ({
         handleCancel();
         form.resetFields();
       }}
-      okText="Cancle Order"
+      okText="Zrušiť objednávku"
       centered
       // styles.body={{ textAlign: "center" }}
       footer={null}

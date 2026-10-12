@@ -51,19 +51,19 @@ const CartSection = ({ myData }: { myData: IProfile }) => {
           </h2>
           <div className=" py-5 w-full space-y-4 border-y border-base-color/30 mb-5">
             <div className="flex justify-between">
-              <span className="font-bold">Sub Total: </span>
+              <span className="font-bold">Medzisúčet: </span>
               <span className="font-bold">{subTotal?.toFixed(2)}€</span>
             </div>
 
             <div className="flex justify-between">
-              <span className="font-bold">Shipping: </span>
+              <span className="font-bold">Poštovné: </span>
               <span className="font-bold">{shippingTotal?.toFixed(2)}€</span>
             </div>
 
             <hr className="border-gray-700" />
 
             <div className="flex justify-between font-semibold">
-              <span className=" font-bold">Total</span>
+              <span className=" font-bold">Celkom</span>
               <span className="text-secondary-color text-lg font-bold">
                 {totalPrice?.toFixed(2)}€
               </span>

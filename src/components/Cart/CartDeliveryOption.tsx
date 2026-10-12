@@ -24,49 +24,49 @@ const inputFields: {
 }[] = [
     {
       name: "name",
-      label: "Name",
-      placeholder: "Placeholder",
+      label: "Meno a priezvisko",
+      placeholder: "Zadajte meno a priezvisko",
       required: true,
-      rules: [{ required: true, message: "Name is required" }] as Rule[],
+      rules: [{ required: true, message: "Meno a priezvisko je povinné" }] as Rule[],
     },
     {
       name: "shippingAddress",
-      label: "Shipping Address",
-      placeholder: "Placeholder",
+      label: "Doručovacia adresa",
+      placeholder: "Zadajte doručovaciu adresu",
       required: true,
       rules: [
-        { required: true, message: "Shipping Address is required" },
+        { required: true, message: "Doručovacia adresa je povinná" },
       ] as Rule[],
     },
     {
       name: "postCode",
-      label: "Zip Code",
-      placeholder: "Placeholder",
+      label: "PSČ",
+      placeholder: "Zadajte PSČ",
       required: true,
-      rules: [{ required: true, message: "Zip Code is required" }] as Rule[],
+      rules: [{ required: true, message: "PSČ je povinné" }] as Rule[],
     },
     {
       name: "town",
-      label: "Town",
-      placeholder: "Placeholder",
+      label: "Mesto",
+      placeholder: "Zadajte mesto",
       required: true,
-      rules: [{ required: true, message: "Town is required" }] as Rule[],
+      rules: [{ required: true, message: "Mesto je povinné" }] as Rule[],
     },
     {
       name: "mobileNumber",
-      label: "Phone Number",
-      placeholder: "Placeholder",
+      label: "Telefónne číslo",
+      placeholder: "Zadajte telefónne číslo",
       required: true,
-      rules: [{ required: true, message: "Phone Number is required" }] as Rule[],
+      rules: [{ required: true, message: "Telefónne číslo je povinné" }] as Rule[],
     },
     {
       name: "email",
-      label: "Email address",
-      placeholder: "Placeholder",
+      label: "E-mailová adresa",
+      placeholder: "Zadajte e-mail",
       required: true,
       rules: [
-        { required: true, message: "Email is required" },
-        { type: "email", message: "Enter a valid email" },
+        { required: true, message: "E-mail je povinný" },
+        { type: "email", message: "Zadajte platný e-mail" },
       ] as Rule[],
       disabled: true,
     },
@@ -81,45 +81,45 @@ const otherFields: {
 }[] = [
     {
       name: "companyName",
-      label: "Company Name",
-      placeholder: "Enter Company Name",
+      label: "Názov firmy",
+      placeholder: "Zadajte názov firmy",
       required: true,
-      rules: [{ required: true, message: "Company Name is required" }] as Rule[],
+      rules: [{ required: true, message: "Názov firmy je povinný" }] as Rule[],
     },
     {
       name: "ico",
       label: "IČO",
-      placeholder: "Placeholder",
-      rules: [{ required: true, message: "IČO is required" }],
+      placeholder: "Zadajte IČO",
+      rules: [{ required: true, message: "IČO je povinné" }],
     },
     {
       name: "dic",
       label: "DIČ",
-      placeholder: "Placeholder",
-      rules: [{ required: true, message: "DIČ is required" }],
+      placeholder: "Zadajte DIČ",
+      rules: [{ required: true, message: "DIČ je povinné" }],
     },
     {
       name: "ic_dph",
-      label: "IČ DHP (Optional)",
-      placeholder: "Placeholder",
+      label: "IČ DPH (Nepovinné)",
+      placeholder: "Zadajte IČ DPH",
     },
     {
       name: "companyAddress",
-      label: "Company Address",
-      placeholder: "Placeholder",
-      rules: [{ required: true, message: "Company Address is required" }],
+      label: "Adresa firmy",
+      placeholder: "Zadajte adresu firmy",
+      rules: [{ required: true, message: "Adresa firmy je povinná" }],
     },
     {
       name: "companyPostCode",
-      label: "Company Zip Code",
-      placeholder: "Placeholder",
-      rules: [{ required: true, message: "Company Zip Code is required" }],
+      label: "PSČ firmy",
+      placeholder: "Zadajte PSČ firmy",
+      rules: [{ required: true, message: "PSČ firmy je povinné" }],
     },
     {
       name: "companyTown",
-      label: "Company Town",
-      placeholder: "Placeholder",
-      rules: [{ required: true, message: "Company Town is required" }],
+      label: "Mesto firmy",
+      placeholder: "Zadajte mesto firmy",
+      rules: [{ required: true, message: "Mesto firmy je povinné" }],
     },
   ];
 
@@ -166,7 +166,7 @@ const CartDeliveryOption = ({
       {
         toastLoadingMessage: "Prosím, počkajte...",
         toastSuccessMessage: "Presmerovávame Vás na platobnú bránu Stripe na dokončenie platby...",
-        toastErrorMessage: "Something went wrong! Please try again.",
+        toastErrorMessage: "Niečo sa pokazilo! Skúste to prosím znova.",
       }
     );
     if (res?.success) {
@@ -193,7 +193,7 @@ const CartDeliveryOption = ({
         <div className="mb-2">
           <Form.Item name="loginAsCompany" valuePropName="checked">
             <Checkbox className="text-base-color font-semibold">
-              I am login as company
+              Nakupujem ako firma
             </Checkbox>
           </Form.Item>
         </div>
@@ -210,8 +210,8 @@ const CartDeliveryOption = ({
           ))}
         <ReuseInput
           name={"deliveryNote"}
-          label={"Delivery Note (Optional)"}
-          placeholder={"Placeholder"}
+          label={"Poznámka k doručeniu (nepovinné)"}
+          placeholder={"Zadajte poznámku k doručeniu"}
           rules={[]}
           inputType={"textarea"}
         />
@@ -234,10 +234,10 @@ const CartDeliveryOption = ({
           >
             <div>
               <p className="text-sm">
-                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
-                  Terms of Service Conceptural
+                Súhlasím s našimi <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                  Všeobecné obchodné podmienky Zmluvné vzťahy
                 </Link>{" "}
-                and{" "}
+                a{" "}
                 <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                   Všeobecné obchodné podmienky Online trh.
                 </Link>
@@ -302,7 +302,7 @@ const CartDeliveryOption = ({
             variant="secondary"
             className="w-full md:w-auto !text-base !py-5 !px-5"
           >
-            Continue to Payment
+            Pokračovať k platbe
           </ReuseButton>
         </div>
       </div>
