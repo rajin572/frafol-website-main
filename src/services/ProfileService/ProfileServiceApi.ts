@@ -71,6 +71,22 @@ export const updateIntroVIdeo = async (
     return Error(error);
   }
 };
+// Removes the profile's intro video (DELETE /users/delete-intro-video, token via fetchWithAuth).
+export const deleteIntroVideo = async () => {
+  try {
+    const res = await fetchWithAuth(`/users/delete-intro-video`, {
+      method: "DELETE",
+    });
+    const result = await res.json();
+    if (result?.success) {
+      updateTag(TagTypes.profile);
+    }
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return Error(error);
+  }
+};
 export const updateBannerImage = async (
   req = {
     body: FormData,
