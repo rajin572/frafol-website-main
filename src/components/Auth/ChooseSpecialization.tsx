@@ -111,7 +111,7 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
         </h2>
         <p className="text-base sm:text-lg lg:text-xl text-base-color">
           {/* Select the services you specialize in */}
-          Vyberte kategórie, v ktorých chcete prezentovať svoju prácu
+          Vyberte si oblasti fotografie a videografie, ktorým sa venujete.
         </p>
       </div>
       <div>

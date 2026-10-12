@@ -27,13 +27,13 @@ const userInputStructure = [
     type: "text",
     inputType: "normal",
     // label: "Full Name"
-    label: "Celé meno",
+    label: "Meno a priezvisko",
     // placeholder: "Enter your full name"
-    placeholder: "Zadajte svoje celé meno",
+    placeholder: "Zadajte svoje meno a priezvisko",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
     // rules: [{ required: true, message: "Name is required" }]
-    rules: [{ required: true, message: "Celé meno je povinné" }],
+    rules: [{ required: true, message: "Meno a priezvisko je povinné" }],
   },
   {
     name: "email",
@@ -103,26 +103,26 @@ const companyInputStructure = [
     type: "text",
     inputType: "normal",
     // label: "Full Name"
-    label: "Celé meno",
+    label: "Meno a priezvisko",
     // placeholder: "Enter your full name"
-    placeholder: "Zadajte svoje celé meno",
+    placeholder: "Zadajte svoje meno a priezvisko",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
     // rules: [{ required: true, message: "Name is required" }]
-    rules: [{ required: true, message: "Celé meno je povinné" }],
+    rules: [{ required: true, message: "Meno a priezvisko je povinné" }],
   },
   {
     name: "companyName",
     type: "text",
     inputType: "normal",
     // label: "Company Name"
-    label: "Obchodné meno",
+    label: "Názov firmy",
     // placeholder: "Enter Company Name"
-    placeholder: "Zadajte obchodné meno",
+    placeholder: "Zadajte názov firmy",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
     // rules: [{ required: true, message: "Company Name is required" }]
-    rules: [{ required: true, message: "Obchodné meno je povinné" }],
+    rules: [{ required: true, message: "Názov firmy je povinný" }],
   },
   {
     name: "email",
@@ -314,7 +314,7 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
         </h2>
         <p className="text-base sm:text-lg lg:text-xl text-base-color">
           {/* Tell us about yourself */}
-          Zaregistrujte sa ako používateľ a nájdite fotografov a kameramanov
+          Zaregistrujte sa ako klient a nájdite fotografov a kameramanov
         </p>
       </div>
       <ReusableForm handleFinish={onFinish} form={form}  >
@@ -332,7 +332,7 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
             }}
           >
             {/* Register as a company */}
-            Registrovať ako spoločnosť
+            Registrovať sa ako firma
           </Checkbox>
         </div>
         {type !== "company"
@@ -479,9 +479,8 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
                 <Link href="/data-protection" target="_blank" className="text-secondary-color! underline">
                   {/* GDPR */}
                   GDPR
-                </Link>{" "}
+                </Link>
                 {/* contract */}
-                zmluvou
               </p>
             </div>
           </Checkbox>

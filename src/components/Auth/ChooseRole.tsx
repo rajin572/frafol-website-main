@@ -38,7 +38,7 @@ const ChooseRole = () => {
       <div>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color mb-3">
           {/* Choose Your Role */}
-          Vyberte si svoju rolu
+          Vyberte svoj typ služby
         </h2>
         <p className="text-base sm:text-lg lg:text-xl text-base-color">
           {/* Select your professional role to continue */}

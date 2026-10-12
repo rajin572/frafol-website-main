@@ -26,24 +26,24 @@ const inputStructure = [
     type: "number",
     inputType: "number",
     // label: "Min Rate"
-    label: "Minimálna sadzba",
+    label: "Minimálna cena (€)",
     // placeholder: "Enter Min Rate"
-    placeholder: "Zadajte minimálnu sadzbu",
+    placeholder: "Zadajte minimálnu cenu",
     labelClassName: "!font-semibold !text-secondary-color",
     // rules: [{ required: true, message: "Min Rate is required" }]
-    rules: [{ required: true, message: "Minimálna sadzba je povinná" }],
+    rules: [{ required: true, message: "Minimálna cena je povinná" }],
   },
   {
     name: "maxHourlyRate",
     type: "number",
     inputType: "number",
     // label: "Max Rate"
-    label: "Maximálna sadzba",
+    label: "Maximálna cena (€)",
     // placeholder: "Enter Max Rate"
-    placeholder: "Zadajte maximálnu sadzbu",
+    placeholder: "Zadajte maximálnu cenu",
     labelClassName: "!font-semibold !text-secondary-color",
     // rules: [{ required: true, message: "Max Rate is required" }]
-    rules: [{ required: true, message: "Maximálna sadzba je povinná" }],
+    rules: [{ required: true, message: "Maximálna cena je povinná" }],
   },
 ];
 

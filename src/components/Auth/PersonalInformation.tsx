@@ -16,13 +16,13 @@ const inputStructure = [
     type: "text",
     inputType: "normal",
     // label: "Full Name"
-    label: "Celé meno",
+    label: "Meno a priezvisko",
     // placeholder: "Enter Full Name"
-    placeholder: "Zadajte svoje celé meno",
+    placeholder: "Zadajte svoje meno a priezvisko",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
     // rules: [{ required: true, message: "Name is required" }]
-    rules: [{ required: true, message: "Celé meno je povinné" }],
+    rules: [{ required: true, message: "Meno a priezvisko je povinné" }],
   },
   {
     name: "email",

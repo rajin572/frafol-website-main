@@ -354,7 +354,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                   <Button
                     onClick={() => { setMobileMenuOpen(!mobileMenuOpen); handleLogOut() }}
                     className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                    <p className="font-semibold">Logout</p>
+                    <p className="font-semibold">{/* Logout */}Odhlásiť sa</p>
                     <div className="bg-primary-color p-1 rounded-full">
                       <TbLogout2 className=" text-lg text-secondary-color" />
                     </div>
@@ -442,7 +442,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                   onClick={handleLogOut}
                   className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full"
                 >
-                  <p className="font-semibold">Logout</p>
+                  <p className="font-semibold">{/* Logout */}Odhlásiť sa</p>
                   <div className="bg-primary-color p-1 rounded-full">
                     <TbLogout2 className=" text-lg text-secondary-color" />
                   </div>

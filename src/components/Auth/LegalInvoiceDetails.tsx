@@ -18,12 +18,12 @@ const BusinessInputStructure = [
     type: "text",
     inputType: "normal",
     // label: "Company Name"
-    label: "Obchodné meno",
+    label: "Firemné meno",
     // placeholder: "Enter Company Name"
-    placeholder: "Zadajte obchodné meno",
+    placeholder: "Zadajte firemné meno",
     labelClassName: "!font-semibold !text-secondary-color",
     // rules: [{ required: true, message: "Company Name is required" }]
-    rules: [{ required: true, message: "Obchodné meno je povinné" }],
+    rules: [{ required: true, message: "Firemné meno je povinné" }],
   },
   {
     name: "phone",
@@ -176,7 +176,7 @@ const LegalInvoiceDetails = ({ townData }: { townData: ITown[] }) => {
           className="!text-secondary-color !font-semibold"
         >
           {/* Business Information */}
-          Obchodné údaje
+          Firemné údaje
         </Typography.Title>
         {BusinessInputStructure.map((input, index) => (
           <ReuseInput

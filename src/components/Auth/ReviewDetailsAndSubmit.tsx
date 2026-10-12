@@ -20,10 +20,17 @@ const ReviewDetailsAndSubmit = () => {
   const parseData = JSON.parse(storedInformation || "{}");
 
 
+  // Same labels as the role-selection page (ChooseRole).
+  const roleLabels: Record<string, string> = {
+    photographer: "Fotograf",
+    videographer: "Videograf",
+    both: "Fotograf aj Kameraman",
+  };
+
   const details = [
     {
       // label: "Name"
-      label: "Celé meno",
+      label: "Meno a priezvisko",
       value: parseData.name || "N/A",
     },
     {
@@ -34,7 +41,7 @@ const ReviewDetailsAndSubmit = () => {
     {
       // label: "Role"
       label: "Rola",
-      value: parseData.role ? parseData.role.charAt(0).toUpperCase() + parseData.role.slice(1) : "N/A",
+      value: parseData.role ? roleLabels[parseData.role] ?? parseData.role : "N/A",
     },
     {
       // label: "Phone Number"
@@ -107,7 +114,7 @@ const ReviewDetailsAndSubmit = () => {
     // Company-specific fields (conditionally included)
     ...(parseData.companyName ? [{
       // label: "Company Name"
-      label: "Obchodné meno",
+      label: "Firemné meno",
       value: parseData.companyName,
     }] : []),
     ...(parseData.ico ? [{
@@ -250,9 +257,8 @@ const ReviewDetailsAndSubmit = () => {
                 <Link href="/data-protection" target="_blank" className="text-secondary-color! underline">
                   {/* GDPR */}
                   GDPR
-                </Link>{" "}
+                </Link>
                 {/* contract */}
-                zmluvou
               </p>
             </div>
           </Checkbox>
