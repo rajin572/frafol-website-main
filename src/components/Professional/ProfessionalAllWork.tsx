@@ -70,7 +70,7 @@ const ProfessionalAllImages = ({
             className="!px-0 !py-0 flex items-center w-fit !border-none !border-transparent !text-secondary-color"
             url={`/professionals/${id}`}
           >
-            <MdOutlineArrowBackIosNew className="mr-2" /> Back
+            <MdOutlineArrowBackIosNew className="mr-2" /> Späť
           </ReuseButton>
         </div>
         <div className="space-y-4">
@@ -82,7 +82,7 @@ const ProfessionalAllImages = ({
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                  Images ({galleryImages.length})
+                  Fotografie ({galleryImages.length})
                 </h3>
                 <FiChevronDown
                   className={`text-2xl transition-transform duration-300 ${openSections.images ? 'transform rotate-180' : ''
@@ -117,7 +117,7 @@ const ProfessionalAllImages = ({
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                  Videos ({galleryVideos.length})
+                  Videá ({galleryVideos.length})
                 </h3>
                 <FiChevronDown
                   className={`text-2xl transition-transform duration-300 ${openSections.videos ? 'transform rotate-180' : ''

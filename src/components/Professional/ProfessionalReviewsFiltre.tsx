@@ -6,11 +6,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const sortItems: MenuProps["items"] = [
   {
     key: "newest",
-    label: "Newest",
+    label: "Najnovšie",
   },
   {
     key: "oldest",
-    label: "Oldest",
+    label: "Najstaršie",
   },
 ];
 

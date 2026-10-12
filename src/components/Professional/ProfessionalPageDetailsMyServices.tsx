@@ -16,7 +16,7 @@ const ProfessionalPageDetailsMyServices = ({
 }) => {
   return (
     <div className="mt-16">
-      <SectionHeader title="My Services" className="mb-3" />
+      <SectionHeader title="Moje balíky" className="mb-3" />
       {packages?.length > 0 ? (
         <div
           className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
@@ -28,8 +28,8 @@ const ProfessionalPageDetailsMyServices = ({
         </div>
       ) : (
         <NoResultFound
-          title="No Service Available"
-          description="This professional has not added any services yet."
+          title="Zatiaľ žiadne balíky"
+          description="Tento profesionál zatiaľ nepridal žiadne balíky."
         />
       )}
     </div>

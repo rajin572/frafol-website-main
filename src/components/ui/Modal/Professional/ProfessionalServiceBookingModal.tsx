@@ -177,7 +177,7 @@ const ProfessionalServiceBookingModal: React.FC<
 
         <div className="border border-base-color/20 mt-5 p-3 rounded-lg">
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-5">
-            Event Information
+            Informácie o fotení/natáčaní
           </p>
 
           <ReusableForm
@@ -192,18 +192,18 @@ const ProfessionalServiceBookingModal: React.FC<
           >
             <ReuseInput
               name="location"
-              label="Event Location"
-              placeholder="Enter Event Location"
-              rules={[{ required: true, message: "Event Location is required" }]}
+              label="Miesto"
+              placeholder="Miesto fotenia/natáčania"
+              rules={[{ required: true, message: "Zadajte miesto fotenia/natáčania" }]}
               labelClassName="!font-semibold"
             />
 
             <ReuseDatePicker
               name="date"
-              label="Event Date"
+              label="Dátum"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Date is required" }]}
-              placeholder="Select Date"
+              rules={[{ required: true, message: "Vyberte dátum" }]}
+              placeholder="Dátum fotenia/natáčania"
               unAllowedDate={professionalUser?.unAvailability}
               format="MM-DD-YYYY"
             />
@@ -211,10 +211,10 @@ const ProfessionalServiceBookingModal: React.FC<
             <ReuseTimePicker
               name="time"
               date={selectedDate ? selectedDate.toISOString() : null}
-              label="Event Time"
+              label="Čas začiatku"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Time is required" }]}
-              placeholder="Select Time"
+              rules={[{ required: true, message: "Vyberte čas začiatku" }]}
+              placeholder="Vyberte čas"
               disabled={!selectedDate}
             />
 
@@ -230,7 +230,7 @@ const ProfessionalServiceBookingModal: React.FC<
                   }
                 }}
               >
-                Register as a company
+                Objednať ako firma
               </Checkbox>
             </div>
             {type !== "company"
@@ -349,7 +349,7 @@ const ProfessionalServiceBookingModal: React.FC<
             </Form.Item> */}
 
             <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-              Send Booking Request
+              Odoslať žiadosť o rezerváciu
             </ReuseButton>
           </ReusableForm>
         </div>

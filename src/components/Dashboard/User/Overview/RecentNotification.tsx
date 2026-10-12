@@ -36,7 +36,7 @@ const RecentNotification = ({
               </p>
 
               <p className="text-sm text-[#8A8D8E] mt-1">
-                {formatDateTime(activity?.createdAt)}
+                {formatDateTime(activity?.createdAt, "notification")}
               </p>
             </div>
           </Link>

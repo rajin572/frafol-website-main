@@ -1,6 +1,11 @@
 import dayjs from "dayjs";
 
-export const formatDateTime = (date: string | Date | undefined): string => {
+// `notification` style spells the minutes out ("Pred 2 minútami"); the default is the short
+// chat/forum style ("pred 2 min.").
+export const formatDateTime = (
+  date: string | Date | undefined,
+  style: "short" | "notification" = "short"
+): string => {
   // date is less than 1min ago, return "just now"
   // date is less than 1 hour ago, return "x minutes ago"
   // date is less than 1 day ago, return "HH:mm"
@@ -8,9 +13,14 @@ export const formatDateTime = (date: string | Date | undefined): string => {
   const now = dayjs();
   const messageDate = dayjs(date);
 
-  if (now.diff(messageDate, "minute") < 1) return "just now";
-  if (now.diff(messageDate, "hour") < 1)
-    return `${now.diff(messageDate, "minute")} minutes ago`;
+  if (now.diff(messageDate, "minute") < 1) return "Práve teraz";
+  if (now.diff(messageDate, "hour") < 1) {
+    const minutes = now.diff(messageDate, "minute");
+    if (style === "notification") {
+      return `Pred ${minutes} ${minutes === 1 ? "minútou" : "minútami"}`;
+    }
+    return `pred ${minutes} min.`;
+  }
   if (now.diff(messageDate, "day") < 1) return messageDate.format("HH:mm");
   return messageDate.format("DD - MMM - YYYY"); // Fixed: used "DD / MM / YYYY"
 };

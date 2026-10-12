@@ -28,7 +28,7 @@ const ServiceCardBookNow = ({
         className="!text-sm sm:!text-sm lg:!text-base !px-2 !py-1 w-fit"
         onClick={myData?._id ? openModal : () => router.push("/sign-in")}
       >
-        Book Now
+        Objednať teraz
       </ReuseButton>
       <ProfessionalServiceBookingModal
         professionalUser={professionalUser}

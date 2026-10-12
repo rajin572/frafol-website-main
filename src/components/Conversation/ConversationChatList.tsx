@@ -139,7 +139,7 @@ const ConversationChatList = ({
     >
       <div className="sticky top-0 z-20   pt-5 !bg-primary-color">
         <div className=" flex justify-between items-center pe-4  text-base sm:text-xl md:text-2xl lg:text-3xl text-secondary-color font-bold mt-3">
-          Messages
+          Správy
         </div>
         <div className="mt-3 w-full">
           <SearchInput

@@ -30,7 +30,7 @@ const ProfessionalReviews = async ({
   console.log("Review View:", data?.data?.reviews)
   return (
     <div id="reviews" className="mt-16">
-      <SectionHeader title="Reviews" className="mb-3" />
+      <SectionHeader title="Recenzie" className="mb-3" />
       <ProfessionalReviewRating professionalUser={professionalUser} />
       <ProfessionalReviewsFiltre />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-10">

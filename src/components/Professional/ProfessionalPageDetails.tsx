@@ -84,15 +84,15 @@ const ProfessionalPageDetails = async ({
           </h2>
 
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold">
-            Average price: {professionalUser?.minHourlyRate}€ -{" "}
+            Cenové rozpätie: {professionalUser?.minHourlyRate}€ -{" "}
             {professionalUser?.maxHourlyRate}€
           </p>
           <p className=" text-sm sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-0">
             {professionalUser?.role === "both"
-              ? "Videographer & Photographer"
+              ? "Fotograf aj Kameraman"
               : professionalUser?.role === "photographer"
-                ? "Photographer"
-                : "Videographer"}
+                ? "Fotograf"
+                : "Videograf"}
           </p>
           <Link href="#reviews">
             {" "}
@@ -101,7 +101,7 @@ const ProfessionalPageDetails = async ({
               <span>
                 {" "}
                 {professionalUser?.averageRating?.toFixed(1)} (
-                {professionalUser?.totalReview} Reviews)
+                {professionalUser?.totalReview} Recenzie)
               </span>
             </p>{" "}
           </Link>
@@ -142,7 +142,7 @@ const ProfessionalPageDetails = async ({
           )}
         </div>
         <div className="mt-16">
-          <SectionHeader title="About Me" className="mb-3" />
+          <SectionHeader title="O mne" className="mb-3" />
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium">
             {professionalUser?.profileId?.about}
           </p>

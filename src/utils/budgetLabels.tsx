@@ -1,9 +1,9 @@
 export const budgetLabels: { [key: string]: string } = {
-  under50: "Under 50€",
+  under50: "Pod 50€",
   "50-100": "50€-100€",
   "100-300": "100€-300€",
   "2000-5000": "2000€-5000€",
-  over1000: "Over 1000€",
+  over1000: "Nad 1000€",
 };
 export const eventOrderStatus: { [key: string]: string } = {
   pending: "Pending",

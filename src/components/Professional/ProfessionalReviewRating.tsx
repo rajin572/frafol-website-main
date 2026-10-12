@@ -24,12 +24,12 @@ const ProfessionalReviewRating = ({
       {/* Left side: Rating breakdown */}
       <div className=" space-y-2">
         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-extrabold text-secondary-color">
-          {professionalUser?.totalReview} Ratings
+          {professionalUser?.totalReview} hodnotení
         </p>
         {ratings.map(({ star, count }) => (
           <div key={star} className="flex items-center gap-2 w-full">
             <div className="text-sm text-nowrap sm:text-sm lg:text-base xl:text-lg font-semibold">
-              {star} Star
+              {star} {star === 1 ? "hviezdička" : star === 5 ? "hviezdičiek" : "hviezdičky"}
             </div>
             <div className="w-full lg:w-[500px]">
               <Progress

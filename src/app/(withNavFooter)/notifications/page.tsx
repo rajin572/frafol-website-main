@@ -69,7 +69,7 @@ const Notifications = async ({
                                             {notification?.message?.text}
                                         </span>
                                         <span className="text-xs sm:text-sm text-gray-500 mt-0.5">
-                                            {formatDateTime(notification?.createdAt)}
+                                            {formatDateTime(notification?.createdAt, "notification")}
                                         </span>
                                     </div>
                                 </div>

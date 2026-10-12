@@ -57,7 +57,7 @@ const ProfessionalServiceCard = ({
               <div className="flex items-center gap-2">
                 <FaEuroSign className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                  Price:
+                  Cena:
                 </p>
               </div>
               <p className="text-sm sm:text-sm lg:text-base">{data.mainPrice?.toFixed(2)}€ </p>
@@ -67,7 +67,7 @@ const ProfessionalServiceCard = ({
               <div className="flex items-center gap-1">
                 <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                  Duration:
+                  Trvanie:
                 </p>
               </div>
               <p className="text-sm sm:text-sm lg:text-base">{data?.duration}</p>
@@ -76,7 +76,7 @@ const ProfessionalServiceCard = ({
               <div className="flex items-center gap-1">
                 <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                  Delivery Time:
+                  Čas dodania:
                 </p>
               </div>
               <p className="text-sm sm:text-sm lg:text-base">

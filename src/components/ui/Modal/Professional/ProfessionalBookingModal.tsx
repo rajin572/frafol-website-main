@@ -20,16 +20,16 @@ export const userInputStructure = [
     name: "name",
     type: "text",
     inputType: "normal",
-    label: " Name",
+    label: "Meno a priezvisko",
     placeholder: "Enter Full Name",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Name is required" }],
+    rules: [{ required: true, message: "Meno a priezvisko je povinné" }],
   },
   {
     name: "email",
     type: "email",
     inputType: "normal",
-    label: "Email",
+    label: "E-mail",
     placeholder: "",
     labelClassName: "!font-semibold",
     rules: [],
@@ -48,37 +48,37 @@ export const userInputStructure = [
     name: "streetAddress",
     type: "text",
     inputType: "normal",
-    label: "Street Address",
+    label: "Ulica a číslo",
     placeholder: "Enter Street Address",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
     name: "town",
     type: "text",
     inputType: "normal",
-    label: "Town",
+    label: "Mesto",
     placeholder: "Enter Town Name",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Town is required" }],
+    rules: [{ required: true, message: "Mesto je povinné" }],
   },
   {
     name: "zipCode",
     type: "text",
     inputType: "normal",
-    label: "ZIP Code",
+    label: "PSČ",
     placeholder: "Enter ZIP Code",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "ZIP Code is required" }],
+    rules: [{ required: true, message: "PSČ je povinné" }],
   },
   {
     name: "country",
     type: "text",
     inputType: "normal",
-    label: "Country",
+    label: "Krajina",
     placeholder: "Enter Country Name",
     labelClassName: "!font-bold",
-    rules: [{ required: true, message: "Country is required" }],
+    rules: [{ required: true, message: "Krajina je povinná" }],
   },
 ];
 export const companyInputStructure = [
@@ -95,7 +95,7 @@ export const companyInputStructure = [
     name: "email",
     type: "email",
     inputType: "normal",
-    label: "Email",
+    label: "E-mail",
     placeholder: "",
     labelClassName: "!font-semibold",
     rules: [],
@@ -105,37 +105,37 @@ export const companyInputStructure = [
     name: "streetAddress",
     type: "text",
     inputType: "normal",
-    label: "Street Address",
+    label: "Ulica a číslo",
     placeholder: "Enter Street Address",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Street Address is required" }],
+    rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
     name: "town",
     type: "text",
     inputType: "normal",
-    label: "Town",
+    label: "Mesto",
     placeholder: "Enter Town Name",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Town is required" }],
+    rules: [{ required: true, message: "Mesto je povinné" }],
   },
   {
     name: "zipCode",
     type: "text",
     inputType: "normal",
-    label: "ZIP Code",
+    label: "PSČ",
     placeholder: "Enter ZIP Code",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "ZIP Code is required" }],
+    rules: [{ required: true, message: "PSČ je povinné" }],
   },
   {
     name: "country",
     type: "text",
     inputType: "normal",
-    label: "Country",
+    label: "Krajina",
     placeholder: "Enter Country Name",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Country is required" }],
+    rules: [{ required: true, message: "Krajina je povinná" }],
   },
   {
     name: "ico",
@@ -259,14 +259,14 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
     >
       <div className="p-5 text-base-color  max-h-[90vh] overflow-y-auto !p-0">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
-          Contact {professionalUser?.name} for Booking
+          Kontaktovať {professionalUser?.name}
         </h1>
         <p className="text-sm sm:text-sm lg:text-base xl:text-lg mb-5 font-medium">
-          Fill out the form below to request a quote and book your session.
+          Opíšte svoje predstavy a požiadajte o nezáväznú cenovú ponuku.
         </p>
 
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-5">
-          Event Information
+          Informácie o fotení/natáčaní
         </p>
 
         <ReusableForm
@@ -282,29 +282,29 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 mt-6">
             <ReuseInput
               name="title"
-              label="Event Name"
-              placeholder="Enter Event Name"
+              label="Typ fotenia/natáčania"
+              placeholder="Napr. svadba, portrét, produktové fotenie..."
               rules={[
-                { required: true, message: "Event Name is required" },
+                { required: true, message: "Uveďte typ fotenia/natáčania" },
               ]}
               labelClassName="!font-semibold"
             />
             <ReuseInput
               name="location"
-              label="Event Location"
-              placeholder="Enter Event Location"
+              label="Miesto fotenia/natáčania"
+              placeholder="Zadajte miesto fotenia/natáčania"
               rules={[
-                { required: true, message: "Event Location is required" },
+                { required: true, message: "Zadajte miesto fotenia/natáčania" },
               ]}
               labelClassName="!font-semibold"
             />
 
             <ReuseDatePicker
               name="date"
-              label="Event Date"
+              label="Dátum fotenia/natáčania"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Date is required" }]}
-              placeholder="Select Date"
+              rules={[{ required: true, message: "Vyberte dátum" }]}
+              placeholder="Vyberte dátum"
               unAllowedDate={professionalUser?.unAvailability}
               format="MM-DD-YYYY"
             />
@@ -312,35 +312,35 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
             <ReuseTimePicker
               name="time"
               date={selectedDate ? selectedDate.toISOString() : null}
-              label="Event Time"
+              label="Čas začiatku"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Time is required" }]}
-              placeholder="Select Time"
+              rules={[{ required: true, message: "Vyberte čas začiatku" }]}
+              placeholder="Vyberte čas"
               format="HH:mm"
               disabled={!selectedDate}
             />
             <ReuseSelect
               name="budget_range"
-              label="Budget"
-              placeholder="Select Budget"
+              label="Rozpočet (€)"
+              placeholder="Vyberte rozpočet"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Budget is required" }]}
+              rules={[{ required: true, message: "Vyberte rozpočet" }]}
               options={[
-                { value: "under50", label: "Under 50€" },
+                { value: "under50", label: "Pod 50€" },
                 { value: "50€-100€", label: "50€-100€" },
                 { value: "100€-300€", label: "100€-300€" },
                 { value: "300€ – 500€", label: "300€ – 500€" },
                 { value: "500€ – 700€", label: "500€ – 700€" },
                 { value: "700€ – 1000€", label: "700€ – 1000€" },
-                { value: "over1000", label: "Over 1000€" },
+                { value: "over1000", label: "Nad 1000€" },
               ]}
             />
             <ReuseSelect
               name="duration"
-              label="Duration"
-              placeholder="Select Duration"
+              label="Trvanie"
+              placeholder="Vyberte trvanie"
               labelClassName="!font-semibold"
-              rules={[{ required: true, message: "Duration is required" }]}
+              rules={[{ required: true, message: "Vyberte trvanie" }]}
               options={[
                 { value: "1hour", label: "1 hour" },
                 { value: "2hour", label: "2 hours" },
@@ -352,20 +352,20 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
           </div>
           <div>
             <Typography.Title level={5} className="!font-semibold mt-4">
-              Media Options
+              Typ služby
             </Typography.Title>
-            <Form.Item name="serviceType" rules={[{ required: true }]}>
+            <Form.Item name="serviceType" rules={[{ required: true, message: "Vyberte typ služby" }]}>
               <Radio.Group>
                 {professionalUser?.role === "both" ? (
                   <div>
-                    <Radio value="photography">Photography</Radio>
-                    <Radio value="videography">Videography</Radio>
-                    <Radio value="both">Both</Radio>
+                    <Radio value="photography">Fotenie</Radio>
+                    <Radio value="videography">Natáčanie</Radio>
+                    <Radio value="both">Fotenie a natáčanie</Radio>
                   </div>
                 ) : professionalUser?.role === "photographer" ? (
-                  <Radio value="photography">Photography</Radio>
+                  <Radio value="photography">Fotenie</Radio>
                 ) : (
-                  <Radio value="videography">Videography</Radio>
+                  <Radio value="videography">Natáčanie</Radio>
                 )}
               </Radio.Group>
             </Form.Item>
@@ -374,10 +374,10 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
             name="description"
             inputType="textarea"
             rows={5}
-            label="Event Description"
-            placeholder="Enter Event Description"
+            label="Vaše predstavy a požiadavky"
+            placeholder="Opíšte, čo by ste chceli nafotiť alebo natočiť"
             rules={[
-              { required: true, message: "Event Description is required" },
+              { required: true, message: "Opíšte svoje požiadavky" },
             ]}
             labelClassName="!font-semibold"
           />
@@ -393,7 +393,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
                 }
               }}
             >
-              Register as a company
+              Kontaktovať ako firma
             </Checkbox>
           </div>
           {type !== "company"
@@ -511,7 +511,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
             </Checkbox>
           </Form.Item> */}
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Send Booking Request
+            Odoslať žiadosť o rezerváciu
           </ReuseButton>
         </ReusableForm>
       </div>

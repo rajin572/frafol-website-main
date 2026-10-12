@@ -162,7 +162,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
             )}
             <div className="flex flex-col items-start">
               <p className="text-sm! text-gray-800 line-clamp-2">{notification?.message?.text}</p>
-              <p className="text-sm! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt)}</p>
+              <p className="text-sm! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt, "notification")}</p>
             </div>
           </div>
         </Link>
@@ -171,7 +171,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
         href={`/notifications`}
         className="w-2/3 mx-auto text-center !bg-secondary-color !text-primary-color rounded-xl h-8 py-1"
       >
-        See More
+        Zobraziť viac
       </Link>
     </div>
   );

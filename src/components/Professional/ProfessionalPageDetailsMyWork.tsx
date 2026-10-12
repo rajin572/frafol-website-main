@@ -36,7 +36,7 @@ const ProfessionalPageDetailsMyWork = ({
 
   return (
     <div className="mt-16">
-      <SectionHeader title="My Work" className="mb-3" />
+      <SectionHeader title="Moja tvorba" className="mb-3" />
       {(galleryImages?.length > 0 || galleryVideos?.length > 0) ? (
         <div>
           <div className="my-10">
@@ -54,7 +54,7 @@ const ProfessionalPageDetailsMyWork = ({
               className="!text-sm sm:!text-base lg:!text-lg !py-4.5 !px-4 !w-fit"
               url={`/professionals/${professionalId}/works`}
             >
-              View More
+              Zobraziť viac
             </ReuseButton>
           </div>
         </div>
