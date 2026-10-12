@@ -43,6 +43,13 @@ html {
   overflow-x: hidden !important;
 }
 
+/* Scrolling inside a modal must never hand over to the page behind it (iOS rubber-banding,
+   scrolling past the end of a long popup). */
+.ant-modal-wrap,
+.ant-modal-body {
+  overscroll-behavior: contain;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
 }
