@@ -170,17 +170,16 @@ const companyInputStructure = [
     rules: [{ required: true, message: "Ulica a číslo je povinná" }],
   },
   {
-    name: "town",
+    name: "zipCode",
     type: "text",
     inputType: "normal",
-    /* label: "Town", */
-    label: "Mesto",
-    placeholder: "Zadajte mesto",
+    label: "PSČ",
+    placeholder: "Zadajte PSČ",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Mesto je povinné" }],
+    rules: [{ required: true, message: "PSČ je povinné" }],
   },
   {
     name: "country",
