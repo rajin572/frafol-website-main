@@ -3,8 +3,9 @@ interface User {
   name: string;
   sureName: string;
   profileImage: string;
-  role: "admin" | "user"; // Assuming these are the only roles
-  switchRole: "user" | "admin"; // Same assumption for switchRole
+  // user | company | photographer | videographer | both | admin
+  role: string;
+  switchRole: string;
 }
 
 interface ITestimonial {

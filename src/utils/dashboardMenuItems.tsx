@@ -13,7 +13,6 @@ import myCommunityPost from "../../public/assets/svg/myCommunityPost.svg";
 
 // Profesional Dashboard Icons
 import event from "../../public/assets/svg/event.svg";
-import calendar from "../../public/assets/svg/calender.svg";
 import earning from "../../public/assets/svg/earning.svg";
 import gearOrder from "../../public/assets/svg/gearOrder.svg";
 import gearMarketplace from "../../public/assets/svg/gearMarketplace.svg";
@@ -358,24 +357,6 @@ export const useProfessionalPaths = () => {
           className="mr-2"
           style={{
             filter: pathname.includes("/packages")
-              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
-              : undefined,
-          }}
-        />
-      ),
-    },
-    {
-      key: "calendar",
-      label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/calendar">{/* Calendar */}Kalendár</Link>,
-      icon: (
-        <Image
-          src={calendar}
-          alt="icon"
-          width={20}
-          className="mr-2"
-          style={{
-            filter: pathname.includes("/calendar")
               ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
               : undefined,
           }}

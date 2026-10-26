@@ -8,13 +8,20 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { IGear } from "@/types";
 
 const Marketplace = async () => {
-  const res = await fetchWithAuth(`/marketPlace?limit=4`, {
+  // Only items that are still in stock — sold-out gear must not be offered on the home page.
+  const res = await fetchWithAuth(`/marketPlace?limit=4&status=In Stock`, {
     next: {
       tags: [TagTypes.gear],
     },
   });
   const data = await res.json();
   const categories: IGear[] = data?.data?.result;
+
+  // Nothing in stock → no section at all (same as the Frafol Choice block).
+  if (!categories || categories.length === 0) {
+    return null;
+  }
+
   return (
     <section className="pb-28">
       <Container>

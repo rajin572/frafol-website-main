@@ -2,6 +2,7 @@
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { ITestimonial } from "@/types/testimonial.type";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import { Modal } from "antd";
 import { MdClose } from "react-icons/md";
@@ -13,12 +14,46 @@ interface TestimonialCardProps {
 
 const CHAR_LIMIT = 100;
 
+const PROFESSIONAL_ROLES = ["photographer", "videographer", "both"];
+
+const isProfessionalUser = (user: ITestimonial["userId"]) =>
+  PROFESSIONAL_ROLES.includes(user?.role) ||
+  PROFESSIONAL_ROLES.includes(user?.switchRole);
+
+// Author block (picture + name). Professionals have a public profile, so it links there;
+// clients and admins have none, so it stays plain.
+const AuthorLink = ({
+  user,
+  className,
+  children,
+}: {
+  user: ITestimonial["userId"];
+  className: string;
+  children: React.ReactNode;
+}) => {
+  return isProfessionalUser(user) && user?._id ? (
+    <Link
+      href={`/professionals/${user._id}`}
+      className={`${className} cursor-pointer hover:opacity-80 transition-opacity`}
+    >
+      {children}
+    </Link>
+  ) : (
+    <div className={className}>{children}</div>
+  );
+};
+
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const text = testimonial?.text || "";
   const isLong = text.length > CHAR_LIMIT;
   const previewText = isLong ? `${text.slice(0, CHAR_LIMIT).trimEnd()}...` : text;
+
+  // Red name = a professional (their profile is linked); anyone else keeps the normal text colour.
+  const nameColor = isProfessionalUser(testimonial?.userId)
+    ? "text-secondary-color"
+    : "text-base-color";
 
   const profileImage =
     testimonial?.userId?.profileImage?.length > 0
@@ -39,7 +74,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
             </button>
           )}
         </p>
-        <div className="flex items-center gap-2">
+        <AuthorLink user={testimonial?.userId} className="flex items-center gap-2">
           <Image
             src={profileImage}
             alt={testimonial?.userId?.name || "Profile Image"}
@@ -48,14 +83,14 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
             className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full object-cover"
           />
           <div>
-            <p className=" text-sm sm:text-base lg:text-lg text-secondary-color font-semibold ">
+            <p className={` text-sm sm:text-base lg:text-lg font-semibold ${nameColor}`}>
               {testimonial?.userId?.name}
             </p>
             <p className=" text-sm sm:text-sm lg:text-base text-lighter-color">
               {testimonial?.userId?.switchRole}
             </p>
           </div>
-        </div>
+        </AuthorLink>
       </div>
 
       <Modal
@@ -67,7 +102,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
         className="lg:!w-[600px]"
       >
         <div className="p-2 text-[#1a1a1a] max-h-[80vh] overflow-y-auto my-6">
-          <div className="flex items-center gap-2 mb-5">
+          <AuthorLink user={testimonial?.userId} className="flex items-center gap-2 mb-5">
             <Image
               src={profileImage}
               alt={testimonial?.userId?.name || "Profile Image"}
@@ -76,14 +111,14 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
               className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover"
             />
             <div>
-              <p className="text-base lg:text-lg text-secondary-color font-semibold">
+              <p className={`text-base lg:text-lg font-semibold ${nameColor}`}>
                 {testimonial?.userId?.name}
               </p>
               <p className="text-sm lg:text-base text-lighter-color">
                 {testimonial?.userId?.switchRole}
               </p>
             </div>
-          </div>
+          </AuthorLink>
           <p className="font-medium text-sm sm:text-base whitespace-pre-line leading-relaxed">
             {text}
           </p>
