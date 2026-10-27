@@ -24,6 +24,7 @@ const ProfessionalOverviewCards = async () => {
 
 
   const overview = overviewData.data;
+  console.log(overview)
   const countData = [
     {
       id: 1,
@@ -38,7 +39,7 @@ const ProfessionalOverviewCards = async () => {
       id: 2,
       background: "#ffffff",
       /* name: "Upcoming Events", */
-      name: "Plánované objednávky",
+      name: "Nadchádzajúce objednávky",
       icon: <IoCameraSharp className="size-5 text-secondary-color" />,
       count: overview?.totalUpcomingEvents,
     },
