@@ -62,10 +62,14 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
     {
       /* title: "Item Price (€)", */
       title: "Cena (€)",
-      dataIndex: "mainPrice",
-      key: "mainPrice",
+      dataIndex: "price",
+      key: "price",
       align: "center",
-      render: (price: number) => `${price?.toFixed(2)}€`,
+      // The professional's own price, VAT included if there is any, without the FRAFOL service fee.
+      render: (price: number, record: any) => {
+        const vat = record?.totalVatAmount ?? (price || 0) * ((record?.vatAmount || 0) / 100);
+        return `${((price || 0) + vat).toFixed(2)}€`;
+      },
     },
     {
       title: "Stav schválenia",

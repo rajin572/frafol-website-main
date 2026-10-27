@@ -150,11 +150,11 @@ const UserWorkshopPage = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-2 mt-1">
-                  <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                  <FaLink className="shrink-0 text-secondary-color text-sm sm:text-base lg:text-lg" />
                   <Link
                     href={workshop?.workshop?.workshopLink}
                     target="_blank"
-                    className="text-sm sm:text-sm lg:text-base font-semibold"
+                    className="min-w-0 break-all text-sm sm:text-sm lg:text-base font-semibold"
                   >
                     {workshop?.workshop?.workshopLink}
                   </Link>
