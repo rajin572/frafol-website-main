@@ -84,7 +84,7 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
               Hodnotenie
             </Typography.Title>
             <Form.Item name={"review"} rules={[{ required: true, message: "Vyberte počet hviezdičiek" }]}>
-              <Rate className="!text-3xl" allowHalf onChange={(value) => {
+              <Rate className="!text-3xl" onChange={(value) => {
                 const clamped = Math.min(5, Math.max(1, value)); // 1–5, can be 0.5 steps
                 form.setFieldsValue({ review: clamped });
               }} />

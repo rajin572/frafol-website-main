@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Tag, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
@@ -25,6 +25,12 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
   limit,
 }) => {
   console.log("data", data)
+  // A tooltip opened by tapping the eye icon never closes on a touch screen (there is no mouse to
+  // leave it) and stayed floating above the order modal, so touch screens get no tooltip here.
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
   const columns = [
     {
       /* title: "Client Name", */
@@ -78,7 +84,7 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
       key: "action",
       render: (_: unknown, record: IGearOrder) => (
         <Space size="middle">
-          <Tooltip placement="right" /* title="View Details" */ title="Zobraziť detaily">
+          <Tooltip placement="right" /* title="View Details" */ title="Zobraziť detaily" open={isTouch ? false : undefined}>
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
               onClick={() => showViewModal(record)}

@@ -18,6 +18,14 @@ interface ProfessionalEventOrderTableProps {
   activeTab?: string;
 }
 
+// The professional sees what they charge for their service (VAT included, if any), without the
+// FRAFOL service fee. `totalPrice` is what the client pays: price + VAT + service fee.
+const professionalPrice = (record: IEventOrder): number => {
+  const total = Number(record?.totalPrice) || 0;
+  const serviceFee = Math.max((record?.priceWithServiceFee || 0) - (record?.price || 0), 0);
+  return Math.max(total - serviceFee, 0);
+};
+
 const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
 > = ({ data, loading, showViewModal, page, total, limit }) => {
@@ -112,7 +120,7 @@ const ProfessionalEventOrderTable: React.FC<
       render: (text: string, record: IEventOrder) => (
         <div>
           {text ? (
-            <p translate="no" className="capitalize text-center">{record?.couponDiscount ? Number(text) - record?.couponDiscount : text}€</p>
+            <p translate="no" className="capitalize text-center">{professionalPrice(record).toFixed(2)}€</p>
           ) : (
             <p translate="no" className="capitalize">
               {budgetLabels[record?.budget_range as string] ||

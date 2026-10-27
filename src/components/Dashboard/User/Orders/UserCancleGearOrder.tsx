@@ -30,6 +30,7 @@ const UserCancleGearOrder = ({
     setIsModalOpen(false);
     setCurrentRecord(null);
   };
+  console.log(myGearOrderData)
   return (
     <div>
       <div className="space-y-5">

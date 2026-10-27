@@ -51,8 +51,8 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
     >
       <div className="p-3 space-y-6">
         {/* Product Card */}
-        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4 grid grid-cols-2 gap-4 items-center">
-          <div className="flex items-center gap-4">
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4 flex items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
             <Image
               src={
                 currentRecord?.gearMarketplaceId?.gallery?.[0]
@@ -62,14 +62,15 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
               alt={currentRecord?.gearMarketplaceId?.name || "Product Image"}
               width={80}
               height={80}
+              className="shrink-0"
             />
-            <div>
-              <h2 className="text-lg font-medium">
+            <div className="min-w-0">
+              <h2 className="text-lg font-medium break-words">
                 {currentRecord?.gearMarketplaceId?.name || /* "Product Name" */ "Názov produktu"}
               </h2>
             </div>
           </div>
-          <div className="text-right">
+          <div className="shrink-0 text-right">
             <span className=" text-sm">{/* Price */}Cena</span>
             <p className="text-xl font-semibold">
               {currentRecord?.gearMarketplaceId?.mainPrice?.toFixed(2) || 0}€
@@ -165,6 +166,16 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
           <h3 className="font-semibold mb-2">Poznámka k doručeniu</h3>
           <p className="text-sm ">{currentRecord?.deliveryNote || "N/A"}</p>
         </div>
+        {/* Cancle Reason */}
+        {
+          currentRecord?.cancelReason &&
+
+          <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+            <h3 className="font-semibold mb-2">Dôvod zrušenia</h3>
+            <p className="text-sm ">{currentRecord?.cancelReason || "N/A"}</p>
+          </div>
+
+        }
 
         {/* Actions */}
         <div className="flex gap-4">
