@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Space, Tag, Tooltip } from "antd";
+import ViewDetailsTooltip from "@/components/ui/Table/ViewDetailsTooltip";
+import { Space, Tag } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 
@@ -70,14 +71,14 @@ const GearEarningTable = ({
       key: "action",
       render: (_: any, record: any) => (
         <Space size="middle">
-          <Tooltip placement="right" /* title="View Details" */ title="Zobraziť detaily">
+          <ViewDetailsTooltip>
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
               onClick={() => onView(record)}
             >
               <GoEye style={{ fontSize: "24px" }} />
             </button>
-          </Tooltip>
+          </ViewDetailsTooltip>
         </Space>
       ),
       align: "center",

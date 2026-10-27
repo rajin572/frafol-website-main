@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Rate, Space, Tooltip } from "antd";
+import ViewDetailsTooltip from "@/components/ui/Table/ViewDetailsTooltip";
+import { Rate, Space } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import { formatDate } from "@/utils/dateFormet";
@@ -70,14 +71,14 @@ const ProfessionalReviewTable = ({
         <>
           <Space size="middle">
             {/* View Details Tooltip */}
-            <Tooltip placement="right" /* title="View Details" */ title="Zobraziť podrobnosti">
+            <ViewDetailsTooltip title="Zobraziť podrobnosti">
               <button
                 className="!p-0 !bg-transparent !border-none !text-secondary-color !cursor-pointer"
                 onClick={() => showViewModal(record)}
               >
                 <GoEye style={{ fontSize: "24px" }} />
               </button>
-            </Tooltip>
+            </ViewDetailsTooltip>
           </Space>
         </>
       ),

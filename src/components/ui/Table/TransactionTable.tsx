@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import ViewDetailsTooltip from "@/components/ui/Table/ViewDetailsTooltip";
 import React from "react";
-import { Space, Tooltip } from "antd";
+import { Space } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 
@@ -69,14 +70,14 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       render: (_: unknown, record: any) => (
         <Space size="middle">
           {/* View Details Tooltip */}
-          <Tooltip placement="right" /* title="View Details" */ title="Zobraziť detaily">
+          <ViewDetailsTooltip>
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
               onClick={() => showViewModal(record)}
             >
               <GoEye style={{ fontSize: "24px" }} />
             </button>
-          </Tooltip>
+          </ViewDetailsTooltip>
         </Space>
       ),
       align: "center",
