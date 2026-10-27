@@ -8,6 +8,7 @@ export interface InvoiceLine {
   quantity: string;
   unitPrice: number;
   total: number;
+  bold?: boolean;
 }
 
 // One printable invoice page. Everything is already resolved (rows, totals, dates),
@@ -30,15 +31,19 @@ export interface InvoiceData {
   // Marketplace only, and only when different from the billing address.
   deliveryAddress?: string;
   lines: InvoiceLine[];
+  // Final settlement only: the payment invoice that is deducted again, a negative amount.
+  advance?: { invoiceNumber: string; amount: number };
+  // "Spolu bez DPH" row under the products. Only for VAT payers.
+  totalWithoutVat?: number;
   subtotal: number;
+  // Only set for VAT payers. Without it the invoice prints "Nie som platiteľom DPH."
   vat?: { percent: number; amount: number };
   total: number;
 }
 
-// The four invoices of one order.
+// The invoices of one order. Frafol only invoices its service fee once, at payment.
 export interface InvoiceSet {
   creatorPayment: InvoiceData;
   feePayment?: InvoiceData;
   creatorFinal: InvoiceData;
-  feeFinal?: InvoiceData;
 }

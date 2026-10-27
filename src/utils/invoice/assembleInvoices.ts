@@ -1,4 +1,4 @@
-import { IOrderInvoices } from "@/types";
+import { IInvoiceMeta, IOrderInvoices } from "@/types/invoice.type";
 import { FRAFOL_SUPPLIER } from "./invoiceConfig";
 import { makeRows } from "./invoiceFormat";
 import { InvoiceData, InvoiceLine, InvoiceRow, InvoiceSet } from "./invoiceTypes";
@@ -32,46 +32,85 @@ export const frafolRows = (): InvoiceRow[] =>
     ["E-mail", FRAFOL_SUPPLIER.email, true],
   ]);
 
-// Payment invoices (creator and Frafol) are "<order ID>-F1", final settlements "<order ID>-F2",
-// without the letters in front of the order ID: "EVT-20261005-0005" -> "20261005-0005-F1".
+// Creator invoices are "<order ID>-F1" (payment) and "<order ID>-F2" (final settlement), without
+// the letters in front of the order ID: "EVT-20261005-0005" -> "20261005-0005-F1".
 const invoiceNumberOf = (orderId: string, kind: InvoiceData["kind"]): string =>
   `${orderId.replace(/^[A-Za-z]+-/, "")}-F${kind === "payment" ? 1 : 2}`;
 
 export const assembleInvoices = (source: InvoiceSource): InvoiceSet => {
   const creatorSubtotal = source.creatorLines.reduce((sum, line) => sum + line.total, 0);
-  const vat = source.creatorVat && source.creatorVat.amount > 0 ? source.creatorVat : undefined;
+  // The professional is a VAT payer when they entered a VAT percentage.
+  const vat =
+    source.creatorVat && source.creatorVat.percent > 0 ? source.creatorVat : undefined;
   const creatorTotal = creatorSubtotal + (vat?.amount || 0);
+  const paymentNumber = invoiceNumberOf(source.orderId, "payment");
 
   const creatorInvoice = (
     kind: InvoiceData["kind"],
-    meta: { issueDate?: string } | undefined,
+    meta: IInvoiceMeta | undefined,
     fallbackDate?: string | Date
-  ): InvoiceData => ({
-    kind,
-    issuer: "creator",
-    orderNumber: source.orderId,
-    invoiceNumber: invoiceNumberOf(source.orderId, kind),
-    date: meta?.issueDate || fallbackDate,
-    supplierRows: source.creatorRows,
-    customerRows: source.customerRows,
-    deliveryAddress: source.deliveryAddress,
-    lines: source.creatorLines,
-    subtotal: creatorSubtotal,
-    vat,
-    total: creatorTotal,
-  });
+  ): InvoiceData => {
+    const base = {
+      issuer: "creator" as const,
+      orderNumber: source.orderId,
+      date: meta?.issueDate || fallbackDate,
+      supplierRows: source.creatorRows,
+      customerRows: source.customerRows,
+      deliveryAddress: source.deliveryAddress,
+    };
 
+    if (kind === "payment") {
+      // One line with the whole price, whatever was bought.
+      return {
+        ...base,
+        kind,
+        invoiceNumber: meta?.invoiceNumber || paymentNumber,
+        lines: [
+          {
+            name: "Faktúra k prijatej platbe",
+            quantity: "1 ks",
+            unitPrice: creatorSubtotal,
+            total: creatorSubtotal,
+            bold: true,
+          },
+        ],
+        totalWithoutVat: vat ? creatorSubtotal : undefined,
+        subtotal: creatorSubtotal,
+        vat,
+        total: creatorTotal,
+      };
+    }
+
+    // Final settlement: the real products, then the payment invoice is deducted again (without VAT,
+    // the VAT is deducted on its own line), so everything ends at 0,00 €.
+    return {
+      ...base,
+      kind,
+      invoiceNumber: meta?.invoiceNumber || invoiceNumberOf(source.orderId, kind),
+      lines: source.creatorLines,
+      advance: {
+        invoiceNumber: paymentNumber,
+        amount: -creatorSubtotal,
+      },
+      totalWithoutVat: vat ? 0 : undefined,
+      subtotal: 0,
+      vat,
+      total: 0,
+    };
+  };
+
+  // Frafol invoices its service fee once, at payment. It has its own numbering sequence: the number
+  // comes from the backend, the creator's order-based number is only a stand-in until it does.
   const feeInvoice = (
-    kind: InvoiceData["kind"],
-    meta: { issueDate?: string } | undefined,
+    meta: IInvoiceMeta | undefined,
     fallbackDate?: string | Date
   ): InvoiceData | undefined =>
     source.serviceFee > 0
       ? {
-          kind,
+          kind: "payment",
           issuer: "frafol",
           orderNumber: source.orderId,
-          invoiceNumber: invoiceNumberOf(source.orderId, kind),
+          invoiceNumber: meta?.invoiceNumber || paymentNumber,
           date: meta?.issueDate || fallbackDate,
           supplierRows: frafolRows(),
           customerRows: source.customerRows,
@@ -91,9 +130,8 @@ export const assembleInvoices = (source: InvoiceSource): InvoiceSet => {
   const { invoices } = source;
   return {
     creatorPayment: creatorInvoice("payment", invoices?.creatorPayment, source.paymentDate),
-    feePayment: feeInvoice("payment", invoices?.feePayment, source.paymentDate),
+    feePayment: feeInvoice(invoices?.feePayment, source.paymentDate),
     creatorFinal: creatorInvoice("final", invoices?.creatorFinal, source.completionDate),
-    feeFinal: feeInvoice("final", invoices?.feeFinal, source.completionDate),
   };
 };
 
@@ -104,9 +142,8 @@ const defined = (invoices: (InvoiceData | undefined)[]): InvoiceData[] =>
 export const paymentInvoices = (set: InvoiceSet): InvoiceData[] =>
   defined([set.creatorPayment, set.feePayment]);
 
-// Customer: both final settlement invoices combined into one PDF.
-export const finalInvoices = (set: InvoiceSet): InvoiceData[] =>
-  defined([set.creatorFinal, set.feeFinal]);
+// Customer: the final settlement invoice (Frafol's service fee has no second invoice).
+export const finalInvoices = (set: InvoiceSet): InvoiceData[] => [set.creatorFinal];
 
 // Creator: only their own invoices, one PDF each (payment, and final once completed).
 export const creatorPaymentInvoice = (set: InvoiceSet): InvoiceData[] => [set.creatorPayment];

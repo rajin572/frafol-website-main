@@ -125,6 +125,13 @@ const Txt = ({
   );
 };
 
+// Rows under the products (deducted payment invoice, total without VAT): label left, amount right.
+const tableRow = {
+  flexDirection: "row" as const,
+  justifyContent: "space-between" as const,
+};
+const tableRowText = { fontSize: 11, fontWeight: 700 as const, color: INK };
+
 const partyText = {
   fontSize: 11,
   lineHeight: PARTY_PITCH / 11,
@@ -195,7 +202,7 @@ const InvoicePage = ({ invoice }: { invoice: InvoiceData }) => {
           ...(invoice.orderNumber ? [["Číslo objednávky", invoice.orderNumber]] : []),
           ["Číslo faktúry", invoice.invoiceNumber],
           ["Dátum vystavenia", dateText],
-          ["Dátum dodania služby", dateText],
+          ["Dátum dodania", dateText],
           ...(invoice.extraMeta ?? []).map((row) => [row.label, row.value]),
         ].map(([label, value]) => (
           <Text key={label} style={{ fontSize: 10.12, lineHeight: 9.75 / 10.12, color: INK }}>
@@ -269,7 +276,7 @@ const InvoicePage = ({ invoice }: { invoice: InvoiceData }) => {
                 width: PRODUCT_WIDTH,
                 fontSize: 11,
                 lineHeight: 12 / 11,
-                fontWeight: L.productWeight,
+                fontWeight: line.bold ? 700 : L.productWeight,
                 color: INK,
               }}
             >
@@ -300,23 +307,68 @@ const InvoicePage = ({ invoice }: { invoice: InvoiceData }) => {
             </Txt>
           </View>
         ))}
+        {/* Final settlement: the payment invoice is deducted again */}
+        {invoice.advance && (
+          <View
+            style={{
+              ...tableRow,
+              marginLeft: 70.4 - L.lineX,
+              paddingVertical: 10,
+              borderBottomWidth: 0.75,
+              borderBottomColor: LINE,
+            }}
+          >
+            <Text style={{ ...tableRowText, width: 300 }}>
+              Faktúra k prijatej platbe č. {invoice.advance.invoiceNumber}
+            </Text>
+            <Text style={tableRowText}>{formatMoney(invoice.advance.amount)}</Text>
+          </View>
+        )}
+        {invoice.totalWithoutVat !== undefined && (
+          <View style={{ ...tableRow, marginLeft: 70.4 - L.lineX, paddingVertical: 10 }}>
+            <Text style={tableRowText}>Spolu bez DPH</Text>
+            <Text style={tableRowText}>{formatMoney(invoice.totalWithoutVat)}</Text>
+          </View>
+        )}
       </View>
 
       {/* Totals */}
-      <Txt x={subtotal.x} base={subtotal.base} size={12} weight={700} color={TEXT_RED}>
-        MEDZISÚČET:
-      </Txt>
-      <Txt x={523.45} base={subtotal.base} size={12} weight={700} align="right">
-        {formatMoney(invoice.subtotal)}
-      </Txt>
-      {vat && (
+      {isFinal ? (
+        // Settlement: the VAT of the payment invoice is deducted again, so both lines cancel out.
+        vat && (
+          <>
+            <Txt x={297.59} base={603.46} size={12} weight={700} color={TEXT_RED}>
+              {`DPH (${vat.percent}%):`}
+            </Txt>
+            <Txt x={523.46} base={603.46} size={12} weight={700} align="right">
+              {formatMoney(vat.amount)}
+            </Txt>
+            <Txt x={297.59} base={636.66} size={12} weight={700} color={TEXT_RED}>
+              {`DPH (${vat.percent}%):`}
+            </Txt>
+            <Txt x={523.46} base={633.62} size={12} weight={700} align="right">
+              {formatMoney(-vat.amount)}
+            </Txt>
+          </>
+        )
+      ) : (
         <>
-          <Txt x={297.59} base={636.66} size={12} weight={700} color={TEXT_RED}>
-            {`DPH (${vat.percent}%):`}
+          <Txt x={subtotal.x} base={subtotal.base} size={12} weight={700} color={TEXT_RED}>
+            MEDZISÚČET:
           </Txt>
-          <Txt x={523.46} base={633.62} size={12} weight={700} align="right">
-            {formatMoney(vat.amount)}
+          <Txt x={523.45} base={subtotal.base} size={12} weight={700} align="right">
+            {formatMoney(invoice.subtotal)}
           </Txt>
+          {vat && (
+            <>
+              <Txt x={297.59} base={636.66} size={12} weight={700} color={TEXT_RED}>
+                {`DPH (${vat.percent}%):`}
+              </Txt>
+              <Txt x={523.46} base={633.62} size={12} weight={700} align="right">
+                {formatMoney(vat.amount)}
+              </Txt>
+            </>
+          )}
         </>
       )}
       <View
@@ -339,18 +391,19 @@ const InvoicePage = ({ invoice }: { invoice: InvoiceData }) => {
       {isFinal && (
         <>
           <Txt x={301.23} base={708.76} size={12} weight={700} color={TEXT_RED}>
-            ZAPLATENÝ PREDDAVOK:
+            K ÚHRADE:
           </Txt>
           <Txt x={527.06} base={708.76} size={12} weight={700} align="right">
-            {formatMoney(invoice.total)}
-          </Txt>
-          <Txt x={302.21} base={741.92} size={12} weight={700} color={TEXT_RED}>
-            ZOSTÁVA UHRADIŤ:
-          </Txt>
-          <Txt x={528.06} base={741.92} size={12} weight={700} align="right">
             {formatMoney(0)}
           </Txt>
         </>
+      )}
+
+      {/* Only VAT payers charge VAT; Frafol itself is not one */}
+      {!vat && (
+        <Txt x={297.75} base={763} size={10} weight={700} align="center" boxWidth={PAGE.width}>
+          Nie som platiteľom DPH.
+        </Txt>
       )}
 
       <Txt x={297.75} base={798.59} size={10} align="center" boxWidth={PAGE.width}>
