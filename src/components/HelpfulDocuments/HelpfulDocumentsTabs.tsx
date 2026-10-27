@@ -32,20 +32,18 @@ const legalDocuments = [
     description:
       "Súhlas so zhotovením a použitím fotografií a audiovizuálnych záznamov (klient).",
     fileInfo: "18 KB DOCX",
-    downloadUrl:
-      "/documents/Legal document _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu.docx",
+    downloadUrl: "/documents/consent-client.docx",
     fileName:
-      "Legal document _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu.docx",
+      "Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu.docx",
   },
   {
     title: "Právny dokument 2 — Dieťa na fotografiách a videách",
     description:
       "Súhlas so zhotovením a použitím fotografií a audiovizuálnych záznamov (dieťa, podpisuje zákonný zástupca).",
     fileInfo: "18 KB DOCX",
-    downloadUrl:
-      "/documents/Legal document_ child _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu_ zákonný zástupca.docx",
+    downloadUrl: "/documents/consent-child-guardian.docx",
     fileName:
-      "Legal document_ child _ Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu_ zákonný zástupca.docx",
+      "Súhlas so zhotovovaním audiovizuálneho a fotografického záznamu, zákonný zástupca.docx",
   },
 ];
 

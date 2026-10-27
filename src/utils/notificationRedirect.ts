@@ -53,6 +53,43 @@ export type NotificationType =
   | "NewComment"
   | "CommentReply";
 
+// Forum notifications (NewComment / CommentReply) name the post in a field whose name depends on the
+// backend, and it can be a plain id or a populated object. Look for it in the usual places so the
+// notification opens the post instead of a generic dashboard page.
+const POST_ID_KEYS = [
+  "communityId",
+  "postId",
+  "community",
+  "communityPostId",
+  "forumId",
+  "forumPostId",
+  "post",
+  "referenceId",
+  "relatedId",
+  "targetId",
+  "entityId",
+  "contentId",
+];
+
+const findPostId = (notification: any): string | undefined => {
+  const places = [
+    notification,
+    notification?.message,
+    notification?.data,
+    notification?.metadata,
+    notification?.meta,
+  ];
+  for (const place of places) {
+    if (!place || typeof place !== "object") continue;
+    for (const key of POST_ID_KEYS) {
+      const value = place[key];
+      const id = typeof value === "object" && value ? value._id : value;
+      if (typeof id === "string" && /^[a-fd]{24}$/i.test(id)) return id;
+    }
+  }
+  return undefined;
+};
+
 export const isProfessionalRole = (role?: string): boolean => {
   if (!role) return false;
   const normalized = role.toLowerCase();
@@ -95,13 +132,7 @@ export const getNotificationRedirectUrl = (
     notification?.message?.roomId ||
     notification?.chatId ||
     notification?.data?.roomId;
-  const postId =
-    notification?.communityId ||
-    notification?.postId ||
-    notification?.message?.communityId ||
-    notification?.message?.postId ||
-    notification?.data?.communityId ||
-    notification?.data?.postId;
+  const postId = findPostId(notification);
   const workshopId =
     notification?.workshopId ||
     notification?.message?.workshopId ||
