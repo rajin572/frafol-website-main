@@ -22,7 +22,7 @@ const page = async ({
   const resdata = await res.json();
 
   const conversation: IConversation[] = resdata?.data || [];
-
+  console.log(conversation)
   let allMessages = [];
   let totalMessages = { page: 1, limit: 10, total: 0, totalPage: 0 };
 

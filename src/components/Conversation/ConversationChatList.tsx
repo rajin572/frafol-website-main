@@ -156,7 +156,11 @@ const ConversationChatList = ({
         <div className=" text-gray-300 bg-white   ">
           {filteredConversations?.map((conversation: IConversation) => {
             // Compute the image source URL
-            const imageUrlSrc = conversation?.chat?.users?.[0]?.profileImage;
+            const chatPartner =
+              conversation?.chat?.users?.find(
+                (u) => u?._id?.toString() !== user?.userId?.toString()
+              ) || conversation?.chat?.users?.[0];
+            const imageUrlSrc = chatPartner?.profileImage;
 
             // Return the JSX
             return (

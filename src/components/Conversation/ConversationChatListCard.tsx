@@ -7,13 +7,16 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { formatDateTime } from "../../utils/dateFormet";
 import Image from "next/image";
-import { IConversation } from "@/types/conversation.type";
+import { IConversation, isOfficialAdminRole } from "@/types/conversation.type";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Tooltip } from "antd";
+import { RiShieldCheckFill, RiVerifiedBadgeFill } from "react-icons/ri";
+import { useGetUserData } from "@/context/useGetUserData";
 
 interface IConversationChatListCardProps {
   conversation: IConversation;
-  imageUrlSrc: string;
+  imageUrlSrc?: string;
   onlineUsers: any[];
 }
 
@@ -28,8 +31,17 @@ const ConversationChatListCard = ({
   const { replace } = router;
   const dispatch = useAppDispatch();
   const selectedConversation = useAppSelector(selectSelectedChatUser);
+  const currentUser = useGetUserData();
 
-  // REMOVED the useEffect - no longer needed since we handle it in ConversationPage
+  // Find the other participant in the conversation
+  const chatPartner =
+    conversation?.chat?.users?.find(
+      (u) => u?._id?.toString() !== currentUser?.userId?.toString()
+    ) || conversation?.chat?.users?.[0];
+
+  const role = chatPartner?.role?.toLowerCase();
+  const isAdminOrSuperAdmin = isOfficialAdminRole(role);
+  const isSelected = conversation?.chat?._id === selectedConversation?.chat?._id;
 
   const handleConversationSelect = (conversation: IConversation) => {
     const conversationId = conversation?.chat?._id;
@@ -40,7 +52,7 @@ const ConversationChatListCard = ({
     // Set the room and DELETE page params (don't set to "1")
     if (conversationId) {
       params.set("room", conversationId);
-      params.delete("page"); // ← CHANGED: Delete instead of set to "1"
+      params.delete("page");
     } else {
       params.delete("room");
       params.delete("page");
@@ -53,54 +65,102 @@ const ConversationChatListCard = ({
     dispatch(setSelectedChatUser(conversation));
   };
 
+  const partnerName = chatPartner?.name || "Užívateľ";
+  const avatarUrl =
+    getMediaUrl(chatPartner?.profileImage || imageUrlSrc) || AllImages?.dummyProfile;
+
   return (
     <div
       onClick={() => handleConversationSelect(conversation)}
-      className={`m-1 rounded  border-b border-secondary-color/10 bg-secondary-color/10 text-black ${conversation?.chat?._id === selectedConversation?.chat?._id
-        ? "!bg-secondary-color text-white"
-        : ""
+      className={`m-1 rounded-lg transition-all cursor-pointer relative overflow-hidden ${isSelected
+        ? "!bg-secondary-color text-white shadow-md"
+        : isAdminOrSuperAdmin
+          ? "bg-gradient-to-r from-red-50/90 via-amber-50/30 to-white border border-secondary-color/30 text-black hover:bg-red-50 shadow-xs"
+          : "border-b border-secondary-color/10 bg-secondary-color/10 text-black hover:bg-secondary-color/15"
         }`}
     >
-      <div className="py-4 px-2 cursor-pointer">
-        <div className="flex items-center gap-2">
-          <Image
-            className="rounded-full aspect-square h-12 w-fit object-cover relative"
-            src={getMediaUrl(imageUrlSrc) || AllImages?.dummyProfile}
-            width={100}
-            height={100}
-            alt="Profile"
-            priority={true}
-            fetchPriority="high"
-          />
-          <div className="w-full mt-1">
-            <div className="flex items-center gap-1 text-xl">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  <p>
-                    {conversation?.chat?.users?.[0]?.name?.length > 15
-                      ? `${conversation?.chat?.users?.[0]?.name.slice(
-                        0,
-                        15
-                      )}...`
-                      : conversation?.chat?.users?.[0]?.name}
-                  </p>
-                  {onlineUsers?.includes(
-                    conversation?.chat?.users?.[0]?._id
-                  ) && <div className="size-2 rounded-full bg-green-500"></div>}
-                </div>
+      {/* Official FRAFOL left accent indicator bar */}
+      {isAdminOrSuperAdmin && !isSelected && (
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-secondary-color to-[#ffc700]" />
+      )}
+
+      <div className={`py-3 px-2.5 ${isAdminOrSuperAdmin && !isSelected ? "pl-3.5" : ""}`}>
+        <div className="flex items-center gap-2.5">
+          {/* Avatar with official badge overlay if admin */}
+          <div className="relative shrink-0">
+            <Image
+              className={`rounded-full aspect-square h-12 w-12 object-cover ${isAdminOrSuperAdmin
+                ? isSelected
+                  ? "ring-2 ring-white/80 shadow-xs"
+                  : "ring-2 ring-secondary-color shadow-xs"
+                : ""
+                }`}
+              src={avatarUrl}
+              width={100}
+              height={100}
+              alt={partnerName}
+              priority={true}
+              fetchPriority="high"
+            />
+            {isAdminOrSuperAdmin && (
+              <Tooltip title="Oficiálny účet FRAFOL" placement="top">
+                <span className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-md flex items-center justify-center ring-1 ring-secondary-color/40">
+                  <RiShieldCheckFill className="size-4 text-secondary-color" />
+                </span>
+              </Tooltip>
+            )}
+          </div>
+
+          <div className="w-full min-w-0">
+            <div className="flex items-center justify-between gap-1">
+              <div className="flex items-center gap-1.5 flex-wrap min-w-0">
+                <p className="font-semibold text-base leading-tight truncate max-w-[140px] sm:max-w-[160px]">
+                  {partnerName}
+                </p>
+
+                {/* Official verified badge pill */}
+
+                {onlineUsers?.includes(chatPartner?._id) && (
+                  <div className="size-2 rounded-full bg-green-500 shrink-0"></div>
+                )}
               </div>
-            </div>
-            <div className="flex justify-between items-center w-full">
-              <div className="text-sm">
-                {conversation?.lastMessage
-                  ? `${conversation?.lastMessage?.slice(0, 10)}...`
-                  : ""}
-              </div>
-              <div className="text-sm">
+
+              <div
+                className={`text-xs shrink-0 ${isSelected ? "text-white/80" : "text-gray-400"
+                  }`}
+              >
                 {conversation?.lastMessageCreatedAt
                   ? formatDateTime(conversation?.lastMessageCreatedAt)
                   : ""}
               </div>
+            </div>
+
+            {/* Official subtitle to build trust and prevent scammers */}
+            {isAdminOrSuperAdmin && (
+              <div
+                className={`text-[11px] font-medium flex items-center gap-1 mt-0.5 ${isSelected ? "text-amber-200" : "text-secondary-color"
+                  }`}
+              >
+                <RiVerifiedBadgeFill className="text-xs shrink-0" />
+                <span className="truncate">Oficiálna podpora FRAFOL</span>
+              </div>
+            )}
+
+            <div className="flex justify-between items-center w-full mt-1">
+              <div
+                className={`text-sm truncate max-w-[190px] sm:max-w-[210px] ${isSelected ? "text-white/90" : "text-gray-600"
+                  }`}
+              >
+                {conversation?.lastMessage
+                  ? conversation?.lastMessage
+                  : "Žiadne správy"}
+              </div>
+
+              {conversation?.unreadMessageCount > 0 && (
+                <span className="ml-1 px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-[#11c186] text-white shrink-0">
+                  {conversation.unreadMessageCount}
+                </span>
+              )}
             </div>
           </div>
         </div>

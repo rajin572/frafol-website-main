@@ -14,11 +14,12 @@ import ConversationSendMessage from "./ConversationSendMessage";
 import Image from "next/image";
 import Link from "next/link";
 import { getMediaUrl } from "@/utils/mediaUrl";
-import { IMessage } from "@/types/conversation.type";
+import { IMessage, isOfficialAdminRole } from "@/types/conversation.type";
 import { ISignInUser } from "@/types";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SpinLoader from "../ui/SpinLoader";
+import { RiShieldCheckFill, RiVerifiedBadgeFill } from "react-icons/ri";
 
 // Wraps the header user (picture + name) in a link when a public profile exists.
 const HeaderUserLink = ({
@@ -71,9 +72,18 @@ const ConversationMessage = ({
   const selectedConversation = useSelector(selectSelectedChatUser);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const [isInitialLoading, setIsInitialLoading] = useState(true); // Changed
-  const [isLoadingMore, setIsLoadingMore] = useState(false); // Added for pagination
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
+
+  // Find the other participant in the active conversation
+  const chatPartner =
+    selectedConversation?.chat?.users?.find(
+      (u) => u?._id?.toString() !== userData?.userId?.toString()
+    ) || selectedConversation?.chat?.users?.[0];
+
+  const role = chatPartner?.role?.toLowerCase();
+  const isAdminOrSuperAdmin = isOfficialAdminRole(role);
 
   const handleBack = () => {
     const params = new URLSearchParams(searchParams);
@@ -82,9 +92,6 @@ const ConversationMessage = ({
     replace(`${pathName}?${params.toString()}`, { scroll: false });
     dispatch(setSelectedChatUser(null));
   };
-
-
-
 
   // Reset on conversation change
   useEffect(() => {
@@ -105,11 +112,6 @@ const ConversationMessage = ({
   useEffect(() => {
     if (!allMessages) return;
 
-    // `room` is the conversation `allMessages` was fetched for. While switching
-    // conversations, the selected id updates instantly (Redux) but `allMessages`
-    // lags behind (server refetch), so skip applying stale data for another
-    // conversation. Also re-run on id change so the loader always clears once the
-    // matching data is present (otherwise the reset effect can leave it stuck on).
     const selectedId = selectedConversation?.chat?._id;
     if (selectedId && room !== selectedId) return;
 
@@ -142,12 +144,12 @@ const ConversationMessage = ({
   useEffect(() => {
     const handleScroll = () => {
       const container = messagesContainerRef.current;
-      if (!container || isLoadingMore) return; // Prevent multiple requests
+      if (!container || isLoadingMore) return;
 
       if (container.scrollTop === 0) {
         if (room === selectedConversation?.chat?._id) {
           if (totalMessages?.totalPage && page < totalMessages?.totalPage) {
-            setIsLoadingMore(true); // Set loading state
+            setIsLoadingMore(true);
             const curentPage = page;
             const params = new URLSearchParams(searchParams);
             if (curentPage) {
@@ -166,7 +168,7 @@ const ConversationMessage = ({
     container?.addEventListener("scroll", handleScroll);
     return () => container?.removeEventListener("scroll", handleScroll);
   }, [
-    isLoadingMore, // Added dependency
+    isLoadingMore,
     page,
     pathName,
     replace,
@@ -218,6 +220,7 @@ const ConversationMessage = ({
       (a: any, b: any) =>
         new Date(a.createdAt || a.time).getTime() - new Date(b.createdAt || b.time).getTime()
     );
+
   return (
     <div
       className={`w-full ${selectedConversation ? "block lg:block" : "hidden lg:block"
@@ -234,44 +237,91 @@ const ConversationMessage = ({
                   className="text-2xl cursor-pointer text-secondary-color"
                 />
               </div>
-              {/* Clients can open the professional's public profile from the chat header. */}
+
+              {/* Clients can open the professional's public profile from the chat header (only for regular professionals, not admins) */}
               <HeaderUserLink
-                userId={selectedConversation?.chat?.users?.[0]?._id}
-                isLink={userData?.role === "user" || userData?.role === "company"}
+                userId={chatPartner?._id}
+                isLink={
+                  !isAdminOrSuperAdmin &&
+                  (userData?.role === "user" || userData?.role === "company")
+                }
               >
-                <Image
-                  width={2000}
-                  height={2000}
-                  priority={true}
-                  fetchPriority="high"
-                  className="h-12 w-12 object-cover rounded-full"
-                  src={
-                    getMediaUrl(selectedConversation?.chat?.users?.[0]?.profileImage) ||
-                    AllImages?.dummyProfile
-                  }
-                  alt="Profile"
-                />
-                <div>
-                  <span className="font-bold text-base sm:text-lg lg:text-xl flex items-center gap-1">
-                    {selectedConversation?.chat?.users?.[0]?.name}
-                    <Tooltip title="Online">
-                      {onlineUsers.includes(
-                        selectedConversation?.chat?.users?.[0]?._id
-                      ) && (
-                          <div className="size-2 rounded-full bg-green-500"></div>
-                        )}
+                <div className="relative shrink-0">
+                  <Image
+                    width={2000}
+                    height={2000}
+                    priority={true}
+                    fetchPriority="high"
+                    className={`h-12 w-12 object-cover rounded-full ${isAdminOrSuperAdmin
+                      ? "ring-2 ring-secondary-color shadow-sm"
+                      : ""
+                      }`}
+                    src={
+                      getMediaUrl(chatPartner?.profileImage) ||
+                      AllImages?.dummyProfile
+                    }
+                    alt={chatPartner?.name || "Profile"}
+                  />
+                  {isAdminOrSuperAdmin && (
+                    <Tooltip title="Oficiálny overený účet FRAFOL" placement="bottom">
+                      <span className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-md flex items-center justify-center ring-1 ring-secondary-color/40">
+                        <RiShieldCheckFill className="size-4 text-secondary-color" />
+                      </span>
                     </Tooltip>
-                  </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="font-bold text-base sm:text-lg lg:text-xl text-secondary-color">
+                      {chatPartner?.name}
+                    </span>
+
+
+                    <Tooltip title="Online">
+                      {onlineUsers.includes(chatPartner?._id) && (
+                        <div className="size-2.5 rounded-full bg-green-500"></div>
+                      )}
+                    </Tooltip>
+                  </div>
+
+                  {isAdminOrSuperAdmin && (
+                    <span className="text-xs text-secondary-color flex items-center gap-1 font-medium mt-0.5">
+                      <RiVerifiedBadgeFill className="text-xs shrink-0" />
+                      <span>Oficiálna podpora a tím FRAFOL</span>
+                    </span>
+                  )}
                 </div>
               </HeaderUserLink>
             </div>
           </div>
 
+          {/* Anti-Scam Official Administrator Security Banner */}
+          {isAdminOrSuperAdmin && (
+            <div className="bg-gradient-to-r from-red-50 via-amber-50/60 to-orange-50 border-b border-secondary-color/20 px-3 sm:px-4 py-2.5 text-xs flex items-center gap-2.5 sm:gap-3 shadow-xs">
+              <div className="p-1.5 sm:p-2 bg-secondary-color text-white rounded-lg shrink-0 shadow-xs flex items-center justify-center">
+                <RiShieldCheckFill className="text-lg sm:text-xl text-yellow-300" />
+              </div>
+              <div className="flex-1">
+                <div className="font-bold text-secondary-color flex items-center gap-2 flex-wrap">
+                  <span>Oficiálna komunikácia FRAFOL</span>
+                  <span className="text-[10px] bg-green-100 text-green-800 font-bold px-1.5 py-0.2 rounded border border-green-300 flex items-center gap-1 uppercase tracking-wide">
+                    <span className="size-1.5 rounded-full bg-green-600 inline-block"></span>
+                    Systémovo overené
+                  </span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-gray-700 leading-snug mt-0.5">
+                  Komunikujete s oficiálnym zástupcom platformy FRAFOL. Administrátori od vás <strong className="text-gray-900 font-bold">nikdy nebudú žiadať vaše heslo</strong>, SMS overovacie kódy ani údaje z platobnej karty.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Message List - ALWAYS RENDER CONTENT */}
           <Content className="bg-white flex flex-col gap-5 !relative">
             <div className="h-full flex flex-col justify-end !relative ">
               <Card
-                className="!border-0 !pb-5 !relative overflow-y-auto border-none h-full overflow-x-hidden  !mb-5"
+                className="!border-0 !pb-5 !relative overflow-y-auto border-none h-full overflow-x-hidden !mb-5"
                 ref={messagesContainerRef}
               >
                 {/* Show initial loading OR messages */}
@@ -294,6 +344,7 @@ const ConversationMessage = ({
                         key={msg._id}
                         msg={msg}
                         userData={userData}
+                        isPartnerAdmin={isAdminOrSuperAdmin}
                       />
                     ))}
                     <div ref={messagesEndRef} />

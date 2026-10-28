@@ -1,11 +1,13 @@
-interface IConversationUser {
+export interface IConversationUser {
   _id: string;
   email: string;
   name: string;
+  sureName?: string;
   profileImage: string;
+  role: string;
 }
 
-interface IConversationInfo {
+export interface IConversationInfo {
   _id: string;
   users: IConversationUser[];
   createdBy: string;
@@ -25,10 +27,11 @@ export interface IConversation {
   lastMessageCreatedAt: string;
 }
 
-interface IMessageSender {
+export interface IMessageSender {
   _id: string;
   name: string;
   profileImage: string;
+  role?: string;
 }
 
 export interface IMessage {
@@ -44,3 +47,13 @@ export interface IMessage {
   updatedAt: string;
   __v: number;
 }
+
+export const isOfficialAdminRole = (role?: string | null): boolean => {
+  if (!role) return false;
+  const normalized = role.toLowerCase().trim();
+  return (
+    normalized === "admin" ||
+    normalized === "super-admin" ||
+    normalized === "super_admin"
+  );
+};
