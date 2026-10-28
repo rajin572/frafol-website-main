@@ -115,7 +115,9 @@ const UserOrderCard = ({
                       ? "Prebieha"
                       : data?.status === "cancelRequest"
                         ? "Žiadosť o zrušenie odoslaná"
-                        : eventOrderStatus[data?.status as string] || data?.status}
+                        : data?.status === "cancelled"
+                          ? "Zrušené"
+                          : eventOrderStatus[data?.status as string] || data?.status}
               </p>
             )}
             {

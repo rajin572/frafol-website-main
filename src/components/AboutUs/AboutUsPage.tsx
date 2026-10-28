@@ -24,11 +24,11 @@ const data = [
   {
     image: AllImages.aboutUs3,
     /* title: "For Photographers and Videographers" */
-    title: "Pre fotografov a videografov",
+    title: "Pre fotografov a kameramanov",
     /* description: "This is not just a platform but a community that connects creators..." */
-    description: "Toto nie je len platforma, ale komunita, ktorá spája tvorcov, vrátane fóra na diskusiu o rôznych témach. Neberieme žiadnu províziu z vašich výdelení — dostanete celú dohodnutú sumu. Vlastné profesionálne portfólio. Klienti, ktorí vedia, čo hľadajú.",
+    description: "Získajte nových klientov a prezentujte svoju tvorbu na jednom mieste. Vytvorte si profesionálne portfólio, ponúkajte fotografické a video služby a prijímajte objednávky jednoducho online. Z ceny, ktorú si stanovíte, vám FRAFOL nič neodpočítava. Servisný poplatok sa pripočíta k cene objednávky a hradí ho klient. Navyše sa môžete zapojiť do komunity fotografov a kameramanov, zdieľať skúsenosti a diskutovať na fóre.",
     /* buttonText: "Join As a Photographer/Videographer" */
-    buttonText: "Pridajte sa ako fotograf/videograf",
+    buttonText: "Pridajte sa ako fotograf/kameraman",
     reverse: true,
     redirectUrl: "/join",
   },
@@ -37,10 +37,10 @@ const data = [
     /* title: "For Clients" */
     title: "Pre klientov",
     /* description: "Looking for a photographer or videographer for a wedding, baptism, corporate event, or prom?..." */
-    description: "Hľadáte fotografa alebo videografa na svadbu, krst, firemnú akciu alebo maturity? Ste na správnom mieste. Pretože: Každý profil je overený. Komunikujete priamo s tvorcom. Získate presne to, na čo ste sa dohodli pred objednávkou.",
+    description: "Hľadáte fotografa alebo kameramana na svadbu, stužkovú, oslavu či firemnú akciu? Na FRAFOL si jednoducho prezrite portfóliá overených fotografov a kameramanov, porovnáte ich ponuky a vyberte si toho pravého. S profesionálom môžete komunikovať priamo, dohodnúť si všetky detaily a objednať fotenie alebo natáčanie.",
     /* buttonText: "Find a Photographer/Videographer" */
-    buttonText: "Nájsť fotografa/videografa",
-    redirectUrl: "/photography",
+    buttonText: "Nájsť fotografa/kameramana",
+    redirectUrl: "/professionals",
   },
   {
     image: AllImages.aboutUs5,

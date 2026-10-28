@@ -27,7 +27,7 @@ const cartSlice = createSlice({
       // If not exists, add the product to the cart
       if (!existingProduct) {
         state.products.push(action.payload);
-        toast.success(`${action.payload.name} added to cart`);
+        toast.success(`${action.payload.name} pridané do košíka`);
       } else {
         toast.error("Product already exists in cart");
       }

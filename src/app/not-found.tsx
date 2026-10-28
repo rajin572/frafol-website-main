@@ -9,7 +9,7 @@ const NotFoundPage = () => {
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const fullText = "NOTHING WAS FOUND";
+  const fullText = "Nič sa nenašlo";
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

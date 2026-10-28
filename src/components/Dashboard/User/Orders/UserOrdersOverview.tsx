@@ -18,7 +18,7 @@ const UserOrdersOverview = ({ states }: { states: IUserEventOrderStats }) => {
       id: 2,
       background: "#ffffff",
       /* name: "To Confirm", */
-      name: "Na potvrdenie",
+      name: "Potvrdiť doručenie",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
       count: states?.totalToConfirm,
     },
@@ -26,7 +26,7 @@ const UserOrdersOverview = ({ states }: { states: IUserEventOrderStats }) => {
       id: 1,
       background: "#ffffff",
       /* name: "Delivered", */
-      name: "Doručené",
+      name: "Dokončené",
       icon: (
         <IoCheckmarkDoneCircleOutline className="size-6 text-secondary-color" />
       ),

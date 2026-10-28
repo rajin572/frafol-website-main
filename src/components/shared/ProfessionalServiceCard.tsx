@@ -45,7 +45,7 @@ const ProfessionalServiceCard = ({
         </div>
         <div className="px-1  mt-3">
           <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
-            {data?.category}
+            {data?.category === "photography" ? "Fotenie" : data?.category === "videography" ? "Natáčanie" : data?.category === "both" ? "Fotenie a natáčanie" : ""}
           </span>
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
             {data.title}

@@ -302,7 +302,7 @@ const CartDeliveryOption = ({
             variant="secondary"
             className="w-full md:w-auto !text-base !py-5 !px-5"
           >
-            Pokračovať k platbe
+            Objednať s povinnosťou platby
           </ReuseButton>
         </div>
       </div>

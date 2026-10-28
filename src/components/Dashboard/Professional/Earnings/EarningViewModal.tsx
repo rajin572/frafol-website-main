@@ -68,9 +68,9 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
   const paymentInvoice =
     type === "workshop"
       ? {
-          invoices: creatorPaymentInvoice(buildWorkshopInvoices(record, record.instructorId)),
-          filename: `${record.orderId}-faktura-platba.pdf`,
-        }
+        invoices: creatorPaymentInvoice(buildWorkshopInvoices(record, record.instructorId)),
+        filename: `${record.orderId}-faktura-platba.pdf`,
+      }
       : null;
 
   const formatDate = (dateStr: string) =>
@@ -91,7 +91,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
   const titles: Record<EarningType, string> = {
     event: "Event Earning Details",
     gear: "Gear Earning Details",
-    workshop: "Workshop Earning Details",
+    workshop: "Detail zárobku z kurzu",
   };
 
   // Resolve client info per type
@@ -225,7 +225,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           <Row label="DPH" value={<span>{workshop?.vatAmount?.toFixed(2)} €</span>} />
         )}
         <Row label="Celkom (s DPH)" value={<span>{workshop?.mainPrice?.toFixed(2)} €</span>} />
-        <Row label="Provízia" value={<span className="text-error">{(record.netAmount - workshop?.mainPrice)?.toFixed(2)} €</span>} />
+        <Row label="Provízia" value={<span className="">{(record.netAmount - workshop?.mainPrice)?.toFixed(2)} €</span>} />
         <Row
           label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{record.netAmount?.toFixed(2)} €</span>}

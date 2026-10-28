@@ -43,7 +43,7 @@ const DeleteAccountPage = ({
     reqStatus === "rejected" &&
     deleteStatus?.deleteRequestedAt &&
     Date.now() - new Date(deleteStatus.deleteRequestedAt).getTime() <
-      TWENTY_FOUR_HOURS;
+    TWENTY_FOUR_HOURS;
 
   const showBanner = reqStatus === "pending" || isRejectedVisible;
 
@@ -52,37 +52,33 @@ const DeleteAccountPage = ({
       {/* Status Banner */}
       {showBanner && (
         <div
-          className={`mb-6 p-4 rounded-lg border ${
-            reqStatus === "pending"
-              ? "bg-yellow-50 border-yellow-300"
-              : "bg-red-50 border-red-300"
-          }`}
+          className={`mb-6 p-4 rounded-lg border ${reqStatus === "pending"
+            ? "bg-yellow-50 border-yellow-300"
+            : "bg-red-50 border-red-300"
+            }`}
         >
           <div className="flex items-center gap-3 mb-1">
             <span
-              className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                reqStatus === "pending"
-                  ? "bg-yellow-200 text-yellow-900"
-                  : "bg-red-200 text-red-900"
-              }`}
+              className={`text-xs font-semibold px-3 py-1 rounded-full ${reqStatus === "pending"
+                ? "bg-yellow-200 text-yellow-900"
+                : "bg-red-200 text-red-900"
+                }`}
             >
-              {reqStatus === "pending" ? "Pending" : "Rejected"}
+              {reqStatus === "pending" ? "Čakajúce" : "Zamietnuté"}
             </span>
             <span
-              className={`text-sm font-medium ${
-                reqStatus === "pending" ? "text-yellow-800" : "text-red-800"
-              }`}
+              className={`text-sm font-medium ${reqStatus === "pending" ? "text-yellow-800" : "text-red-800"
+                }`}
             >
               {reqStatus === "pending"
-                ? "Your account deletion request is under review."
-                : "Your account deletion request was rejected."}
+                ? "Vaša žiadosť o vymazanie účtu sa posudzuje."
+                : "Vaša žiadosť o vymazanie účtu bola zamietnutá."}
             </span>
           </div>
           {deleteStatus?.deleteRequestReason && (
             <p
-              className={`mt-1 text-sm ${
-                reqStatus === "pending" ? "text-yellow-700" : "text-red-700"
-              }`}
+              className={`mt-1 text-sm ${reqStatus === "pending" ? "text-yellow-700" : "text-red-700"
+                }`}
             >
               <span className="font-medium">Váš dôvod:</span>{" "}
               {deleteStatus.deleteRequestReason}
