@@ -75,7 +75,11 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
   const formatDate = (dateStr: string) =>
     dateStr
-      ? new Date(dateStr).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+      ? new Date(dateStr).toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      })
       : "—";
 
   const capitalize = (str: string) =>
@@ -89,7 +93,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
   );
 
   const titles: Record<EarningType, string> = {
-    event: "Event Earning Details",
+    event: "Detail zárobku z fotenia/natáčania",
     gear: "Gear Earning Details",
     workshop: "Detail zárobku z kurzu",
   };
@@ -97,19 +101,26 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
   // Resolve client info per type
   const client = type === "event" ? record.userId : record.clientId;
   const clientImage = getMediaUrl(client?.profileImage) || AllImages.dummyProfile;
-
+  const serviceTypeLabels: Record<string, string> = {
+    Photography: "Fotografovanie",
+    Videography: "Natáčanie",
+    Both: "Fotografovanie a natáčanie",
+  };
   const renderEventContent = () => {
     const eventOrder = record.eventOrderId;
     return (
       <>
-        <Row /* label="Event Name" */ label="Názov podujatia" value={eventOrder?.title} />
+        <Row /* label="Event Name" */ label="Názov" value={eventOrder?.title} />
         <Row /* label="Transaction ID" */ label="ID transakcie" value={<span className="text-xs ">{record.transactionId}</span>} />
         <Row /* label="Payment Method" */ label="Spôsob platby" value={capitalize(record.paymentMethod)} />
-        <Row
+        {/* <Row
           label="Stav platby"
           value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus)}</Tag>}
+        /> */}
+        <Row
+          label="Service Type"
+          value={serviceTypeLabels[eventOrder?.serviceType ?? ""] ?? "—"}
         />
-        <Row /* label="Service Type" */ label="Typ služby" value={capitalize(eventOrder?.serviceType)} />
         <Row
           label="Typ objednávky"
           value={<Tag color={eventOrder?.orderType === "direct" ? "blue" : "purple"}>{capitalize(eventOrder?.orderType)}</Tag>}
@@ -225,23 +236,23 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           <Row label="DPH" value={<span>{workshop?.vatAmount?.toFixed(2)} €</span>} />
         )}
         <Row label="Celkom (s DPH)" value={<span>{workshop?.mainPrice?.toFixed(2)} €</span>} />
-        <Row label="Provízia" value={<span className="">{(record.netAmount - workshop?.mainPrice)?.toFixed(2)} €</span>} />
+        <Row label="Servisný poplatok" value={<span className="">{(workshop?.mainPrice - record.netAmount)?.toFixed(2)} €</span>} />
         <Row
           label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{record.netAmount?.toFixed(2)} €</span>}
         />
         <Row
           label="Stav platby"
-          value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus)}</Tag>}
+          value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus === "completed" ? "Dokončená" : record.paymentStatus)}</Tag>}
         />
-        <Row
+        {/* <Row
           label="Platba lektorovi"
           value={
             <Tag color={record.instructorPayment?.status === "received" ? "green" : "orange"}>
               {capitalize(record.instructorPayment?.status || "pending")}
             </Tag>
           }
-        />
+        /> */}
         <Row label="Dátum registrácie" value={formatDate(record.joinedAt)} />
         <Row
           label="Vyplatené administrátorom"
