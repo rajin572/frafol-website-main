@@ -18,7 +18,7 @@ const AcceptModal: React.FC<AcceptModalProps<any>> = ({
   currentRecord,
   handleConfirm,
   description = "Naozaj chcete túto objednávku označiť ako dokončenú?",
-  confirmText = "Confirm",
+  confirmText = "Prijať",
 }) => {
   //   const [blockUser] = useBlockUserMutation();
 

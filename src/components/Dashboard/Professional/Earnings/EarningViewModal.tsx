@@ -169,7 +169,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
     const gear = record.gearMarketplaceId;
     const shippingPrice = gear?.shippingCompany?.price || 0;
     const netEarning = gear ? gear.mainPrice - gear.platformCommission + shippingPrice : 0;
-
+    console.log(record)
     return (
       <>
         <Row label="ID objednávky" value={<span className="text-xs">{record.orderId}</span>} />
@@ -178,15 +178,15 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           label="Stav objednávky"
           value={
             <Tag color={record.orderStatus === "delivered" ? "green" : record.orderStatus === "cancelled" ? "red" : "orange"}>
-              {capitalize(record.orderStatus)}
+              {capitalize(record.orderStatus === "delivered" ? "Doručená" : record.orderStatus)}
             </Tag>
           }
         />
         <Row
-          label="Stav platby"
+          label="Stav vyplatenia"
           value={
-            <Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>
-              {capitalize(record.paymentStatus)}
+            <Tag color={record.adminPaid === true ? "green" : "orange"}>
+              {capitalize(record.adminPaid === false ? "Čaká na vyplatenie" : "Dokončená")}
             </Tag>
           }
         />
@@ -197,7 +197,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
         {gear?.totalVatAmount > 0 && (
           <Row label="Suma DPH" value={<span>{gear.totalVatAmount?.toFixed(2)} €</span>} />
         )}
-        <Row label="Provízia platformy" value={<span>{gear?.platformCommission?.toFixed(2)} €</span>} />
+        <Row label="Servisný poplatok" value={<span>{gear?.platformCommission?.toFixed(2)} €</span>} />
         {gear?.shippingCompany?.name && (
           <Row label="Dopravca" value={`${gear.shippingCompany.name} — ${gear.shippingCompany.price?.toFixed(2)} €`} />
         )}
