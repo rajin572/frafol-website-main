@@ -94,7 +94,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
   const titles: Record<EarningType, string> = {
     event: "Detail zárobku z fotenia/natáčania",
-    gear: "Gear Earning Details",
+    gear: "Detail zárobku z bazára",
     workshop: "Detail zárobku z kurzu",
   };
 
@@ -102,9 +102,9 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
   const client = type === "event" ? record.userId : record.clientId;
   const clientImage = getMediaUrl(client?.profileImage) || AllImages.dummyProfile;
   const serviceTypeLabels: Record<string, string> = {
-    Photography: "Fotografovanie",
-    Videography: "Natáčanie",
-    Both: "Fotografovanie a natáčanie",
+    photography: "Fotografovanie",
+    videography: "Natáčanie",
+    both: "Fotografovanie a natáčanie",
   };
   const renderEventContent = () => {
     const eventOrder = record.eventOrderId;
@@ -118,12 +118,12 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           value={<Tag color={record.paymentStatus === "completed" ? "green" : "orange"}>{capitalize(record.paymentStatus)}</Tag>}
         /> */}
         <Row
-          label="Service Type"
+          label="Typ služby"
           value={serviceTypeLabels[eventOrder?.serviceType ?? ""] ?? "—"}
         />
         <Row
           label="Typ objednávky"
-          value={<Tag color={eventOrder?.orderType === "direct" ? "blue" : "purple"}>{capitalize(eventOrder?.orderType)}</Tag>}
+          value={<Tag color={eventOrder?.orderType === "direct" ? "blue" : "purple"}>{capitalize(eventOrder?.orderType === "custome" ? "Formulár" : "Balík")}</Tag>}
         />
         <Row /* label="Event Date" */ label="Dátum" value={formatDate(eventOrder?.date)} />
         <Row label="Dátum vytvorenia" value={formatDate(record.createdAt)} />
@@ -139,7 +139,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
         {eventOrder?.vatAmount ? (
           <Row label="DPH" value={<span>{eventOrder.vatAmount.toFixed(2)} €</span>} />
         ) : null}
-        <Row label="Provízia" value={<span>{record.commission?.toFixed(2)} €</span>} />
+        <Row label="Servisný poplatok" value={<span>{record.commission?.toFixed(2)} €</span>} />
 
         <Row /* label="Total Amount" */ label="Celková suma" value={<span>{record.amount?.toFixed(2)} €</span>} />
         {record.couponDiscount > 0 && (
