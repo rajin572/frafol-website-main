@@ -276,10 +276,10 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                   {(currentRecord?.extensionRequests?.length ?? 0) < 1
                     ? "Žiadosť nebola odoslaná"
                     : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "pending"
-                      ? "Request On Pending"
+                      ? "Čaká na schválenie"
                       : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "accepted"
-                        ? "Request Approved"
-                        : "Request Declined"}
+                        ? "Žiadosť schválená"
+                        : "Žiadosť zamietnutá"}
                 </span>
               </p>
             )}

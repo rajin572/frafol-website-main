@@ -50,13 +50,13 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
       footer={null}
     >
       <p className="text-3xl font-semibold py-5 text-base-color">
-        Poskytnúť spätnú väzbu
+        Napísať recenziu na FRAFOL
       </p>
       <ReusableForm handleFinish={submit} form={form}>
         <ReuseInput
           inputType="textarea"
           name="text"
-          label="Spätná väzba"
+          label="Podeľte sa o svoje skúsenosti. Vaša recenzia sa môže zobraziť na hlavnej stránke a pomôcť ostatným používateľom."
           rows={5}
           placeholder="Zadajte spätnú väzbu"
           rules={[{ required: true, message: "Spätná väzba je povinná" }]}

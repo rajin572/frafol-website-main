@@ -40,7 +40,7 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
           {data?.description}
         </p>
         <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
-          Seller:{" "}
+          Predajca:{" "}
           <Link
             href={`/professionals/${data?.authorId?._id}`}
             className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer"
@@ -50,7 +50,7 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
           </Link>
         </p>
         <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
-          Condition:{" "}
+          Stav:{" "}
           <span className="font-bold capitalize"> {data?.condition ? data?.condition === "new" ? "Nové" : "Použité" : "N/A"}</span>
         </p>
         <div className="flex flex-col w-full mt-10">

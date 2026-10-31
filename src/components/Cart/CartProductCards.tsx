@@ -40,7 +40,7 @@ const CartCard = ({ product }: { product: IGear }) => {
           </Link>
           <div className="flex items-center gap-2">
             <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              Condition:
+              Stav:
             </p>
             <p className="text-sm sm:text-sm lg:text-base">
               {product?.condition === "new" ? "Nové" : "Použité"}
@@ -48,7 +48,7 @@ const CartCard = ({ product }: { product: IGear }) => {
           </div>
           <div className="flex items-center gap-2">
             <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              Seller:
+              Predajca:
             </p>
             <Link href={`/professionals/${product?.authorId?._id}`} className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer">
               <p className="text-sm sm:text-sm lg:text-base">

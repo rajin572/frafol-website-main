@@ -47,11 +47,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product?.description?.length > 75 && "..."}
             </p>
             <p className=" mb-2">
-              Category:{" "}
+              Kategória:{" "}
               <span className="font-medium ">{product?.categoryId?.title}</span>
             </p>
             <p className=" mb-2">
-              Seller:{" "}
+              Predajca:{" "}
               <Link
                 href={`/professionals/${product?.authorId?._id}`}
                 className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer"
@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </Link>
             </p>
             <p className=" mb-2">
-              Condition:{" "}
+              Stav:{" "}
               <span className="font-medium">{product?.condition ? product?.condition === "new" ? "Nové" : "Použité" : "N/A"}</span>
             </p>
             <span className="text-sm sm:text-lg lg:text-xl font-bold">

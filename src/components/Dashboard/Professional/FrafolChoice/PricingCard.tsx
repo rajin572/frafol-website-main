@@ -42,7 +42,7 @@ export default function PricingCard({
             [buildSubscriptionInvoice(myData, subscriptionData, pack)],
             `frafol-choice-invoice-${pack._id.slice(-8)}.pdf`
         );
-
+    console.log(period)
     return (
         <div
             className={cn(
@@ -54,7 +54,12 @@ export default function PricingCard({
             <div className="">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                     <h3 className="text-xl sm:text-2xl lg:text-3xl text-base-color font-bold">
-                        {period} month
+                        {period} {" "}
+                        {Number(period) === 1
+                            ? "mesiac"
+                            : Number(period) >= 2 && Number(period) <= 4
+                                ? "mesiace"
+                                : "mesiacov"}
                     </h3>
                     {badge && (
                         <ReuseButton variant="secondary" className="cursor-pointer bg-warning! border-warning! py-2! !w-fit px-4! text-base! text-secondary-color! font-bold! rounded-full! shadow" disabled>{badge}</ReuseButton>

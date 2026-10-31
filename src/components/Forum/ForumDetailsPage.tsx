@@ -39,7 +39,7 @@ const ForumDetailsPage = ({
                 {/* Posted */} Publikované {formatDateTime(communityPosts?.createdAt)}
               </p>
               <p className="text-sm sm:text-sm lg:text-base  mt-4">
-                {communityPosts?.totalViewers} {/* views */} zhltnutí
+                {communityPosts?.totalViewers} {/* views */} videní
               </p>
             </div>
           </div>
