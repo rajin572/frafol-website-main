@@ -45,7 +45,7 @@ const AuthorLink = ({
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  console.log(testimonial)
   const text = testimonial?.text || "";
   const isLong = text.length > CHAR_LIMIT;
   const previewText = isLong ? `${text.slice(0, CHAR_LIMIT).trimEnd()}...` : text;
@@ -60,6 +60,14 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
       ? getMediaUrl(testimonial?.userId?.profileImage)
       : AllImages.dummyProfile;
 
+
+  const roleLabels: Record<string, string> = {
+    photographer: "Fotograf",
+    videographer: "Kameraman",
+    client: "Klient",
+    both: "Fotograf a kameraman",
+    company: "Firma", // or "Spoločnosť"
+  };
   return (
     <>
       <div className=" p-5 rounded-xl flex flex-col justify-between min-h-[220px] hover:shadow-sm border border-[#E1E1E1]">
@@ -86,8 +94,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
             <p className={` text-sm sm:text-base lg:text-lg font-semibold ${nameColor}`}>
               {testimonial?.userId?.name}
             </p>
-            <p className=" text-sm sm:text-sm lg:text-base text-lighter-color">
-              {testimonial?.userId?.switchRole}
+            <p className="text-sm sm:text-sm lg:text-base text-lighter-color">
+              {roleLabels[testimonial?.userId?.switchRole?.toLowerCase() ?? ""] || testimonial?.userId?.switchRole}
             </p>
           </div>
         </AuthorLink>

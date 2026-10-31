@@ -11,28 +11,28 @@ const data = [
     /* name: "Search" */
     name: "Hľadať",
     /* description: "Browse through our collection of photographers and videographers or use our search to find the perfect match." */
-    description: "Prezrite si ponuku fotografov a kameramanov alebo si jednoducho vyhľadajte toho pravého",
+    description: "Široký výber fotografov a kameramanov s portfóliami, ponukami a službami na rôzne príležitosti.",
     icon: <FiSearch className="size-7 text-secondary-color" />,
   },
   {
     /* name: "Book" */
-    name: "Rezervujte",
+    name: "Rezervovať",
     /* description: "Schedule a meeting, discuss your project details and confirm your booking with your chosen professional." */
-    description: "Dohodnite si stretnutie, preberte detaily projektu a potvrďte objednávku s vybraným profesionálom",
+    description: "Jednoduché objednanie fotenia alebo natáčania s možnosťou dohodnúť všetky detaily priamo s tvorcom.",
     icon: <IoCalendar className="size-7 text-secondary-color" />,
   },
   {
     /* name: "Shoot" */
-    name: "Fotenie/natáčanie",
+    name: "Fotenie alebo natáčanie",
     /* description: "Meet with your professional and let them capture amazing images or videos for your project." */
-    description: "Stretnite sa s vybraným fotografom alebo kameramanom a nechajte si vytvoriť fotografie či videá pre svoj projekt",
-    icon: <ImCamera className="size-7 text-secondary-color" />,
+    description: "Realizácia fotenia či natáčania podľa dohodnutých predstáv, termínu a požiadaviek.",
+    icon: < ImCamera className="size-7 text-secondary-color" />,
   },
   {
     /* name: "Receive" */
     name: "Prevziať",
     /* description: "Get your edited photos or videos and provide feedback on your experience with the professional." */
-    description: "Získajte upravené fotografie alebo videá a ohodnoťte svoju skúsenosť",
+    description: "Odovzdanie upravených fotografií alebo videí a možnosť podeliť sa o skúsenosť prostredníctvom hodnotenia.",
     icon: <ImDownload2 className="size-7 text-secondary-color" />,
   },
 ];
@@ -45,7 +45,7 @@ const HowItWorks = () => {
           /* title="How It Works" */
           title="Ako to funguje"
           /* description="Frafol makes it easy to find and hire the perfect photographer or videographer for your project." */
-          description="Frafol vám uľahčí nájsť a objednať si ideálneho fotografa alebo videografa pre váš projekt"
+          description="Od výberu fotografa či kameramana až po hotové fotografie a videá. Všetko jednoducho na jednom mieste."
         />
 
         <div className="mt-16">

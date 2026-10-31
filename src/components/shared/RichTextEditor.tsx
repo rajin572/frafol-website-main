@@ -649,7 +649,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         <thead><tr>`;
 
         for (let j = 0; j < cols; j++) {
-            html += `<th class="rte-th">Header ${j + 1}</th>`;
+            html += `<th class="rte-th">Hlavička ${j + 1}</th>`;
         }
 
         html += `</tr></thead><tbody>`;
@@ -658,7 +658,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             const rowClass = i % 2 === 1 ? "rte-row-even" : "";
             html += `<tr class="${rowClass}">`;
             for (let j = 0; j < cols; j++) {
-                html += `<td class="rte-td">Cell ${i + 1}-${j + 1}</td>`;
+                html += `<td class="rte-td">Bunka ${i + 1}-${j + 1}</td>`;
             }
             html += `</tr>`;
         }
@@ -1055,7 +1055,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         <div className="p-5 text-sm text-gray-700">
                             Vyberte, ako chcete vložiť text:
                             <div className="mt-3 p-3 rounded-xl bg-gray-50 border text-xs text-gray-600">
-                                &quot;Keep formatting&quot; will keep Google Docs styles (bold, headings, lists, links, tables, etc.)
+                                „Zachovať formátovanie“ ponechá pôvodné formátovanie z Dokumentov Google (tučné písmo, nadpisy, zoznamy, odkazy, tabuľky a pod.).
                             </div>
                         </div>
                         <div className="p-5 pt-0 flex gap-3 justify-end">

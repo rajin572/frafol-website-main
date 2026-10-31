@@ -19,7 +19,7 @@ const joinOptions = [
     // title: "Regular User"
     title: "Klient",
     // description: "Find skilled photographers/ videographers for your needs"
-    description: "Nájdite skúsených fotografov/kameramanov podľa svojich potrieb",
+    description: "Nájdite skúsených fotografov/kameramanov",
     icon: <LuUser className="text-3xl text-primary-color" />,
   },
 ];

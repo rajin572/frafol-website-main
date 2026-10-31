@@ -145,7 +145,7 @@ const ProfessionalWorkshopCard = ({
         <div className="flex items-center gap-2 mt-1">
           <RiMoneyEuroCircleLine className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-sm sm:text-sm lg:text-base font-semibold">
-            Price without Service Fee: {(workshop?.price + workshop?.vatAmount).toFixed(2)}€
+            Cena bez servisného poplatku: {(workshop?.price + workshop?.vatAmount).toFixed(2)}€
           </p>
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">

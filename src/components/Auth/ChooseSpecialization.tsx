@@ -145,7 +145,7 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
             },
             {
               // label: "Videography"
-              label: "Videografia",
+              label: "Video",
               value: "videography",
               disabled: isVideographyDisabled,
               content: (

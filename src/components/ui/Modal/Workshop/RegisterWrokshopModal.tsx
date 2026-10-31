@@ -370,7 +370,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
                                 htmlType="submit"
                             >
-                                Zaregistrovať sa
+                                Objednať s povinnosťou platby
                             </ReuseButton>
                         )}
                     </div>

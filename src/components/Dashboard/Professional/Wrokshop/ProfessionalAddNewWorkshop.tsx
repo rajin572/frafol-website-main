@@ -157,7 +157,7 @@ const ProfessionalAddNewWorkshop = ({
             labelClassName="!font-semibold"
             options={[
               { label: "Online", value: "online" },
-              { label: "Offline", value: "offline" },
+              { label: "Naživo", value: "offline" },
             ]}
             onChange={(value) => {
               setSelectedLocation(value);

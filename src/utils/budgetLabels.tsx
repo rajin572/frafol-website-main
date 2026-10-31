@@ -21,9 +21,9 @@ export const serviceTypeLabels: { [key: string]: string } = {
   videography: "Natáčanie",
 };
 export const gearOrderStatus: { [key: string]: string } = {
-  inProgress: "In Progress",
-  toConfirm: "To Confirm",
-  deliveryRequest: "Čaká na odoslanie",
-  delivered: "Delivered",
-  cancelled: "Cancelled",
+  inProgress: "Čaká na odoslanie",
+  toConfirm: "Čaká na potvrdenie",
+  deliveryRequest: "Odoslaná",
+  delivered: "Doručená",
+  cancelled: "Zrušená",
 };

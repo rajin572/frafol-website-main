@@ -447,7 +447,7 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
                 a{" "}
                 <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                   {/* Všeobecné obchodné podmienky Online trh. */}
-                  Obchodné podmienky Marketplace.
+                  Všeobecné obchodné podmienky Online trh.
                 </Link>
               </p>
             </div>
