@@ -7,7 +7,11 @@ const ProfessionalReviewRating = ({
 }: {
   professionalUser: IProfessionalUser;
 }) => {
-  const ratings = Object.entries(professionalUser?.starCounts)
+  // `starCounts` is missing when the profile did not load or has no reviews yet; that used to crash
+  // the whole page ("Ups! Niečo sa pokazilo").
+  const ratings = Object.entries(
+    professionalUser?.starCounts ?? { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+  )
     .map(([star, count]) => ({
       star: parseInt(star), // Convert string to number
       count: count,
