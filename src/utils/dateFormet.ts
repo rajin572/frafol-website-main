@@ -1,4 +1,22 @@
 import dayjs from "dayjs";
+import { format } from "date-fns";
+import { sk } from "date-fns/locale";
+
+// "október 2026" -> "Október 2026": heading of the month calendars.
+export const formatMonthTitle = (date: Date): string => {
+  const title = format(date, "LLLL yyyy", { locale: sk });
+  return title.charAt(0).toUpperCase() + title.slice(1);
+};
+
+// Short month names in Slovak, as the client wrote them.
+export const SK_MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec"];
+
+// "27 Okt 2026"
+export const formatShortDate = (date: string | Date | undefined): string => {
+  const parsed = dayjs(date);
+  if (!date || !parsed.isValid()) return "—";
+  return `${parsed.format("DD")} ${SK_MONTHS_SHORT[parsed.month()]} ${parsed.year()}`;
+};
 
 // `notification` style spells the minutes out ("Pred 2 minútami"); the default is the short
 // chat/forum style ("pred 2 min.").
@@ -22,7 +40,7 @@ export const formatDateTime = (
     return `pred ${minutes} min.`;
   }
   if (now.diff(messageDate, "day") < 1) return messageDate.format("HH:mm");
-  return messageDate.format("DD - MMM - YYYY"); // Fixed: used "DD / MM / YYYY"
+  return `${messageDate.format("DD")} - ${SK_MONTHS_SHORT[messageDate.month()]} - ${messageDate.year()}`;
 };
 
 export const formatDate = (date: string | Date | undefined): string => {

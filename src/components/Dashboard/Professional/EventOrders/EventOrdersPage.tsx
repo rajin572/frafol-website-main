@@ -418,6 +418,8 @@ const EventOrdersPage = ({
         <AcceptModal
           isModalVisible={isAcceptModalVisible}
           handleCancel={() => setIsAcceptModalVisible(false)}
+          description="Naozaj chcete zrušiť túto objednávku?"
+          confirmText="Potvrdiť"
           currentRecord={currentRecord}
           handleConfirm={handleAcceptCancel}
         />

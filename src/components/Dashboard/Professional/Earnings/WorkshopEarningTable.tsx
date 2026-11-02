@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { formatShortDate } from "@/utils/dateFormet";
 import ViewDetailsTooltip from "@/components/ui/Table/ViewDetailsTooltip";
 import { Space, Tag } from "antd";
 import { GoEye } from "react-icons/go";
@@ -20,10 +21,7 @@ const WorkshopEarningTable = ({
 
   console.log(data)
 
-  const formatDate = (dateStr: string) =>
-    dateStr
-      ? new Date(dateStr).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
-      : "—";
+  const formatDate = (dateStr: string) => (dateStr ? formatShortDate(dateStr) : "—");
 
   const capitalize = (str: string) =>
     str ? str.charAt(0).toUpperCase() + str.slice(1) : "—";

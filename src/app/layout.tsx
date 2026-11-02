@@ -2,7 +2,7 @@ import "@ant-design/v5-patch-for-react-19";
 import { Nunito } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Toaster } from "sonner";
-import { ConfigProvider } from "antd";
+import AntdLocaleProvider from "@/components/shared/AntdLocaleProvider";
 import { mainTheme } from "@/theme";
 import Providers from "@/providers/Providers";
 import ModalScrollLock from "@/components/shared/ModalScrollLock";
@@ -82,12 +82,12 @@ export default function RootLayout({
           <Toaster position="top-center" richColors />
           <ModalScrollLock />
           <AntdRegistry>
-            <ConfigProvider theme={mainTheme} locale={{ locale: "en", Image: { preview: "Náhľad" } }}>
+            <AntdLocaleProvider theme={mainTheme}>
               <div className="sticky top-0 w-full z-[100]!">
                 <NavbarWraper />
               </div>
               {children}
-            </ConfigProvider>
+            </AntdLocaleProvider>
           </AntdRegistry>
         </Providers>
       </body>

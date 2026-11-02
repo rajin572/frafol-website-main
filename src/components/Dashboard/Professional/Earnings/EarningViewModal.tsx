@@ -1,5 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { formatShortDate } from "@/utils/dateFormet";
 import { Modal, Tag } from "antd";
 import Image from "next/image";
 import { getMediaUrl } from "@/utils/mediaUrl";
@@ -73,14 +74,7 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
       }
       : null;
 
-  const formatDate = (dateStr: string) =>
-    dateStr
-      ? new Date(dateStr).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      })
-      : "—";
+  const formatDate = (dateStr: string) => (dateStr ? formatShortDate(dateStr) : "—");
 
   const capitalize = (str: string) =>
     str ? str.charAt(0).toUpperCase() + str.slice(1) : "—";

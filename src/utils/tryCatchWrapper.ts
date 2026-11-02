@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "sonner";
+import { GENERIC_ERROR_MESSAGE, getFriendlyErrorMessage } from "./errorMessage";
 
 interface TryCatchWrapperOptions {
   body?: any;
@@ -26,9 +27,9 @@ const tryCatchWrapper = async (
     showToast = true,
     setLoading,
     setError,
-    toastLoadingMessage = "Processing...",
+    toastLoadingMessage = "Spracováva sa...",
     toastSuccessMessage,
-    toastErrorMessage = "Something went wrong! Please try again.",
+    toastErrorMessage = GENERIC_ERROR_MESSAGE,
   } = config;
 
   // Set loading state
@@ -97,9 +98,11 @@ const tryCatchWrapper = async (
       errorMessage.toLowerCase().includes("too large")
     ) {
       displayError =
-        "File size exceeded! Maximum upload size is 500MB. Please upload smaller files.";
+        "Veľkosť súboru je príliš veľká! Maximálna veľkosť nahrávania je 500 MB. Nahrajte menšie súbory.";
     } else if (errorMessage) {
-      displayError = errorMessage;
+      // Next.js' own "error occurred in the Server Components render" text is replaced by the
+      // configured message; a real reason from the backend is kept.
+      displayError = getFriendlyErrorMessage(errorMessage, toastErrorMessage);
     }
 
     // Show error toast only if showToast is true

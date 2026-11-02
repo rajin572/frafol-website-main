@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { getFriendlyErrorMessage } from "@/utils/errorMessage";
 import Container from "@/components/ui/Container";
 import Image from "next/image";
 import Link from "next/link";
@@ -269,7 +270,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
         socket?.emit("readNotification");
       } catch (error: any) {
         toast.error(
-          error?.data?.message || error?.message || "Something went wrong!",
+          getFriendlyErrorMessage(error?.data?.message || error?.message),
           { duration: 2000 }
         );
       }
@@ -284,7 +285,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
         dispatch(clearSelectedChatUser());
       } catch (error: any) {
         toast.error(
-          error?.data?.message || error?.message || "Something went wrong!",
+          getFriendlyErrorMessage(error?.data?.message || error?.message),
           { duration: 2000 }
         );
       }

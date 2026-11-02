@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getFriendlyErrorMessage } from "@/utils/errorMessage";
 import { useState, useEffect } from "react";
 import { Form, Input, Tooltip, Upload } from "antd";
 import { BsImage } from "react-icons/bs";
@@ -83,7 +84,10 @@ const ConversationSendMessage = ({
       });
     } catch (error: any) {
       toast.error(
-        error?.data?.message || error?.message || "Failed to send message",
+        getFriendlyErrorMessage(
+          error?.data?.message || error?.message,
+          "Správu sa nepodarilo odoslať. Skúste to znova."
+        ),
         { duration: 2000 }
       );
     }

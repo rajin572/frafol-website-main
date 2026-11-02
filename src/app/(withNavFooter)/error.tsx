@@ -11,7 +11,9 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
+    // Production hides the real message of a server error; the digest is what matches it to the
+    // server log. Logged here so the browser console shows which page crashed.
+    console.error("[page error]", window.location.pathname, error.digest ?? "", error);
   }, [error]);
 
   const handleContact = () => {

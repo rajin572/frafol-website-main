@@ -1,6 +1,7 @@
 // components/EventCalendar.tsx
 "use client";
 
+import { formatMonthTitle } from "@/utils/dateFormet";
 import {
   addMonths,
   format,
@@ -45,7 +46,7 @@ const ProfessionalOverviewCalendar = ({
         <ChevronLeft className="text-gray-600" />
       </button>
       <div className="text-center font-semibold text-gray-700">
-        {format(currentMonth, "MMMM yyyy")}
+        {formatMonthTitle(currentMonth)}
       </div>
       <button onClick={nextMonth}>
         <ChevronRight className="text-gray-600" />
