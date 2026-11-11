@@ -53,7 +53,7 @@ const Bar_Chart = ({ data }: { data: ChartData[] }) => {
           }}
         >
           <p style={{ margin: 0, color: "#202020" }}>{`Mesiac: ${label}`}</p>
-          <p style={{ margin: 0, color: "#0a0a08" }}>{`Zárobky: ${value}€`}</p>
+          <p style={{ margin: 0, color: "#0a0a08" }}>{`Zárobky: ${(Number(value) || 0).toFixed(2)}€`}</p>
         </div>
       );
     }

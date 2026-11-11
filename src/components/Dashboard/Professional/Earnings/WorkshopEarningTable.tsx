@@ -44,12 +44,6 @@ const WorkshopEarningTable = ({
       render: (_: any, record: any) => formatDate(record.workshopId?.date),
     },
     {
-      /* title: "Price", */
-      title: "Cena",
-      key: "price",
-      render: (_: any, record: any) => <span>{record.workshopId?.price?.toFixed(2)}€</span>,
-    },
-    {
       title: "Čistý zárobok",
       key: "netAmount",
       render: (_: any, record: any) => (

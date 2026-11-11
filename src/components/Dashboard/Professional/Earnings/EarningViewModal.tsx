@@ -176,14 +176,6 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
             </Tag>
           }
         />
-        <Row
-          label="Stav vyplatenia"
-          value={
-            <Tag color={record.adminPaid === true ? "green" : "orange"}>
-              {capitalize(record.adminPaid === false ? "Čaká na vyplatenie" : "Dokončená")}
-            </Tag>
-          }
-        />
         {gear?.vatAmount > 0 && (
           <Row label="DPH (%)" value={`${gear.vatAmount}%`} />
         )}
@@ -199,10 +191,6 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
           label="Čistý zárobok"
           value={<span className="text-green-600 font-bold text-base">{netEarning?.toFixed(2)} €</span>}
         />
-        <Row label="Doručovacia adresa" value={record.shippingAddress} />
-        <Row label="Mesto" value={record.town} />
-        <Row label="PSČ" value={record.postCode} />
-        <Row label="Mobil" value={record.mobileNumber} />
         <Row label="Dátum objednávky" value={formatDate(record.createdAt)} />
         {record.statusTimestamps?.deliveredAt && (
           <Row label="Dátum doručenia" value={formatDate(record.statusTimestamps.deliveredAt)} />
