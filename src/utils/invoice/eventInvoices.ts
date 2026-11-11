@@ -36,7 +36,14 @@ export const buildEventInvoices = (order: IEventOrder): InvoiceSet => {
       ["IČ DPH", creator?.ic_dph],
     ]),
     customerRows: makeRows([
-      ["Meno", order.companyName || order.name || customer?.companyName || customer?.name, true],
+      [
+        "Meno",
+        // Ordered as a private person: the personal name, never the profile's company name.
+        useProfileCompany
+          ? order.companyName || order.name || customer?.companyName || customer?.name
+          : order.name || customer?.name,
+        true,
+      ],
       ["Adresa sídla", customerAddress, true],
       ["IČO", order.ICO || (useProfileCompany ? customer?.ico : undefined)],
       ["DIČ", order.DIC || (useProfileCompany ? customer?.dic : undefined)],

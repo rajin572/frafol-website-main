@@ -22,6 +22,7 @@ const EventCreateOrderModal = ({
   serviceCharge: number;
   minServiceCharge: number
 }) => {
+  console.log(currentRecord)
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
   const vatAmountValue = Form.useWatch("vatAmount", form) || 0;

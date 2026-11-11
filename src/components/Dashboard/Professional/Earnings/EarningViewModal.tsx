@@ -30,17 +30,27 @@ const EarningViewModal: React.FC<Props> = ({ isVisible, onClose, record, type })
 
   // The earning record carries the order, the creator and the customer separately; put them
   // together so the invoices are built exactly like on the event orders screen.
-  const earningEventOrder = () =>
-    ({
-      ...record.eventOrderId,
+  const earningEventOrder = () => {
+    const eo = record.eventOrderId || {};
+    return {
+      ...eo,
       serviceProviderId: record.serviceProviderId,
       userId: record.userId,
+      // The billing choice (private person or company) is stored on the payment record, the
+      // populated order does not carry it. Without it a private customer got the profile's company.
+      isRegisterAsCompany: eo.isRegisterAsCompany ?? record.isRegisterAsCompany,
+      companyName: eo.companyName ?? record.companyName,
+      name: eo.name ?? record.name,
+      ICO: eo.ICO ?? record.ICO,
+      DIC: eo.DIC ?? record.DIC,
+      IC_DPH: eo.IC_DPH ?? record.IC_DPH,
+      streetAddress: eo.streetAddress ?? record.streetAddress,
+      town: eo.town ?? record.town,
+      zipCode: eo.zipCode ?? record.zipCode,
       // Payment date: the order's own, else when it went in progress, else when the payment was made.
-      paidAt:
-        record.eventOrderId?.paidAt ||
-        record.eventOrderId?.statusTimestamps?.inProgressAt ||
-        record.createdAt,
-    }) as IEventOrder;
+      paidAt: eo.paidAt || eo.statusTimestamps?.inProgressAt || record.createdAt,
+    } as IEventOrder;
+  };
 
   // The final settlement invoice of this earning. It is always offered here: the earnings data
   // does not reliably say whether the order is completed, so the creator can always download it.
