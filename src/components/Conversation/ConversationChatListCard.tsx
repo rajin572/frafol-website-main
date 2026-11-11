@@ -17,13 +17,13 @@ import { useGetUserData } from "@/context/useGetUserData";
 interface IConversationChatListCardProps {
   conversation: IConversation;
   imageUrlSrc?: string;
-  onlineUsers: any[];
+  // No longer shown in the list (the online dot was removed); still passed by the parent.
+  onlineUsers?: any[];
 }
 
 const ConversationChatListCard = ({
   conversation,
   imageUrlSrc,
-  onlineUsers,
 }: IConversationChatListCardProps) => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -119,10 +119,6 @@ const ConversationChatListCard = ({
                 </p>
 
                 {/* Official verified badge pill */}
-
-                {onlineUsers?.includes(chatPartner?._id) && (
-                  <div className="size-2 rounded-full bg-green-500 shrink-0"></div>
-                )}
               </div>
 
               <div

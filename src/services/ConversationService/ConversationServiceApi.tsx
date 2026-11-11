@@ -43,3 +43,22 @@ export const sendFiles = async (req: { body: any; params: any }) => {
     return Error(error);
   }
 };
+
+// Total unread messages over all of the user's conversations, for the navbar badge. It is the
+// same per-conversation `unreadMessageCount` the chat list shows. Returns null on any failure so
+// the caller keeps the badge it already has.
+export const getUnreadMessageCount = async (): Promise<number | null> => {
+  try {
+    const res = await fetchWithAuth(
+      `/chat/my-chat-list`,
+      { cache: "no-store" },
+      { logoutOnAuthFailure: false }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const list: any[] = Array.isArray(data?.data) ? data.data : [];
+    return list.reduce((sum, item) => sum + (Number(item?.unreadMessageCount) || 0), 0);
+  } catch {
+    return null;
+  }
+};

@@ -33,6 +33,7 @@ import { clearCart } from "@/redux/features/cart/cartSlice";
 import { clearSelectedChatUser } from "@/redux/features/conversation/conversationSlice";
 import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
 import { getMyNotifications } from "@/services/Others/NotificationApi";
+import { getUnreadMessageCount } from "@/services/ConversationService/ConversationServiceApi";
 
 const NavItems = [
   /* { id: "1", name: "Photography", route: "/photography" }, */
@@ -85,10 +86,28 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     if (updateCount) setNotificationCount(fresh.filter((n) => !n.isRead).length);
   }, []);
 
-  // Page change (client navigation) → pick up notifications that arrived meanwhile.
+  // The unread-messages badge. The socket only tells us about messages that arrive while this tab
+  // is connected, so the count would be 0 after a reload or for messages received while away.
+  // The chat list's own unread counts are the source of truth: load them on mount, on every
+  // page change and whenever a message event arrives.
+  const refreshMessageCount = useCallback(async (fallback?: number) => {
+    const count = await getUnreadMessageCount();
+    if (count !== null) setMessageCount(count);
+    else if (fallback !== undefined) setMessageCount(fallback);
+  }, []);
+
+  // A conversation was opened (and so read) on the messages page: update the badge.
+  useEffect(() => {
+    const onChatRead = () => refreshMessageCount();
+    window.addEventListener("frafol:chat-read", onChatRead);
+    return () => window.removeEventListener("frafol:chat-read", onChatRead);
+  }, [refreshMessageCount]);
+
+  // Page change (client navigation) → pick up notifications and messages that arrived meanwhile.
   useEffect(() => {
     if (!token) return;
     refreshNotifications(true);
+    refreshMessageCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
@@ -242,11 +261,16 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
   }, [refreshNotifications]);
 
   // Unread message count from socket. res: { statusCode, success, unreadCount }
+  // Re-read the real count from the chat list; the event's own number is only the fallback.
   const handleMessageCount = useCallback((data: any) => {
-    console.log(data)
     const count = typeof data === "number" ? data : data?.unreadCount;
-    setMessageCount(count ?? 0);
-  }, []);
+    refreshMessageCount(count ?? 0);
+  }, [refreshMessageCount]);
+
+  // A message arrived: the chat list has the new unread total.
+  const handleNewMessage = useCallback(() => {
+    refreshMessageCount();
+  }, [refreshMessageCount]);
 
   useEffect(() => {
     if (!socket) return;
@@ -257,12 +281,17 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
 
     socket.on(`notification`, handleNotification);
     socket.on(`message_count`, handleMessageCount);
+    socket.on(`newMessage`, handleNewMessage);
+    // Once connected (also after a reconnect) load the current count.
+    socket.on(`connect`, handleNewMessage);
 
     return () => {
       socket.off(`notification`, handleNotification);
       socket.off(`message_count`, handleMessageCount);
+      socket.off(`newMessage`, handleNewMessage);
+      socket.off(`connect`, handleNewMessage);
     };
-  }, [socket, handleNotification, handleMessageCount]);
+  }, [socket, handleNotification, handleMessageCount, handleNewMessage]);
 
   const handleResetNotification = async () => {
     if (notificationCount > 0) {
@@ -281,7 +310,8 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     if (messageCount > 0) {
       try {
         socket?.emit("readMessage");
-        setMessageCount(0);
+        // No manual reset to 0: the badge follows the unread counts of the conversations, which
+        // are refreshed on the page change that follows.
         dispatch(clearSelectedChatUser());
       } catch (error: any) {
         toast.error(

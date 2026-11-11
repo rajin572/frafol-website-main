@@ -27,8 +27,20 @@ const ConversationChatList = ({
   const seletedConversation = useAppSelector(selectSelectedChatUser);
   const [chatList, setChatList] = useState<IConversation[]>([]);
 
+  const myUserId = user?.userId;
+  const openChatId = seletedConversation?.chat?._id;
+
   const handleNewMessage = useCallback((message: any) => {
-    const { chatId, text, sender, time } = message;
+    const { chatId, text: rawText, sender, time } = message;
+    // A picture without text would otherwise show "Žiadne správy" in the list.
+    const text = rawText || (message?.images?.length > 0 ? "Obrázok" : "");
+    // The unread badge counts messages from the OTHER person only. The socket also delivers the
+    // user's own messages (and an open conversation is read as it arrives), so those must not
+    // raise the counter.
+    const senderId = (sender?._id || sender)?.toString();
+    const countsAsUnread =
+      !!myUserId && senderId !== myUserId.toString() && chatId !== openChatId;
+    const unreadIncrement = countsAsUnread ? 1 : 0;
     // Guarantee a valid, recent timestamp. If the socket payload omits/malforms `time`,
     // an undefined lastMessageCreatedAt sorts as epoch 1970 → the conversation sinks to
     // the bottom instead of rising to the top.
@@ -48,7 +60,7 @@ const ConversationChatList = ({
           lastMessageSender: sender._id,
           lastMessageCreatedAt: messageTime,
           unreadMessageCount:
-            prevChatList[existingIndex].unreadMessageCount + 1,
+            (prevChatList[existingIndex].unreadMessageCount || 0) + unreadIncrement,
         };
 
         const rest = prevChatList.filter((_, index) => index !== existingIndex);
@@ -60,7 +72,7 @@ const ConversationChatList = ({
             _id: chatId,
             users: [sender], // you might need to merge with self if needed
             createdBy: sender._id,
-            unreadCounts: 1,
+            unreadCounts: unreadIncrement,
             blockedUsers: null,
             createdAt: messageTime,
             updatedAt: messageTime,
@@ -69,14 +81,14 @@ const ConversationChatList = ({
           lastMessage: text,
           message: text,
           lastMessageSender: sender._id,
-          unreadMessageCount: 1,
+          unreadMessageCount: unreadIncrement,
           lastMessageCreatedAt: messageTime,
         };
 
         return [newConversation, ...prevChatList];
       }
     });
-  }, []);
+  }, [myUserId, openChatId]);
 
   useEffect(() => {
     if (!socket) {
@@ -87,7 +99,7 @@ const ConversationChatList = ({
       socket.connect();
     }
 
-    socket.on(`newMessage`, (message: any) => {
+    const onNewMessage = (message: any) => {
       if (message?.approvalStatus === "rejected") return;
 
       if (message?.approvalStatus === "pending") {
@@ -97,19 +109,19 @@ const ConversationChatList = ({
         }
       }
 
-      console.log("new massage", message);
       handleNewMessage(message);
-    });
-    socket.on("onlineUser", (online: any) => {
+    };
+    const onOnlineUser = (online: any) => {
       dispatch(setOnlineUsers(online));
-    });
+    };
 
-    // const handleNewMessageSocket = (message: any) => {
-    // };
+    socket.on(`newMessage`, onNewMessage);
+    socket.on("onlineUser", onOnlineUser);
 
+    // Remove only our own handlers: other components (the navbar badge) listen to the same events.
     return () => {
-      socket.off("onlineUser");
-      socket.off("newMessage");
+      socket.off("onlineUser", onOnlineUser);
+      socket.off("newMessage", onNewMessage);
     };
   }, [dispatch, handleNewMessage, socket, user?.userId]);
 
@@ -118,6 +130,25 @@ const ConversationChatList = ({
       setChatList(conversation);
     }
   }, [conversation]);
+
+  // Opening a conversation reads it: clear its unread counter in the list right away (the list
+  // only reloads with the page). The server marks it read while the messages load, so a moment
+  // later the navbar badge is asked to refresh.
+  useEffect(() => {
+    if (!openChatId) return;
+    setChatList((prev) =>
+      prev.map((item) =>
+        item.chat._id === openChatId && item.unreadMessageCount > 0
+          ? { ...item, unreadMessageCount: 0 }
+          : item
+      )
+    );
+    const timer = setTimeout(
+      () => window.dispatchEvent(new Event("frafol:chat-read")),
+      1000
+    );
+    return () => clearTimeout(timer);
+  }, [openChatId]);
 
   // Newest activity first. Fall back to the chat's updatedAt when a conversation has no
   // lastMessageCreatedAt yet, so the initial server list is ordered too.

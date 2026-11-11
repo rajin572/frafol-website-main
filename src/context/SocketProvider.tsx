@@ -24,7 +24,12 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
   // Create socket when token is set and valid
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      // Logged out: drop the old (already disconnected) socket. Otherwise components still
+      // holding it call socket.connect() and reconnect with the previous user's token.
+      setSocket(null);
+      return;
+    }
 
     const user = decodedToken(token);
     if (!user) {

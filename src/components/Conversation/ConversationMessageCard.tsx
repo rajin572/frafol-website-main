@@ -121,7 +121,8 @@ const ConversationMessageCard = ({
                     isMyMessage ? "text-right" : "text-left"
                   }`}
                 >
-                  {formatDateTime(msg?.createdAt)}
+                  {/* Live socket messages can carry `time` instead of `createdAt` */}
+                  {formatDateTime(msg?.createdAt || (msg as any)?.time)}
                 </p>
               )}
             </div>

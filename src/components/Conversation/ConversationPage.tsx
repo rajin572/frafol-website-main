@@ -34,17 +34,23 @@ const ConversationPage = ({
   const pathName = usePathname();
   const dispatch = useAppDispatch();
 
-  console.log(userData)
-
-  // Clear room and page params on mount (page reload)
+  // On mount: open the conversation named in `?room=` (a message notification links to
+  // /message?room=<id>), otherwise start with none selected. Before, `room` was always stripped
+  // here, so a notification landed on an empty "Vitajte v správach" screen.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    dispatch(setSelectedChatUser(null));
+    const roomParam = params.get("room");
+    const target = roomParam
+      ? conversation?.find((item) => item?.chat?._id === roomParam)
+      : undefined;
+
+    dispatch(setSelectedChatUser(target ?? null));
+
     if (params.has("room") || params.has("page")) {
-      params.delete("room");
+      if (!target) params.delete("room");
       params.delete("page");
-      const newUrl = `${pathName}?${params.toString()}`;
-      window.history.replaceState(null, "", newUrl);
+      const query = params.toString();
+      window.history.replaceState(null, "", query ? `${pathName}?${query}` : pathName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only on mount

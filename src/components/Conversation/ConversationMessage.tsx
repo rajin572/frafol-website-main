@@ -181,8 +181,19 @@ const ConversationMessage = ({
 
   // New socket message handler
   const handleMessage = useCallback((message: any) => {
-    console.log(message);
-    setMessages((prev) => [...prev, message]);
+    setMessages((prev) => {
+      // The same message can arrive twice (or again with a new approval status): replace it
+      // instead of showing it twice.
+      const existing = message?._id
+        ? prev.findIndex((m) => m?._id === message._id)
+        : -1;
+      if (existing !== -1) {
+        const next = [...prev];
+        next[existing] = { ...prev[existing], ...message };
+        return next;
+      }
+      return [...prev, message];
+    });
 
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -198,10 +209,15 @@ const ConversationMessage = ({
       socket.connect();
     }
 
-    socket.emit("join", roomId.toString());
+    const joinRoom = () => socket.emit("join", roomId.toString());
+    joinRoom();
+    // After a dropped connection the server forgets the room: join again on every reconnect,
+    // otherwise new messages stop arriving in the open conversation.
+    socket.on("connect", joinRoom);
     socket.on(`message_received::${roomId}`, handleMessage);
 
     return () => {
+      socket.off("connect", joinRoom);
       socket.off(`message_received::${roomId}`, handleMessage);
       socket.emit("leave", roomId);
     };
@@ -279,7 +295,7 @@ const ConversationMessage = ({
 
 
                     <Tooltip title="Online">
-                      {onlineUsers.includes(chatPartner?._id) && (
+                      {onlineUsers?.includes(chatPartner?._id) && (
                         <div className="size-2.5 rounded-full bg-green-500"></div>
                       )}
                     </Tooltip>
