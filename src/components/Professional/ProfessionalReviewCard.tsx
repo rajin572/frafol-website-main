@@ -12,11 +12,14 @@ const ReviewCard = ({ review }: { review: IReview }) => {
 
   const toggleReadMore = () => setExpanded((prev) => !prev);
 
+  // A review can be just stars with no text: `message` is then missing, and reading `.length` on
+  // it crashed the whole page (seen when filtering by 1 star).
+  const message = review?.message ?? "";
   const maxChars = 150;
-  const isLong = review.message.length > maxChars;
+  const isLong = message.length > maxChars;
   const displayText = expanded
-    ? review.message
-    : review.message.slice(0, maxChars) + (isLong ? "..." : "");
+    ? message
+    : message.slice(0, maxChars) + (isLong ? "..." : "");
 
   return (
     <div className="p-4 rounded-lg shadow-none hover:shadow-md transition">
@@ -41,7 +44,7 @@ const ReviewCard = ({ review }: { review: IReview }) => {
             · {formatDateTime(review?.createdAt)}
           </span>
         </div>
-        <Rate className="" disabled value={review.rating} />
+        <Rate className="" disabled value={review?.rating} />
       </div>
 
       {/* Content */}

@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, useEffect } from "react";
+"use client";
+import React, { ChangeEvent, useEffect, useRef, useTransition } from "react";
 import ReuseInput from "./ReuseInput";
 import { SearchOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Form } from "antd";
 import { cn } from "@/lib/utils";
+import PendingBar from "@/components/shared/PendingBar";
 
 interface SearchInputProps {
   placeholder: string;
@@ -13,6 +14,8 @@ interface SearchInputProps {
   formClassName?: string;
   isPage?: boolean;
 }
+
+const SEARCH_DEBOUNCE_MS = 300;
 
 const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
@@ -26,38 +29,34 @@ const SearchInput: React.FC<SearchInputProps> = ({
   const pathName = usePathname();
   const router = useRouter();
   const { replace } = router;
+  const [isPending, startTransition] = useTransition();
+  // One timer for the lifetime of the component. (A debounce function created in the render body
+  // gets a new timer on every render, so a quick typist could still fire several requests.)
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    debounceSearch(e.target.value);
+    const text = e.target.value;
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      // Read the URL at the moment of searching, not at render time, so other params (tab,
+      // filters) changed meanwhile are kept.
+      const params = new URLSearchParams(window.location.search);
+      if (text) {
+        params.set("search", text);
+        if (isPage) {
+          params.set("page", "1");
+        }
+      } else {
+        params.delete("search");
+      }
+
+      startTransition(() => {
+        replace(`${pathName}?${params.toString()}`, { scroll: false });
+      });
+    }, SEARCH_DEBOUNCE_MS);
   };
 
-  const debounceSearch = debounce((value: string) => {
-    const text = value;
-    const params = new URLSearchParams(searchParams);
-    if (text) {
-      params.set("search", text);
-      if (isPage) {
-        params.set("page", "1");
-      }
-    } else {
-      params.delete("search");
-    }
-
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
-  }, 200);
-
-  function debounce<T extends (...args: any[]) => void>(
-    this: void, // Explicitly type `this` as `void`
-    func: T,
-    wait: number
-  ) {
-    let timeout: NodeJS.Timeout;
-    return function (...args: Parameters<T>) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait); // Use spread operator for arguments
-    };
-  }
-
+  useEffect(() => () => clearTimeout(debounceTimer.current), []);
 
   useEffect(() => {
     const text = searchParams.get("search");
@@ -69,6 +68,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   }, [searchParams, form]);
   return (
     <div className={cn("flex gap-4 items-center", className)}>
+      <PendingBar pending={isPending} label="Vyhľadáva sa…" />
       <Form form={form} className={cn(formClassName)}>
         <ReuseInput
           name="search"

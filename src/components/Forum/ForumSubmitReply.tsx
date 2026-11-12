@@ -7,7 +7,7 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { Form } from "antd";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { addNewComment } from "@/services/ComentsService/ComentsServiceApi";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { TiDelete } from "react-icons/ti";
 
 const ForumSubmitReply = ({ id }: { id: string }) => {
@@ -15,8 +15,6 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
 
   const searchParams = useSearchParams();
   const pathName = usePathname();
-  const router = useRouter();
-  const { replace } = router;
 
   const replyid = searchParams?.get("reply")
   const replyName = searchParams?.get("to")
@@ -38,7 +36,9 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
     const params = new URLSearchParams(searchParams);
     params.delete("reply");
     params.delete("to");
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
+    // No server round trip needed to drop the reply target (see ForumReplyCard.handleReply).
+    const query = params.toString();
+    window.history.replaceState(null, "", query ? `${pathName}?${query}` : pathName);
   };
 
   const onSubmit = async (values: any) => {

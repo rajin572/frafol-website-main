@@ -1,7 +1,9 @@
 "use client";
+import { useOptimistic, useTransition } from "react";
 import { Dropdown, MenuProps, Button } from "antd";
 import { DownOutlined, StarFilled } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import PendingBar from "../shared/PendingBar";
 
 const sortItems: MenuProps["items"] = [
   {
@@ -14,40 +16,45 @@ const sortItems: MenuProps["items"] = [
   },
 ];
 
+type ReviewFilter = { sort: string; rating: string };
+
 const ProfessionalReviewsFiltre = () => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
   const { replace } = router;
+  const [isPending, startTransition] = useTransition();
 
-  const sort = searchParams?.get("sort") || "newest";
-  const rating = searchParams?.get("rating") || "5";
+  const urlSort = searchParams?.get("sort") || "newest";
+  const urlRating = searchParams?.get("rating") || "5";
 
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
-    const text = e.key;
+  // The URL (and so the server-rendered review list) only changes after the server has answered.
+  // Show the tapped sort / star at once; React falls back to the real values when the navigation
+  // settles.
+  const [{ sort, rating }, setShownFilter] = useOptimistic<ReviewFilter, Partial<ReviewFilter>>(
+    { sort: urlSort, rating: urlRating },
+    (current, change) => ({ ...current, ...change })
+  );
+
+  const applyFilter = (key: keyof ReviewFilter, value: string) => {
+    if (value === (key === "sort" ? sort : rating)) return;
+
     const params = new URLSearchParams(searchParams);
-    if (text) {
-      params.set("sort", text);
-    } else {
-      params.delete("sort");
-    }
+    params.set(key, value);
 
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      setShownFilter({ [key]: value });
+      replace(`${pathName}?${params.toString()}`, { scroll: false });
+    });
   };
-  const handleRatingClick = (star: number) => {
-    const text = star.toString();
-    const params = new URLSearchParams(searchParams);
-    if (text) {
-      params.set("rating", text);
-    } else {
-      params.delete("rating");
-    }
 
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
-  };
+  const handleMenuClick: MenuProps["onClick"] = (e) => applyFilter("sort", e.key);
+  const handleRatingClick = (star: number) => applyFilter("rating", star.toString());
 
   return (
     <div className="flex flex-wrap items-center gap-4 mt-5">
+      <PendingBar pending={isPending} label="Načítavajú sa recenzie…" />
+
       {/* Sort Dropdown */}
       <Dropdown
         menu={{ items: sortItems, onClick: handleMenuClick }}
@@ -67,8 +74,9 @@ const ProfessionalReviewsFiltre = () => {
         {[5, 4, 3, 2, 1].map((star) => (
           <button
             key={star}
+            type="button"
             onClick={() => handleRatingClick(star)}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-sm sm:text-sm lg:text-base font-medium cursor-pointer
+            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-sm sm:text-sm lg:text-base font-medium cursor-pointer touch-manipulation select-none
               ${Number(rating) === star
                 ? "bg-yellow-400 text-white border-yellow-400"
                 : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"

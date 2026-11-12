@@ -27,7 +27,6 @@ const ProfessionalReviews = async ({
   const data = await res.json();
   const reviews: IReview[] = data?.data?.reviews || [];
 
-  console.log("Review View:", data?.data?.reviews)
   return (
     <div id="reviews" className="mt-16">
       <SectionHeader title="Recenzie" className="mb-3" />

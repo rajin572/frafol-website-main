@@ -5,7 +5,7 @@ import { AllImages } from "../../../public/assets/AllImages";
 import { ICommunityComment, IReply } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDateTime } from "@/utils/dateFormet";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
@@ -13,8 +13,6 @@ const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
 
   const searchParams = useSearchParams();
   const pathName = usePathname();
-  const router = useRouter();
-  const { replace } = router;
 
   const handleReply = (value: ICommunityComment) => {
 
@@ -26,8 +24,10 @@ const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
     params.set("reply", id);
     params.set("to", name);
 
-
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
+    // Only the reply form reads these two params, so there is nothing for the server to fetch.
+    // router.replace would re-render the whole post and its comments on the server first (slow);
+    // history.replaceState updates the URL and `useSearchParams` immediately, with no request.
+    window.history.replaceState(null, "", `${pathName}?${params.toString()}`);
   };
 
   return (

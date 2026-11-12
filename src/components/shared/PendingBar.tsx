@@ -1,4 +1,5 @@
 "use client";
+import SpinLoader from "@/components/ui/SpinLoader";
 
 interface Props {
   pending: boolean;
@@ -28,7 +29,7 @@ const PendingBar = ({ pending, label = "Načítava sa…" }: Props) => {
         role="status"
         className="fixed top-20 left-1/2 z-[10000] flex -translate-x-1/2 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-base-color shadow-lg pointer-events-none"
       >
-        <span className="size-4 rounded-full border-2 border-secondary-color/30 border-t-secondary-color animate-spin" />
+        <SpinLoader />
         {label}
       </div>
     </>
