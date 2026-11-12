@@ -51,6 +51,7 @@ const NavItems = [
 
 
 const Navbar = ({ notifications }: { notifications: INotification[] }) => {
+  console.log(notifications)
   const router = useRouter();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");

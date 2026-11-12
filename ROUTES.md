@@ -677,7 +677,7 @@ Nasledujúca matica definuje presné presmerovanie podľa typu notifikácie pre 
 | **`GearMarketplaceDeclined`**| `/marketplace` | `/dashboard/professional/gear-marketPlace` | Inzerát neschválený |
 | **`GearOrderSold`** | `/dashboard/my-account/gear-order?tab=currentOrder` | `/dashboard/professional/gear-order` | Tovar z bazáru bol zakúpený |
 | **`GearPaymentReceived`** | `/dashboard/my-account/gear-order?tab=currentOrder` | `/dashboard/professional/gear-order` | Platba za techniku prijatá |
-| **`GearDeliveryRequest`** | `/dashboard/my-account/gear-order?tab=toConfirm` | `/dashboard/professional/gear-order` | Tovar odoslaný / čaká na potvrdenie prevzatia |
+| **`GearDeliveryRequest`** | `/dashboard/my-account/gear-order?tab=toConfirm` | `/dashboard/professional/gear-purchases?tab=toConfirm` | Tovar odoslaný / čaká na potvrdenie prevzatia |
 | **`GearDeliveryAccepted`** | `/dashboard/my-account/gear-order?tab=delivered` | `/dashboard/professional/gear-order` | Kupujúci potvrdil prevzatie techniky |
 | **`GearDeliveryDeclined`** | `/dashboard/my-account/gear-order?tab=currentOrder` | `/dashboard/professional/gear-order` | Kupujúci nahlásil problém s doručením |
 | **`GearOrderCancelled`** | `/dashboard/my-account/gear-order?tab=cancelled` | `/dashboard/professional/gear-order` | Objednávka z bazáru zrušená |
@@ -688,8 +688,8 @@ Nasledujúca matica definuje presné presmerovanie podľa typu notifikácie pre 
 | **`ProfileDeclined`** | `/dashboard/my-account/profile-settings?tab=profile` | `/dashboard/professional/profile-settings?tab=profile` | Profil neschválený administrátorom |
 | **`CommunityRejected`** | `/dashboard/my-account/my-community-posts` | `/dashboard/professional/my-community-posts` | Diskusný príspevok neschválený |
 | **`CommunityDeleted`** | `/dashboard/my-account/my-community-posts` | `/dashboard/professional/my-community-posts` | Diskusný príspevok zmazaný |
-| **`NewComment`** | `/dashboard/my-account/my-community-posts` *(alebo `/forums/[id]`)* | `/dashboard/professional/my-community-posts` *(alebo `/forums/[id]`)* | Nový komentár k téme |
-| **`CommentReply`** | `/dashboard/my-account/my-community-posts` *(alebo `/forums/[id]`)* | `/dashboard/professional/my-community-posts` *(alebo `/forums/[id]`)* | Odpoveď na komentár |
+| **`NewComment`** | `/forums/[id]` | `/forums/[id]` | Nový komentár k téme |
+| **`CommentReply`** | `/forums/[id]` | `/forums/[id]` | Odpoveď na komentár |
 | **`newMessage`** | `/message` *(alebo `/message?room=[roomId]`)* | `/message` *(alebo `/message?room=[roomId]`)* | Nová správa v chate |
 | **`AdminNotice`** | `/dashboard/my-account/overview` | `/dashboard/professional/overview` | Systémové hlásenie administrátora |
 | **`added`** | `/dashboard/my-account/overview` | `/dashboard/professional/overview` | Všeobecné systémové oznámenie |

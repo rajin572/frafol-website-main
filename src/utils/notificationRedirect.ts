@@ -84,7 +84,7 @@ const findPostId = (notification: any): string | undefined => {
     for (const key of POST_ID_KEYS) {
       const value = place[key];
       const id = typeof value === "object" && value ? value._id : value;
-      if (typeof id === "string" && /^[a-fd]{24}$/i.test(id)) return id;
+      if (typeof id === "string" && /^[a-f0-9]{24}$/i.test(id)) return id;
     }
   }
   return undefined;
@@ -224,9 +224,13 @@ export const getNotificationRedirectUrl = (
       case "GearMarketplaceApproved":
         return "/dashboard/professional/gear-marketPlace?filter=In%20Stock";
 
+      // The seller marked the gear as sent and now waits for the buyer. Only the buyer ever gets
+      // this one, so a professional who bought gear lands on their purchases page, same as a client.
+      case "GearDeliveryRequest":
+        return "/dashboard/professional/gear-purchases?tab=toConfirm";
+
       case "GearOrderSold":
       case "GearPaymentReceived":
-      case "GearDeliveryRequest":
       case "GearDeliveryAccepted":
       case "GearDeliveryDeclined":
       case "GearOrderCancelled":
@@ -254,9 +258,8 @@ export const getNotificationRedirectUrl = (
 
       case "NewComment":
       case "CommentReply":
-        return postId
-          ? `/forums/${postId}`
-          : "/dashboard/professional/my-community-posts";
+        // Never "My posts": the commenter / replier may not own the post and would not find it there.
+        return postId ? `/forums/${postId}` : "/forums";
 
       // 17. Messages & Chat
       case "newMessage":
@@ -387,7 +390,7 @@ export const getNotificationRedirectUrl = (
 
     case "NewComment":
     case "CommentReply":
-      return postId ? `/forums/${postId}` : "/dashboard/my-account/my-community-posts";
+      return postId ? `/forums/${postId}` : "/forums";
 
     // 16. Messages & Chat
     case "newMessage":
