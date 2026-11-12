@@ -11,8 +11,6 @@ import Link from "next/link";
 const ForumReplyCard = ({ item }: { item: ICommunityComment }) => {
   const [isReplyVisible, setIsReplyVisible] = React.useState(false);
 
-  console.log(item)
-
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();

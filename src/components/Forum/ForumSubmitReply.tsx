@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
@@ -20,6 +20,18 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
 
   const replyid = searchParams?.get("reply")
   const replyName = searchParams?.get("to")
+
+  // "Odpovedať" sits on a comment that can be far above the form: when a reply target is chosen,
+  // bring the form into view and put the cursor in it, so the visitor sees where to write.
+  const formWrapperRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!replyid) return;
+    const wrapper = formWrapperRef.current;
+    if (!wrapper) return;
+    wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
+    // preventScroll: the smooth scroll above must not be cut short by the focus jump.
+    wrapper.querySelector("textarea")?.focus({ preventScroll: true });
+  }, [replyid]);
 
 
   const handleRemoveReply = () => {
@@ -55,6 +67,7 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
     }
   };
   return (
+    <div ref={formWrapperRef} className="w-full">
     <ReusableForm form={form} handleFinish={onSubmit} className="!mt-5 w-full">
       {
         replyName && (
@@ -83,6 +96,7 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
         </ReuseButton>
       </div>
     </ReusableForm>
+    </div>
   );
 };
 

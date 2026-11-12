@@ -40,7 +40,7 @@ const FeaturedProfessionalSlider = ({ data }: { data: IProfessional[] }) => {
     >
       {data?.map((item, index) => (
         <SwiperSlide key={index}>
-          <FeaturedProfessionalsCard item={item} />
+          <FeaturedProfessionalsCard item={item} priority={index < 2} />
         </SwiperSlide>
       ))}
     </Swiper>

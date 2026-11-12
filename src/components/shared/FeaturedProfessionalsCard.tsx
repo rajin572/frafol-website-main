@@ -7,17 +7,18 @@ import FeaturedProfessionalsCardSlider from "./Card/FeaturedProfessionalsCardSli
 
 interface FeaturedProfessionalsCardProps {
   item: IProfessional;
+  // Load the card's image eagerly (first cards of a list).
+  priority?: boolean;
 }
 
 const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
   item,
+  priority = false,
 }) => {
-
-  console.log(item)
   return (
     <div className="flex flex-col gap-2 bg-base-color/[0.01] rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 group" >
       {/* Image/Video Carousel Container */}
-      <FeaturedProfessionalsCardSlider item={item} />
+      <FeaturedProfessionalsCardSlider item={item} priority={priority} />
       {/* Content Section */}
       <Link href={`/professionals/${item?._id}`}>
         <div className="p-2 cursor-pointer ">

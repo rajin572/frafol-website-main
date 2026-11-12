@@ -1047,7 +1047,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             {pasteDialog.show && (
                 <>
                     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9998]" />
-                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-[9999] w-[520px] rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-[9999] w-[520px] max-w-[calc(100vw-2rem)] max-h-[90vh] rounded-2xl shadow-2xl border border-gray-200 overflow-y-auto">
                         <div className="flex items-center justify-between p-5 border-b">
                             <div className="font-bold text-[#2c2c2c]">Možnosti vloženia</div>
                             <button onClick={() => setPasteDialog({ show: false, html: "", text: "" })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X /></button>
@@ -1058,7 +1058,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                                 „Zachovať formátovanie“ ponechá pôvodné formátovanie z Dokumentov Google (tučné písmo, nadpisy, zoznamy, odkazy, tabuľky a pod.).
                             </div>
                         </div>
-                        <div className="p-5 pt-0 flex gap-3 justify-end">
+                        <div className="p-5 pt-0 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
                             <button className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 font-semibold text-[#2c2c2c]" onClick={pastePlainText} type="button">Vložiť ako obyčajný text</button>
                             <button className="px-5 py-2.5 rounded-xl bg-[#ad2b08] hover:bg-[#8d2306] font-semibold text-white" onClick={pasteKeepFormatting} type="button">Zachovať formátovanie</button>
                         </div>
@@ -1069,14 +1069,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             {linkDialog.show && (
                 <>
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]" onClick={() => setLinkDialog({ show: false, url: "" })} />
-                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] border border-gray-200">
+                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 sm:p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] max-w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto border border-gray-200">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-xl font-bold text-[#2c2c2c]">Vložiť odkaz</h3>
                             <button onClick={() => setLinkDialog({ show: false, url: "" })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X size={20} /></button>
                         </div>
                         <label className="block text-sm font-semibold text-[#2c2c2c] mb-2">Zadajte adresu URL</label>
                         <input type="text" value={linkDialog.url} onChange={(e) => setLinkDialog({ ...linkDialog, url: e.target.value })} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } }} className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#ad2b08] focus:ring-4 focus:ring-[#fff3f0] transition-all text-[#2c2c2c] font-medium" autoFocus placeholder="https://example.com" />
-                        <div className="flex gap-3 justify-end mt-6">
+                        <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end mt-6">
                             <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setLinkDialog({ show: false, url: "" })} type="button">Zrušiť</button>
                             <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={applyLink} type="button">Vložiť odkaz</button>
                         </div>
@@ -1087,7 +1087,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             {tableDialog.show && (
                 <>
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]" onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} />
-                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] border border-gray-200">
+                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 sm:p-8 rounded-2xl shadow-2xl z-[9999] w-[500px] max-w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto border border-gray-200">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-xl font-bold text-[#2c2c2c]">Vložiť tabuľku</h3>
                             <button onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} className="p-2 rounded-lg hover:bg-gray-100" type="button"><X size={20} /></button>
@@ -1108,7 +1108,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                                 <input type="range" min="2" max="10" value={tableDialog.cols} onChange={(e) => setTableDialog({ ...tableDialog, cols: parseInt(e.target.value) })} className="w-full accent-[#ad2b08]" />
                             </div>
                         </div>
-                        <div className="flex gap-3 justify-end">
+                        <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
                             <button className="px-6 py-3 bg-gray-100 rounded-xl hover:bg-gray-200 font-semibold" onClick={() => setTableDialog({ show: false, rows: 3, cols: 3 })} type="button">Zrušiť</button>
                             <button className="px-6 py-3 bg-[#ad2b08] text-white rounded-xl hover:bg-[#8d2306] font-semibold" onClick={insertTable} type="button">Vložiť tabuľku</button>
                         </div>

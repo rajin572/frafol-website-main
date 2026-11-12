@@ -364,3 +364,17 @@ html {
 .rte-content p:last-child {
   margin-bottom: 0 !important;
 }
+
+/* Indeterminate progress bar used by <PendingBar /> */
+@keyframes pending-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-pending-bar {
+  animation: pending-bar 1s ease-in-out infinite;
+}

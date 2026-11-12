@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import { getMediaUrl } from '@/utils/mediaUrl';
@@ -9,13 +9,46 @@ import { IProfessional } from '@/types';
 
 
 
-const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
+const FeaturedProfessionalsCardSlider = ({
+    item,
+    priority = false,
+}: {
+    item: IProfessional;
+    // The first cards on a page are often the largest visible element: load their image eagerly.
+    priority?: boolean;
+}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    console.log("Professional", item)
-
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
+
+    // Only keep a <video> mounted while the card is on (or close to) the screen. A home page full
+    // of professionals used to start a video decoder per card at once, which makes iPhone Safari
+    // run out of memory and reload the page ("This web page was reloaded because a problem
+    // occurred"). Off-screen cards show the grey placeholder and release their decoder. A video the
+    // visitor has started stays mounted (paused when it leaves the screen), so scrolling away
+    // never resets it or throws away their position.
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [isNearScreen, setIsNearScreen] = useState(false);
+    const [keepVideoMounted, setKeepVideoMounted] = useState(false);
+    useEffect(() => {
+        const element = containerRef.current;
+        if (!element) return;
+        if (typeof IntersectionObserver === "undefined") {
+            setIsNearScreen(true);
+            return;
+        }
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsNearScreen(entry.isIntersecting);
+                // Off screen: stop playback (onPause updates the play button state).
+                if (!entry.isIntersecting) videoRef.current?.pause();
+            },
+            { rootMargin: "200px" }
+        );
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, []);
 
     // Touch swipe tracking (mobile)
     const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -143,6 +176,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
         if (!videoRef.current) return;
 
         if (videoRef.current.paused) {
+            setKeepVideoMounted(true);
             // The thumbnail fragment parks the video at 0.5s — start from the beginning.
             if (videoRef.current.currentTime < 1) videoRef.current.currentTime = 0;
             videoRef.current.play();
@@ -165,6 +199,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
 
     return (
         <div
+            ref={containerRef}
             className={`relative w-full aspect-video bg-gray-200 overflow-hidden rounded-tl-lg rounded-tr-lg ${hasMultipleItems ? "swiper-no-swiping" : ""}`}
             onTouchStart={hasMultipleItems ? handleTouchStart : undefined}
             onTouchMove={hasMultipleItems ? handleTouchMove : undefined}
@@ -193,11 +228,10 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                     src={getImageSrc(currentMedia.src)}
                     alt={currentMedia.alt}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    fetchPriority="high"
-                    preload={true}
+                    {...(priority ? { fetchPriority: "high" as const, preload: true } : {})}
                     className="w-full !max-h-[250px] sm:!max-h-[250px] lg:!max-h-[300px] aspect-video object-cover rounded-tl-lg rounded-tr-lg "
                 />
-            ) : (
+            ) : isNearScreen || keepVideoMounted ? (
                 <video
                     ref={videoRef}
                     // "#t=0.5" makes the browser show a real frame of the video itself as the
@@ -214,9 +248,10 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                         console.warn(`Failed to load video: ${currentMedia.src}`);
                     }}
                 />
-            )}
+            ) : null}
 
-            {isCurrentMediaVideo && (
+            {/* Controls only exist together with the video: before it is mounted they would do nothing */}
+            {isCurrentMediaVideo && (isNearScreen || keepVideoMounted) && (
                 <div className="absolute bottom-5 flex items-center gap-4 px-3 bg-gradient-to-r from-black/20 via-transparent to-black/20 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                     {/* Play/Pause Button */}
                     <button
