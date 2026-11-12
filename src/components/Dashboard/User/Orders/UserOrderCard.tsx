@@ -375,8 +375,8 @@ const UserOrderCard = ({
                 className="disabled:cursor-not-allowed flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
               >
                 <IoCheckmarkSharp size={16} />
-                {/* Accept Order */}
-                Prijať objednávku
+                {/* Order with obligation to pay */}
+                Objednať s povinnosťou platby
               </button>
               <button
                 onClick={() => openModal(data)}

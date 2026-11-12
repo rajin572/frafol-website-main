@@ -7,14 +7,14 @@ export const budgetLabels: { [key: string]: string } = {
 };
 export const eventOrderStatus: { [key: string]: string } = {
   pending: "Čaká na schválenie",
-  declined: "Declined",
+  declined: "Odmietnuté",
   accepted: "Čaká sa na platbu",
   inProgress: "Prebieha",
   deliveryRequestDeclined: "Prebieha",
   deliveryRequest: "Čaká na potvrdenie",
   delivered: "Dokončené",
-  cancelRequest: "Cancel Requested",
-  cancelled: "Cancelled",
+  cancelRequest: "Žiadosť o zrušenie",
+  cancelled: "Zrušené",
 };
 export const serviceTypeLabels: { [key: string]: string } = {
   photography: "Fotenie",

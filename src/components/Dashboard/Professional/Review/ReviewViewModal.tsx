@@ -17,8 +17,8 @@ const ReportViewModal = ({
   if (!currentRecord) return null;
 
   const { userId, rating, message, createdAt } = currentRecord;
-  const userName = userId?.name || "Unknown User";
-  const userEmail = userId?.email || "No Email";
+  const userName = userId?.name || "Anonymný používateľ";
+  const userEmail = userId?.email || "Bez e-mailu";
   const userProfile =
     getMediaUrl(userId?.profileImage) || AllImages.dummyProfile;
 
@@ -35,7 +35,7 @@ const ReportViewModal = ({
           Recenzia používateľa
         </h3>
         <p className="text-sm sm:text-base lg:text-lg text-center mt-2">
-          See full feedback from {userName}
+          Celá recenzia od používateľa {userName}
         </p>
 
         <div className="flex justify-center items-center gap-2 mt-5">
@@ -77,7 +77,7 @@ const ReportViewModal = ({
             <div className="flex items-start gap-2 mb-2">
               <span className="font-medium text-nowrap">{/* Feedback: */}Recenzia:</span>
               <span className="text-justify pt-0">
-                {message || "No feedback provided."}
+                {message || "Bez slovného hodnotenia"}
               </span>
             </div>
 

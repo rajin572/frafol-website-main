@@ -26,7 +26,7 @@ const ProfessionalPageDetailsBookSession = ({
         className="!py-4.5 !px-4 !text-sm sm:!text-sm lg:!text-base !text-secondary-color !border-secondary-color flex items-center"
         onClick={myData?._id ? openBookModal : () => router.push("/sign-in")}
       >
-        <IoCameraOutline className="" /> Nezáväzný dopyt
+        <IoCameraOutline className="" /> Požiadať o cenovú ponuku
       </ReuseButton>
       <ProfessionalBookingModal
         isModalVisible={isBookModalOpen}

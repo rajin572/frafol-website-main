@@ -26,7 +26,7 @@ const ProfessionalReviewTable = ({
       title: "Meno klienta",
       dataIndex: "userId",
       key: "userId",
-      render: (user: any) => user?.name || "N/A", // uses actual user name
+      render: (user: any) => user?.name || "Anonymný používateľ", // uses actual user name
     },
     {
       /* title: "Feedback", */
@@ -35,7 +35,7 @@ const ProfessionalReviewTable = ({
       key: "message",
       render: (message: string) => (
         <div className="max-w-[200px] truncate">
-          {message || "No feedback provided"}
+          {message || "Bez slovného hodnotenia"}
         </div>
       ),
     },

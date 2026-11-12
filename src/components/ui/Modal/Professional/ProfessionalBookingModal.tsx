@@ -259,10 +259,10 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
     >
       <div className="p-5 text-base-color  max-h-[90vh] overflow-y-auto !p-0">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
-          Kontaktovať {professionalUser?.name}
+          Žiadosť o cenovú ponuku
         </h1>
         <p className="text-sm sm:text-sm lg:text-base xl:text-lg mb-5 font-medium">
-          Opíšte svoje predstavy a požiadajte o nezáväznú cenovú ponuku.
+          Opíšte svoje predstavy a získajte cenovú ponuku na fotenie alebo natáčanie.
         </p>
 
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-5">
@@ -321,7 +321,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
             />
             <ReuseSelect
               name="budget_range"
-              label="Rozpočet (€)"
+              label="Predpokladaný rozpočet (€)"
               placeholder="Vyberte rozpočet"
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Vyberte rozpočet" }]}
@@ -393,7 +393,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
                 }
               }}
             >
-              Kontaktovať ako firma
+              Žiadosť o cenovú ponuku ako firma
             </Checkbox>
           </div>
           {type !== "company"
@@ -510,8 +510,11 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
               </div>
             </Checkbox>
           </Form.Item> */}
+          <p className="text-sm sm:text-sm lg:text-base font-medium mt-2">
+            Odoslanie žiadosti je nezáväzné. Rezervácia bude potvrdená až po zaplatení cenovej ponuky.
+          </p>
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Odoslať nezáväzný dopyt
+            Požiadať o cenovú ponuku
           </ReuseButton>
         </ReusableForm>
       </div>

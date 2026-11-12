@@ -216,7 +216,7 @@ const FeaturedProfessionalsCardSlider = ({
                         className="size-2.5 sm:size-3 lg:size-4"
                     />
                     <p className="text-white text-[8px] sm: lg:text-sm font-bold">
-                        Frafol Choice
+                        Odporúča Frafol
                     </p>
                 </div>
             )}

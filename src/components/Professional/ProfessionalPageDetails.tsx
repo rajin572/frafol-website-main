@@ -76,7 +76,7 @@ const ProfessionalPageDetails = async ({
                 alt={professionalUser?.name || "item Image"}
                 className="size-3 sm:size-4 lg:size-5"
               />
-              <p className="text-white text-sm sm:text-sm font-bold">Frafol Choice</p>
+              <p className="text-white text-sm sm:text-sm font-bold">Odporúča Frafol</p>
             </div>
           }
           <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-secondary-color mt-1">

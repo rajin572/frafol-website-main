@@ -18,6 +18,7 @@ import { LuClock } from "react-icons/lu";
 import { BsCurrencyEuro } from "react-icons/bs";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { getMediaUrl } from "@/utils/mediaUrl";
+import { formatDuration, formatWeeks } from "@/utils/durationLabels";
 // import Link from "next/link";
 
 
@@ -103,7 +104,7 @@ const ProfessionalServiceBookingModal: React.FC<
       <div className="p-5 text-base-color  max-h-[90vh] overflow-y-auto">
 
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-5">
-          Objednať teraz
+          Rezervovať
         </h1>
 
         <div className="relative">
@@ -129,7 +130,13 @@ const ProfessionalServiceBookingModal: React.FC<
           </div>
           <div className="px-1  mt-3">
             <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
-              {packageData?.category}
+              {packageData?.category === "photography"
+                ? "Fotenie"
+                : packageData?.category === "videography"
+                  ? "Natáčanie"
+                  : packageData?.category === "both"
+                    ? "Fotenie a natáčanie"
+                    : packageData?.category}
             </span>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
               {packageData?.title}
@@ -155,7 +162,7 @@ const ProfessionalServiceBookingModal: React.FC<
                     Trvanie:
                   </p>
                 </div>
-                <p className="text-sm sm:text-sm lg:text-base">{packageData?.duration}</p>
+                <p className="text-sm sm:text-sm lg:text-base">{formatDuration(packageData?.duration)}</p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
@@ -165,7 +172,7 @@ const ProfessionalServiceBookingModal: React.FC<
                   </p>
                 </div>
                 <p className="text-sm sm:text-sm lg:text-base">
-                  {packageData?.deliveryTime / 7} Week
+                  {formatWeeks(packageData?.deliveryTime / 7)}
                 </p>
               </div>
             </div>
@@ -230,7 +237,7 @@ const ProfessionalServiceBookingModal: React.FC<
                   }
                 }}
               >
-                Objednať ako firma
+                Rezervovať ako firma
               </Checkbox>
             </div>
             {type !== "company"

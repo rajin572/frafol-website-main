@@ -23,9 +23,6 @@ const WorkshopEarningTable = ({
 
   const formatDate = (dateStr: string) => (dateStr ? formatShortDate(dateStr) : "—");
 
-  const capitalize = (str: string) =>
-    str ? str.charAt(0).toUpperCase() + str.slice(1) : "—";
-
   const columns = [
     {
       /* title: "Client", */
@@ -55,7 +52,7 @@ const WorkshopEarningTable = ({
       key: "instructorPaid",
       render: (_: any, record: any) => (
         <Tag color={record.instructorPayment?.status === "received" ? "green" : "orange"}>
-          {capitalize(record.instructorPayment?.status || "pending")}
+          {record.instructorPayment?.status === "received" ? "Vyplatené" : "Čakajúce"}
         </Tag>
       ),
       align: "center",

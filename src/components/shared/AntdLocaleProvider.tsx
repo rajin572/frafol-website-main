@@ -17,6 +17,8 @@ const AntdLocaleProvider = ({
     locale={{
       locale: "sk",
       Image: { preview: "Náhľad" },
+      // Empty tables and lists ("No data").
+      Empty: { description: "Žiadne údaje" },
       DatePicker: pickerLocale,
       TimePicker: timePickerLocale,
       Calendar: calendarLocale,

@@ -26,3 +26,18 @@ export const formatWeeks = (weeks?: number | null): string => {
   const [one, few, many] = UNITS.week;
   return `${weeks} ${pluralize(weeks, one, few, many)}`;
 };
+
+// Duration chosen in the custom-order form. The API stores the option value ("2hour"), which the
+// order screens used to print as it is.
+const EVENT_DURATIONS: Record<string, string> = {
+  "1hour": "1 hodina",
+  "2hour": "2 hodiny",
+  halfday: "Pol dňa",
+  fullday: "Celý deň",
+  multiday: "Viac dní",
+};
+
+export const formatEventDuration = (duration?: string | null): string => {
+  if (!duration) return "";
+  return EVENT_DURATIONS[duration.trim().toLowerCase()] ?? duration;
+};

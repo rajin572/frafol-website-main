@@ -29,7 +29,7 @@ const cartSlice = createSlice({
         state.products.push(action.payload);
         toast.success(`${action.payload.name} pridané do košíka`);
       } else {
-        toast.error("Product already exists in cart");
+        toast.error("Produkt je už v košíku");
       }
     },
     removeFromCart: (state, action: PayloadAction<string>) => {

@@ -69,7 +69,16 @@ const SignUpProfessionalOTPVerify = () => {
                     value={otp}
                     onChange={setOtp}
                     numInputs={4}
-                    renderInput={(props) => <input {...props} required />}
+                    renderInput={(props) => (
+                      <input
+                        {...props}
+                        required
+                        // The browser's own message follows the browser language ("Please fill out
+                        // this field."); show it in Slovak and clear it again once typing starts.
+                        onInvalid={(e) => e.currentTarget.setCustomValidity("Vyplňte toto pole.")}
+                        onInput={(e) => e.currentTarget.setCustomValidity("")}
+                      />
+                    )}
                   />
                 </div>
               </Form.Item>

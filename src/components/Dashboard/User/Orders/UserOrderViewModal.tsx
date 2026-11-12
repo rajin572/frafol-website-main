@@ -11,6 +11,7 @@ import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { budgetLabels, eventOrderStatus, serviceTypeLabels } from "@/utils/budgetLabels";
+import { formatEventDuration } from "@/utils/durationLabels";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import { buildEventInvoices } from "@/utils/invoice/eventInvoices";
 import { finalInvoices, paymentInvoices } from "@/utils/invoice/assembleInvoices";
@@ -154,7 +155,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               <p className="text-sm sm:text-sm lg:text-base mt-1">
                 {/* <span className="font-semibold">Duration :</span> */}
                 <span className="font-semibold">Trvanie:</span>{" "}
-                <span className="capitalize">{currentRecord?.duration}</span>
+                <span className="capitalize">{formatEventDuration(currentRecord?.duration)}</span>
               </p>
             )}
             <p className="text-sm sm:text-sm lg:text-base mt-1">

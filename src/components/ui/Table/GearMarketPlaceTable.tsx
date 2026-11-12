@@ -109,7 +109,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       render: (_: unknown, record: any) => (
         <Space size="middle">
           {/* View Details Tooltip */}
-          <ViewDetailsTooltip>
+          <ViewDetailsTooltip title="Upraviť">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
               onClick={() => showEditModal(record)}
@@ -117,7 +117,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
               <MdEdit style={{ fontSize: "24px" }} />
             </button>
           </ViewDetailsTooltip>
-          <ViewDetailsTooltip>
+          <ViewDetailsTooltip title="Zmazať">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
               onClick={() => showDeleteModal(record)}
