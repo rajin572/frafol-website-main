@@ -18,7 +18,7 @@ const page = async ({
   const page = Number(params?.page) || 1;
   const searchText = params?.search || "";
   const workshopId = params?.workshop || undefined;
-  const limit = 1;
+  const limit = 12;
 
   const res = await fetchWithAuth(`/workshop/my?approvalStatus=${activeTab}&page=${page}&limit=${limit}&searchTerm=${searchText}`, {
     next: {
@@ -60,8 +60,6 @@ const page = async ({
   } else {
     participantsData = undefined;
   }
-  console.log("participantsData", participantsData);
-
   return (
     <ProfessionalWorkshopPage
       tab={tab as "approved" | "pending"}

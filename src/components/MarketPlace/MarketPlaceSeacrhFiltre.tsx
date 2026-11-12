@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { ChangeEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import PendingBar from "../shared/PendingBar";
+import useUrlSearch from "@/hook/useUrlSearch";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
@@ -22,42 +24,17 @@ const MarketPlaceSeacrhFiltre = () => {
   const [height, setHeight] = React.useState(0);
   const [filter, setFilter] = React.useState(false);
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    debounceSearch(e.target.value);
-  };
+  // The search text is synced by the hook (never overwritten while typing); only the other
+  // filters are copied from the URL below.
+  const { onSearchChange, isPending } = useUrlSearch(form);
 
   useEffect(() => {
     form.setFieldsValue({
       min: searchParams.get("min"),
       max: searchParams.get("max"),
       category: searchParams.get("category"),
-      search: searchParams.get("search"),
     });
   }, [searchParams, form]);
-
-  const debounceSearch = debounce((value: string) => {
-    const text = value;
-    const params = new URLSearchParams(searchParams);
-    if (text) {
-      params.set("search", text);
-    } else {
-      params.delete("search");
-    }
-
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
-  }, 200);
-
-  function debounce<T extends (...args: any[]) => void>(
-    this: void, // Explicitly type `this` as `void`
-    func: T,
-    wait: number
-  ) {
-    let timeout: NodeJS.Timeout;
-    return function (...args: Parameters<T>) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait); // Use spread operator for arguments
-    };
-  }
 
   useEffect(() => {
     if (filter && inputRef.current) {
@@ -104,6 +81,7 @@ const MarketPlaceSeacrhFiltre = () => {
   };
   return (
     <div>
+      <PendingBar pending={isPending} label="Vyhľadáva sa…" />
       <ReusableForm
         form={form}
         handleFinish={handleFinish}
@@ -117,7 +95,7 @@ const MarketPlaceSeacrhFiltre = () => {
               className="text-secondary-color size-5 cursor-pointer"
             />
           }
-          onChange={handleSearch}
+          onChange={onSearchChange}
           name="search"
           inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-full lg:!w-96 !py-2.5"
           placeholder="Hľadať..."

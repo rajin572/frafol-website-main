@@ -6,6 +6,18 @@ import React from "react";
 
 const { Option } = Select;
 
+// Lower-case and strip accents, so typing "kosice" finds "Košice" and "presov" finds "Prešov".
+const normalize = (text: unknown) =>
+  String(text ?? "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
+
+// Search both the visible label and the value of an option.
+const filterOption = (input: string, option?: any) =>
+  normalize(option?.children).includes(normalize(input)) ||
+  normalize(option?.value).includes(normalize(input));
+
 type TSelectProps = {
   Typolevel?: 1 | 2 | 3 | 4 | 5;
   label?: React.ReactNode;
@@ -54,6 +66,7 @@ const ReuseSelect = ({
       <Form.Item name={name} rules={rules}>
         <Select
           showSearch={showSearch}
+          filterOption={showSearch ? filterOption : undefined}
           mode={mode}
           className={cn(
             "!h-10  !text-base-color !placeholder:text-[##B5B5B5] border !border-primary-color !ring-0 rounded-md ",

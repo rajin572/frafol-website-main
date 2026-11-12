@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { ChangeEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import PendingBar from "../shared/PendingBar";
+import useUrlSearch from "@/hook/useUrlSearch";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
@@ -26,46 +28,21 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
   const [height, setHeight] = React.useState(0);
   const [filter, setFilter] = React.useState(false);
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    debounceSearch(e.target.value);
-  };
+  // The search text is synced by the hook (never overwritten while typing); only the other
+  // filters are copied from the URL below.
+  const { onSearchChange, isPending } = useUrlSearch(form);
 
   useEffect(() => {
     const townsParam = searchParams.get("towns");
     form.setFieldsValue({
       min: searchParams.get("min"),
       max: searchParams.get("max"),
-      search: searchParams.get("search"),
       date: searchParams.get("availity") ? dayjs(searchParams.get("availity"), "YYYY-MM-DD") : null,
       towns: townsParam ? townsParam.split(",") : [],
     });
   }, [searchParams, form]);
 
 
-
-  const debounceSearch = debounce((value: string) => {
-    const text = value;
-    const params = new URLSearchParams(searchParams);
-    if (text) {
-      params.set("search", text);
-    } else {
-      params.delete("search");
-    }
-
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
-  }, 200);
-
-  function debounce<T extends (...args: any[]) => void>(
-    this: void, // Explicitly type `this` as `void`
-    func: T,
-    wait: number
-  ) {
-    let timeout: NodeJS.Timeout;
-    return function (...args: Parameters<T>) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait); // Use spread operator for arguments
-    };
-  }
 
   useEffect(() => {
     if (filter && inputRef.current) {
@@ -120,6 +97,7 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
 
   return (
     <div className="">
+      <PendingBar pending={isPending} label="Vyhľadáva sa…" />
       <ReuseInput
         prefix={<FiSearch className="text-base-color size-5" />}
         suffix={
@@ -128,7 +106,7 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
             className="text-secondary-color size-5 cursor-pointer"
           />
         }
-        onChange={handleSearch}
+        onChange={onSearchChange}
         name="search"
         inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-full lg:!w-96 !py-2.5"
         /* placeholder="Search" */
@@ -170,6 +148,7 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
               {townData && townData.length > 0 && (
                 <ReuseSelect
                   mode="multiple"
+                  showSearch={true}
                   name="towns"
                   /* label="Towns" */
                   label="Mestá"

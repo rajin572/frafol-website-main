@@ -8,6 +8,7 @@ import { getMediaUrl } from "@/utils/mediaUrl";
 import { formatDuration, formatWeeks } from "@/utils/durationLabels";
 import { LuClock } from "react-icons/lu";
 import { FaEuroSign } from "react-icons/fa6";
+import ExpandableText from "./ExpandableText";
 
 const ProfessionalServiceCard = ({
   data,
@@ -50,9 +51,11 @@ const ProfessionalServiceCard = ({
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
             {data.title}
           </p>
-          <p className="text-sm sm:text-sm lg:text-base mt-1.5">
-            {data.description?.length > 100 ? data.description.substring(0, 100) + "..." : data.description}
-          </p>
+          <ExpandableText
+            text={data.description}
+            maxChars={100}
+            className="text-sm sm:text-sm lg:text-base mt-1.5"
+          />
           <div className="flex flex-col gap-1 mt-3">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
