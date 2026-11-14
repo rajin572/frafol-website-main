@@ -32,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
             {product?.condition ? (
               <span
-                className="rounded-md bg-white px-2 py-0.5 text-xs font-semibold text-base-color"
+                className="rounded-md bg-base-color px-2 py-0.5 text-xs font-semibold text-white shadow-sm"
               >
                 {isNew ? "Nové" : "Použité"}
               </span>
@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <span />
             )}
             {product?.vatAmount > 0 && (
-              <span className="rounded-md bg-white px-2 py-0.5 text-xs font-semibold text-base-color">
+              <span className="rounded-md bg-secondary-color px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
                 Vrátane DPH: {product?.vatAmount}%
               </span>
             )}

@@ -7,6 +7,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
 import { LuUsers } from "react-icons/lu";
+import { MdOutlineLaptop } from "react-icons/md";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IWorkshop } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
@@ -14,116 +15,130 @@ import { formatDate, formetTime } from "@/utils/dateFormet";
 import { useGetUserData } from "@/context/useGetUserData";
 import Link from "next/link";
 
+const metaClass = "flex min-w-0 items-center gap-2 text-sm sm:text-[15px] font-medium text-base-color/80";
+const metaIconClass = "size-4 shrink-0 text-secondary-color";
+
+// Workshop (kurz) card: photo with price, title + description, date / time / place, how full it is,
+// and the author with the register button.
 const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModalOpen: any }) => {
 
   const userData = useGetUserData();
-  console.log(data)
-  return (
-    <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between relative">
-      <div>
-        <Image
-          width={1000}
-          height={1000}
-          src={data?.image ? getMediaUrl(data?.image) : AllImages?.dummyCover}
-          alt="workspace"
-          className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
-        />
-        {data?.vatPercent > 0 && <p className="absolute top-3 left-3 bg-secondary-color px-1 py-0.5 text-primary-color rounded">
-          Vrátane DPH: {data?.vatPercent}%
-        </p>}
-        <div className="px-1 flex flex-col justify-between">
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3 ">
-            {data?.title}
-          </p>
-          <p className="text-sm sm:text-sm lg:text-base mt-1 ">
-            {data?.description?.length > 100
-              ? (
-                <>
-                  {data.description.substring(0, 100)}...
-                  <span className="font-medium text-secondary-color cursor-pointer" onClick={() => handleModalOpen(data)}> Zobraziť viac</span>
-                </>
-              )
-              : data?.description
-            }
-          </p>
+  const total = Number(data?.totalParticipants) || 0;
+  const max = Number(data?.maxParticipant) || 0;
+  const filledPercent = max > 0 ? Math.min(100, Math.round((total / max) * 100)) : 0;
 
-          <div className="flex items-center gap-2 mt-3">
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-base-color/10 bg-white transition-colors hover:border-base-color/25">
+      {/* Photo + price */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-background-color">
+        <Image
+          fill
+          src={data?.image ? getMediaUrl(data?.image) : AllImages?.dummyCover}
+          alt={data?.title || "workspace"}
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
+        {data?.vatPercent > 0 && (
+          <p className="absolute top-3 left-3 rounded-md bg-secondary-color px-2.5 py-1 text-xs sm:text-sm font-semibold text-white shadow-sm">
+            Vrátane DPH: {data?.vatPercent}%
+          </p>
+        )}
+        <p className="absolute bottom-3 left-3 rounded-lg bg-base-color px-3 py-1.5 text-lg font-bold text-white shadow-sm">
+          {data?.mainPrice?.toFixed(2)}€
+        </p>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-lg sm:text-xl font-bold leading-snug text-base-color line-clamp-2">
+          {data?.title}
+        </h3>
+        <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-base-color/70">
+          {data?.description?.length > 100
+            ? (
+              <>
+                {data.description.substring(0, 100)}...
+                <span className="font-semibold text-secondary-color cursor-pointer hover:underline" onClick={() => handleModalOpen(data)}> Zobraziť viac</span>
+              </>
+            )
+            : data?.description
+          }
+        </p>
+
+        {/* When and where */}
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 rounded-xl bg-background-color/50 p-4">
+          <div className={metaClass}>
+            <IoCalendarOutline className={metaIconClass} />
+            <p className="truncate">{formatDate(data?.date)}</p>
+          </div>
+          <div className={metaClass}>
+            <LuClock className={metaIconClass} />
+            <p className="truncate">{formetTime(data?.time)}</p>
+          </div>
+          <div className={metaClass}>
+            {data?.locationType === "online" ? (
+              <MdOutlineLaptop className={metaIconClass} />
+            ) : (
+              <FaLocationDot className={metaIconClass} />
+            )}
+            <p className="truncate capitalize">{data?.locationType}</p>
+          </div>
+          {data?.locationType !== "online" && (
+            <div className={metaClass}>
+              <FaLocationDot className={metaIconClass} />
+              <p className="truncate" title={data?.location}>{data?.location}</p>
+            </div>
+          )}
+        </div>
+
+        {/* How full the workshop is */}
+        <div className="mt-4">
+          <div className={metaClass}>
+            <LuUsers className={metaIconClass} />
+            <p>
+              {data?.totalParticipants} / {data?.maxParticipant} participants
+            </p>
+          </div>
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-background-color">
+            <div className="h-full rounded-full bg-secondary-color" style={{ width: `${filledPercent}%` }} />
+          </div>
+        </div>
+
+        {/* Author + register */}
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-base-color/10 pt-4 mt-6">
+          <div className="flex min-w-0 items-center gap-2.5">
             <Image
-              width={1000}
-              height={1000}
+              width={72}
+              height={72}
               src={
                 data?.authorId?.profileImage
                   ? getMediaUrl(data?.authorId?.profileImage)
                   : AllImages?.dummyProfile
               }
               alt={data?.authorId?.name || "Profile Image"}
-              className="w-8 h-8 object-cover rounded-full "
+              className="size-9 shrink-0 object-cover rounded-full"
             />
             {
               data?.authorId?.role === "photographer" || data?.authorId?.role === "both" || data?.authorId?.role === "videographer" ? (
-                <Link href={`/professionals/${data?.authorId?._id}`} className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer">
-
-                  <p className="text-sm sm:text-sm lg:text-base font-bold">
-                    {data?.authorId?.name}
-                  </p>
+                <Link href={`/professionals/${data?.authorId?._id}`} className="truncate text-sm sm:text-base font-semibold text-base-color hover:text-secondary-color">
+                  {data?.authorId?.name}
                 </Link>
-              ) : <p className="text-sm sm:text-sm lg:text-base font-bold">
+              ) : <p className="truncate text-sm sm:text-base font-semibold text-base-color">
                 {data?.authorId?.name}
               </p>
             }
-
           </div>
-          <div className="flex items-center gap-2 mt-2">
-            <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              {formatDate(data?.date)}
-            </p>
-          </div>
-          <div className="flex items-center gap-2 mt-1">
-            <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              {formetTime(data?.time)}
-            </p>
-          </div>
-          <div className="flex items-center gap-2 mt-1">
-            <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-sm sm:text-sm lg:text-base font-semibold capitalize">
-              {data?.locationType}
-            </p>
-          </div>
-          {data?.locationType !== "online" && (
-            <div className="flex items-center gap-2 mt-1">
-              <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-sm sm:text-sm lg:text-base font-semibold">
-                {data?.location}
-              </p>
-            </div>
+          {(userData?.userId && userData?.userId !== data?.authorId?._id) && (
+            <ReuseButton
+              variant="secondary"
+              className="!w-fit !shrink-0 !text-sm !py-4 !px-4 !rounded-lg !font-semibold"
+              onClick={() => handleModalOpen(data)}
+            >
+              Zaregistrovať sa
+            </ReuseButton>
           )}
-
-          <div className="flex items-center gap-2 mt-1">
-            <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
-              {data?.totalParticipants} / {data?.maxParticipant} participants
-            </p>
-          </div>
         </div>
       </div>
-
-      <div className="flex items-center gap-2 pt-5 justify-between">
-        <p className="text-base sm:text-lg lg:text-xl font-semibold">
-          {data?.mainPrice?.toFixed(2)}€
-        </p>
-        {(userData?.userId && userData?.userId !== data?.authorId?._id) && (
-          <ReuseButton
-            variant="secondary"
-            className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
-            onClick={() => handleModalOpen(data)}
-          >
-            Zaregistrovať sa
-          </ReuseButton>
-        )}
-      </div>
-    </div >
+    </article>
   );
 };
 

@@ -1,11 +1,11 @@
 "use client";
 import React, { Suspense } from "react";
-import SectionHeader from "../ui/SectionHeader";
 import WorkShopsCards from "../shared/WorkShopsCards";
 import { IProfile, IWorkshop } from "@/types";
 import PaginationSection from "../shared/PaginationSection";
 import RegisterWrokshopModal from "../ui/Modal/Workshop/RegisterWrokshopModal";
 
+// The title and intro are in the page banner (see app/(withNavFooter)/workshops/page.tsx).
 const WorkshopsPage = ({
   workshops,
   totalData,
@@ -35,16 +35,13 @@ const WorkshopsPage = ({
   };
 
   return (
-    <div className="py-20">
-      {/* title="Photography & Videography Workshops" */}
-      {/* description="Learn new skills and techniques from industry professionals." */}
-      <SectionHeader title="Fotografické a video workshopy" description="Objavte praktické kurzy vedené fotografmi a kameramanmi z praxe." />
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div className="py-12 sm:py-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch gap-6">
         {workshops.map((item) => (
           <WorkShopsCards key={item._id} data={item} handleModalOpen={openModal} />
         ))}
       </div>
-      <div className="mt-16 flex justify-center items-center">
+      <div className="mt-14 flex justify-center items-center">
         <Suspense fallback={<div>Načítava sa...</div>}>
           <PaginationSection page={page} limit={limit} totalData={totalData} />
         </Suspense>

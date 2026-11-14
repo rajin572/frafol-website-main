@@ -18,11 +18,17 @@ export const addNewComment = async (req: { body: any; params: any }) => {
       }
     );
     const result = await res.json();
-    updateTag(TagTypes.comment);
+
+    // Empty / non-JSON answer (fetchWithAuth turns it into null) or a backend error: report a
+    // failure the client can show in a toast, and keep the cached comments as they are.
+    if (!result) {
+      return { success: false, message: `Komentár sa nepodarilo odoslať (${res.status}).` };
+    }
+    if (result?.success) updateTag(TagTypes.comment);
 
     return result;
   } catch (error: any) {
-    return Error(error);
+    return { success: false, message: error?.message || "" };
   }
 };
 

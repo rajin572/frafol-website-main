@@ -1,10 +1,8 @@
 import React from "react";
-import ForumReplyCard from "./ForumReplyCard";
-import ForumSubmitReply from "./ForumSubmitReply";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICommunityComment } from "@/types";
-import PaginationSection from "../shared/PaginationSection";
+import ForumCommentsThread from "./ForumCommentsThread";
 
 const ForumAllComents = async ({ id, page }: { id: string; page: number }) => {
   const limit = 5;
@@ -16,29 +14,30 @@ const ForumAllComents = async ({ id, page }: { id: string; page: number }) => {
 
   const data = await res.json();
 
-  const allComments: ICommunityComment[] = data?.data;
+  const allComments: ICommunityComment[] = Array.isArray(data?.data) ? data.data : [];
 
-  const paginatedData =
-    allComments?.slice((page - 1) * limit, page * limit) || [];
+  // Newest first: the comment box is above the list, so a new comment appears right under it
+  // (the API returns them oldest first, which put a new comment at the end of the last page).
+  const newestFirst = [...allComments].sort(
+    (a, b) => new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime()
+  );
+
+  const paginatedData = newestFirst.slice((page - 1) * limit, page * limit);
+
   return (
-    <div className="rounded-xl border border-background-color flex flex-col gap-2 p-5 items-start mt-16">
-      <p className="text-base sm:text-lg lg:text-xl font-bold">{/* Replies */} Odpovede</p>
+    <section className="mt-10 rounded-2xl border border-base-color/10 bg-white flex flex-col p-6 sm:p-8 items-start">
+      <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-base-color">
+        {/* Replies */} Odpovede
+      </h2>
 
-      {paginatedData?.map((item, index) => (
-        <ForumReplyCard item={item} key={index} />
-      ))}
-
-      <div className="w-full flex justify-center items-center my-5">
-        {(allComments?.length || 0) > limit && (
-          <PaginationSection
-            page={page}
-            limit={limit}
-            totalData={allComments?.length || 0}
-          />
-        )}
-      </div>
-      <ForumSubmitReply id={id} />
-    </div>
+      <ForumCommentsThread
+        id={id}
+        comments={paginatedData}
+        totalComments={allComments.length}
+        page={page}
+        limit={limit}
+      />
+    </section>
   );
 };
 

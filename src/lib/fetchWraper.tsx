@@ -86,6 +86,41 @@ const refreshAccessToken = async (): Promise<string | null> => {
   }
 };
 
+// Statuses that may not carry a body; such responses are passed through untouched.
+const NULL_BODY_STATUSES = [101, 103, 204, 205, 304];
+
+// Every page calls `res.json()` on what fetchWithAuth returns. When the backend answers with an
+// empty or non-JSON body (a crash, a proxy error page, a dropped connection), `res.json()` throws
+// "Unexpected end of JSON input" and the whole page shows "Ups! Niečo sa pokazilo". This re-wraps
+// such a body as JSON `null`, so `data?.data` is simply empty, and logs what really came back in the
+// server console (URL, status, start of the body) so the backend answer can be checked.
+const ensureJsonBody = async (response: Response, url: string): Promise<Response> => {
+  if (NULL_BODY_STATUSES.includes(response.status)) return response;
+
+  const text = await response.text();
+  let body = text;
+
+  if (!text) {
+    console.error(`[fetchWithAuth] empty response body (status ${response.status}) from ${url}`);
+    body = "null";
+  } else {
+    try {
+      JSON.parse(text);
+    } catch {
+      console.error(
+        `[fetchWithAuth] response is not JSON (status ${response.status}) from ${url}: ${text.slice(0, 300)}`
+      );
+      body = "null";
+    }
+  }
+
+  return new Response(body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+  });
+};
+
 type FetchWithAuthConfig = {
   // Set to false for non-critical, layout-level fetches (e.g. navbar notifications) so a
   // failing auth response doesn't log the user out and bounce them to /sign-in.
@@ -116,22 +151,23 @@ export const fetchWithAuth = async (
 
       if (newAccessToken) {
         // Retry the original request once with the refreshed token
-        return fetch(baseUrl + url, {
+        const retried = await fetch(baseUrl + url, {
           ...options,
           headers: {
             ...options.headers,
             Authorization: newAccessToken,
           },
         });
+        return ensureJsonBody(retried, url);
       }
-      if (!logoutOnAuthFailure) return response;
+      if (!logoutOnAuthFailure) return ensureJsonBody(response, url);
       // Refresh failed (no/expired refresh token) — session is unrecoverable, log out.
       console.warn(`[fetchWithAuth] ${response.status} on ${url}, refresh failed → logging out`);
       await safeLogout(); // best-effort cookie clear (only works from a Server Action)
       redirect("/logout"); // /logout Route Handler clears cookies + → /sign-in (works from renders too)
     }
 
-    return response; // Return the response
+    return ensureJsonBody(response, url);
   } catch (error) {
     throw error;
   }

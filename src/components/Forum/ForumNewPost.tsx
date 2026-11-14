@@ -11,16 +11,16 @@ const ForumNewPost = () => {
   const handleCancle = () => setIsAddModalOpen(false);
   console.log(userData)
   return (
-    <div>
+    <div className="shrink-0 empty:hidden">
       {
         userData?.userId && (
-          <div className=" mt-5 flex justify-end">
+          <div className="flex justify-end">
             <ReuseButton
               variant="secondary"
               onClick={() => setIsAddModalOpen(true)}
-              className="w-fit !text-sm sm:!text-base lg:!text-lg !py-4.5"
+              className="!w-full sm:!w-fit !text-sm sm:!text-base !py-6 !px-6 !rounded-xl !font-semibold flex items-center justify-center gap-2"
             >
-              <FaPlus className="mt-1" />
+              <FaPlus />
               { /* New Post */}
               Nový príspevok
             </ReuseButton>

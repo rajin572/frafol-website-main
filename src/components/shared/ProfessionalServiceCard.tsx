@@ -38,7 +38,7 @@ const ProfessionalServiceCard = ({
         />
         <div className="flex items-center justify-start gap-2 absolute top-4 w-full px-4">
           {data?.vatAmount > 0 ? (
-            <span className="text-xs sm:text-sm font-semibold bg-white/95 text-base-color py-1 px-2.5 rounded-md">
+            <span className="text-xs sm:text-sm font-semibold bg-secondary-color text-white py-1 px-2.5 rounded-md shadow-sm">
               Vrátane DPH: {data?.vatAmount}%
             </span>
           ) : (

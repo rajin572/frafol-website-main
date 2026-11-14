@@ -1,5 +1,5 @@
 import Container from "@/components/ui/Container";
-import SectionBanner from "@/components/ui/SectionBanner";
+import BrowseHeader from "@/components/shared/BrowseHeader";
 import WorkshopsPage from "@/components/Workshops/WorkshopsPage";
 import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
@@ -57,7 +57,13 @@ const page = async ({
 
   return (
     <main>
-      <SectionBanner image={AllImages.workspaceBanner?.src} title="Kurzy" />
+      {/* title="Photography & Videography Workshops" */}
+      {/* description="Learn new skills and techniques from industry professionals." */}
+      <BrowseHeader
+        image={AllImages.workspaceBanner}
+        title="Fotografické a video workshopy"
+        description="Objavte praktické kurzy vedené fotografmi a kameramanmi z praxe."
+      />
       <Container>
         <WorkshopsPage
           workshops={workshops}

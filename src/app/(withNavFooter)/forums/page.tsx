@@ -1,4 +1,4 @@
-import SectionBanner from "@/components/ui/SectionBanner";
+import BrowseHeader from "@/components/shared/BrowseHeader";
 import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import Container from "@/components/ui/Container";
@@ -40,8 +40,13 @@ const page = async ({
 
   return (
     <main className="pb-20">
-      {/* title="Forum" */}
-      <SectionBanner image={AllImages?.forum?.src} title="Diskusie" />
+      {/* title="Community Forum" */}
+      {/* description="Connect with other photographers and videographers to discuss gear, techniques, and more." */}
+      <BrowseHeader
+        image={AllImages?.forum}
+        title="Komunitná diskusia"
+        description="Prepojte sa s inými fotografmi a kameramanmi na diskusiu o príslušenství, technikách a ďalších témach."
+      />
       <Container>
         <ForumPage
           communityPosts={communityPosts}
