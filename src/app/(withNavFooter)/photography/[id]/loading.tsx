@@ -1,23 +1,18 @@
 import Container from "@/components/ui/Container";
+import BrowseHeaderSkeleton from "@/components/ui/Skeletons/BrowseHeaderSkeleton";
 import ProfessionalsCardSkeleton from "@/components/ui/Skeletons/ProfessionalsCardSkeleton";
-import SearchSkeleton from "@/components/ui/Skeletons/SearchSkeleton";
-import SectionBannerSkeleton from "@/components/ui/Skeletons/SectionBannerSkeleton";
 
 const SkeletonLoader = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <SectionBannerSkeleton />
+    <div className="min-h-screen pb-20">
+      <BrowseHeaderSkeleton banner />
       <Container>
-        <div className="pt-10">
-          <div className="flex justify-between mb-3 mt-16">
-            <div className="flex justify-baseline items-center gap-5 py-3 px-2 bg-gray-200 animate-pulse rounded-lg overflow-hidden w-60 lg:w-80"></div>
-            <SearchSkeleton />
-          </div>
-
-          {/* Grid Skeleton */}
-          <div className="py-10">
-            <ProfessionalsCardSkeleton />
-          </div>
+        <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="h-12 w-52 animate-pulse rounded-xl bg-base-color/10" />
+          <div className="h-11 w-full animate-pulse rounded-lg bg-base-color/10 md:w-[28rem]" />
+        </div>
+        <div className="mt-8">
+          <ProfessionalsCardSkeleton />
         </div>
       </Container>
     </div>

@@ -1,26 +1,30 @@
 import Container from "@/components/ui/Container";
 import ProfessionalsCardSkeleton from "@/components/ui/Skeletons/ProfessionalsCardSkeleton";
-import SearchSkeleton from "@/components/ui/Skeletons/SearchSkeleton";
 
 const SkeletonLoader = () => {
   return (
-    <Container>
-      <div className="flex flex-col py-20 min-h-screen">
-        {/* Header Skeleton */}
-        <div className="w-2/3 lg:w-1/3 h-8 bg-gray-200 animate-pulse rounded mb-6 text-center mx-auto"></div>
-        <div className="w-1/2 h-6 bg-gray-200 animate-pulse rounded text-center mx-auto"></div>
-
-        <div className="flex justify-end mb-3 mt-16">
-          <SearchSkeleton />
+    <div className="min-h-screen pb-20">
+      {/* Same centred band as BrowseHeader (title + intro, no search) */}
+      <section className="border-b border-base-color/10 bg-[#fbf7f4]">
+        <Container>
+          <div className="mx-auto flex max-w-3xl flex-col items-center py-14 sm:py-20">
+            <div className="h-11 w-3/4 animate-pulse rounded-md bg-base-color/10" />
+            <div className="mt-6 h-4 w-full max-w-xl animate-pulse rounded bg-base-color/10" />
+            <div className="mt-2.5 h-4 w-2/3 max-w-md animate-pulse rounded bg-base-color/10" />
+          </div>
+        </Container>
+      </section>
+      <Container>
+        {/* Tabs + search/filter */}
+        <div className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="h-12 w-full max-w-md animate-pulse rounded-xl bg-base-color/10" />
+          <div className="h-12 w-full animate-pulse rounded-xl bg-base-color/10 md:w-[28rem]" />
         </div>
-
-        {/* Grid Skeleton */}
-
-        <ProfessionalsCardSkeleton />
-        {/* Footer Skeleton (if needed) */}
-        <div className="w-48 h-12 bg-gray-300 animate-pulse rounded-lg my-16 mx-auto"></div>
-      </div>
-    </Container>
+        <div className="mt-8">
+          <ProfessionalsCardSkeleton />
+        </div>
+      </Container>
+    </div>
   );
 };
 

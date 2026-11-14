@@ -11,7 +11,7 @@ const page = ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   return (
-    <div className="py-20">
+    <div>
       <PhotographyPage searchParams={searchParams} />
     </div>
   );

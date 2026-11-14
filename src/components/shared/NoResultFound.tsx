@@ -1,25 +1,21 @@
-import { BiSearchAlt } from "react-icons/bi";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { SearchX } from "lucide-react";
 
 const NoResultFound = ({
   /* title = "  No result found" */
-  title = "  Nenašiel sa žiadny výsledok",
+  title = "Nenašiel sa žiadny výsledok",
   /* description = "We can't find any item matching your search" */
   description = "Nenašli sme žiadnu položku zodpovedajúcu vášmu vyhľadávaniu.",
 }) => {
   return (
-    <div className=" flex items-center justify-center p-4">
-      <div className="text-center">
-        <div className="inline-flex items-center justify-center w-24 h-24 mb-6 relative">
-          <BiSearchAlt className="w-20 h-20 text-gray-300 animate-pulse" />
-          <IoCloseCircleOutline className="w-8 h-8 text-gray-300 animate-pulse absolute bottom-2 right-2" />
-        </div>
+    <div className="flex items-center justify-center p-4">
+      <div className="max-w-md text-center">
+        <span className="mx-auto mb-5 flex size-14 items-center justify-center rounded-full bg-background-color">
+          <SearchX className="size-6 text-base-color/50" />
+        </span>
 
-        <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">
-          {title}
-        </h2>
+        <h2 className="mb-2 text-lg lg:text-xl font-semibold text-base-color">{title}</h2>
 
-        <p className="text-sm lg:text-base text-gray-500">{description}</p>
+        <p className="text-sm lg:text-base leading-relaxed text-base-color/60">{description}</p>
       </div>
     </div>
   );

@@ -6,7 +6,8 @@ import useUrlSearch from "@/hook/useUrlSearch";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
-import { Form, Typography } from "antd";
+import { Form } from "antd";
+import { cn } from "@/lib/utils";
 // import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -16,7 +17,7 @@ import dayjs from "dayjs";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
-const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) => {
+const PhotographyCategorySeacrhFiltre = ({ townData, className }: { townData: ITown[]; className?: string }) => {
   const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -96,48 +97,60 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
   };
 
   return (
-    <div className="">
+    <div className={cn("relative w-full md:w-[28rem]", className)}>
       <PendingBar pending={isPending} label="Vyhľadáva sa…" />
-      <ReuseInput
-        prefix={<FiSearch className="text-base-color size-5" />}
-        suffix={
-          <IoFilter
-            onClick={() => setFilter((prev) => !prev)}
-            className="text-secondary-color size-5 cursor-pointer"
-          />
-        }
-        onChange={onSearchChange}
-        name="search"
-        inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-full lg:!w-96 !py-2.5"
-        /* placeholder="Search" */
-        placeholder="Hľadať"
-        type="text"
-      />
-      <div className="relative z-20! -mt-5">
-        <div
-          ref={inputRef}
-          style={{
-            height: `${height}px`,
-            overflow: "hidden",
-            transition: "height 0.5s ease",
-          }}
-          className="absolute top-0 w-full bg-primary-color rounded-md shadow"
+      {/* Search box and filter button side by side */}
+      <div className="flex items-stretch gap-2">
+        <ReuseInput
+          prefix={<FiSearch className="mr-1.5 size-5 text-base-color/50" />}
+          onChange={onSearchChange}
+          name="search"
+          wrapperClassName="min-w-0 flex-1"
+          formItemClassName="!mb-0"
+          inputClassName="!w-full !bg-white !border !border-base-color/15 hover:!border-base-color/30 focus-within:!border-secondary-color !rounded-xl !text-base-color !shadow-sm !text-base !py-2.5 !px-4"
+          /* placeholder="Search" */
+          placeholder="Hľadať"
+          type="text"
+        />
+        <button
+          type="button"
+          aria-label="Filtre"
+          aria-expanded={filter}
+          onClick={() => setFilter((prev) => !prev)}
+          className={cn(
+            "flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-xl border shadow-sm transition-colors",
+            filter
+              ? "border-secondary-color bg-secondary-color text-white"
+              : "border-base-color/15 bg-white text-secondary-color hover:border-secondary-color"
+          )}
         >
+          <IoFilter className="size-5" />
+        </button>
+      </div>
+      <div
+        ref={inputRef}
+        style={{
+          height: `${height}px`,
+          overflow: "hidden",
+          transition: "height 0.4s ease",
+        }}
+        className={cn(
+          "absolute right-0 top-full z-30 mt-2 w-full rounded-xl bg-white",
+          filter && "border border-base-color/10 shadow-lg"
+        )}
+      >
           <ReusableForm form={form} handleFinish={handleFinish}>
-            <div className="w-full p-4">
+            <div className="w-full p-5">
               {/* <ReuseInput
                 name="town"
                 label="Town"
                 placeholder="Town"
                 type="text"
               /> */}
-              <Typography.Title
-                level={5}
-                className="!text-base-color !font-normal"
-              >
+              <p className="mb-2 text-sm font-semibold text-base-color">
                 {/* Price Range */}
                 Cenové rozpätie
-              </Typography.Title>
+              </p>
               <div className="flex items-center gap-3">
                 <ReuseInput name="min" placeholder="Min" type="text" />
                 <ReuseInput name="max" placeholder="Max" type="text" />
@@ -164,24 +177,26 @@ const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) =>
                 />
               )}
 
-              <p
-                className="cursor-pointer text-secondary-color text-end mb-5 font-semibold !text-sm sm:!text-sm lg:!text-base"
-                onClick={HandleReset}
-              >
-                {/* Reset */}
-                Obnoviť
-              </p>
-              <ReuseButton
-                htmlType="submit"
-                variant="secondary"
-                className="w-full !text-sm sm:!text-sm lg:!text-base"
-              >
-                {/* Apply Filters */}
-                Použiť filtre
-              </ReuseButton>
+              <div className="mt-1 flex items-center justify-between gap-3 border-t border-base-color/10 pt-4">
+                <button
+                  type="button"
+                  className="cursor-pointer text-sm font-semibold text-base-color/60 transition-colors hover:text-secondary-color"
+                  onClick={HandleReset}
+                >
+                  {/* Reset */}
+                  Obnoviť
+                </button>
+                <ReuseButton
+                  htmlType="submit"
+                  variant="secondary"
+                  className="!w-fit !text-sm !py-4 !px-6 !rounded-lg !font-semibold"
+                >
+                  {/* Apply Filters */}
+                  Použiť filtre
+                </ReuseButton>
+              </div>
             </div>
           </ReusableForm>
-        </div>
       </div>
     </div>
   );
