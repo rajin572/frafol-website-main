@@ -5,10 +5,10 @@ import dummyProfile from "./images/dummyProfile.jpg";
 import batch from "./images/batch.png";
 
 import joinFrafol from "./images/joinFrafol.png";
-import signupuser from "./images/signup-user.png";
+import signupuser from "./images/signup-user.jpg";
 import chooseRole from "./images/chooseRole.jpg";
 import personalInfo from "./images/personalInfo.png";
-import signUpSpecialization from "./images/signUp-specialization.png";
+import signUpSpecialization from "./images/signUp-specialization.jpg";
 import legalInvoice from "./images/legal-invoice.jpg";
 import reviewDetails from "./images/review-details.jpg";
 
@@ -33,7 +33,7 @@ import heyFafol5 from "./images/heyFafol5.png";
 import heyFafol6 from "./images/heyFafol6.png";
 
 import aboutUs1 from "./images/aboutUs1.jpg";
-import aboutUs2 from "./images/aboutUs2.jpg";
+import aboutUs2 from "./images/aboutUs-vision.jpg";
 import aboutUs3 from "./images/aboutUs3.jpg";
 import aboutUs4 from "./images/aboutUs4.jpg";
 import aboutUs5 from "./images/aboutUs5.jpg";
