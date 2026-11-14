@@ -1,107 +1,123 @@
-import Image from "next/image";
-import Container from "../ui/Container";
-import Revel from "../ui/Animation/Revel";
-import BannerSearch from "./BannerSearch";
-import { AllImages } from "../../../public/assets/AllImages";
 import Link from "next/link";
+import * as motion from "motion/react-client";
+import { BadgeCheck, Camera, Crown, ShieldCheck, Star, Video } from "lucide-react";
+import Container from "../ui/Container";
+import BannerSearch from "./BannerSearch";
+import HeroStage from "./HeroStage";
+
+// Home hero: headline + search on the left, the animated "photo shoot" scene on the right.
+// The headline is not animated on purpose (LCP element), neither is the photo in the scene.
+
+const quickLinks = [
+  { href: "/photography", label: "Fotografi", icon: Camera },
+  { href: "/videography", label: "Kameramani", icon: Video },
+  { href: "/professionals?type=verified", label: "Frafol odporúča", icon: Crown },
+];
+
+const trustPoints = [
+  { icon: BadgeCheck, label: "Schválené profily tvorcov" },
+  { icon: ShieldCheck, label: "Bezpečná online platba" },
+  { icon: Star, label: "Hodnotenia od klientov" },
+];
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay, ease: "easeOut" as const },
+});
 
 export default function Banner() {
   return (
-    <section className="w-full min-h-[50vh] max-h-[80vh] mb-10 lg:mb-0 h-fit lg:min-h-screen z-10 text-secondary-color flex justify-center items-center mx-auto relative overflow-hidden">
-      <div className="hidden lg:block">
-        {" "}
-        <Container>
-          <div className="w-full grid grid-cols-1 lg:grid-cols-5 relative">
-            <div className="hidden lg:flex flex-col items-center">
-              {/* alt="Photographer" */}
-              <Image
-                src={AllImages.girl}
-                alt="Fotograf"
-                className="w-fit"
-              />
-              <Link href="/photography">
-                <button className="mt-2 bg-secondary-color text-white text-sm sm:text-sm px-3 py-1 rounded-md cursor-pointer">
-                  {/* Photographers */}
-                  Fotografi
-                </button>
-              </Link>
-            </div>
-            <div className="text-center flex flex-col items-center justify-center col-span-3">
-              <Revel>
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 w-[90%] sm:w-[80%] md:w-[70%] mx-auto leading-8 lg:leading-12 xl:leading-14 text-secondary-color">
-                  {/* Capture Your Moments with the Best in the Industry */}
-                  Nájdite si fotografa alebo kameramana na každú príležitosť
-                </h1>
-              </Revel>
-
-              <Revel delay={0.5}>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-8 text-base-color">
-                  {/* Find skilled photographers and videographers, check their */}
-                  {/* portfolios, and book your next shoot easily */}
-                  Objavte skúsených fotografov a kameramanov z celého Slovenska. Prezrite si ich portfóliá a jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
-                </p>
-              </Revel>
-
-              <Revel delay={0.75}>
-                <BannerSearch />
-              </Revel>
-            </div>
-            <div className="hidden lg:flex flex-col items-center">
-              {/* alt="Videographer" */}
-              <Image
-                src={AllImages.male}
-                alt="Kameraman"
-                className="w-fit"
-              />
-              <Link href="/videography">
-                <button className="mt-2 bg-secondary-color text-white text-sm sm:text-sm px-3 py-1 rounded-md cursor-pointer">
-                  {/* Videographers */}
-                  Kameramani
-                </button>
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </div>
-      <div
-        className="relative bg-cover bg-center min-h-[50vh] max-h-[80vh] h-fit lg:h-screen block lg:hidden"
-        style={{
-          width: "100%",
-        }}
-      >
-        {/* alt="Hero Image" */}
-        <Image
-          src={AllImages.herobanner}
-          alt="Hlavný obrázok"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+    <section className="relative isolate overflow-hidden bg-[#fbf7f4]">
+      {/* Background decoration */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-32 -left-32 size-[420px] rounded-full bg-secondary-color/10 blur-3xl" />
+        <div className="absolute top-1/3 -right-40 size-[460px] rounded-full bg-third-color/20 blur-3xl" />
+        <div
+          className="absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage: "radial-gradient(#ad2b0822 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            maskImage: "linear-gradient(to bottom, black, transparent 85%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black, transparent 85%)",
+          }}
         />
-        {/* White overlay */}
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-        <div className="absolute px-4 lg:px-0 inset-0 flex items-center justify-center m-auto">
-          <div className="text-center flex flex-col items-center justify-center">
-            <Revel>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 w-[90%] sm:w-[80%] md:w-[70%] mx-auto leading-8 lg:leading-12 xl:leading-14 text-secondary-color">
-                {/* Capture Your Moments with the Best in the Industry */}
-                Nájdite si fotografa alebo kameramana na každú príležitosť
-              </h1>
-            </Revel>
+      </div>
 
-            <Revel delay={0.5}>
-              <p className="text-base sm:text-lg lg:text-xl font-semibold mb-8 text-primary-color">
-                {/* Find skilled photographers and videographers, check their */}
-                {/* portfolios, and book your next shoot easily */}
-                Objavte skúsených fotografov a kameramanov z celého Slovenska. Prezrite si ich portfóliá a jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
-              </p>
-            </Revel>
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center py-12 sm:py-16 lg:py-20 lg:min-h-[calc(100vh)]">
+          {/* ---------- Text ---------- */}
+          <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <motion.span
+              {...fadeUp(0)}
+              className="inline-flex items-center gap-2 rounded-full border border-secondary-color/20 bg-white/80 px-4 py-1.5 text-xs sm:text-sm font-semibold text-secondary-color shadow-sm backdrop-blur"
+            >
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-secondary-color/60" />
+                <span className="relative inline-flex size-2 rounded-full bg-secondary-color" />
+              </span>
+              Fotografi a kameramani z celého Slovenska
+            </motion.span>
 
-            <Revel delay={0.75}>
+            <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl xl:text-[3.6rem] font-extrabold leading-[1.15] tracking-tight text-base-color">
+              Nájdite si{" "}
+              <span className="relative inline-block text-secondary-color">
+                fotografa
+                <svg
+                  aria-hidden
+                  viewBox="0 0 200 12"
+                  preserveAspectRatio="none"
+                  className="absolute -bottom-1 left-0 h-2.5 w-full text-third-color"
+                >
+                  <path d="M2 9 C 50 2, 150 2, 198 8" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
+                </svg>
+              </span>{" "}
+              alebo <span className="text-secondary-color">kameramana</span> na každú príležitosť
+            </h1>
+
+            <p className="mt-6 max-w-xl text-base sm:text-lg text-base-color/75 font-medium leading-relaxed">
+              Objavte skúsených fotografov a kameramanov z celého Slovenska. Prezrite si ich portfóliá a
+              jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
+            </p>
+
+            <motion.div {...fadeUp(0.15)} className="mt-8 w-full max-w-xl">
               <BannerSearch />
-            </Revel>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.25)} className="mt-5 flex flex-wrap justify-center lg:justify-start gap-2.5">
+              {quickLinks.map(({ href, label, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="group inline-flex items-center gap-2 rounded-full border border-base-color/10 bg-white px-4 py-2 text-sm font-semibold text-base-color shadow-sm transition hover:-translate-y-0.5 hover:border-secondary-color/40 hover:text-secondary-color hover:shadow-md"
+                >
+                  <Icon className="size-4 text-secondary-color" />
+                  {label}
+                </Link>
+              ))}
+            </motion.div>
+
+            <motion.ul
+              {...fadeUp(0.35)}
+              className="mt-10 grid w-full max-w-xl grid-cols-1 sm:grid-cols-3 gap-3 border-t border-base-color/10 pt-6"
+            >
+              {trustPoints.map(({ icon: Icon, label }) => (
+                <li key={label} className="flex items-center justify-center lg:justify-start gap-2.5 text-sm font-semibold text-base-color/80">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary-color/10">
+                    <Icon className="size-4 text-secondary-color" />
+                  </span>
+                  {label}
+                </li>
+              ))}
+            </motion.ul>
+          </div>
+
+          {/* ---------- Photo shoot scene ---------- */}
+          <div className="lg:col-span-6">
+            <HeroStage />
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

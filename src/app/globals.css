@@ -378,3 +378,118 @@ html {
 .animate-pending-bar {
   animation: pending-bar 1s ease-in-out infinite;
 }
+
+/* ---------- Home hero "photo shoot" scene (components/Home/HeroStage.tsx) ---------- */
+
+/* Characters walk in place: a small bob with a slight tilt. */
+@keyframes hero-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-1.5deg);
+  }
+}
+
+/* Camera flash at the photographer's lens. Fires once every 4s. */
+@keyframes hero-flash {
+  0%,
+  84%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  94% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+/* The framed photo "gets taken": a short white flash in sync with hero-flash. */
+@keyframes hero-snap {
+  0%,
+  85%,
+  100% {
+    opacity: 0;
+  }
+  88% {
+    opacity: 0.55;
+  }
+}
+
+/* Videographer's recording waves coming out of the lens. */
+@keyframes hero-rec-wave {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+}
+
+/* Slow drift for the small polaroid shots. */
+@keyframes hero-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--hero-tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-8px) rotate(var(--hero-tilt, 0deg));
+  }
+}
+
+.hero-bob {
+  animation: hero-bob 3.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.hero-bob-delayed {
+  animation: hero-bob 3.2s ease-in-out 1.6s infinite;
+  transform-origin: bottom center;
+}
+.hero-flash {
+  animation: hero-flash 4s ease-out infinite;
+}
+.hero-snap {
+  animation: hero-snap 4s ease-out infinite;
+}
+.hero-rec-wave {
+  animation: hero-rec-wave 2s ease-out infinite;
+}
+.hero-rec-wave-delayed {
+  animation: hero-rec-wave 2s ease-out 1s infinite;
+}
+.hero-drift {
+  transform: rotate(var(--hero-tilt, 0deg));
+  animation: hero-drift 5s ease-in-out infinite;
+}
+.hero-drift-delayed {
+  transform: rotate(var(--hero-tilt, 0deg));
+  animation: hero-drift 5s ease-in-out 2.5s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bob,
+  .hero-bob-delayed,
+  .hero-flash,
+  .hero-snap,
+  .hero-rec-wave,
+  .hero-rec-wave-delayed,
+  .hero-drift,
+  .hero-drift-delayed {
+    animation: none;
+  }
+  /* Effects that only make sense while animating stay hidden. */
+  .hero-flash,
+  .hero-snap,
+  .hero-rec-wave,
+  .hero-rec-wave-delayed {
+    opacity: 0;
+  }
+}
