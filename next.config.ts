@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Testing / preview deployments: tell search engines not to index anything, including files and
+  // API responses that have no <meta name="robots"> (see src/lib/seo/site.ts).
+  async headers() {
+    if (process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true") return [];
+    return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }];
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "200mb",

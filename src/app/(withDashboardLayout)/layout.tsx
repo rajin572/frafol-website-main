@@ -2,6 +2,10 @@ import { Layout } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import SideBar from "@/components/shared/SideBar";
 import SidebarCollapsedIcon from "@/components/shared/SidebarCollapsedIcon";
+import { NOINDEX_METADATA } from "@/lib/seo/site";
+
+// Login, registration, dashboards and messages are private: never indexed.
+export const metadata = NOINDEX_METADATA;
 // import NavbarWraper from "@/components/shared/NavbarWraper";
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({

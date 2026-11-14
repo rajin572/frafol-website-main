@@ -1,9 +1,8 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import VideographeyPage from "@/components/Videographey/VideographeyPage";
 import React from "react";
 
-export const metadata = {
-  title: "Natáčanie videa – Video služby a kategórie | Frafol",
-};
+export const metadata = staticPageMetadata("videography");
 
 const page = ({
   searchParams,

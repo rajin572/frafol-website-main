@@ -5,6 +5,7 @@ import sidebarReducer from "./features/sidebar/sidebarSlice"; // Import your aut
 import conversationReducer from "./features/conversation/conversationSlice";
 import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer } from "redux-persist";
+import type { PersistorOptions } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
   FLUSH,
@@ -72,8 +73,11 @@ export const store = configureStore({
     }).concat(baseApi.middleware), // Add `baseApi` middleware
 });
 
-// Create persistor for Redux store persistence
-export const persistor = persistStore(store);
+// Create persistor for Redux store persistence. `manualPersist`: the saved cart / sidebar state is
+// loaded by Providers after the page has hydrated (persistor.persist()), so the server HTML and
+// the browser's first render match and the pages are rendered on the server (SEO, faster LCP).
+// (redux-persist 6 supports the option but its .d.ts does not list it.)
+export const persistor = persistStore(store, { manualPersist: true } as unknown as PersistorOptions);
 
 // Define RootState type to infer the store's state shape
 export type RootState = ReturnType<typeof store.getState>;

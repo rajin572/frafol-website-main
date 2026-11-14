@@ -8,6 +8,12 @@ import JoinCta from "@/components/Home/JoinCta";
 import Marketplace from "@/components/Home/Marketplace";
 import TalentedProfessionalsImages from "@/components/Home/TalentedProfessionalsImages";
 import Testimonial from "@/components/Home/Testimonial";
+import { clientsAccordions, professionalsAccordions } from "@/components/Home/faqData";
+import JsonLd from "@/components/seo/JsonLd";
+import { PAGE_SEO, staticPageMetadata } from "@/lib/seo/pages";
+import { faqSchema, webPageSchema } from "@/lib/seo/schema";
+
+export const metadata = staticPageMetadata("home");
 
 const HomePage = ({
   searchParams,
@@ -16,6 +22,12 @@ const HomePage = ({
 }) => {
   return (
     <main className="">
+      <JsonLd
+        data={[
+          webPageSchema({ name: PAGE_SEO.home.title, description: PAGE_SEO.home.description, path: "/" }),
+          faqSchema([...clientsAccordions, ...professionalsAccordions]),
+        ]}
+      />
       <Banner />
       <FrafolChoiceProfessional />
       <ExploreCategories searchParams={searchParams} />

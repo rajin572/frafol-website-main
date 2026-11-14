@@ -4,6 +4,10 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICommunityPost } from "@/types/communityForum.type";
 import React from "react";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema, forumPostSchema } from "@/lib/seo/schema";
+import { pageMetadata, toPlainText } from "@/lib/seo/site";
+import { getMediaUrl } from "@/utils/mediaUrl";
 
 export async function generateMetadata({
   params,
@@ -18,11 +22,20 @@ export async function generateMetadata({
       },
     });
     const post: ICommunityPost | undefined = (await res.json())?.data;
-    if (post?.title) return { title: `${post.title} – Fórum | Frafol` };
+    if (post?.title) {
+      const image = getMediaUrl(post?.images?.[0]);
+      return pageMetadata({
+        title: `${post.title} – Fórum | Frafol`,
+        description: toPlainText(post?.text, 160) || `${post.title} – diskusia na fóre fotografov a kameramanov Frafol.`,
+        path: `/forums/${id}`,
+        type: "article",
+        images: image ? [{ url: image, alt: post.title }] : undefined,
+      });
+    }
   } catch {
     // no post data, use the generic title below
   }
-  return { title: "Fórum fotografov a kameramanov | Frafol" };
+  return { title: "Fórum fotografov a kameramanov | Frafol", alternates: { canonical: `/forums/${id}` } };
 }
 
 const page = async ({
@@ -45,6 +58,18 @@ const page = async ({
   const communityPosts: ICommunityPost = data?.data || {};
   return (
     <main>
+      {communityPosts?.title && (
+        <JsonLd
+          data={[
+            forumPostSchema(communityPosts, `/forums/${id}`),
+            breadcrumbSchema([
+              { name: "Domov", path: "/" },
+              { name: "Fórum", path: "/forums" },
+              { name: communityPosts.title, path: `/forums/${id}` },
+            ]),
+          ]}
+        />
+      )}
       <Container>
         <ForumDetailsPage communityPosts={communityPosts} id={id} page={page} />
       </Container>

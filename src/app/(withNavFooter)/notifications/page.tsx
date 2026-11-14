@@ -9,6 +9,9 @@ import { getNotificationRedirectUrl } from "@/utils/notificationRedirect";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import Link from "next/link";
 import Image from "next/image";
+import { NOINDEX_METADATA } from "@/lib/seo/site";
+
+export const metadata = NOINDEX_METADATA;
 
 const Notifications = async ({
     searchParams,

@@ -34,7 +34,7 @@ const data = [
   },
 ];
 
-// Dark band with 4 numbered steps. Each step: number, icon, title, text, separated by hairlines.
+// Dark band with 4 numbered steps as cards: icon + step number, title, text.
 const HowItWorks = () => {
   return (
     <section className="bg-[#1f1d1c] py-20 sm:py-24">
@@ -48,17 +48,21 @@ const HowItWorks = () => {
           description="Od výberu fotografa či kameramana až po hotové fotografie a videá. Všetko jednoducho na jednom mieste."
         />
 
-        <ol className="mt-14 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {data.map(({ name, description, icon: Icon }, i) => (
-            <li key={name} className="border-t border-white/20 pt-6">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold tabular-nums text-white/40">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <Icon className="size-6 text-third-color" strokeWidth={1.75} />
+            <li key={name}>
+              <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.06] sm:p-7">
+                <div className="flex items-center justify-between">
+                  <span className="flex size-12 items-center justify-center rounded-xl bg-third-color/10 ring-1 ring-inset ring-third-color/25">
+                    <Icon className="size-6 text-third-color" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-sm font-semibold tabular-nums text-white/35">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-7 text-lg sm:text-xl font-bold text-white">{name}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-white/60">{description}</p>
               </div>
-              <h3 className="mt-6 text-lg sm:text-xl font-bold text-white">{name}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-white/60">{description}</p>
             </li>
           ))}
         </ol>

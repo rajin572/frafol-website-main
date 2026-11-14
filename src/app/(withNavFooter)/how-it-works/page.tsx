@@ -1,12 +1,11 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
 import React from "react";
 
-export const metadata = {
-  title: "Ako funguje Frafol pre fotografov a kameramanov",
-};
+export const metadata = staticPageMetadata("howItWorks");
 
 const HowItWorks = async () => {
   const res = await fetchWithAuth(`/settings/howItWorks`, {});

@@ -1,3 +1,4 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import BrowseHeader from "@/components/shared/BrowseHeader";
 import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
@@ -7,9 +8,7 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICommunityPost } from "@/types";
 
-export const metadata = {
-  title: "Fórum fotografov a kameramanov | Frafol",
-};
+export const metadata = staticPageMetadata("forums");
 
 const page = async ({
   searchParams,

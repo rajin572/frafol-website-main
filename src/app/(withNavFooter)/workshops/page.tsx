@@ -1,16 +1,17 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import Container from "@/components/ui/Container";
 import BrowseHeader from "@/components/shared/BrowseHeader";
 import WorkshopsPage from "@/components/Workshops/WorkshopsPage";
 import React from "react";
+import JsonLd from "@/components/seo/JsonLd";
+import { workshopListSchema } from "@/lib/seo/schema";
 import { AllImages } from "../../../../public/assets/AllImages";
 import TagTypes from "@/helpers/config/TagTypes";
 import { IProfile, IWorkshop } from "@/types";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { getAuthToken } from "@/lib/getAuthToken";
 
-export const metadata = {
-  title: "Kurzy fotografie a videa – Workshopy | Frafol",
-};
+export const metadata = staticPageMetadata("workshops");
 
 const page = async ({
   searchParams,
@@ -57,6 +58,7 @@ const page = async ({
 
   return (
     <main>
+      {workshops.length > 0 && <JsonLd data={workshopListSchema(workshops)} />}
       {/* title="Photography & Videography Workshops" */}
       {/* description="Learn new skills and techniques from industry professionals." */}
       <BrowseHeader

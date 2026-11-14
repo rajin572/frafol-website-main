@@ -1,24 +1,10 @@
-import Link from "next/link";
 import * as motion from "motion/react-client";
-import { BadgeCheck, Camera, Crown, ShieldCheck, Star, Video } from "lucide-react";
 import Container from "../ui/Container";
 import BannerSearch from "./BannerSearch";
 import HeroStage from "./HeroStage";
 
 // Home hero: headline + search on the left, the animated "photo shoot" scene on the right.
 // The headline is not animated on purpose (LCP element), neither is the photo in the scene.
-
-const quickLinks = [
-  { href: "/photography", label: "Fotografi", icon: Camera },
-  { href: "/videography", label: "Kameramani", icon: Video },
-  { href: "/professionals?type=verified", label: "Frafol odporúča", icon: Crown },
-];
-
-const trustPoints = [
-  { icon: BadgeCheck, label: "Schválené profily tvorcov" },
-  { icon: ShieldCheck, label: "Bezpečná online platba" },
-  { icon: Star, label: "Hodnotenia od klientov" },
-];
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -72,33 +58,6 @@ export default function Banner() {
             <motion.div {...fadeUp(0.15)} className="mt-8 w-full max-w-xl">
               <BannerSearch />
             </motion.div>
-
-            <motion.div {...fadeUp(0.25)} className="mt-5 flex flex-wrap justify-center lg:justify-start gap-2.5">
-              {quickLinks.map(({ href, label, icon: Icon }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="group inline-flex items-center gap-2 rounded-full border border-base-color/10 bg-white px-4 py-2 text-sm font-semibold text-base-color shadow-sm transition hover:-translate-y-0.5 hover:border-secondary-color/40 hover:text-secondary-color hover:shadow-md"
-                >
-                  <Icon className="size-4 text-secondary-color" />
-                  {label}
-                </Link>
-              ))}
-            </motion.div>
-
-            <motion.ul
-              {...fadeUp(0.35)}
-              className="mt-10 grid w-full max-w-xl grid-cols-1 sm:grid-cols-3 gap-3 border-t border-base-color/10 pt-6"
-            >
-              {trustPoints.map(({ icon: Icon, label }) => (
-                <li key={label} className="flex items-center justify-center lg:justify-start gap-2.5 text-sm font-semibold text-base-color/80">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary-color/10">
-                    <Icon className="size-4 text-secondary-color" />
-                  </span>
-                  {label}
-                </li>
-              ))}
-            </motion.ul>
           </div>
 
           {/* ---------- Photo shoot scene ---------- */}

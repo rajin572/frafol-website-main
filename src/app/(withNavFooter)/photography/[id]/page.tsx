@@ -2,23 +2,22 @@
 // app/(withNavFooter)/photography/[id]/page.tsx
 
 import React from "react";
+import JsonLd from "@/components/seo/JsonLd";
+import { categoryMetadata, categorySchemas } from "@/lib/seo/category";
 import PhotographyCategoryDetails from "@/components/Photography/PhotographyCategoryDetails";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
-// "Názov kategórie – Nájdite fotografa | Frafol". The category title comes from the ?title= param.
+// Title, description, canonical URL and Open Graph of the category (see src/lib/seo/category.ts).
 export async function generateMetadata({
+  params,
   searchParams,
 }: {
+  params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const title = ((await searchParams)?.title as string) || "";
-  return {
-    title: title
-      ? `${title} – Nájdite fotografa | Frafol`
-      : "Nájdite fotografa | Frafol",
-  };
+  return categoryMetadata("photography", (await params).id, await searchParams);
 }
 
 const PhotographyCategoryDetailsPage = async ({
@@ -82,6 +81,7 @@ const PhotographyCategoryDetailsPage = async ({
   const townData: ITown[] = Tdata?.data || [];
   return (
     <div>
+      <JsonLd data={categorySchemas("photography", id, paramsData)} />
       <PhotographyCategoryDetails categories={categories} data={data} townData={townData} />
     </div>
   );

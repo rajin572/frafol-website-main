@@ -3,8 +3,10 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IProfile } from "@/types";
 import React from "react";
+import { NOINDEX_METADATA } from "@/lib/seo/site";
 
 export const metadata = {
+  ...NOINDEX_METADATA,
   title: "Nákupný košík | Frafol",
 };
 

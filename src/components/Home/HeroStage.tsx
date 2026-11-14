@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
-import { ArrowRight, CalendarCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { AllImages } from "../../../public/assets/AllImages";
 
 // Hero "photo shoot" scene. A camera viewfinder with a real photo in the middle; the photographer
@@ -130,22 +130,6 @@ export default function HeroStage() {
             Kameramani <ArrowRight className="size-3 sm:size-3.5" />
           </span>
         </Link>
-      </motion.div>
-
-      {/* ---------- Booking card (sm and up) ---------- */}
-      <motion.div
-        {...popIn(0.9)}
-        className="absolute bottom-[9%] left-1/2 z-10 hidden w-[38%] -translate-x-1/2 sm:block"
-      >
-        <div className="flex items-center gap-2.5 rounded-2xl bg-white p-3 shadow-xl ring-1 ring-black/5">
-          <span className="flex size-9 lg:size-10 shrink-0 items-center justify-center rounded-xl bg-secondary-color text-white">
-            <CalendarCheck className="size-4 lg:size-5" />
-          </span>
-          <span className="text-left leading-tight">
-            <span className="block text-xs lg:text-sm font-bold text-base-color">Objednávka online</span>
-            <span className="block text-[10px] lg:text-xs text-base-color/60">Vyberte balík, termín a zaplaťte bezpečne</span>
-          </span>
-        </div>
       </motion.div>
 
       {/* Accent shape behind the scene */}

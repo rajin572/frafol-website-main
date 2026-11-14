@@ -7,6 +7,18 @@ import { mainTheme } from "@/theme";
 import Providers from "@/providers/Providers";
 import ModalScrollLock from "@/components/shared/ModalScrollLock";
 import NavbarWraper from "@/components/shared/NavbarWraper";
+import JsonLd from "@/components/seo/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  OG_IMAGE,
+  ORGANIZATION,
+  SITE_NAME,
+  SITE_URL,
+  robotsFor,
+} from "@/lib/seo/site";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -15,56 +27,39 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
-export const metadata = {
-  title: "Frafol",
-  template: "%s - Frafol",
-  description:
-    "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie",
-  keywords: ["Frafol"],
+// Defaults for every page. Public pages override title / description / canonical with
+// `pageMetadata()` (src/lib/seo/site.ts); private ones use NOINDEX_METADATA.
+// Favicon / app icons are the files src/app/favicon.ico, icon.png and apple-icon.png.
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: ORGANIZATION.legalName, url: SITE_URL }],
+  creator: ORGANIZATION.legalName,
+  publisher: ORGANIZATION.legalName,
+  category: "photography",
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: robotsFor(),
   openGraph: {
-    title: "Frafol",
-    description:
-      "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie",
-    images: [
-      {
-        url: "./opengraph-image.png",
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    url: "https://frafol-website.vercel.app/",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "sk_SK",
     type: "website",
-    siteName: "Frafol",
+    images: [OG_IMAGE],
   },
-
-  index: true,
-  follow: true,
-  googleBot: {
-    index: true,
-    follow: true,
-    "max-video-preview": -1,
-    "max-image-preview": "large",
-    "max-snippet": -1,
-  },
-
   twitter: {
     card: "summary_large_image",
-    title: "Frafol",
-    description:
-      "Nájdite skúsených fotografov a kameramanov, pozrite si ich portfóliá a jednoducho si objednajte svoje ďalšie fotenie alebo natáčanie.",
-    images: ["./opengraph-image.png"],
-    creator: "@Frafol",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
+};
 
-  robots: {
-    index: true,
-    follow: true,
-    "max-video-preview": -1,
-    "max-image-preview": "large",
-    "max-snippet": -1,
-  },
-
-  metadataBase: new URL("https://frafol-website.vercel.app/"),
+export const viewport: Viewport = {
+  themeColor: "#ad2b08",
 };
 
 export default function RootLayout({
@@ -78,6 +73,7 @@ export default function RootLayout({
         className={`${nunito.variable} antialiased`}
         cz-shortcut-listen="true"
       >
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Providers>
           <Toaster position="top-center" richColors />
           <ModalScrollLock />

@@ -1,9 +1,8 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import MarketPlace from "@/components/MarketPlace/MarketPlacePage";
 import React from "react";
 
-export const metadata = {
-  title: "Bazár foto a video techniky | Frafol",
-};
+export const metadata = staticPageMetadata("marketplace");
 
 const MarketPlacePage = ({
   searchParams,

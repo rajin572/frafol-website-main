@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import JsonLd from "@/components/seo/JsonLd";
+import { categoryMetadata, categorySchemas } from "@/lib/seo/category";
 import VideographyCategoryDetails from "@/components/Videographey/VideographyCategoryDetails";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
-// "Názov kategórie – Nájdite kameramana | Frafol". The category title comes from the ?title= param.
+// Title, description, canonical URL and Open Graph of the category (see src/lib/seo/category.ts).
 export async function generateMetadata({
+  params,
   searchParams,
 }: {
+  params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const title = ((await searchParams)?.title as string) || "";
-  return {
-    title: title
-      ? `${title} – Nájdite kameramana | Frafol`
-      : "Nájdite kameramana | Frafol",
-  };
+  return categoryMetadata("videography", (await params).id, await searchParams);
 }
 
 const VideographyCategoryDetailsPage = async ({
@@ -78,6 +77,7 @@ const VideographyCategoryDetailsPage = async ({
   const townData: ITown[] = Tdata?.data || [];
   return (
     <div>
+      <JsonLd data={categorySchemas("videography", id, paramsData)} />
       <VideographyCategoryDetails categories={categories} data={data} townData={townData} />
     </div>
   );

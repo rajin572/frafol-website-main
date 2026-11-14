@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { categoryPath } from "@/utils/categoryPath";
 import React from "react";
 import CategoryCard from "../shared/CategoryCard";
 import Container from "../ui/Container";
@@ -44,7 +45,7 @@ const PhotographyPage = async ({ searchParams }: { searchParams: any }) => {
               {filteredCategories?.map((item, index) => (
                 <Link
                   key={index}
-                  href={`/photography/${item?._id}?role=photographer&title=${encodeURIComponent(item?.title ?? "")}&src=${encodeURIComponent(item?.image ?? "")}&subTitle=${encodeURIComponent(item?.subTitle ?? "")}`}
+                  href={categoryPath("photography", item)}
                   className="rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary-color"
                 >
                   <CategoryCard item={item} />

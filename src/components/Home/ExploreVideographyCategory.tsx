@@ -1,3 +1,4 @@
+import { categoryPath } from "@/utils/categoryPath";
 import React from "react";
 import CategoryCard from "../shared/CategoryCard";
 import ReuseButton from "../ui/Button/ReuseButton";
@@ -13,7 +14,7 @@ const ExploreVideographyCategory = ({
     <div className="mt-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
         {categories?.map((item, index) => (
-          <Link key={index} href={`/videography/${item?._id}?role=videographer&title=${encodeURIComponent(item?.title ?? "")}&src=${encodeURIComponent(item?.image ?? "")}&subTitle=${encodeURIComponent(item?.subTitle ?? "")}`}>
+          <Link key={index} href={categoryPath("videography", item)}>
             <CategoryCard key={index} item={item} />
           </Link>
         ))}

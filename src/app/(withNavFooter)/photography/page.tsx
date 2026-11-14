@@ -1,9 +1,8 @@
+import { staticPageMetadata } from "@/lib/seo/pages";
 import PhotographyPage from "@/components/Photography/PhotographyPage";
 import React from "react";
 
-export const metadata = {
-  title: "Fotografi na Slovensku – Vyberte si fotografa | Frafol",
-};
+export const metadata = staticPageMetadata("photography");
 
 const page = ({
   searchParams,
