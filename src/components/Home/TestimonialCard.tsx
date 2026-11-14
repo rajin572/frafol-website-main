@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Modal } from "antd";
 import { MdClose } from "react-icons/md";
+import { Quote } from "lucide-react";
 import { AllImages } from "../../../public/assets/AllImages";
 
 interface TestimonialCardProps {
@@ -70,8 +71,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   };
   return (
     <>
-      <div className=" p-5 rounded-xl flex flex-col justify-between min-h-[220px] hover:shadow-sm border border-[#E1E1E1]">
-        <p className="font-semibold text-xs sm:text-am lg:text-base mb-5 whitespace-pre-line">
+      <div className="relative flex min-h-[240px] h-full flex-col justify-between rounded-xl border border-base-color/10 bg-white p-6">
+        <Quote aria-hidden className="mb-4 size-6 text-secondary-color/40" />
+        <p className="mb-6 grow whitespace-pre-line text-sm lg:text-base leading-relaxed text-base-color/80">
           {previewText}
           {isLong && (
             <button
@@ -82,16 +84,16 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
             </button>
           )}
         </p>
-        <AuthorLink user={testimonial?.userId} className="flex items-center gap-2">
+        <AuthorLink user={testimonial?.userId} className="flex items-center gap-3 border-t border-base-color/10 pt-4">
           <Image
             src={profileImage}
             alt={testimonial?.userId?.name || "Profile Image"}
             width={64}
             height={64}
-            className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full object-cover"
+            className="w-11 h-11 lg:w-12 lg:h-12 rounded-full object-cover"
           />
           <div>
-            <p className={` text-sm sm:text-base lg:text-lg font-semibold ${nameColor}`}>
+            <p className={`text-sm sm:text-base font-semibold ${nameColor}`}>
               {testimonial?.userId?.name}
             </p>
             <p className="text-sm sm:text-sm lg:text-base text-lighter-color">

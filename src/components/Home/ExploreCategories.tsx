@@ -31,13 +31,14 @@ const ExploreCategories = async ({
   const categories: ICategory[] = data?.data?.slice(0, 4);
 
   return (
-    <section className="py-28">
+    <section className="bg-[#fbf7f4] py-20 sm:py-24">
       <Container>
         <SectionHeader
+          eyebrow="Kategórie"
           title="Preskúmajte kategórie"
           description="Frafol vám uľahčí nájsť a objednať si ideálneho fotografa alebo videografa pre váš projekt."
         />
-        <div className="mt-16">
+        <div className="mt-12">
           <Suspense
             fallback={
               <div className="py-40 w-full flex justify-center items-center">

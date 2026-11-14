@@ -48,18 +48,7 @@ export default function Banner() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center py-12 sm:py-16 lg:py-20 lg:min-h-[calc(100vh)]">
           {/* ---------- Text ---------- */}
           <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <motion.span
-              {...fadeUp(0)}
-              className="inline-flex items-center gap-2 rounded-full border border-secondary-color/20 bg-white/80 px-4 py-1.5 text-xs sm:text-sm font-semibold text-secondary-color shadow-sm backdrop-blur"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-secondary-color/60" />
-                <span className="relative inline-flex size-2 rounded-full bg-secondary-color" />
-              </span>
-              Fotografi a kameramani z celého Slovenska
-            </motion.span>
-
-            <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl xl:text-[3.6rem] font-extrabold leading-[1.15] tracking-tight text-base-color">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.6rem] font-extrabold leading-[1.15] tracking-tight text-base-color">
               Nájdite si{" "}
               <span className="relative inline-block text-secondary-color">
                 fotografa

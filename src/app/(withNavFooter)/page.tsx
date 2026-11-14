@@ -4,6 +4,7 @@ import FAQ from "@/components/Home/FAQ";
 import FeaturedProfessionals from "@/components/Home/FeaturedProfessionals";
 import FrafolChoiceProfessional from "@/components/Home/FrafolChoiceProfessional";
 import HowItWorks from "@/components/Home/HowItWorks";
+import JoinCta from "@/components/Home/JoinCta";
 import Marketplace from "@/components/Home/Marketplace";
 import TalentedProfessionalsImages from "@/components/Home/TalentedProfessionalsImages";
 import Testimonial from "@/components/Home/Testimonial";
@@ -24,6 +25,7 @@ const HomePage = ({
       <Testimonial />
       <FAQ />
       <TalentedProfessionalsImages />
+      <JoinCta />
     </main>
   );
 };

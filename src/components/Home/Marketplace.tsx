@@ -23,24 +23,25 @@ const Marketplace = async () => {
   }
 
   return (
-    <section className="pb-28">
+    <section className="bg-white py-20 sm:py-24">
       <Container>
         <SectionHeader
           /* title="Marketplace" */
+          eyebrow="Foto a video technika"
           title="Bazár"
           /* description="Browse and buy equipment from professionals in the industry." */
           description="Prezrite si ponuku príslušenstva a nakúpte od fotografov a kameramanov"
         />
-        <div className="mt-16">
+        <div className="mt-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {categories?.map((item, i) => (
               <ProductCard key={i} product={item} />
             ))}
           </div>
-          <div className="flex justify-center items-center !mt-10">
+          <div className="flex justify-center items-center mt-12">
             <ReuseButton
               url="/marketplace"
-              className="w-fit  mt-5 !text-sm sm:!text-base lg:!text-lg !py-4.5"
+              className="w-fit !text-sm sm:!text-base lg:!text-lg !py-5 !px-8 !rounded-lg"
               variant="secondary"
             >
               {/* View All */}

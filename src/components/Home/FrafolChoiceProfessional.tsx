@@ -23,19 +23,20 @@ const FrafolChoiceProfessional = async () => {
     }
 
     return (
-        <section className="">
+        <section className="bg-white py-20 sm:py-24">
             <Container>
                 <SectionHeader
+                    eyebrow="Zvýraznení tvorcovia"
                     title="Odporúča Frafol"
                     description="Objavte našich overených fotografov a videografov"
                 />
 
                 <FeaturedProfessionalSlider data={professionals} />
 
-                <div className="flex justify-center items-center !mt-10">
+                <div className="flex justify-center items-center mt-12">
                     <ReuseButton
                         url="/professionals?type=verified"
-                        className="mt-10 w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-4.5"
+                        className="w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-5 !px-8 !rounded-lg"
                         variant="secondary"
                     >
                         {/* See More */}

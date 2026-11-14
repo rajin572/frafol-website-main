@@ -37,31 +37,47 @@ const Accordion: React.FC<AccordionProps> = ({
   return (
     <div
       className={cn(
-        "mb-5 bg-primary-color duration-500 border-b-2 border-[#CDD6DA40]",
+        "mb-3 rounded-xl border bg-primary-color transition-colors duration-200",
+        isOpen
+          ? "border-base-color/20"
+          : "border-base-color/10 hover:border-base-color/20",
         className
       )}
     >
       <div
-        className="flex justify-between gap-5 items-center p-4 cursor-pointer duration-500"
+        role="button"
+        tabIndex={0}
+        aria-expanded={!!isOpen}
+        className="flex justify-between gap-5 items-center p-4 sm:p-5 cursor-pointer"
         onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle?.();
+          }
+        }}
       >
-        <div className="flex items-center gap-5">
-          <span className="text-[#3C3C4380] !text-lg sm:!text-xl md:!text-2xl lg:!text-3xl xl:!text-4xl font-semibold text-nowrap whitespace-nowrap shrink-0">
+        <div className="flex items-center gap-4 sm:gap-5">
+          <span
+            className={cn(
+              "text-sm font-semibold tabular-nums shrink-0 transition-colors duration-200",
+              isOpen ? "text-secondary-color" : "text-base-color/35"
+            )}
+          >
             0{index + 1}
           </span>
-          <h3 className="text-base-color text-base md:text-lg lg:text-xl font-semibold">
+          <h3 className="text-base-color text-base md:text-lg font-semibold">
             {title}
           </h3>
         </div>
-        {isOpen ? (
-          <div className="p-[2px] rounded-full border border-secondary-color">
-            <HiMinus className="text-secondary-color text-base md:text-lg lg:text-xl duration-500" />
-          </div>
-        ) : (
-          <div className="p-[2px] rounded-full border border-secondary-color">
-            <GoPlus className="text-secondary-color text-base md:text-lg lg:text-xl duration-500" />
-          </div>
-        )}
+        <span
+          className={cn(
+            "flex size-8 shrink-0 items-center justify-center rounded-full border transition-colors duration-200",
+            isOpen ? "border-secondary-color bg-secondary-color text-white" : "border-base-color/15 text-base-color/70"
+          )}
+        >
+          {isOpen ? <HiMinus className="text-lg" /> : <GoPlus className="text-lg" />}
+        </span>
       </div>
       <div
         ref={contentRef}
@@ -71,7 +87,7 @@ const Accordion: React.FC<AccordionProps> = ({
           transition: "height 0.5s ease",
         }}
       >
-        <div className="p-2 w-[98%] ml-auto duration-500 text-sm md:text-sm lg:text-base text-[#3C3C43D9] font-medium">
+        <div className="px-4 sm:px-5 pb-5 sm:pl-[3.25rem] text-sm lg:text-base text-base-color/70 leading-relaxed">
           {content}
         </div>
       </div>

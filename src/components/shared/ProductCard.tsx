@@ -9,67 +9,70 @@ import { AllImages } from "../../../public/assets/AllImages";
 interface ProductCardProps {
   product: IGear;
 }
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
+// Marketplace (bazár) item card.
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const isNew = product?.condition === "new";
   return (
-    <div className="!h-full flex flex-col justify-baseline">
-      <Link href={`/marketplace/${product?._id}`} className="grow">
-        <div className="flex flex-col relative">
-          <div className="overflow-hidden rounded-tl-lg rounded-tr-lg ">
-            <Image
-              width={200}
-              height={200}
-              className="w-full h-72 object-cover hover:scale-105 transform-3d transition-transform duration-300 ease-in-out"
-              src={
-                product?.gallery[0]?.length > 0
-                  ? getMediaUrl(product?.gallery[0])
-                  : AllImages.dummyCover
-              }
-              alt="product"
-            />
-          </div>
-          <div className="flex items-center justify-between gap-2 absolute top-2  w-full px-2">
-            {product?.vatAmount > 0 ? (
-              <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
-                Vrátane DPH: {product?.vatAmount}%
+    <div className="group !h-full flex flex-col overflow-hidden rounded-xl border border-base-color/10 bg-white transition-shadow duration-300 hover:shadow-lg">
+      <Link href={`/marketplace/${product?._id}`} className="grow flex flex-col">
+        <div className="relative overflow-hidden bg-background-color">
+          <Image
+            width={600}
+            height={600}
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="w-full h-64 object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            src={
+              product?.gallery[0]?.length > 0
+                ? getMediaUrl(product?.gallery[0])
+                : AllImages.dummyCover
+            }
+            alt={product?.name || "Produkt"}
+          />
+          <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
+            {product?.condition ? (
+              <span
+                className="rounded-md bg-white px-2 py-0.5 text-xs font-semibold text-base-color"
+              >
+                {isNew ? "Nové" : "Použité"}
               </span>
             ) : (
-              <span></span>
+              <span />
+            )}
+            {product?.vatAmount > 0 && (
+              <span className="rounded-md bg-white px-2 py-0.5 text-xs font-semibold text-base-color">
+                Vrátane DPH: {product?.vatAmount}%
+              </span>
             )}
           </div>
-          <div className="mt-4 p-1">
-            <p className="text-base sm:text-lg xl:text-xl font-bold text-secondary-color  mb-2">
-              {product?.name}
-            </p>
+        </div>
 
-            <p className=" mb-2 ">
-              {product?.description?.slice(0, 75)}{" "}
-              {product?.description?.length > 75 && "..."}
+        <div className="flex grow flex-col p-4">
+          {product?.categoryId?.title && (
+            <p className="text-sm text-base-color/55">
+              {product.categoryId.title}
             </p>
-            <p className=" mb-2">
-              Kategória:{" "}
-              <span className="font-medium ">{product?.categoryId?.title}</span>
-            </p>
-            <p className=" mb-2">
-              Predajca:{" "}
-              <Link
-                href={`/professionals/${product?.authorId?._id}`}
-                className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer"
-              >
-                {product?.authorId?.name}
-              </Link>
-            </p>
-            <p className=" mb-2">
-              Stav:{" "}
-              <span className="font-medium">{product?.condition ? product?.condition === "new" ? "Nové" : "Použité" : "N/A"}</span>
-            </p>
-            <span className="text-sm sm:text-lg lg:text-xl font-bold">
-              {product?.mainPrice?.toFixed(2)}€
-            </span>
-          </div>
+          )}
+          <p className="mt-0.5 text-lg font-bold text-base-color line-clamp-1">{product?.name}</p>
+          <p className="mt-1.5 text-sm text-base-color/65 line-clamp-2">{product?.description}</p>
         </div>
       </Link>
-      <div className="shrink">
+      {/* Outside the card link: the seller name is its own link (no <a> inside <a>). */}
+      <div className="flex items-end justify-between gap-3 px-4 pb-1">
+        <div className="min-w-0 text-sm text-base-color/60 line-clamp-1">
+          Predajca:{" "}
+          <Link
+            href={`/professionals/${product?.authorId?._id}`}
+            className="font-bold text-secondary-color hover:underline"
+          >
+            {product?.authorId?.name}
+          </Link>
+        </div>
+        <span className="shrink-0 text-lg font-bold text-base-color">
+          {product?.mainPrice?.toFixed(2)}€
+        </span>
+      </div>
+      <div className="shrink px-4 pb-4">
         <AddToCardButton gear={product} />
       </div>
     </div>

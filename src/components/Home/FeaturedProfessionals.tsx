@@ -20,23 +20,24 @@ const FeaturedProfessionals = async () => {
   console.log(professionals)
 
   return (
-    <section className="pb-28">
+    <section className="bg-white py-20 sm:py-24">
       <Container>
         {/* title="Featured Professionals" */}
         {/* description="Discover our top-rated photographers and videographers" */}
         <SectionHeader
+          eyebrow="Tvorcovia"
           title="Odporúčaní fotografi a kameramani"
           description="Objavte našich najlepšie hodnotených fotografov a kameramanov"
         />
 
-        <div className="mt-16">
+        <div className="mt-12">
           <FeaturedProfessionalSlider data={professionals} />
         </div>
 
-        <div className="flex justify-center items-center !mt-10">
+        <div className="flex justify-center items-center mt-12">
           <ReuseButton
             url="/professionals"
-            className="mt-10 w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-4.5"
+            className="w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-5 !px-8 !rounded-lg"
             variant="secondary"
           >
             {/* See All Professionals */}

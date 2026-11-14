@@ -21,15 +21,16 @@ const Testimonial = async () => {
   }
 
   return (
-    <section className="pb-28">
+    <section className="bg-[#fbf7f4] py-20 sm:py-24">
       <Container>
         <SectionHeader
           /* title="Their Experience, In Their Words" */
+          eyebrow="Recenzie"
           title="Ich skúsenosť, Ich slovami"
           /* description="Hear from clients who found their perfect visual professional through our platform" */
           description="Prečítajte si skúsenosti klientov, ktorí si cez našu platformu našli ideálneho fotografa alebo kameramana"
         />
-        <div className="mt-16 relative">
+        <div className="mt-12 relative">
           <TestimonialSlider data={testimonials} />
         </div>
       </Container>

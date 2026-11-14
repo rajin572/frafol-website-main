@@ -9,16 +9,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useOutsideClick from "@/hook/useOutsideClick";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter } from "next/navigation";
-import { Button, Dropdown, MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import * as motion from "motion/react-client";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { TbLogout2 } from "react-icons/tb";
-import { HiOutlineLogin } from "react-icons/hi";
 import { IoMdCart } from "react-icons/io";
 import { GoBellFill } from "react-icons/go";
 import { AiFillMessage } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
+import { ArrowRight, Menu, X } from "lucide-react";
 import Cookies from "js-cookie";
 import { INotification, ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
@@ -41,17 +41,29 @@ const NavItems = [
   /* { id: "2", name: "Videography", route: "/videography" }, */
   { id: "2", name: "Kameramani", route: "/videography" },
   /* { id: "1", name: "Marketplace", route: "/marketplace" }, */
-  { id: "1", name: "Bazár", route: "/marketplace" },
+  { id: "3", name: "Bazár", route: "/marketplace" },
   /* { id: "1", name: "Forums", route: "/forums" }, */
-  { id: "1", name: "Fórum", route: "/forums" },
+  { id: "4", name: "Fórum", route: "/forums" },
   /* { id: "1", name: "Workshops", route: "/workshops" }, */
-  { id: "1", name: "Kurzy", route: "/workshops" },
+  { id: "5", name: "Kurzy", route: "/workshops" },
 ];
 
+// A nav item is active on its own page and on its sub-pages (/photography/<id>).
+const isActiveRoute = (path: string, route: string) =>
+  path === route || path.startsWith(`${route}/`);
 
+// Small count bubble on the message / bell / cart icons.
+const CountBadge = ({ count }: { count: number }) =>
+  count > 0 ? (
+    <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-third-color px-1 text-[11px] font-extrabold text-base-color ring-2 ring-secondary-color">
+      {count > 99 ? "99+" : count}
+    </span>
+  ) : null;
+
+const iconButtonClass =
+  "relative flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20";
 
 const Navbar = ({ notifications }: { notifications: INotification[] }) => {
-  console.log(notifications)
   const router = useRouter();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
@@ -145,8 +157,6 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     }
   }, [mobileMenuOpen]);
 
-  console.log(userData)
-
   const isProfessional = userData?.role === "both" ||
     userData?.role === "videographer" ||
     userData?.role === "photographer";
@@ -177,43 +187,48 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
   ];
 
   const notificationMenu = (
-    <div
-      className="flex flex-col gap-4 w-full bg-white p-4 rounded-lg"
-      style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
-    >
-      {allNotifications?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())?.slice(0, 6)?.map((notification: INotification) => (
-        <Link
-          href={getNotificationRedirectUrl(notification, userData?.role)}
-          className="test-start max-w-[300px] hover:bg-gray-50 p-1.5 rounded-lg transition duration-200 block"
-          key={notification?._id}
-        >
-          <div className="flex items-start gap-2">
-            {notification?.message?.image ? (
-              <Image
-                src={getMediaUrl(notification.message.image)}
-                alt="Avatar"
-                width={28}
-                height={28}
-                className="w-7 h-7 rounded-full object-cover shrink-0 mt-0.5 border border-gray-200"
-              />
-            ) : (
-              <div className="p-1 bg-secondary-color rounded-full w-fit h-fit mt-1 shrink-0">
-                <GoBellFill className="text-white cursor-pointer text-xs" />
+    <div className="w-[340px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5">
+      <div className="flex items-center justify-between border-b border-base-color/10 px-4 py-3">
+        <p className="text-base font-extrabold text-base-color">Upozornenia</p>
+        <GoBellFill className="text-secondary-color" />
+      </div>
+      <div className="flex max-h-[360px] flex-col gap-1 overflow-y-auto p-2">
+        {allNotifications?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())?.slice(0, 6)?.map((notification: INotification) => (
+          <Link
+            href={getNotificationRedirectUrl(notification, userData?.role)}
+            className={`block rounded-xl p-2.5 transition duration-200 hover:bg-background-color ${notification?.isRead ? "" : "bg-secondary-color/[0.04]"}`}
+            key={notification?._id}
+          >
+            <div className="flex items-start gap-3">
+              {notification?.message?.image ? (
+                <Image
+                  src={getMediaUrl(notification.message.image)}
+                  alt="Avatar"
+                  width={36}
+                  height={36}
+                  className="size-9 shrink-0 rounded-full border border-gray-200 object-cover"
+                />
+              ) : (
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary-color/10">
+                  <GoBellFill className="text-sm text-secondary-color" />
+                </span>
+              )}
+              <div className="flex min-w-0 flex-col items-start">
+                <p className="text-sm! text-base-color line-clamp-2">{notification?.message?.text}</p>
+                <p className="text-xs! mt-1 text-gray-400">{formatDateTime(notification?.createdAt, "notification")}</p>
               </div>
-            )}
-            <div className="flex flex-col items-start">
-              <p className="text-sm! text-gray-800 line-clamp-2">{notification?.message?.text}</p>
-              <p className="text-sm! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt, "notification")}</p>
             </div>
-          </div>
+          </Link>
+        ))}
+      </div>
+      <div className="border-t border-base-color/10 p-3">
+        <Link
+          href={`/notifications`}
+          className="flex w-full items-center justify-center gap-2 rounded-full !bg-secondary-color py-2 text-sm font-bold !text-primary-color transition hover:opacity-90"
+        >
+          Zobraziť viac <ArrowRight className="size-4" />
         </Link>
-      ))}
-      <Link
-        href={`/notifications`}
-        className="w-2/3 mx-auto text-center !bg-secondary-color !text-primary-color rounded-xl h-8 py-1"
-      >
-        Zobraziť viac
-      </Link>
+      </div>
     </div>
   );
 
@@ -224,10 +239,6 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     });
     dispatch(clearCart());
     dispatch(clearSelectedChatUser());
-    // setIsLoading(true);
-    // if (protectedRoutes.some((route) => pathname.match(route))) {
-    //   router.push("/");
-    // }
   };
 
   const cartProducts = useAppSelector(
@@ -238,8 +249,6 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
 
   // New socket message handler
   const handleNotification = useCallback((notification: any) => {
-    console.log(notification)
-
     if (!notification?.message?.text) {
       setNotificationCount(notification?.unreadCount);
     } else {
@@ -323,6 +332,53 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     }
   };
 
+  // Message / bell / cart / avatar. Same on desktop and mobile.
+  const userIcons = (
+    <div className="flex items-center gap-2 sm:gap-2.5">
+      <Link href="/message" onClick={handleResetMessage} aria-label="Správy" className={iconButtonClass}>
+        <AiFillMessage className="text-xl" />
+        <CountBadge count={messageCount} />
+      </Link>
+
+      <Dropdown
+        overlay={notificationMenu}
+        trigger={["hover"]}
+        onOpenChange={(open) => {
+          if (open) refreshNotifications(false);
+          handleResetNotification();
+        }}
+        placement="bottomRight"
+      >
+        <button type="button" aria-label="Upozornenia" className={`${iconButtonClass} cursor-pointer`}>
+          <GoBellFill className="text-xl" />
+          <CountBadge count={notificationCount} />
+        </button>
+      </Dropdown>
+
+      <Link href="/cart" aria-label="Košík" className={iconButtonClass}>
+        <IoMdCart className="text-xl" />
+        <CountBadge count={totalCart} />
+      </Link>
+
+      <Dropdown
+        menu={{ items }}
+        trigger={["hover"]}
+        rootClassName="min-w-[200px]! lg:min-w-fit!"
+        placement="bottomRight"
+      >
+        <span className="ml-1 cursor-pointer rounded-full p-0.5 ring-2 ring-white/60 transition hover:ring-third-color">
+          <Image
+            src={userData?.profileImage ? getMediaUrl(userData?.profileImage) : AllImages.dummyProfile}
+            alt="profile_img"
+            width={36}
+            height={36}
+            className="size-8 xl:size-9 rounded-full object-cover"
+          />
+        </span>
+      </Dropdown>
+    </div>
+  );
+
   return (
     <motion.div
       variants={{
@@ -331,304 +387,164 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`!z-[99999]  ${scrolled ? " !z-[99999] duration-300  py-1.5" : " duration-300  py-1.5"
-        } ${mobileMenuOpen || scrolled
-          ? "bg-secondary-color !text-primary-color"
-          : "bg-secondary-color !text-primary-color"
-        }`}
+      className={`!z-[99999] relative bg-secondary-color text-primary-color transition-shadow duration-300 ${scrolled || mobileMenuOpen ? "shadow-lg shadow-black/15" : ""}`}
       ref={navbarWrapperRef}
     >
       <Container>
-        <header className="text-base mx-auto  flex justify-between items-center z-[99999] ">
-          {/* //*Company name */}
-          <div>
-            <Link
-              href="/"
-              className=" cursor-pointer flex justify-center items-end gap-1"
-            >
-              <Image
-                src={AllImages.logo}
-                alt="logo"
-                width={1000}
-                height={1000}
-                sizes="100vw"
-                className="h-10 w-auto"
-              />
-            </Link>
-          </div>
-          {/* //*Nav links */}
-          <nav>
-            {/* //* For Laptop or Desktop */}
-            <div className="hidden lg:block">
-              <ul className="flex justify-center items-center gap-8 lg:flex-row flex-col lg:py-0 py-10">
-                {NavItems.map((navItem, i) => (
-                  <li
-                    key={i}
-                    className={`lg:mb-0 mb-5 cursor-pointer group relative hover:text-third-color transition-all font-semibold duration-300 
-                      ${path === navItem.route ? "!text-third-color " : " "}
-                      `}
-                  >
+        <header className="mx-auto flex h-16 items-center justify-between gap-4 text-base">
+          {/* Logo */}
+          <Link href="/" aria-label="Frafol" className="flex shrink-0 cursor-pointer items-center transition-transform hover:scale-[1.03]">
+            <Image
+              src={AllImages.logo}
+              alt="logo"
+              width={1000}
+              height={315}
+              sizes="160px"
+              priority
+              className="h-10 w-auto"
+            />
+          </Link>
+
+          {/* Desktop links */}
+          <nav className="hidden lg:block">
+            <ul className="flex items-center gap-1 rounded-full bg-black/10 p-1">
+              {NavItems.map((navItem) => {
+                const active = isActiveRoute(path, navItem.route);
+                return (
+                  <li key={navItem.id}>
                     <Link
                       href={navItem.route}
-                      className="after-underline-after"
+                      className={`block rounded-full px-4 xl:px-5 py-2 text-[15px] font-bold transition-all duration-300 ${active
+                        ? "bg-white text-secondary-color shadow-sm"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       {navItem.name}
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
-            {/* //*For Tab or Mobile */}
-            <div
-              style={{
-                height: `${height}px`, // Dynamic height
-                overflow: "hidden",
-                transition: "height 0.3s ease", // Smooth transition effect for height
-              }}
-              ref={navbarRef}
-              className={`block lg:hidden bg-secondary-color w-full lg:static absolute top-[52px] left-0 lg:bg-none transition-all duration-500 lg:z-0 -z-[9999] lg:border-none ${mobileMenuOpen ? "shadow-md" : ""}`}
-            >
-              <ul className="flex justify-end items-center gap-5 lg:flex-row flex-col lg:py-0 py-5">
-                {NavItems.map((navItem, i) => (
-                  <li
-                    key={i}
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className={`lg:mb-0 mb-0 cursor-pointer hover:text-third-color group relative  transition-all duration-300 ${path === navItem.route ? "!text-third-color " : " "
-                      }`}
-                  >
-                    <Link
-                      href={navItem.route}
-                      className="after-underline-after"
-                    >
-                      {navItem.name}
-                    </Link>
-                  </li>
-                ))}
-                {userData ? (
-                  <Button
-                    onClick={() => { setMobileMenuOpen(!mobileMenuOpen); handleLogOut() }}
-                    className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                    <p className="font-semibold">{/* Logout */}Odhlásiť sa</p>
-                    <div className="bg-primary-color p-1 rounded-full">
-                      <TbLogout2 className=" text-lg text-secondary-color" />
-                    </div>
-                  </Button>
-                ) : (
-                  <div className="flex flex-col items-center gap-3 space-y-3">
-                    <Link
-                      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                      href="/sign-in"
-                      className="px-4 py-1 text-primary-color font-semibold rounded-full border-2 border-primary-color mb-1"
-                    >
-                      {/* Sign In */}
-                      Prihlásenie
-                    </Link>
-                    <Link
-                      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                      href="/join"
-                      className="px-4 py-1 rounded-full border-2 border-primary-color bg-primary-color text-secondary-color font-semibold"
-                    >
-                      {/* Join */}
-                      Registrácia
-                    </Link>
-                  </div>
-                )}
-              </ul>
-            </div>
+                );
+              })}
+            </ul>
           </nav>
-          <div className="lg:flex items-center gap-2 hidden">
+
+          {/* Desktop right side */}
+          <div className="hidden items-center gap-3 lg:flex">
             {userData?.email ? (
-              <div className="flex items-center gap-5">
-                <div className="relative">
-                  <Link href="/message" onClick={handleResetMessage}>
-                    <AiFillMessage className="text-2xl cursor-pointer" />
-                  </Link>
-                  {messageCount > 0 && (
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full min-w-4 min-h-4 text-sm font-semibold flex justify-center items-center">{messageCount}</div>
-                  )}
-                </div>
-
-                <Dropdown
-                  overlay={notificationMenu}
-                  trigger={["hover"]}
-                  onOpenChange={(open) => {
-                    if (open) refreshNotifications(false);
-                    handleResetNotification();
-                  }}
-                  placement="bottomRight"
-                  className="cursor-pointer "
-                >
-                  <div className="relative">
-                    <GoBellFill className="text-2xl cursor-pointer" />
-                    {notificationCount > 0 && (
-                      <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full min-w-4 min-h-4 text-sm font-semibold flex justify-center items-center">{notificationCount}</div>
-                    )}
-                  </div>
-                </Dropdown>
-                <div className="relative">
-                  <Link href="/cart">
-                    <IoMdCart className="text-2xl cursor-pointer" />
-                  </Link>
-                  {totalCart > 0 && (
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full min-w-4 min-h-4 text-sm font-semibold flex justify-center items-center">{totalCart}</div>
-                  )}
-                </div>
-                <Dropdown
-                  menu={{ items }}
-                  trigger={["hover"]}
-                  rootClassName="min-w-[200px]! lg:min-w-fit!"
-                  // onOpenChange={(open: boolean) => {
-                  //   setOpen(open);
-                  // }}
-                  placement="bottomRight"
-                  className="cursor-pointer"
-                >
-                  <Image
-                    src={userData?.profileImage ? getMediaUrl(userData?.profileImage) : AllImages.dummyProfile}
-                    alt="profile_img"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="xl:h-[35px] h-[30px] w-[30px] xl:w-[35px] rounded-full cursor-pointer border-2 border-[#2B4257]"
-                  />
-                </Dropdown>
-
-                <Button
+              <>
+                {userIcons}
+                <button
+                  type="button"
                   onClick={handleLogOut}
-                  className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full"
+                  className="ml-1 inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/40 py-1.5 pl-4 pr-1.5 text-sm font-bold text-white transition hover:border-white hover:bg-white hover:text-secondary-color"
                 >
-                  <p className="font-semibold">{/* Logout */}Odhlásiť sa</p>
-                  <div className="bg-primary-color p-1 rounded-full">
-                    <TbLogout2 className=" text-lg text-secondary-color" />
-                  </div>
-                </Button>
-              </div>
+                  {/* Logout */}Odhlásiť sa
+                  <span className="flex size-7 items-center justify-center rounded-full bg-white text-secondary-color">
+                    <TbLogout2 className="text-base" />
+                  </span>
+                </button>
+              </>
             ) : (
-              <div className="w-full flex items-center gap-5">
+              <>
                 <Link
                   href="/sign-in"
-                  className={` "!text-lg px-2 py-1 font-semibold  mt-0.5 " ${scrolled ? "text-primary-color" : "text-primary-color"
-                    } `}
+                  className="rounded-full px-4 py-2 text-[15px] font-bold text-white transition hover:bg-white/10"
                 >
                   {/* Sign In */}
                   Prihlásenie
                 </Link>
-                <Link href="/join">
-                  <Button
-                    className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${scrolled
-                      ? "!border-primary-color !bg-primary-color !text-secondary-color "
-                      : "!border-primary-color !bg-primary-color !text-secondary-color "
-                      }`}
-                  >
-                    {/* <p className="font-semibold text-base">Join</p> */}
-                    <p className="font-semibold text-base">Registrácia</p>
-                    <div
-                      className={`${scrolled ? "bg-secondary-color" : "bg-secondary-color"
-                        } p-0.5 rounded-full`}
-                    >
-                      <HiOutlineLogin
-                        className={`text-lg ${scrolled ? "text-primary-color" : "text-primary-color"
-                          }`}
-                      />
-                    </div>
-                  </Button>
+                <Link
+                  href="/join"
+                  className="group inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-[15px] font-extrabold text-secondary-color shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  {/* Join */}
+                  Registrácia
+                  <span className="flex size-7 items-center justify-center rounded-full bg-secondary-color text-white transition-transform group-hover:translate-x-0.5">
+                    <ArrowRight className="size-4" />
+                  </span>
                 </Link>
-              </div>
+              </>
             )}
           </div>
-          {/* //*Icons */}
-          <div className="lg:hidden select-none flex items-center gap-5">
-            {userData?.email && (
-              <div className="flex items-center gap-5">
-                <div className="relative">
-                  <Link href="/message" onClick={handleResetMessage}>
-                    <AiFillMessage className="text-2xl cursor-pointer" />
-                  </Link>
-                  {messageCount > 0 && (
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{messageCount}</div>
-                  )}
-                </div>
 
-                <Dropdown
-                  overlay={notificationMenu}
-                  trigger={["hover"]}
-                  onOpenChange={(open) => {
-                    if (open) refreshNotifications(false);
-                    handleResetNotification();
-                  }}
-                  placement="bottomRight"
-                  className="cursor-pointer "
-                >
-                  <div className="relative">
-                    <GoBellFill className="text-2xl cursor-pointer" />
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{notificationCount}</div>
-                  </div>
-                </Dropdown>
-                <div className="relative">
-                  <Link href="/cart">
-                    <IoMdCart className="text-2xl cursor-pointer" />
-                  </Link>
-                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{totalCart}</div>
-                </div>
-                <Dropdown
-                  menu={{ items }}
-                  trigger={["hover"]}
-                  rootClassName="min-w-[200px]! lg:min-w-fit!"
-                  // onOpenChange={(open: boolean) => {
-                  //   setOpen(open);
-                  // }}
-                  placement="bottomRight"
-                  className="cursor-pointer"
-                >
-                  <Image
-                    src={userData?.profileImage ? getMediaUrl(userData?.profileImage) : AllImages.dummyProfile}
-                    alt="profile_img"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="xl:h-[35px] h-[30px] w-[30px] xl:w-[35px] rounded-full cursor-pointer border-2 border-[#2B4257]"
-                  />
-                </Dropdown>
-              </div>
-            )}
-            {mobileMenuOpen ? (
-              <div onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="#ffffff"
-                  className="w-8 h-8 cursor-pointer"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-              </div>
-            ) : (
-              <div onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke={mobileMenuOpen || scrolled ? "#ffffff" : "#ffffff"}
-                  className="w-8 h-8 cursor-pointer"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
-                </svg>
-              </div>
-            )}
+          {/* Mobile right side */}
+          <div className="flex select-none items-center gap-2 lg:hidden">
+            {userData?.email && <div className="hidden min-[420px]:block">{userIcons}</div>}
+            <button
+              type="button"
+              aria-label={mobileMenuOpen ? "Zavrieť menu" : "Otvoriť menu"}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            >
+              {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
         </header>
       </Container>
+
+      {/* Mobile / tablet menu */}
+      <div
+        ref={navbarRef}
+        style={{
+          height: `${height}px`,
+          overflow: "hidden",
+          transition: "height 0.3s ease",
+        }}
+        className="absolute left-0 top-full w-full bg-secondary-color lg:hidden"
+      >
+        <Container>
+          <div className="flex flex-col gap-1.5 border-t border-white/15 py-4">
+            {/* Very small phones: the icons live in the menu instead of the bar */}
+            {userData?.email && <div className="mb-2 flex justify-center min-[420px]:hidden">{userIcons}</div>}
+            {NavItems.map((navItem) => {
+              const active = isActiveRoute(path, navItem.route);
+              return (
+                <Link
+                  key={navItem.id}
+                  href={navItem.route}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between rounded-2xl px-4 py-3 text-base font-bold transition ${active ? "bg-white text-secondary-color" : "text-white hover:bg-white/10"
+                    }`}
+                >
+                  {navItem.name}
+                  <ArrowRight className={`size-4 ${active ? "" : "opacity-50"}`} />
+                </Link>
+              );
+            })}
+
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/15 pt-4">
+              {userData ? (
+                <button
+                  type="button"
+                  onClick={() => { setMobileMenuOpen(false); handleLogOut() }}
+                  className="col-span-2 inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/40 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-secondary-color"
+                >
+                  {/* Logout */}Odhlásiť sa <TbLogout2 className="text-lg" />
+                </button>
+              ) : (
+                <>
+                  <Link
+                    onClick={() => setMobileMenuOpen(false)}
+                    href="/sign-in"
+                    className="rounded-full border border-white/50 py-3 text-center text-sm font-bold text-white"
+                  >
+                    {/* Sign In */}
+                    Prihlásenie
+                  </Link>
+                  <Link
+                    onClick={() => setMobileMenuOpen(false)}
+                    href="/join"
+                    className="rounded-full bg-white py-3 text-center text-sm font-extrabold text-secondary-color"
+                  >
+                    {/* Join */}
+                    Registrácia
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </Container>
+      </div>
     </motion.div>
   );
 };

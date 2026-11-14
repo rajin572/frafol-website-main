@@ -26,10 +26,10 @@ const TalentedProfessionalsImages = async () => {
   const randomImages: IRandomImages[] = data?.data;
 
   return (
-    <section className="pb-28">
+    <section className="bg-[#fbf7f4] py-20 sm:py-24">
       <Container>
-        <SectionHeader title="Od našich talentovaných tvorcov" />
-        <div className="mt-16">
+        <SectionHeader eyebrow="Portfóliá" title="Od našich talentovaných tvorcov" />
+        <div className="mt-12">
           <ImageGallery<IRandomImages>
             data={randomImages}
             columnsCountBreakPoints={columnsCountBreakPoints}

@@ -21,7 +21,7 @@ const ExploreVideographyCategory = ({
       <div className="flex justify-center items-center !mt-10">
         <ReuseButton
           url="/videography"
-          className="w-fit  mt-5 !text-sm sm:!text-base lg:!text-lg !py-4.5"
+          className="w-fit mt-5 !text-sm sm:!text-base lg:!text-lg !py-5 !px-8 !rounded-lg"
           variant="secondary"
         >
           {/* See All Categories */}

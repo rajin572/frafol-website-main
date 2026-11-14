@@ -1,42 +1,56 @@
 import React from "react";
-import AnimatedUnderline from "./Animation/AnimatedUnderline";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
   className?: string;
   title?: string;
   subTitle?: string;
+  /** Short label above the title (e.g. "Kategórie"). */
+  eyebrow?: string;
   description?: string;
+  /** "dark" for sections on a dark background. */
+  tone?: "light" | "dark";
 }
+
+// Shared section / page heading, used across the whole website. Plain typography, no decoration.
 const SectionHeader: React.FC<SectionHeaderProps> = ({
   className = "",
   subTitle,
+  eyebrow,
   title,
   description,
+  tone = "light",
 }) => {
+  const dark = tone === "dark";
   return (
-    <div
-      className={cn(
-        "flex flex-col justify-center items-center text-center mb-10",
-        className
+    <div className={cn("flex flex-col justify-center items-center text-center mb-10", className)}>
+      {eyebrow && (
+        <p className={cn("mb-3 text-sm font-semibold", dark ? "text-third-color" : "text-secondary-color")}>
+          {eyebrow}
+        </p>
       )}
-    >
       {subTitle && (
         <h2 className="text-sm sm:text-base lg:text-lg text-secondary-color font-semibold mb-3">
           {subTitle}
         </h2>
       )}
       {title && (
-        <div className="mb-3">
-          {" "}
-          <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-secondary-color font-bold mb-2">
-            {title}
-          </h1>
-          <AnimatedUnderline className="mx-auto" />
-        </div>
+        <h1
+          className={cn(
+            "mb-4 text-2xl sm:text-3xl lg:text-[2.5rem] font-bold tracking-tight leading-tight",
+            dark ? "text-white" : "text-base-color"
+          )}
+        >
+          {title}
+        </h1>
       )}
       {description && (
-        <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-base-color w-full sm:w-[90%] lg:w-[80%] xl:w-[65%] mx-auto font-medium">
+        <p
+          className={cn(
+            "text-base lg:text-lg w-full sm:w-[90%] lg:w-[70%] xl:w-[55%] mx-auto leading-relaxed",
+            dark ? "text-white/65" : "text-base-color/65"
+          )}
+        >
           {description}
         </p>
       )}
