@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 type ProductDetailAccordionProps = {
   title: string;
@@ -32,22 +32,20 @@ const ProductDetailAccordion: React.FC<ProductDetailAccordionProps> = ({
   }, [isOpen]);
 
   return (
-    <div
-      className={cn("border-y border-[#2C2C2C] duration-500 py-2", className)}
-    >
-      <div
-        className="flex justify-between items-center p-2 cursor-pointer duration-500"
+    <div className={cn("border-y border-base-color/30 py-2", className)}>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        className="flex w-full justify-between items-center p-2 cursor-pointer text-left"
         onClick={toggleAccordion}
       >
-        <h3 className="text-base-color text-sm sm:text-base lg:text-lg xl:text-xl font-bold">
+        <h3 className="text-base-color text-base sm:text-lg lg:text-xl font-bold">
           {title}
         </h3>
-        {isOpen ? (
-          <IoIosArrowUp className="text-2xl duration-500" />
-        ) : (
-          <IoIosArrowDown className="text-2xl duration-500" />
-        )}
-      </div>
+        <IoIosArrowDown
+          className={cn("text-2xl transition-transform duration-300", isOpen && "rotate-180")}
+        />
+      </button>
 
       <div
         ref={contentRef}
@@ -57,7 +55,7 @@ const ProductDetailAccordion: React.FC<ProductDetailAccordionProps> = ({
           transition: "height 0.5s ease",
         }}
       >
-        <div className="p-2 text-base-color duration-500 text-sm sm:text-base lg:text-lg xl:text-lg">
+        <div className="p-2 text-base-color text-sm sm:text-base lg:text-lg">
           {content}
         </div>
       </div>

@@ -23,10 +23,10 @@ const ProfessionalPageDetailsBookSession = ({
     <>
       <ReuseButton
         variant="outline"
-        className="!py-4.5 !px-4 !text-sm sm:!text-sm lg:!text-base !text-secondary-color !border-secondary-color flex items-center"
+        className="!w-full !py-5 !px-5 !text-sm sm:!text-base !font-semibold !rounded-lg !bg-white !text-secondary-color !border-secondary-color hover:!bg-secondary-color/5 flex items-center justify-center gap-2"
         onClick={myData?._id ? openBookModal : () => router.push("/sign-in")}
       >
-        <IoCameraOutline className="" /> Požiadať o cenovú ponuku
+        <IoCameraOutline className="text-lg" /> Požiadať o cenovú ponuku
       </ReuseButton>
       <ProfessionalBookingModal
         isModalVisible={isBookModalOpen}

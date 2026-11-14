@@ -1,26 +1,47 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
+type ConfettiPiece = {
+  id: number;
+  x: number;
+  y: number;
+  rotation: number;
+  scale: number;
+  color: string;
+  delay: number;
+  drift: number;
+  duration: number;
+};
+
+const generateConfetti = (): ConfettiPiece[] => {
+  const confettiCount = 100;
+  const colors = ["#ad2b08", "#262621", "#ffb31f"];
+
+  return Array.from({ length: confettiCount }).map((_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: -10 - Math.random() * 100,
+    rotation: Math.random() * 360,
+    scale: 0.5 + Math.random() * 0.5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    delay: Math.random() * 0.5,
+    drift: Math.random() * 10 - 5,
+    duration: 3 + Math.random() * 4,
+  }));
+};
+
 const PaymentSuccess = () => {
   const router = useRouter();
 
-  const generateConfetti = () => {
-    const confettiCount = 100;
-    const colors = ["#ad2b08 ", "#262621", "#ffb31f"];
-
-    return Array.from({ length: confettiCount }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: -10 - Math.random() * 100,
-      rotation: Math.random() * 360,
-      scale: 0.5 + Math.random() * 0.5,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      delay: Math.random() * 0.5,
-    }));
-  };
+  // Random confetti is created after mount: random values during the server render would differ
+  // from the browser's and cause a hydration mismatch.
+  const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
+  useEffect(() => {
+    setConfetti(generateConfetti());
+  }, []);
 
   const handleTrackOrder = () => {
     router.push("/");
@@ -28,11 +49,11 @@ const PaymentSuccess = () => {
 
   const buttonVariants = {
     hover: {
-      scale: 1.03,
+      scale: 1.02,
       transition: { duration: 0.2 },
     },
     tap: {
-      scale: 0.97,
+      scale: 0.98,
       transition: { duration: 0.1 },
     },
   };
@@ -45,7 +66,7 @@ const PaymentSuccess = () => {
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -61,16 +82,16 @@ const PaymentSuccess = () => {
       transition: {
         delay: 0.3,
         duration: 0.5,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] flex flex-col items-center justify-center p-4 sm:p-6 ">
+    <div className="min-h-[80vh] bg-[#FFFFFF] flex flex-col items-center justify-center p-4 sm:p-6">
       {/* Confetti */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {generateConfetti().map((piece) => (
+        {confetti.map((piece) => (
           <motion.div
             key={piece.id}
             className="absolute w-2 h-8"
@@ -90,12 +111,12 @@ const PaymentSuccess = () => {
             }}
             animate={{
               y: "100vh",
-              x: `${piece.x + (Math.random() * 10 - 5)}%`,
+              x: `${piece.x + piece.drift}%`,
               rotate: piece.rotation,
               opacity: 0,
             }}
             transition={{
-              duration: 3 + Math.random() * 4,
+              duration: piece.duration,
               delay: piece.delay,
               ease: [0.1, 0.4, 0.6, 1],
             }}
@@ -105,12 +126,12 @@ const PaymentSuccess = () => {
 
       {/* Main Content */}
       <motion.div
-        className="w-full max-w-lg bg-white rounded-2xl shadow-lg overflow-hidden border border-secondary-color/10"
+        className="w-full max-w-lg bg-white rounded-2xl shadow-lg overflow-hidden border border-base-color/10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex flex-col items-center p-8">
+        <div className="flex flex-col items-center p-8 sm:p-10">
           {/* Success Checkmark */}
           <motion.div
             className="w-24 h-24 relative flex items-center justify-center"
@@ -131,7 +152,7 @@ const PaymentSuccess = () => {
             >
               <motion.path
                 d="M20 35L30 45L50 25"
-                stroke="#ad2b08 "
+                stroke="#ad2b08"
                 strokeWidth="6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -142,7 +163,7 @@ const PaymentSuccess = () => {
 
           {/* Title and Subtitle */}
           <motion.h1
-            className="text-2xl sm:text-3xl font-semibold text-secondary-color mt-6"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-secondary-color mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
@@ -151,47 +172,10 @@ const PaymentSuccess = () => {
             Platba bola úspešná!
           </motion.h1>
 
-          {/* Payment Details */}
-          {/* <motion.div
-            className="w-full mt-8 p-6 bg-secondary-color/5 rounded-xl"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.4 }}
-          >
-            <div className="flex justify-between items-center mb-5">
-              <h3 className="text-lg font-medium text-secondary-color">
-                Order Summary
-              </h3>
-              <div className="text-xl font-semibold text-secondary-color">
-                {paymentData.amount}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {detailItems.map((item, index) => (
-                <motion.div
-                  key={index}
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: item.delay, duration: 0.3 }}
-                >
-                  <div className="flex-shrink-0">{item.icon}</div>
-                  <div className="flex flex-col">
-                    <span className="text-sm text-[#262621]">{item.label}</span>
-                    <span className="text-sm font-medium text-secondary-color">
-                      {item.value}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div> */}
-
           {/* Action Buttons */}
           <div className="w-full mt-8 space-y-4">
             <motion.button
-              className="w-full py-3 px-6 bg-secondary-color hover:bg-secondary-color/90 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-3.5 px-6 bg-secondary-color hover:bg-secondary-color/90 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
               onClick={handleTrackOrder}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -201,7 +185,7 @@ const PaymentSuccess = () => {
               whileTap="tap"
             >
               <span>{/* Continue */} Pokračovať</span>
-              <FaArrowRight size={18} />
+              <FaArrowRight size={16} />
             </motion.button>
           </div>
         </div>
@@ -216,9 +200,9 @@ const PaymentSuccess = () => {
       >
         <p>
           {/* Need help? Contact */} Potrebujete pomoc? Kontaktujte{" "}
-          <span className="font-semibold text-secondary-color">
+          <a href="mailto:cvak@frafol.sk" className="font-semibold text-secondary-color hover:underline">
             cvak@frafol.sk
-          </span>
+          </a>
         </p>
       </motion.div>
     </div>

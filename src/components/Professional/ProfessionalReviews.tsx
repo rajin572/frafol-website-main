@@ -1,5 +1,5 @@
 import React from "react";
-import SectionHeader from "../ui/SectionHeader";
+import ProfileSectionTitle from "./ProfileSectionTitle";
 import ProfessionalReviewRating from "./ProfessionalReviewRating";
 import ProfessionalReviewsFiltre from "./ProfessionalReviewsFiltre";
 import ReviewCard from "./ProfessionalReviewCard";
@@ -28,16 +28,18 @@ const ProfessionalReviews = async ({
   const reviews: IReview[] = data?.data?.reviews || [];
 
   return (
-    <div id="reviews" className="mt-16">
-      <SectionHeader title="Recenzie" className="mb-3" />
-      <ProfessionalReviewRating professionalUser={professionalUser} />
+    <section id="reviews" className="scroll-mt-24">
+      <ProfileSectionTitle>Recenzie</ProfileSectionTitle>
+      <div className="mt-6">
+        <ProfessionalReviewRating professionalUser={professionalUser} />
+      </div>
       <ProfessionalReviewsFiltre />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full mt-6">
         {reviews.map((review, idx) => (
           <ReviewCard key={idx} review={review} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

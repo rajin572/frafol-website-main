@@ -300,7 +300,7 @@ const CartDeliveryOption = ({
           <ReuseButton
             htmlType="submit"
             variant="secondary"
-            className="w-full md:w-auto !text-base !py-5 !px-5"
+            className="w-full md:w-auto !text-base !py-5 !px-6 !rounded-lg !font-semibold"
           >
             Objednať s povinnosťou platby
           </ReuseButton>

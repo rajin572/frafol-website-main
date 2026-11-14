@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { ICategory } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
@@ -8,6 +9,9 @@ const MarketPlaceTab = ({ categories }: { categories: ICategory[] }) => {
   const pathName = usePathname();
   const router = useRouter();
   const { replace } = router;
+
+  // No ?category= means everything is listed, so "Všetko" is shown as the active chip then too.
+  const activeCategory = searchParams.get("category") || "all";
 
   const handleTabChange = (tab: string) => {
     const params = new URLSearchParams(searchParams);
@@ -20,30 +24,28 @@ const MarketPlaceTab = ({ categories }: { categories: ICategory[] }) => {
     replace(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
+  const chipClass = (active: boolean) =>
+    cn(
+      "px-4 py-2 cursor-pointer rounded-lg transition-colors duration-200 border text-sm sm:text-base font-medium",
+      active
+        ? "bg-secondary-color text-white border-secondary-color"
+        : "bg-transparent text-secondary-color border-base-color/20 hover:border-secondary-color"
+    );
+
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <div
-        onClick={() => handleTabChange("all")}
-        className={`${
-          searchParams.get("category") === "all"
-            ? "bg-secondary-color text-white border-secondary-color"
-            : "bg-transparent text-secondary-color border-base-color/30"
-        } px-4 py-1.5 cursor-pointer rounded-md transition-all duration-300 border text-sm sm:text-base`}
-      >
+    <div className="flex flex-wrap items-center gap-2.5">
+      <button type="button" onClick={() => handleTabChange("all")} className={chipClass(activeCategory === "all")}>
         Všetko
-      </div>
+      </button>
       {categories?.map((category) => (
-        <div
+        <button
+          type="button"
           key={category?._id}
           onClick={() => handleTabChange(category?._id)}
-          className={`${
-            searchParams.get("category") === category?._id
-              ? "bg-secondary-color text-white border-secondary-color"
-              : "bg-transparent text-secondary-color border-base-color/30"
-          } px-4 py-1.5 cursor-pointer rounded-md transition-all duration-300 border text-sm sm:text-base`}
+          className={chipClass(activeCategory === category?._id)}
         >
           {category?.title}
-        </div>
+        </button>
       ))}
     </div>
   );

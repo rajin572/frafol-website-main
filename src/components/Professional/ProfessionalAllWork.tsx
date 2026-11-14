@@ -1,16 +1,51 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import ImageGallery from "@/components/ui/ImageGallery";
 import Container from "@/components/ui/Container";
-import ReuseButton from "../ui/Button/ReuseButton";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { IProfessionalUser } from "@/types";
 import { FiChevronDown } from "react-icons/fi";
 import GalleryVideoPlayer from "@/components/shared/GalleryVideoPlayer";
 import useVideoThumbnails from "@/hook/useVideoThumbnails";
 
 const columnsCountBreakPoints = { 350: 1, 600: 2, 1024: 3 };
+
+// Collapsible block (photos / videos) of the full portfolio page.
+const WorkSection = ({
+  title,
+  count,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  count: number;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) => (
+  <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <button
+      type="button"
+      aria-expanded={open}
+      onClick={onToggle}
+      className="w-full px-6 py-4 flex items-center justify-between gap-4 text-left hover:bg-gray-50 transition-colors cursor-pointer"
+    >
+      <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-base-color">
+        {title} ({count})
+      </h3>
+      <FiChevronDown className={`text-2xl transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+    </button>
+
+    <div
+      className={`overflow-hidden transition-all duration-300 ${open ? "max-h-[10000px] opacity-100" : "max-h-0 opacity-0"}`}
+    >
+      <div className="p-6 pt-8">{children}</div>
+    </div>
+  </div>
+);
 
 const ProfessionalAllImages = ({
   id,
@@ -64,90 +99,57 @@ const ProfessionalAllImages = ({
   return (
     <main className="pb-20 pt-10 min-h-screen">
       <Container>
-        <div className="my-16">
-          <ReuseButton
-            variant="outline"
-            className="!px-0 !py-0 flex items-center w-fit !border-none !border-transparent !text-secondary-color"
-            url={`/professionals/${id}`}
+        <div className="my-12">
+          <Link
+            href={`/professionals/${id}`}
+            className="inline-flex w-fit items-center gap-2 text-base sm:text-lg font-semibold text-secondary-color transition-colors hover:text-secondary-color/80"
           >
-            <MdOutlineArrowBackIosNew className="mr-2" /> Späť
-          </ReuseButton>
+            <MdOutlineArrowBackIosNew className="text-sm" /> Späť
+          </Link>
         </div>
         <div className="space-y-4">
           {/* Images Section */}
           {galleryImages.length > 0 && (
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <button
-                onClick={() => toggleSection('images')}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
-              >
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                  Fotografie ({galleryImages.length})
-                </h3>
-                <FiChevronDown
-                  className={`text-2xl transition-transform duration-300 ${openSections.images ? 'transform rotate-180' : ''
-                    }`}
-                />
-              </button>
-
-              <div
-                className={`overflow-hidden transition-all duration-300 ${openSections.images ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-              >
-                <div className="p-6 pt-10 ">
-                  <ImageGallery<any>
-                    data={galleryImages}
-                    showOnlyImage={true}
-                    columnsCountBreakPoints={columnsCountBreakPoints}
-                    arrayOfImages={true}
-                    photoView={true}
-                  />
-                </div>
-
-              </div>
-            </div>
+            <WorkSection
+              title="Fotografie"
+              count={galleryImages.length}
+              open={openSections.images}
+              onToggle={() => toggleSection("images")}
+            >
+              <ImageGallery<any>
+                data={galleryImages}
+                showOnlyImage={true}
+                columnsCountBreakPoints={columnsCountBreakPoints}
+                arrayOfImages={true}
+                photoView={true}
+              />
+            </WorkSection>
           )}
-
 
           {/* Videos Section */}
           {galleryVideos.length > 0 && (
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <button
-                onClick={() => toggleSection('videos')}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
-              >
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                  Videá ({galleryVideos.length})
-                </h3>
-                <FiChevronDown
-                  className={`text-2xl transition-transform duration-300 ${openSections.videos ? 'transform rotate-180' : ''
-                    }`}
-                />
-              </button>
-
-              <div
-                className={`overflow-hidden transition-all duration-300 ${openSections.videos ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-              >
-                <div className="p-6 pt-10">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {galleryVideos.map((item, index) => (
-                      <GalleryVideoPlayer
-                        key={index}
-                        src={item}
-                        poster={videoThumbnails[item]}
-                        videoRef={(el) => {
-                          if (el) {
-                            videoRefs.current[index] = el;
-                          }
-                        }}
-                        onPlay={() => handleVideoPlay(index)}
-                      />
-                    ))}
-                  </div>
-                </div>
+            <WorkSection
+              title="Videá"
+              count={galleryVideos.length}
+              open={openSections.videos}
+              onToggle={() => toggleSection("videos")}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {galleryVideos.map((item, index) => (
+                  <GalleryVideoPlayer
+                    key={index}
+                    src={item}
+                    poster={videoThumbnails[item]}
+                    videoRef={(el) => {
+                      if (el) {
+                        videoRefs.current[index] = el;
+                      }
+                    }}
+                    onPlay={() => handleVideoPlay(index)}
+                  />
+                ))}
               </div>
-            </div>
+            </WorkSection>
           )}
         </div>
 

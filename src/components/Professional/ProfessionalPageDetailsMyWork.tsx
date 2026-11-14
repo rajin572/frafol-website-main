@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
-import SectionHeader from "../ui/SectionHeader";
+import ProfileSectionTitle from "./ProfileSectionTitle";
 import ImageGallery from "../ui/ImageGallery";
 import ReuseButton from "../ui/Button/ReuseButton";
+import { ArrowRight } from "lucide-react";
 import NoResultFound from "../shared/NoResultFound";
 import ProfessionalPageVideoWorks from "./ProfessionalPageVideoWorks";
 
-const columnsCountBreakPoints = { 350: 1, 600: 2, 1024: 3, 1440: 4 };
+const columnsCountBreakPoints = { 350: 1, 600: 2, 1024: 3 };
 
 const ProfessionalPageDetailsMyWork = ({
   gallery,
@@ -35,11 +36,11 @@ const ProfessionalPageDetailsMyWork = ({
   }, [gallery]);
 
   return (
-    <div className="mt-16">
-      <SectionHeader title="Moja tvorba" className="mb-3" />
+    <section id="work" className="scroll-mt-24">
+      <ProfileSectionTitle>Moja tvorba</ProfileSectionTitle>
       {(galleryImages?.length > 0 || galleryVideos?.length > 0) ? (
         <div>
-          <div className="my-10">
+          <div className="mt-6 mb-3">
             <ImageGallery<string>
               data={galleryImages}
               showOnlyImage={true}
@@ -48,23 +49,26 @@ const ProfessionalPageDetailsMyWork = ({
             />
           </div>
           <ProfessionalPageVideoWorks galleryVideos={galleryVideos} />
-          <div className="mt-10 flex justify-center items-center">
+          <div className="mt-8">
             <ReuseButton
               variant="secondary"
-              className="!text-sm sm:!text-base lg:!text-lg !py-4.5 !px-4 !w-fit"
+              className="!text-sm sm:!text-base !py-5 !px-7 !rounded-lg !font-semibold !w-fit hover:!bg-secondary-color/90 flex items-center gap-2"
               url={`/professionals/${professionalId}/works`}
             >
               Zobraziť viac
+              <ArrowRight className="size-4" />
             </ReuseButton>
           </div>
         </div>
       ) : (
-        <NoResultFound
-          title="Nenašla sa žiadna tvorba"
-          description="Tento profesionál zatiaľ nenahral žiadnu tvorbu"
-        />
+        <div className="mt-6 rounded-2xl border border-base-color/10 py-8">
+          <NoResultFound
+            title="Nenašla sa žiadna tvorba"
+            description="Tento profesionál zatiaľ nenahral žiadnu tvorbu"
+          />
+        </div>
       )}
-    </div>
+    </section>
   );
 };
 

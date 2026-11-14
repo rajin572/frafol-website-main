@@ -4,6 +4,7 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IGear } from "@/types";
 import React from "react";
+import { readJson } from "@/lib/readJson";
 
 export async function generateMetadata({
   params,
@@ -36,11 +37,11 @@ const ProductDetailPage = async ({
       tags: [TagTypes.gear],
     },
   });
-  const data = await res.json();
+  const data = await readJson(res, `/marketPlace/${id}`);
   const gear: IGear = data?.data;
 
   return (
-    <main className="py-20">
+    <main className="py-14 sm:py-20">
       <Container>
         <MarketPlaceDetailsPage data={gear} />
       </Container>

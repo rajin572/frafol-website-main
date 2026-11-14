@@ -24,42 +24,44 @@ const ProfessionalReviewRating = ({
       : 0;
 
   return (
-    <div className="flex flex-col lg:flex-row items-center  gap-8 w-full">
-      {/* Left side: Rating breakdown */}
-      <div className=" space-y-2">
-        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-extrabold text-secondary-color">
-          {professionalUser?.totalReview} hodnotení
-        </p>
-        {ratings.map(({ star, count }) => (
-          <div key={star} className="flex items-center gap-2 w-full">
-            <div className="text-sm text-nowrap sm:text-sm lg:text-base xl:text-lg font-semibold">
-              {star} {star === 1 ? "hviezdička" : star === 5 ? "hviezdičiek" : "hviezdičky"}
-            </div>
-            <div className="w-full lg:w-[500px]">
-              <Progress
-                size="default"
-                percent={getPercent(count)}
-                showInfo={false}
-                strokeColor="#FACC15"
-              />
-            </div>
-            <div className="text-sm text-nowrap sm:text-sm lg:text-base xl:text-lg font-semibold">
-              ({count})
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Right side: Average rating */}
-      <div className="flex flex-col items-center justify-center">
-        <div className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold">
+    <div className="grid grid-cols-1 gap-6 rounded-2xl border border-base-color/10 bg-white p-6 sm:grid-cols-[190px_1fr] sm:items-center sm:gap-10 sm:p-8">
+      {/* Average rating */}
+      <div className="flex flex-col items-center text-center sm:border-r sm:border-base-color/10 sm:pr-10">
+        <div className="text-5xl font-bold tracking-tight text-base-color">
           {professionalUser?.averageRating?.toFixed(1)}
         </div>
         <Rate
           disabled
           value={professionalUser?.averageRating || 0}
-          className="text-[#FACC15]"
+          className="mt-2 !text-base text-[#FACC15]"
         />
+        <p className="mt-2 text-sm font-semibold text-base-color/60">
+          {professionalUser?.totalReview} hodnotení
+        </p>
+      </div>
+
+      {/* Rating breakdown */}
+      <div className="space-y-2">
+        {ratings.map(({ star, count }) => (
+          <div key={star} className="flex items-center gap-3 w-full">
+            <div className="w-24 shrink-0 text-sm text-nowrap font-medium text-base-color/75">
+              {star} {star === 1 ? "hviezdička" : star === 5 ? "hviezdičiek" : "hviezdičky"}
+            </div>
+            <div className="min-w-0 flex-1">
+              <Progress
+                size="default"
+                percent={getPercent(count)}
+                showInfo={false}
+                strokeColor="#FACC15"
+                trailColor="#efefef"
+                className="!m-0"
+              />
+            </div>
+            <div className="min-w-9 text-right text-sm text-nowrap font-semibold text-base-color/60">
+              ({count})
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

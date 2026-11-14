@@ -52,7 +52,7 @@ const ProfessionalReviewsFiltre = () => {
   const handleRatingClick = (star: number) => applyFilter("rating", star.toString());
 
   return (
-    <div className="flex flex-wrap items-center gap-4 mt-5">
+    <div className="flex flex-wrap items-center gap-3 mt-6">
       <PendingBar pending={isPending} label="Načítavajú sa recenzie…" />
 
       {/* Sort Dropdown */}
@@ -60,7 +60,7 @@ const ProfessionalReviewsFiltre = () => {
         menu={{ items: sortItems, onClick: handleMenuClick }}
         placement="bottomLeft"
       >
-        <Button>
+        <Button className="!h-9 !rounded-full !px-4 !font-medium !shadow-none">
           {(() => {
             const found = sortItems.find((item) => item?.key === sort);
             return found && "label" in found ? found.label : "";
@@ -76,7 +76,7 @@ const ProfessionalReviewsFiltre = () => {
             key={star}
             type="button"
             onClick={() => handleRatingClick(star)}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-sm sm:text-sm lg:text-base font-medium cursor-pointer touch-manipulation select-none
+            className={`flex h-9 items-center gap-1 px-3.5 rounded-full border text-sm sm:text-base font-medium cursor-pointer touch-manipulation select-none transition-colors
               ${Number(rating) === star
                 ? "bg-yellow-400 text-white border-yellow-400"
                 : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"

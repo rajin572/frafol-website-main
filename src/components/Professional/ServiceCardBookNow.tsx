@@ -25,7 +25,7 @@ const ServiceCardBookNow = ({
     <>
       <ReuseButton
         variant="secondary"
-        className="!text-sm sm:!text-sm lg:!text-base !px-2 !py-1 w-fit"
+        className="!w-full !text-sm sm:!text-base !py-5 !px-6 !rounded-lg !font-semibold"
         onClick={myData?._id ? openModal : () => router.push("/sign-in")}
       >
         Rezervovať

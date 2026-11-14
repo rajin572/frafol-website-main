@@ -83,7 +83,7 @@ export default function RootLayout({
           <ModalScrollLock />
           <AntdRegistry>
             <AntdLocaleProvider theme={mainTheme}>
-              <div className="sticky top-0 w-full z-[100]!">
+              <div className="pointer-events-none sticky top-0 w-full z-[100]!">
                 <NavbarWraper />
               </div>
               {children}

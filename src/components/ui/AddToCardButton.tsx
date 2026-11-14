@@ -26,7 +26,7 @@ const AddToCardButton = ({ gear }: { gear: IGear }) => {
         (userData?.userId !== gear?.authorId?._id && (
           <ReuseButton
             variant="secondary"
-            className="!px-6 !py-5 mt-4 flex justify-center items-center gap-2"
+            className="!px-6 !py-5 mt-4 !rounded-lg !font-semibold !text-sm sm:!text-base flex justify-center items-center gap-2"
             onClick={() => handleAddToCart(gear)}
           >
             <IoCartOutline className="text-2xl" />

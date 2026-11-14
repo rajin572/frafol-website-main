@@ -21,7 +21,7 @@ const page = async () => {
 
   console.log(data)
   return (
-    <main className="py-10">
+    <main className="py-10 sm:py-14">
       <CartSection myData={myData} />
     </main>
   );

@@ -4,61 +4,48 @@ import { IReview } from "@/types";
 import { formatDateTime } from "@/utils/dateFormet";
 import { Rate } from "antd";
 import Image from "next/image";
-import { useState } from "react";
 import { AllImages } from "../../../public/assets/AllImages";
+import ExpandableText from "../shared/ExpandableText";
 
 const ReviewCard = ({ review }: { review: IReview }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleReadMore = () => setExpanded((prev) => !prev);
-
   // A review can be just stars with no text: `message` is then missing, and reading `.length` on
-  // it crashed the whole page (seen when filtering by 1 star).
+  // it crashed the whole page (seen when filtering by 1 star). ExpandableText handles a missing text.
   const message = review?.message ?? "";
-  const maxChars = 150;
-  const isLong = message.length > maxChars;
-  const displayText = expanded
-    ? message
-    : message.slice(0, maxChars) + (isLong ? "..." : "");
 
   return (
-    <div className="p-4 rounded-lg shadow-none hover:shadow-md transition">
+    <div className="h-full p-5 rounded-2xl border border-base-color/10 bg-white">
       {/* Header */}
       <div className="flex flex-col mb-2">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2.5 mb-2">
           <Image
-            width={2000}
-            height={2000}
+            width={80}
+            height={80}
             alt="avatar"
-            className="rounded-full w-6 sm:w-8 lg:w-10  h-6 sm:h-8 lg:h-10  object-cover"
+            className="rounded-full size-8 lg:size-10 object-cover"
             src={
               review?.isAnonymous || !review?.userId?.profileImage
                 ? AllImages.dummyProfile
                 : getMediaUrl(review?.userId?.profileImage)
             }
           />
-          <div className="text-sm sm:text-sm lg:text-base xl:text-lg font-semibold">
+          <div className="text-sm sm:text-base font-semibold text-base-color">
             {review?.isAnonymous ? "Anonymous" : review?.userId?.name}
           </div>
-          <span className="text-sm sm:text-sm lg:text-base font-light">
+          <span className="text-sm text-base-color/50">
             · {formatDateTime(review?.createdAt)}
           </span>
         </div>
-        <Rate className="" disabled value={review?.rating} />
+        <Rate className="!text-base" disabled value={review?.rating} />
       </div>
 
       {/* Content */}
-      <div className="text-sm sm:text-sm lg:text-base mb-2">
-        {displayText}
-        {isLong && (
-          <button
-            onClick={toggleReadMore}
-            className="ml-1 text-secondary-color hover:underline text-sm "
-          >
-            {expanded ? "Read Less" : "Read More"}
-          </button>
-        )}
-      </div>
+      {message && (
+        <ExpandableText
+          text={message}
+          maxChars={150}
+          className="text-sm sm:text-base leading-relaxed text-base-color/80"
+        />
+      )}
     </div>
   );
 };

@@ -304,9 +304,9 @@ const FeaturedProfessionalsCardSlider = ({
                 </button>
             )}
 
-            {/* Slide Counter / Indicator Dots */}
+            {/* Slide Counter / Indicator Dots. On a dark pill so they stay visible on white photos too. */}
             {hasMultipleItems && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1">
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 rounded-full bg-black/45 px-2 py-1">
                     {displayGallery.map((_, index) => (
                         <button
                             key={index}
@@ -315,9 +315,9 @@ const FeaturedProfessionalsCardSlider = ({
                                 e.stopPropagation();
                                 setCurrentIndex(index);
                             }}
-                            className={`transition-all duration-200 rounded-full ${index === currentIndex
-                                ? "bg-white w-1.5 h-1.5 sm:w-2 sm:h-2"
-                                : "bg-white/50 w-1.5 h-1.5 sm:w-2 sm:h-2"
+                            className={`transition-all duration-200 rounded-full h-1.5 sm:h-2 ${index === currentIndex
+                                ? "bg-white w-3 sm:w-4"
+                                : "bg-white/55 hover:bg-white/80 w-1.5 sm:w-2"
                                 }`}
                             aria-label={`Prejsť na snímku ${index + 1}`}
                         />

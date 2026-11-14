@@ -16,10 +16,9 @@ const CartCard = ({ product }: { product: IGear }) => {
     dispatch(removeFromCart(id));
   };
 
-  console.log(product)
   return (
-    <div className="py-2 flex justify-between items-center gap-5 ">
-      <div className="flex gap-2 items-center">
+    <div className="py-4 flex justify-between items-center gap-5">
+      <div className="flex gap-4 items-center">
         <Image
           src={
             product?.gallery?.[0]
@@ -27,44 +26,45 @@ const CartCard = ({ product }: { product: IGear }) => {
               : AllImages?.dummyCover?.src
           }
           alt="product"
-          width={2000}
-          height={2000}
-          className="w-28 h-28 object-cover rounded"
+          width={240}
+          height={240}
+          className="size-24 sm:size-28 shrink-0 object-cover rounded-lg"
           quality={75}
         />
-        <div>
+        <div className="space-y-0.5">
           <Link href={`/marketplace/${product?._id}`}>
-            <h2 className="text-sm sm:text-base lg:text-lg text-secondary-color font-semibold mb-2">
+            <h2 className="text-base lg:text-lg text-secondary-color font-semibold mb-1.5 hover:underline">
               {product?.name}
             </h2>
           </Link>
-          <div className="flex items-center gap-2">
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
+          <div className="flex items-center gap-2 text-sm lg:text-base">
+            <p className="font-semibold">
               Stav:
             </p>
-            <p className="text-sm sm:text-sm lg:text-base">
+            <p>
               {product?.condition === "new" ? "Nové" : "Použité"}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
+          <div className="flex items-center gap-2 text-sm lg:text-base">
+            <p className="font-semibold">
               Predajca:
             </p>
-            <Link href={`/professionals/${product?.authorId?._id}`} className="text-secondary-color text-sm sm:text-sm lg:text-base font-bold cursor-pointer">
-              <p className="text-sm sm:text-sm lg:text-base">
-                {product?.authorId?.name}
-              </p>
+            <Link href={`/professionals/${product?.authorId?._id}`} className="text-secondary-color font-bold cursor-pointer hover:underline">
+              {product?.authorId?.name}
             </Link>
           </div>
-          <h2 className="text-sm sm:text-sm lg:text-base mb-2">
-            Cena: <span className="font-semibold">{product?.mainPrice?.toFixed(2)}€</span>
+          <h2 className="text-sm lg:text-base">
+            Cena: <span className="font-bold">{product?.mainPrice?.toFixed(2)}€</span>
           </h2>
         </div>
       </div>
-      <MdDelete
+      <button
+        type="button"
         onClick={() => handleRemove(product?._id)}
-        className="size-4 sm:size-5 lg:size-6 cursor-pointer text-error "
-      />
+        className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-error transition-colors hover:bg-error/10"
+      >
+        <MdDelete className="size-5 lg:size-6" />
+      </button>
     </div>
   );
 };

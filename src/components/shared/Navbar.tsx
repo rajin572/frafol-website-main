@@ -387,7 +387,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`!z-[99999] relative bg-secondary-color text-primary-color transition-shadow duration-300 ${scrolled || mobileMenuOpen ? "shadow-lg shadow-black/15" : ""}`}
+      className={`pointer-events-auto !z-[99999] relative bg-secondary-color text-primary-color transition-shadow duration-300 ${scrolled || mobileMenuOpen ? "shadow-lg shadow-black/15" : ""}`}
       ref={navbarWrapperRef}
     >
       <Container>
