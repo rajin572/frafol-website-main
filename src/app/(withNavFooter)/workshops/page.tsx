@@ -9,7 +9,7 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { getAuthToken } from "@/lib/getAuthToken";
 
 export const metadata = {
-  title: "Frafol – Kurzy",
+  title: "Kurzy fotografie a videa – Workshopy | Frafol",
 };
 
 const page = async ({

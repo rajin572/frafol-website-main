@@ -2,7 +2,7 @@ import PhotographyPage from "@/components/Photography/PhotographyPage";
 import React from "react";
 
 export const metadata = {
-  title: "Frafol – Fotografia",
+  title: "Fotografi na Slovensku – Vyberte si fotografa | Frafol",
 };
 
 const page = ({

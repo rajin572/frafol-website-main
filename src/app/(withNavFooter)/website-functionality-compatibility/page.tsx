@@ -4,6 +4,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
 import React from "react";
 
+export const metadata = {
+  title: "Funkčnosť a kompatibilita webu | Frafol",
+};
+
 const WebsiteFunctionalityCompatibility = async () => {
   const res = await fetchWithAuth(
     `/settings/websiteFunctionalityCompatibility`,

@@ -2,7 +2,7 @@ import MarketPlace from "@/components/MarketPlace/MarketPlacePage";
 import React from "react";
 
 export const metadata = {
-  title: "Frafol – Bazár",
+  title: "Bazár foto a video techniky | Frafol",
 };
 
 const MarketPlacePage = ({

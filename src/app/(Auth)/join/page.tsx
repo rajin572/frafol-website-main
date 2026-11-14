@@ -3,6 +3,10 @@ import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import JoinFrafol from "@/components/Auth/JoinFrafol";
 
+export const metadata = {
+  title: "Registrácia | Frafol",
+};
+
 const page = () => {
   return (
     <div>

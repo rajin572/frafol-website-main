@@ -4,6 +4,38 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IProfessionalUser } from "@/types";
 import React from "react";
 
+// "Meno tvorcu – Fotograf | Frafol" (Kameraman for videographers, both for creators who do both).
+const ROLE_LABELS: Record<string, string> = {
+  photographer: "Fotograf",
+  videographer: "Kameraman",
+  both: "Fotograf a kameraman",
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  try {
+    const res = await fetchWithAuth(`/users/${id}`, {
+      next: {
+        tags: [TagTypes.prfessional],
+        revalidate: 60,
+      },
+    });
+    const user: IProfessionalUser | undefined = (await res.json())?.data;
+    const fullName = [user?.name, user?.sureName].filter(Boolean).join(" ");
+    if (fullName) {
+      const roleLabel = ROLE_LABELS[user?.role ?? ""] ?? "Fotograf a kameraman";
+      return { title: `${fullName} – ${roleLabel} | Frafol` };
+    }
+  } catch {
+    // no profile data, use the generic title below
+  }
+  return { title: "Fotograf a kameraman | Frafol" };
+}
+
 const page = async ({
   params,
   searchParams,

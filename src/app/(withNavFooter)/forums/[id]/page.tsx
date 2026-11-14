@@ -5,6 +5,26 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICommunityPost } from "@/types/communityForum.type";
 import React from "react";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  try {
+    const res = await fetchWithAuth(`/community/${id}`, {
+      next: {
+        tags: [TagTypes.communityForum],
+      },
+    });
+    const post: ICommunityPost | undefined = (await res.json())?.data;
+    if (post?.title) return { title: `${post.title} – Fórum | Frafol` };
+  } catch {
+    // no post data, use the generic title below
+  }
+  return { title: "Fórum fotografov a kameramanov | Frafol" };
+}
+
 const page = async ({
   params,
   searchParams,

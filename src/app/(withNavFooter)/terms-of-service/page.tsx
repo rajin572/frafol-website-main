@@ -4,6 +4,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
 import React from "react";
 
+export const metadata = {
+  title: "Všeobecné obchodné podmienky Zmluvné vzťahy | Frafol",
+};
+
 const TermsOfService = async () => {
   const res = await fetchWithAuth(`/settings/termsService`, {});
   const data = await res.json();

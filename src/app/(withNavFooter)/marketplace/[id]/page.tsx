@@ -5,6 +5,26 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IGear } from "@/types";
 import React from "react";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  try {
+    const res = await fetchWithAuth(`/marketPlace/${id}`, {
+      next: {
+        tags: [TagTypes.gear],
+      },
+    });
+    const gear: IGear | undefined = (await res.json())?.data;
+    if (gear?.name) return { title: `${gear.name} – Foto a video technika | Frafol` };
+  } catch {
+    // no gear data, use the generic title below
+  }
+  return { title: "Bazár foto a video techniky | Frafol" };
+}
+
 const ProductDetailPage = async ({
   params,
 }: {

@@ -18,9 +18,11 @@ import PhotographyCategorySeacrhFiltre from "../Photography/PhotographyCategoryS
 import ReuseButton from "../ui/Button/ReuseButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
+import { getProfessionalsListCopy } from "@/utils/professionalsCopy";
 
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
+  const copy = getProfessionalsListCopy(params);
   const search = params?.search || "";
   const type = params?.type || null;
   const minPrice = (params?.min as string) || null;
@@ -67,7 +69,8 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
       <Container>
         {/* title="Our Professionals" */}
         {/* description="Discover our top-rated Professionals" */}
-        <SectionHeader title="Naši tvorcovia" description="Objavte našich najlepšie hodnotených tvorcov" />
+        {/* Heading and intro follow the ?role= / ?type= filter, see professionalsCopy.ts */}
+        <SectionHeader title={copy.heading} description={copy.description} />
         <div className="mt-16 flex flex-col md:flex-row gap-y-5 md:gap-y-0 justify-between mb-10">
           {
             role === "videographer" ? (

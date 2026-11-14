@@ -4,6 +4,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
 import React from "react";
 
+export const metadata = {
+  title: "Ako funguje vyhľadávanie tvorcov | Frafol",
+};
+
 const SearchAlgorithm = async () => {
   const res = await fetchWithAuth(`/settings/searchAlgorithm`, {});
   const data = await res.json();

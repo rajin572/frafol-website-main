@@ -2,7 +2,7 @@ import VideographeyPage from "@/components/Videographey/VideographeyPage";
 import React from "react";
 
 export const metadata = {
-  title: "Frafol – Video",
+  title: "Natáčanie videa – Video služby a kategórie | Frafol",
 };
 
 const page = ({

@@ -4,6 +4,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
 import React from "react";
 
+export const metadata = {
+  title: "Ochrana osobných údajov | Frafol",
+};
+
 const GeneralDataProtectionRegulation = async () => {
   const res = await fetchWithAuth(`/settings/gdpr`, {});
   const data = await res.json();

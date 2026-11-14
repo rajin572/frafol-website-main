@@ -5,6 +5,20 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
+// "Názov kategórie – Nájdite kameramana | Frafol". The category title comes from the ?title= param.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const title = ((await searchParams)?.title as string) || "";
+  return {
+    title: title
+      ? `${title} – Nájdite kameramana | Frafol`
+      : "Nájdite kameramana | Frafol",
+  };
+}
+
 const VideographyCategoryDetailsPage = async ({
   params,
   searchParams,

@@ -7,6 +7,10 @@ import { ITown } from "../professional/legal-invoice/page";
 
 
 
+export const metadata = {
+  title: "Registrácia klienta | Frafol",
+};
+
 const page = async () => {
   const res = await fetchWithAuth(
     `/town`,

@@ -4,6 +4,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IProfile } from "@/types";
 import React from "react";
 
+export const metadata = {
+  title: "Nákupný košík | Frafol",
+};
+
 const page = async () => {
   const res = await fetchWithAuth("/users/my-profile", {
     next: {

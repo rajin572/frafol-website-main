@@ -7,6 +7,10 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICommunityPost } from "@/types";
 
+export const metadata = {
+  title: "Fórum fotografov a kameramanov | Frafol",
+};
+
 const page = async ({
   searchParams,
 }: {

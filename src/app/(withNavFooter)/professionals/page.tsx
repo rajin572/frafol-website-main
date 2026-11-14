@@ -1,9 +1,15 @@
 import AllProfessionals from "@/components/Professional/AllProfessionalPage";
 import React from "react";
+import { getProfessionalsListCopy } from "@/utils/professionalsCopy";
 
-export const metadata = {
-  title: "Frafol – Tvorcovia",
-};
+// The tab title follows the ?role= / ?type= filter (all creators, photographers, videographers, Frafol odporúča).
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  return { title: getProfessionalsListCopy(await searchParams).tabTitle };
+}
 
 const page = ({
   searchParams,
