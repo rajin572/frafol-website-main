@@ -20,6 +20,7 @@ import { registerUser } from "@/services/AuthService";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
+import { markOtpSent } from "@/hook/useOtpCooldown";
 
 const userInputStructure = [
   {
@@ -299,6 +300,8 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
     );
     if (res?.success) {
       form.resetFields();
+      // The code was just sent: start the 2-minute "send again" countdown on the OTP page.
+      markOtpSent("email-verification");
       router.push("/sign-up/user/otp-verify");
     }
 

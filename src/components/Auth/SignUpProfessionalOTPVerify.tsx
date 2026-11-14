@@ -7,11 +7,15 @@ import { useRouter } from "next/navigation";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoMdMail } from "react-icons/io";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { useOtpCooldown } from "@/hook/useOtpCooldown";
 import { registerUserOtp, resendOtp } from "@/services/AuthService";
 
 const SignUpProfessionalOTPVerify = () => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
+  // "Send again" is allowed once every 2 minutes; the countdown survives a reload.
+  const { canResend, restart, label } = useOtpCooldown("email-verification");
+  const [resending, setResending] = useState(false);
 
   const handleOTPSubmit = async () => {
     const res = await tryCatchWrapper(
@@ -30,7 +34,9 @@ const SignUpProfessionalOTPVerify = () => {
   };
 
   const handleResendOtp = async () => {
-    await tryCatchWrapper(
+    if (!canResend || resending) return;
+    setResending(true);
+    const res = await tryCatchWrapper(
       resendOtp,
       { body: { purpose: "email-verification" } },
       {
@@ -40,6 +46,8 @@ const SignUpProfessionalOTPVerify = () => {
         toastSuccessMessage: "Overovací kód bol úspešne odoslaný!",
       }
     );
+    setResending(false);
+    if (res?.success) restart();
   };
   return (
     <div className="text-base-color">
@@ -94,13 +102,15 @@ const SignUpProfessionalOTPVerify = () => {
             </Form>
             <div className="flex justify-center gap-2 py-1 mt-5">
               <p>{/* If you don't receive the code? */}Nedostali ste overovací kód?</p>
-              <p
+              <button
+                type="button"
                 onClick={handleResendOtp}
-                className="!text-secondary-color !underline font-semibold cursor-pointer"
+                disabled={!canResend || resending}
+                className="!text-secondary-color !underline font-semibold cursor-pointer disabled:cursor-not-allowed disabled:!no-underline disabled:!text-base-color/45 tabular-nums"
               >
                 {/* Resend Code */}
-                Odoslať overovací kód znova
-              </p>
+                Odoslať overovací kód znova{!canResend && ` (${label})`}
+              </button>
             </div>
           </div>
         </div>

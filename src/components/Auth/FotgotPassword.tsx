@@ -10,6 +10,7 @@ import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { forgetPassword } from "@/services/AuthService";
+import { markOtpSent } from "@/hook/useOtpCooldown";
 
 interface ForgotPasswordValues {
   email: string;
@@ -47,6 +48,8 @@ const ForgotPassword = () => {
     );
     if (res?.success) {
       form.resetFields();
+      // The code was just sent: start the 2-minute "send again" countdown on the OTP page.
+      markOtpSent("forget-password");
       router.push("/forgot-password/otp-verify");
     }
   };

@@ -9,6 +9,7 @@ import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { registerUser } from "@/services/AuthService";
 import Link from "next/link";
 import { formatDate } from "@/utils/dateFormet";
+import { markOtpSent } from "@/hook/useOtpCooldown";
 
 const ReviewDetailsAndSubmit = () => {
   const router = useRouter();
@@ -154,6 +155,8 @@ const ReviewDetailsAndSubmit = () => {
       if (res?.success) {
         Cookies.remove("information");
         form.resetFields();
+        // The code was just sent: start the 2-minute "send again" countdown on the OTP page.
+        markOtpSent("email-verification");
         router.push("/sign-up/professional/otp-verify");
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
