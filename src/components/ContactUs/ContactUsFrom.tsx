@@ -6,6 +6,9 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { contactUs } from "@/services/Others/OthersApi";
 
+const inputClass =
+  "!py-3 !px-4 !text-base !bg-[#F3F3F3] !border !border-[#F3F3F3] hover:!border-base-color/20 focus:!border-secondary-color focus:!bg-white !shadow-none outline-none !ring-0 !text-base-color !rounded-xl transition-colors";
+
 const ContactUsForm = () => {
   const [form] = Form.useForm();
   const TextArea = Input.TextArea;
@@ -43,10 +46,7 @@ const ContactUsForm = () => {
             },
           ]}
         >
-          <Input
-            placeholder="Zadajte svoje celé meno"
-            className="!py-2 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg "
-          />
+          <Input placeholder="Zadajte svoje celé meno" className={inputClass} />
         </Form.Item>
       </div>
       {/* Email Input */}
@@ -65,10 +65,7 @@ const ContactUsForm = () => {
             },
           ]}
         >
-          <Input
-            placeholder="Zadajte svoj e-mail"
-            className="!py-2 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg "
-          />
+          <Input placeholder="Zadajte svoj e-mail" className={inputClass} />
         </Form.Item>
       </div>
       {/* Message Input */}
@@ -87,16 +84,12 @@ const ContactUsForm = () => {
             },
           ]}
         >
-          <TextArea
-            placeholder="Zadajte svoju správu"
-            rows={4}
-            className="!py-2 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg "
-          />
+          <TextArea placeholder="Zadajte svoju správu" rows={5} className={inputClass} />
         </Form.Item>
       </div>
 
-      <Form.Item className="lg:col-span-2">
-        <ReuseButton htmlType="submit" variant="secondary">
+      <Form.Item className="lg:col-span-2 !mb-0">
+        <ReuseButton htmlType="submit" variant="secondary" className="!py-6 !rounded-xl !font-semibold !text-base">
           <span className="text-white">{/* Send Message */}Odoslať správu</span>
         </ReuseButton>
       </Form.Item>

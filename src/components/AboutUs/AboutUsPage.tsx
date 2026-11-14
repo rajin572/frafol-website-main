@@ -62,7 +62,7 @@ const AboutUsPage = () => {
         /* description="We are not just another ordinary listing website..." */
         description="Nie sme len ďalší obyčajný katalógový web. Sme komunita a platforma, kde sa talent stretáva s dopytom. Spájame fotografov a videografov, ktorí milujú tvoriť, s klientmi, ktorí chcú zachytiť to, na čom im najviac záleží."
       />
-      <section className="mt-10 space-y-10">
+      <section className="mt-12 space-y-14 sm:space-y-16 lg:mt-16 lg:space-y-24">
         {data.map((item, index) => (
           <AboutUsCard key={index} data={item} />
         ))}

@@ -8,7 +8,7 @@ export const metadata = {
 
 const page = () => {
   return (
-    <main className="py-10">
+    <main className="py-10 sm:py-14">
       <Container>
         <AboutUsPage />
       </Container>

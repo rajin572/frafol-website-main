@@ -18,26 +18,28 @@ interface AboutUsCardProps {
 }
 const AboutUsCard = ({ data }: AboutUsCardProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-7 ">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-7 md:gap-10 lg:gap-16">
       <div className={`${data?.reverse ? "md:order-2" : ""} relative`}>
         <Image
           src={data?.image}
           alt={data?.title}
-          className="w-full object-cover h-[400px] md:h-[500px] lg:!h-[600px] rounded-2xl"
+          placeholder="blur"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="w-full object-cover h-[340px] sm:h-[420px] md:h-[480px] lg:!h-[560px] rounded-2xl"
         />
       </div>
       <div className={` ${data?.reverse ? "md:order-1" : ""}`}>
-        <h2 className="text-xl sm:text-2xl lg:text-3xl text-secondary-color font-bold">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight text-secondary-color font-bold">
           {data?.title}
         </h2>
-        <p className="mt-4 text-base sm:text-lg lg:text-xl text-base-color font-medium">
+        <p className="mt-5 text-base sm:text-lg lg:text-xl leading-relaxed text-base-color/80">
           {data?.description}
         </p>
         {data?.buttonText && (
           <ReuseButton
             variant="secondary"
             url={data?.redirectUrl}
-            className="mt-4 !w-fit !text-sm sm:!text-sm lg:!text-base"
+            className="mt-7 !w-fit !py-6 !px-7 !rounded-lg !font-semibold !text-sm sm:!text-sm lg:!text-base"
           >
             {data?.buttonText}
           </ReuseButton>
