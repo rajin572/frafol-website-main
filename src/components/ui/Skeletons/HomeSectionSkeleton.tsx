@@ -11,8 +11,7 @@ const HomeSectionSkeleton = ({ variant, tone = "white" }: { variant: Variant; to
   <section className={`${tone === "cream" ? "bg-[#fbf7f4]" : "bg-white"} py-20 sm:py-24`} aria-hidden>
     <Container>
       <div className="mb-12 flex flex-col items-center">
-        <div className="h-4 w-28 animate-pulse rounded bg-gray-200" />
-        <div className="mt-4 h-9 w-2/3 max-w-md animate-pulse rounded-md bg-gray-200" />
+        <div className="h-9 w-2/3 max-w-md animate-pulse rounded-md bg-gray-200" />
         <div className="mt-4 h-4 w-full max-w-lg animate-pulse rounded bg-gray-200" />
       </div>
 

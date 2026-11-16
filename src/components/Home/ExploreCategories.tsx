@@ -34,7 +34,6 @@ const ExploreCategories = async ({
     <section className="bg-[#fbf7f4] py-20 sm:py-24">
       <Container>
         <SectionHeader
-          eyebrow="Kategórie"
           title="Preskúmajte kategórie"
           description="Frafol vám uľahčí nájsť a objednať si ideálneho fotografa alebo videografa pre váš projekt."
         />

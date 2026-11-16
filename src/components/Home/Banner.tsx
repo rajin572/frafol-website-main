@@ -1,9 +1,15 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
-import BannerSearch from "./BannerSearch";
 import HeroStage from "./HeroStage";
 
-// Home hero: headline + search on the left, the animated "photo shoot" scene on the right.
+// Home hero: headline + two buttons on the left, the animated "photo shoot" scene on the right.
 // The headline is not animated on purpose (LCP element), neither is the photo in the scene.
+
+const heroButtons = [
+  { href: "/photography", label: "Fotografi" },
+  { href: "/videography", label: "Kameramani" },
+];
 
 export default function Banner() {
   return (
@@ -48,8 +54,21 @@ export default function Banner() {
               jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
             </p>
 
-            <div className="hero-fade-up mt-8 w-full max-w-xl" style={{ animationDelay: "0.15s" }}>
-              <BannerSearch />
+            {/* Two entry buttons (the search bar used to be here) */}
+            <div
+              className="hero-fade-up mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4"
+              style={{ animationDelay: "0.15s" }}
+            >
+              {heroButtons.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-secondary-color px-9 py-4 text-base sm:text-lg font-bold text-white shadow-lg shadow-secondary-color/20 transition-colors hover:bg-secondary-color/90"
+                >
+                  {label}
+                  <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              ))}
             </div>
           </div>
 

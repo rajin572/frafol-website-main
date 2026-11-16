@@ -14,6 +14,7 @@ import reviewDetails from "./images/review-details.jpg";
 
 import herobanner from "./images/banner.jpg";
 import herobanner1 from "./images/banner1.png";
+import heroVideographer from "./images/hero-videographer.jpg"; // Pexels 3796991, home hero "Natáčanie" photo
 import smartPhone from "./images/smartPhone.png";
 import male from "./images/male.png";
 import girl from "./images/female.png";
@@ -87,6 +88,7 @@ export const AllImages = {
 
   herobanner,
   herobanner1,
+  heroVideographer,
   smartPhone,
   aboutusStory,
   aboutUsBrife,

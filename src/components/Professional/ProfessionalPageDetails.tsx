@@ -21,7 +21,9 @@ import ProfileSectionNav from "./ProfileSectionNav";
 import ProfileSectionTitle from "./ProfileSectionTitle";
 
 // Full width, same height as the "Požiadať o cenovú ponuku" button under it.
-const messageButtonClass = "!w-full !py-5 !px-5 !rounded-lg !font-semibold !text-sm sm:!text-base !justify-center";
+// Outline: "Požiadať o cenovú ponuku" is the highlighted (filled) button, the message one is secondary.
+const messageButtonClass =
+  "!w-full !py-5 !px-5 !rounded-lg !font-semibold !text-sm sm:!text-base !justify-center !bg-white !text-secondary-color !border !border-secondary-color hover:!bg-secondary-color/5";
 
 const ProfessionalPageDetails = async ({
   professionalUser,
@@ -95,12 +97,29 @@ const ProfessionalPageDetails = async ({
                   ? "Fotograf"
                   : "Videograf"}
             </p>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm sm:justify-start sm:text-base text-base-color/80">
+              <Link
+                href="#reviews"
+                className="inline-flex items-center gap-2 font-medium transition-colors hover:text-secondary-color"
+              >
+                <FaStar className="text-[#FFD700]" />
+                <span>
+                  {professionalUser?.averageRating?.toFixed(1)} ({professionalUser?.totalReview} Recenzie)
+                </span>
+              </Link>
+              {professionalUser?.town && (
+                <p className="inline-flex items-center gap-2 font-medium">
+                  <FaLocationDot className="text-secondary-color" />
+                  <span>{professionalUser?.town}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </Container>
 
       {/* ---------- Section links (sticky) ---------- */}
-      <div className="sticky top-0 z-30 mt-8 border-b border-base-color/10 bg-white">
+      <div className="sticky top-0 z-30 mt-5 border-b border-base-color/10 bg-white">
         <Container>
           <ProfileSectionNav />
         </Container>
@@ -116,39 +135,22 @@ const ProfessionalPageDetails = async ({
                 {professionalUser?.minHourlyRate}€ - {professionalUser?.maxHourlyRate}€
               </p>
 
-              <div className="mt-5 space-y-3 border-t border-base-color/10 pt-5 text-sm sm:text-base text-base-color/80">
-                <Link
-                  href="#reviews"
-                  className="flex items-center gap-2.5 font-medium transition-colors hover:text-secondary-color"
-                >
-                  <FaStar className="text-[#FFD700]" />
-                  <span>
-                    {professionalUser?.averageRating?.toFixed(1)} ({professionalUser?.totalReview} Recenzie)
-                  </span>
-                </Link>
-                <p className="flex items-center gap-2.5 font-medium">
-                  <FaLocationDot className="text-secondary-color" />
-                  <span>{professionalUser?.town}</span>
-                </p>
-              </div>
-
               {/* Which buttons show depends on who is looking (unchanged rules) */}
               {myData?.role === "user" ? (
                 <div className="mt-6 flex flex-col gap-3">
-                  <CreateConversionButton userId={professionalUser?._id} name={professionalUser?.name} className={messageButtonClass} />
                   <ProfessionalPageDetailsBookSession
                     myData={myData}
                     professionalUser={professionalUser}
                   />
+                  <CreateConversionButton userId={professionalUser?._id} name={professionalUser?.name} className={messageButtonClass} />
                 </div>
               ) : myData?.role === "company" ? (
                 <div className="mt-6 flex flex-col gap-3">
-                  <CreateConversionButton userId={professionalUser?._id} name={professionalUser?.name} className={messageButtonClass} />
-
                   <ProfessionalPageDetailsBookSession
                     myData={myData}
                     professionalUser={professionalUser}
                   />
+                  <CreateConversionButton userId={professionalUser?._id} name={professionalUser?.name} className={messageButtonClass} />
                 </div>
               ) : myData?.role && userData?.userId !== professionalUser?._id ? (
                 <div className="mt-6 flex flex-col gap-3">

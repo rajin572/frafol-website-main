@@ -27,7 +27,6 @@ const FrafolChoiceProfessional = async () => {
             <JsonLd data={professionalListSchema("Odporúča Frafol", "/", professionals, "frafol-choice")} />
             <Container>
                 <SectionHeader
-                    eyebrow="Zvýraznení tvorcovia"
                     title="Odporúča Frafol"
                     description="Objavte našich overených fotografov a videografov"
                 />

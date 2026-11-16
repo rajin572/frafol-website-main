@@ -28,7 +28,6 @@ const FeaturedProfessionals = async () => {
         {/* title="Featured Professionals" */}
         {/* description="Discover our top-rated photographers and videographers" */}
         <SectionHeader
-          eyebrow="Tvorcovia"
           title="Odporúčaní fotografi a kameramani"
           description="Objavte našich najlepšie hodnotených fotografov a kameramanov"
         />

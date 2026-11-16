@@ -27,7 +27,6 @@ const Marketplace = async () => {
       <Container>
         <SectionHeader
           /* title="Marketplace" */
-          eyebrow="Foto a video technika"
           title="Bazár"
           /* description="Browse and buy equipment from professionals in the industry." */
           description="Prezrite si ponuku príslušenstva a nakúpte od fotografov a kameramanov"

@@ -21,8 +21,7 @@ export default async function JoinCta() {
       <Container>
         <div className="grid overflow-hidden rounded-2xl bg-secondary-color lg:grid-cols-2">
           <div className="px-6 py-12 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
-            <p className="text-sm font-semibold text-third-color">Pre fotografov a kameramanov</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white">
               Ste fotograf alebo kameraman?
             </h2>
             <ul className="mt-6 flex flex-col gap-3">

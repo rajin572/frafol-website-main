@@ -24,7 +24,6 @@ const FAQ = () => {
       <Container>
         <SectionHeader
           /* title="Frequently asked questions" */
-          eyebrow="Otázky a odpovede"
           title="Často kladené otázky"
           /* description="Everything you need to know about the product and billing." */
           description="Všetko, čo potrebujete vedieť o službe a platbách"

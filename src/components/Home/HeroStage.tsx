@@ -1,11 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { AllImages } from "../../../public/assets/AllImages";
 
 // Hero "photo shoot" scene. A camera viewfinder with a real photo in the middle; the photographer
 // (left) takes the picture, the flash fires and the frame blinks white. The videographer (right)
-// records it, with REC waves coming out of his lens. Both characters link to their category page.
+// records it, with REC waves coming out of his lens. The characters are decoration only (no links).
 //
 // Everything is positioned in % of one aspect-ratio box, so the same scene scales from phone to desktop.
 // Animations live in globals.css (hero-*) and switch off with prefers-reduced-motion. The entrance
@@ -80,7 +78,7 @@ export default function HeroStage() {
           style={{ "--hero-tilt": "7deg" } as React.CSSProperties}
         >
           <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image src={AllImages.signupuser} alt="Kameraman pri natáčaní" fill loading="eager" placeholder="blur" sizes="140px" className="object-cover object-[30%_center]" />
+            <Image src={AllImages.heroVideographer} alt="Kameraman pri natáčaní" fill loading="eager" placeholder="blur" sizes="140px" className="object-cover" />
           </div>
           <p className="py-1.5 text-center text-[11px] font-bold text-base-color">Natáčanie</p>
         </div>
@@ -88,9 +86,9 @@ export default function HeroStage() {
 
       {/* ---------- Photographer (left) ---------- */}
       <div className="hero-in-left absolute bottom-[4%] left-[-1%] z-20 h-[62%] aspect-[400/769]" style={{ animationDelay: "0.2s" }}>
-        <Link href="/photography" aria-label="Fotografi" className="group block h-full w-full">
+        <div className="block h-full w-full">
           <span aria-hidden className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-black/15 blur-[3px]" />
-          <div className="hero-bob relative h-full w-full transition-transform duration-300 group-hover:scale-[1.04]">
+          <div className="hero-bob relative h-full w-full">
             <Image src={AllImages.girl} alt="Fotografka" fill priority sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
             {/* Flash at the lens */}
             <span
@@ -98,26 +96,20 @@ export default function HeroStage() {
               className="hero-flash pointer-events-none absolute left-[83%] top-[31%] size-16 sm:size-24 rounded-full bg-[radial-gradient(circle,#ffffff_0%,#fff6c4_30%,#ffc70066_55%,transparent_72%)]"
             />
           </div>
-          <span className="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-secondary-color px-3 py-1 text-[11px] sm:text-sm font-bold text-white shadow-lg transition group-hover:gap-2">
-            Fotografi <ArrowRight className="size-3 sm:size-3.5" />
-          </span>
-        </Link>
+        </div>
       </div>
 
       {/* ---------- Videographer (right) ---------- */}
       <div className="hero-in-right absolute bottom-[4%] right-[-1%] z-20 h-[62%] aspect-[400/769]" style={{ animationDelay: "0.35s" }}>
-        <Link href="/videography" aria-label="Kameramani" className="group block h-full w-full">
+        <div className="block h-full w-full">
           <span aria-hidden className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-black/15 blur-[3px]" />
-          <div className="hero-bob-delayed relative h-full w-full transition-transform duration-300 group-hover:scale-[1.04]">
+          <div className="hero-bob-delayed relative h-full w-full">
             <Image src={AllImages.male} alt="Kameraman" fill priority sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
             {/* Recording waves out of the lens */}
             <span aria-hidden className="hero-rec-wave pointer-events-none absolute left-[8%] top-[19.5%] size-10 sm:size-14 rounded-full border-2 border-secondary-color/70" />
             <span aria-hidden className="hero-rec-wave-delayed pointer-events-none absolute left-[8%] top-[19.5%] size-10 sm:size-14 rounded-full border-2 border-secondary-color/70" />
           </div>
-          <span className="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-secondary-color px-3 py-1 text-[11px] sm:text-sm font-bold text-white shadow-lg transition group-hover:gap-2">
-            Kameramani <ArrowRight className="size-3 sm:size-3.5" />
-          </span>
-        </Link>
+        </div>
       </div>
 
       {/* Accent shape behind the scene */}

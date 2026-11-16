@@ -25,7 +25,6 @@ const Testimonial = async () => {
       <Container>
         <SectionHeader
           /* title="Their Experience, In Their Words" */
-          eyebrow="Recenzie"
           title="Ich skúsenosť, Ich slovami"
           /* description="Hear from clients who found their perfect visual professional through our platform" */
           description="Prečítajte si skúsenosti klientov, ktorí si cez našu platformu našli ideálneho fotografa alebo kameramana"

@@ -12,11 +12,15 @@ const SkeletonLoader = () => {
           <div className="flex flex-col items-center sm:items-start">
             <div className={`h-9 w-56 ${bar}`} />
             <div className={`mt-2 h-5 w-28 ${bar}`} />
+            <div className="mt-3 flex gap-5">
+              <div className={`h-5 w-36 ${bar}`} />
+              <div className={`h-5 w-24 ${bar}`} />
+            </div>
           </div>
         </div>
       </Container>
 
-      <div className="mt-8 border-b border-base-color/10">
+      <div className="mt-5 border-b border-base-color/10">
         <Container>
           <div className="flex gap-8 py-4">
             {[20, 28, 28, 20].map((w, i) => (
@@ -32,10 +36,6 @@ const SkeletonLoader = () => {
             <div className="rounded-2xl border border-base-color/10 p-6">
               <div className={`h-4 w-32 ${bar}`} />
               <div className={`mt-2 h-8 w-44 ${bar}`} />
-              <div className="mt-5 space-y-3 border-t border-base-color/10 pt-5">
-                <div className={`h-4 w-40 ${bar}`} />
-                <div className={`h-4 w-28 ${bar}`} />
-              </div>
               <div className="mt-6 h-11 w-full animate-pulse rounded-lg bg-gray-200" />
               <div className="mt-3 h-11 w-full animate-pulse rounded-lg bg-gray-200" />
             </div>
