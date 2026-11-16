@@ -44,6 +44,7 @@ ${link("termsOfServiceMarketplace", "Obchodné podmienky bazára")}
 ${link("dataProtection", "Ochrana osobných údajov")}
 
 ## Optional
+- [Úplný zoznam](${SITE_URL}/llms-full.txt): všetci fotografi a kameramani s mestom, cenou a hodnotením, kategórie, bazár, workshopy a často kladené otázky.
 - [Mapa stránok](${SITE_URL}/sitemap.xml): všetky verejné profily tvorcov, produkty v bazári, príspevky vo fóre a kategórie.
 `;
 

@@ -1,7 +1,7 @@
 // schema.org JSON-LD builders for the public pages. Rendered with <JsonLd />.
-import type { ICommunityPost, IGear, IProfessionalUser, IWorkshop } from "@/types";
+import type { ICommunityPost, IGear, IProfessional, IProfessionalUser, IReview, IWorkshop } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
-import { ORGANIZATION, SITE_NAME, SITE_URL, absoluteUrl, toPlainText } from "./site";
+import { DEFAULT_DESCRIPTION, ORGANIZATION, SITE_NAME, SITE_URL, absoluteUrl, toPlainText } from "./site";
 
 type Schema = Record<string, unknown>;
 
@@ -28,6 +28,7 @@ export const organizationSchema = (): Schema => ({
   "@id": ORG_ID,
   name: SITE_NAME,
   legalName: ORGANIZATION.legalName,
+  description: DEFAULT_DESCRIPTION,
   url: SITE_URL,
   logo: absoluteUrl("/icons/icon-512.png"),
   image: absoluteUrl("/og-image.png"),
@@ -37,6 +38,8 @@ export const organizationSchema = (): Schema => ({
   taxID: ORGANIZATION.taxID,
   address: { "@type": "PostalAddress", ...ORGANIZATION.address },
   areaServed: { "@type": "Country", name: "Slovensko" },
+  // What Frafol is about: helps AI assistants place it as a photographer / videographer platform.
+  knowsAbout: ["Fotografia", "Natáčanie videa", "Svadobná fotografia", "Fotograf", "Kameraman", "Foto a video technika"],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
@@ -54,6 +57,7 @@ export const websiteSchema = (): Schema => ({
   "@id": WEBSITE_ID,
   name: SITE_NAME,
   url: SITE_URL,
+  description: DEFAULT_DESCRIPTION,
   inLanguage: "sk-SK",
   publisher: { "@id": ORG_ID },
   potentialAction: {
@@ -64,17 +68,32 @@ export const websiteSchema = (): Schema => ({
 });
 
 // A plain page (about, contact, legal …). `type` e.g. AboutPage, ContactPage, CollectionPage.
-export const webPageSchema = ({ type = "WebPage", name, description, path }: { type?: string; name: string; description: string; path: string }): Schema => ({
-  "@context": "https://schema.org",
-  "@type": type,
-  "@id": `${absoluteUrl(path)}#webpage`,
-  url: absoluteUrl(path),
+// `speakable`: CSS selectors of the parts a voice assistant may read out (AEO).
+export const webPageSchema = ({
+  type = "WebPage",
   name,
   description,
-  inLanguage: "sk-SK",
-  isPartOf: { "@id": WEBSITE_ID },
-  publisher: { "@id": ORG_ID },
-});
+  path,
+  speakable,
+}: {
+  type?: string;
+  name: string;
+  description: string;
+  path: string;
+  speakable?: string[];
+}): Schema =>
+  clean({
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${absoluteUrl(path)}#webpage`,
+    url: absoluteUrl(path),
+    name,
+    description,
+    inLanguage: "sk-SK",
+    isPartOf: { "@id": WEBSITE_ID },
+    publisher: { "@id": ORG_ID },
+    speakable: speakable?.length ? { "@type": "SpeakableSpecification", cssSelector: speakable } : undefined,
+  });
 
 // "Domov › Fotografi › Meno" trail, shown by Google instead of the raw URL.
 export const breadcrumbSchema = (items: { name: string; path: string }[]): Schema => ({
@@ -256,5 +275,132 @@ export const workshopListSchema = (workshops: IWorkshop[]): Schema => ({
     "@type": "ListItem",
     position: index + 1,
     item: workshopEventSchema(workshop),
+  })),
+});
+
+// ---------------------------------------------------------------------------------------------
+// Lists (GEO / AEO): the creators, products and posts shown on a list page, so AI assistants and
+// answer boxes can name and link concrete creators ("Be the recommendation"), not just the site.
+// ---------------------------------------------------------------------------------------------
+
+// One creator card (list pages): name, role, town, price range and rating.
+const professionalListEntry = (item: IProfessional): Schema => {
+  const name = fullName(item);
+  const job = ROLE_JOB[item?.role ?? ""] ?? "Fotograf a kameraman";
+  const reviews = Number(item?.totalReview ?? 0);
+  const rating = Number(item?.averageRating ?? 0);
+  const min = Number(item?.minHourlyRate ?? 0);
+  const max = Number(item?.maxHourlyRate ?? 0);
+  return clean({
+    "@type": "ProfessionalService",
+    "@id": `${absoluteUrl(`/professionals/${item?._id}`)}#service`,
+    name: `${name} – ${job}`,
+    url: absoluteUrl(`/professionals/${item?._id}`),
+    image: media(item?.profileImage),
+    priceRange: min > 0 && max > 0 ? `${min} € – ${max} €` : undefined,
+    address: item?.town ? { "@type": "PostalAddress", addressLocality: item.town, addressCountry: "SK" } : undefined,
+    aggregateRating:
+      reviews > 0 && rating > 0
+        ? { "@type": "AggregateRating", ratingValue: Number(rating.toFixed(1)), reviewCount: reviews, bestRating: 5, worstRating: 1 }
+        : undefined,
+  });
+};
+
+const listOf = (name: string, path: string, items: Schema[], key = "list"): Schema => ({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${absoluteUrl(path)}#${key}`,
+  name,
+  url: absoluteUrl(path),
+  numberOfItems: items.length,
+  itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, item })),
+});
+
+export const professionalListSchema = (name: string, path: string, items: IProfessional[] = [], key?: string): Schema =>
+  listOf(name, path, items.filter((item) => item?._id).map(professionalListEntry), key);
+
+export const productListSchema = (name: string, path: string, items: IGear[] = []): Schema =>
+  listOf(
+    name,
+    path,
+    items
+      .filter((item) => item?._id)
+      .map((gear) => {
+        const price = Number(gear?.mainPrice ?? gear?.price ?? 0);
+        return clean({
+          "@type": "Product",
+          name: gear?.name,
+          url: absoluteUrl(`/marketplace/${gear._id}`),
+          image: media(gear?.gallery?.[0]),
+          category: gear?.categoryId?.title,
+          offers: clean({
+            "@type": "Offer",
+            price: price > 0 ? Number(price.toFixed(2)) : undefined,
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            itemCondition: gear?.condition === "new" ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
+          }),
+        });
+      })
+  );
+
+export const forumListSchema = (name: string, path: string, items: ICommunityPost[] = []): Schema =>
+  listOf(
+    name,
+    path,
+    items
+      .filter((item) => item?._id)
+      .map((post) =>
+        clean({
+          "@type": "DiscussionForumPosting",
+          headline: post?.title,
+          url: absoluteUrl(`/forums/${post._id}`),
+          datePublished: post?.createdAt,
+          author: { "@type": "Person", name: fullName(post?.authorId) || SITE_NAME },
+        })
+      )
+  );
+
+// Client reviews on a creator profile, attached to the profile's ProfessionalService.
+export const reviewsSchema = (reviews: IReview[], path: string): Schema[] =>
+  reviews
+    .filter((review) => Number(review?.rating) > 0)
+    .slice(0, 20)
+    .map((review) =>
+      clean({
+        "@context": "https://schema.org",
+        "@type": "Review",
+        itemReviewed: { "@id": `${absoluteUrl(path)}#service` },
+        reviewRating: { "@type": "Rating", ratingValue: Number(review.rating), bestRating: 5, worstRating: 1 },
+        reviewBody: toPlainText(review?.message, 1000) || undefined,
+        datePublished: review?.createdAt,
+        author: { "@type": "Person", name: review?.isAnonymous ? "Anonym" : review?.userId?.name || "Klient" },
+      })
+    );
+
+// Step-by-step answer ("How do I order a photographer?"), for answer boxes and AI assistants.
+export const howToSchema = ({
+  name,
+  description,
+  path,
+  steps,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  steps: { name: string; description: string }[];
+}): Schema => ({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${absoluteUrl(path)}#howto`,
+  name,
+  description,
+  inLanguage: "sk-SK",
+  step: steps.map((step, index) => ({
+    "@type": "HowToStep",
+    position: index + 1,
+    name: step.name,
+    text: step.description,
+    url: `${absoluteUrl(path)}#ako-to-funguje`,
   })),
 });

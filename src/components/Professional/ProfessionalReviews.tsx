@@ -6,6 +6,8 @@ import ReviewCard from "./ProfessionalReviewCard";
 import { IProfessionalUser, IReview } from "@/types";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
+import JsonLd from "@/components/seo/JsonLd";
+import { reviewsSchema } from "@/lib/seo/schema";
 
 const ProfessionalReviews = async ({
   professionalUser,
@@ -29,6 +31,7 @@ const ProfessionalReviews = async ({
 
   return (
     <section id="reviews" className="scroll-mt-24">
+      {reviews.length > 0 && <JsonLd data={reviewsSchema(reviews, `/professionals/${professionalUser?._id}`)} />}
       <ProfileSectionTitle>Recenzie</ProfileSectionTitle>
       <div className="mt-6">
         <ProfessionalReviewRating professionalUser={professionalUser} />

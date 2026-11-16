@@ -6,6 +6,8 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { IProfessional } from "@/types";
 import ReuseButton from "../ui/Button/ReuseButton";
+import JsonLd from "@/components/seo/JsonLd";
+import { professionalListSchema } from "@/lib/seo/schema";
 
 const FeaturedProfessionals = async () => {
   const res = await fetchWithAuth(`/users/professionals`, {
@@ -17,10 +19,11 @@ const FeaturedProfessionals = async () => {
   const data = await res.json();
   const professionals: IProfessional[] = data?.data?.result;
 
-  console.log(professionals)
-
   return (
     <section className="bg-white py-20 sm:py-24">
+      {professionals?.length > 0 && (
+        <JsonLd data={professionalListSchema("Odporúčaní fotografi a kameramani", "/", professionals, "featured")} />
+      )}
       <Container>
         {/* title="Featured Professionals" */}
         {/* description="Discover our top-rated photographers and videographers" */}

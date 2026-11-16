@@ -19,6 +19,8 @@ import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 import { getProfessionalsListCopy } from "@/utils/professionalsCopy";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import JsonLd from "@/components/seo/JsonLd";
+import { professionalListSchema } from "@/lib/seo/schema";
 
 // Tabs above the list. Plain links to URLs the site already uses (navbar, home page).
 const views = [
@@ -78,6 +80,15 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
 
   return (
     <main className="pb-20">
+      {professionals?.length > 0 && (
+        <JsonLd
+          data={professionalListSchema(
+            copy.heading,
+            role ? `/professionals?role=${role}` : type ? "/professionals?type=verified" : "/professionals",
+            professionals
+          )}
+        />
+      )}
       {/* title="Our Professionals" */}
       {/* description="Discover our top-rated Professionals" */}
       {/* Heading and intro follow the ?role= / ?type= filter, see professionalsCopy.ts */}

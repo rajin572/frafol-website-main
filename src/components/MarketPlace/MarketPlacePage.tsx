@@ -16,6 +16,8 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { PlusIcon } from "lucide-react";
 import { getCurrentUser } from "@/services/AuthService";
 import { readJson } from "@/lib/readJson";
+import JsonLd from "@/components/seo/JsonLd";
+import { productListSchema } from "@/lib/seo/schema";
 
 // Let's generate 12 dummy entries (mock data like a boss 😎)
 
@@ -42,7 +44,6 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
   const data = await readJson(res, "/marketPlace");
   const gear: IGear[] = data?.data?.result || [];
   const totalData = data?.data?.meta?.total || 0;
-  console.log(gear)
 
   const categoryRes = await fetchWithAuth(`/category/type/gear`, {
     next: {
@@ -59,6 +60,7 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
   console.log(userData)
   return (
     <main className="pb-20">
+      {gear.length > 0 && <JsonLd data={productListSchema("Bazár foto a video techniky", "/marketplace", gear)} />}
       {/* title="Market Place" */}
       <SectionBanner
         image={AllImages?.marketBanner?.src}

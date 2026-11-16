@@ -13,11 +13,9 @@ const FAQ = () => {
   >("Clients");
 
 
-  const accordionsData = activeButton === "Clients" ? clientsAccordions : professionalsAccordions;
-
   return (
     <motion.section
-      // id="faq"
+      id="faq"
       // initial={{ opacity: 0 }}
       // whileInView={{ opacity: 1 }}
       // transition={{ duration: 0.1 }}
@@ -74,7 +72,14 @@ const FAQ = () => {
             </div>
           </div>
           <div className="col-span-2">
-            <FAQGenerate accordionsData={accordionsData} />
+            {/* Both lists are in the page (the other one hidden), so search engines and AI assistants
+                read every answer, not only the open tab. */}
+            <div hidden={activeButton !== "Clients"}>
+              <FAQGenerate accordionsData={clientsAccordions} />
+            </div>
+            <div hidden={activeButton === "Clients"}>
+              <FAQGenerate accordionsData={professionalsAccordions} />
+            </div>
           </div>
         </div>
       </Container>

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import * as motion from "motion/react-client";
 import { ArrowRight } from "lucide-react";
 import { AllImages } from "../../../public/assets/AllImages";
 
@@ -9,20 +8,9 @@ import { AllImages } from "../../../public/assets/AllImages";
 // records it, with REC waves coming out of his lens. Both characters link to their category page.
 //
 // Everything is positioned in % of one aspect-ratio box, so the same scene scales from phone to desktop.
-// Animations live in globals.css (hero-*) and switch off with prefers-reduced-motion.
+// Animations live in globals.css (hero-*) and switch off with prefers-reduced-motion. The entrance
+// animations are CSS too, so the characters and photos show on first paint, not after the JS loads.
 // The framed photo is the LCP image: it is `priority` and never starts hidden.
-
-const slideIn = (fromX: number, delay: number) => ({
-  initial: { opacity: 0, x: fromX },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.8, delay, ease: "easeOut" as const },
-});
-
-const popIn = (delay: number) => ({
-  initial: { opacity: 0, y: 20, scale: 0.92 },
-  animate: { opacity: 1, y: 0, scale: 1 },
-  transition: { duration: 0.6, delay, ease: "easeOut" as const },
-});
 
 const Corner = ({ className }: { className: string }) => (
   <span aria-hidden className={`absolute size-5 sm:size-7 border-white/90 ${className}`} />
@@ -74,36 +62,36 @@ export default function HeroStage() {
       </div>
 
       {/* ---------- Polaroid shots (sm and up) ---------- */}
-      <motion.div {...popIn(0.5)} className="absolute left-0 top-0 z-10 hidden w-[23%] sm:block">
+      <div className="hero-pop-in absolute left-0 top-0 z-10 hidden w-[23%] sm:block" style={{ animationDelay: "0.5s" }}>
         <div
           className="hero-drift rounded-xl bg-white p-1.5 pb-0 shadow-xl ring-1 ring-black/5"
           style={{ "--hero-tilt": "-8deg" } as React.CSSProperties}
         >
           <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image src={AllImages.aboutUs2} alt="Fotenie v ateliéri" fill placeholder="blur" sizes="150px" className="object-cover" />
+            <Image src={AllImages.aboutUs2} alt="Fotenie v ateliéri" fill loading="eager" placeholder="blur" sizes="150px" className="object-cover" />
           </div>
           <p className="py-1.5 text-center text-[11px] font-bold text-base-color">Fotenie</p>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div {...popIn(0.7)} className="absolute right-0 top-[9%] z-10 hidden w-[21%] sm:block">
+      <div className="hero-pop-in absolute right-0 top-[9%] z-10 hidden w-[21%] sm:block" style={{ animationDelay: "0.7s" }}>
         <div
           className="hero-drift-delayed rounded-xl bg-white p-1.5 pb-0 shadow-xl ring-1 ring-black/5"
           style={{ "--hero-tilt": "7deg" } as React.CSSProperties}
         >
           <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image src={AllImages.signupuser} alt="Kameraman pri natáčaní" fill placeholder="blur" sizes="140px" className="object-cover object-[30%_center]" />
+            <Image src={AllImages.signupuser} alt="Kameraman pri natáčaní" fill loading="eager" placeholder="blur" sizes="140px" className="object-cover object-[30%_center]" />
           </div>
           <p className="py-1.5 text-center text-[11px] font-bold text-base-color">Natáčanie</p>
         </div>
-      </motion.div>
+      </div>
 
       {/* ---------- Photographer (left) ---------- */}
-      <motion.div {...slideIn(-60, 0.2)} className="absolute bottom-[4%] left-[-1%] z-20 h-[62%] aspect-[400/769]">
+      <div className="hero-in-left absolute bottom-[4%] left-[-1%] z-20 h-[62%] aspect-[400/769]" style={{ animationDelay: "0.2s" }}>
         <Link href="/photography" aria-label="Fotografi" className="group block h-full w-full">
           <span aria-hidden className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-black/15 blur-[3px]" />
           <div className="hero-bob relative h-full w-full transition-transform duration-300 group-hover:scale-[1.04]">
-            <Image src={AllImages.girl} alt="Fotografka" fill sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
+            <Image src={AllImages.girl} alt="Fotografka" fill priority sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
             {/* Flash at the lens */}
             <span
               aria-hidden
@@ -114,14 +102,14 @@ export default function HeroStage() {
             Fotografi <ArrowRight className="size-3 sm:size-3.5" />
           </span>
         </Link>
-      </motion.div>
+      </div>
 
       {/* ---------- Videographer (right) ---------- */}
-      <motion.div {...slideIn(60, 0.35)} className="absolute bottom-[4%] right-[-1%] z-20 h-[62%] aspect-[400/769]">
+      <div className="hero-in-right absolute bottom-[4%] right-[-1%] z-20 h-[62%] aspect-[400/769]" style={{ animationDelay: "0.35s" }}>
         <Link href="/videography" aria-label="Kameramani" className="group block h-full w-full">
           <span aria-hidden className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-black/15 blur-[3px]" />
           <div className="hero-bob-delayed relative h-full w-full transition-transform duration-300 group-hover:scale-[1.04]">
-            <Image src={AllImages.male} alt="Kameraman" fill sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
+            <Image src={AllImages.male} alt="Kameraman" fill priority sizes="(min-width: 1024px) 190px, 30vw" className="object-contain drop-shadow-lg" />
             {/* Recording waves out of the lens */}
             <span aria-hidden className="hero-rec-wave pointer-events-none absolute left-[8%] top-[19.5%] size-10 sm:size-14 rounded-full border-2 border-secondary-color/70" />
             <span aria-hidden className="hero-rec-wave-delayed pointer-events-none absolute left-[8%] top-[19.5%] size-10 sm:size-14 rounded-full border-2 border-secondary-color/70" />
@@ -130,7 +118,7 @@ export default function HeroStage() {
             Kameramani <ArrowRight className="size-3 sm:size-3.5" />
           </span>
         </Link>
-      </motion.div>
+      </div>
 
       {/* Accent shape behind the scene */}
       <div aria-hidden className="absolute bottom-[16%] left-1/2 -z-10 size-[45%] -translate-x-1/2 rounded-full bg-third-color/25 blur-2xl" />

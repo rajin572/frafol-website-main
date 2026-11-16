@@ -17,7 +17,6 @@ export async function generateMetadata({
     const res = await fetchWithAuth(`/users/${id}`, {
       next: {
         tags: [TagTypes.prfessional],
-        revalidate: 60,
       },
     });
     const user: IProfessionalUser | undefined = (await res.json())?.data;

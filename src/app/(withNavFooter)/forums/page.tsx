@@ -7,6 +7,8 @@ import ForumPage from "@/components/Forum/ForumPage";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICommunityPost } from "@/types";
+import JsonLd from "@/components/seo/JsonLd";
+import { forumListSchema } from "@/lib/seo/schema";
 
 export const metadata = staticPageMetadata("forums");
 
@@ -35,10 +37,10 @@ const page = async ({
   const totalData = data?.data?.meta?.total;
 
   const communityPosts: ICommunityPost[] = data?.data?.result || [];
-  console.log(communityPosts)
 
   return (
     <main className="pb-20">
+      {communityPosts.length > 0 && <JsonLd data={forumListSchema("Fórum fotografov a kameramanov", "/forums", communityPosts)} />}
       {/* title="Community Forum" */}
       {/* description="Connect with other photographers and videographers to discuss gear, techniques, and more." */}
       <BrowseHeader

@@ -474,7 +474,68 @@ html {
   animation: hero-drift 5s ease-in-out 2.5s infinite;
 }
 
+/* Hero entrance (CSS, not JS): runs on first paint, so nothing waits for the page's JavaScript.
+   Delay per element with style={{ animationDelay: "0.3s" }}. */
+@keyframes hero-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-in-left {
+  animation: hero-in-left 0.8s ease-out both;
+}
+.hero-in-right {
+  animation: hero-in-right 0.8s ease-out both;
+}
+.hero-pop-in {
+  animation: hero-pop-in 0.6s ease-out both;
+}
+.hero-fade-up {
+  animation: hero-fade-up 0.6s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-in-left,
+  .hero-in-right,
+  .hero-pop-in,
+  .hero-fade-up {
+    animation: none;
+  }
   .hero-bob,
   .hero-bob-delayed,
   .hero-flash,

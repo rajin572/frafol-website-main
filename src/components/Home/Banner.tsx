@@ -1,16 +1,9 @@
-import * as motion from "motion/react-client";
 import Container from "../ui/Container";
 import BannerSearch from "./BannerSearch";
 import HeroStage from "./HeroStage";
 
 // Home hero: headline + search on the left, the animated "photo shoot" scene on the right.
 // The headline is not animated on purpose (LCP element), neither is the photo in the scene.
-
-const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: "easeOut" as const },
-});
 
 export default function Banner() {
   return (
@@ -55,9 +48,9 @@ export default function Banner() {
               jednoducho si objednajte fotenie alebo natáčanie podľa svojich predstáv.
             </p>
 
-            <motion.div {...fadeUp(0.15)} className="mt-8 w-full max-w-xl">
+            <div className="hero-fade-up mt-8 w-full max-w-xl" style={{ animationDelay: "0.15s" }}>
               <BannerSearch />
-            </motion.div>
+            </div>
           </div>
 
           {/* ---------- Photo shoot scene ---------- */}

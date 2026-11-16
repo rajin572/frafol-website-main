@@ -9,6 +9,9 @@ import BrowseHeader from "../shared/BrowseHeader";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
+import JsonLd from "@/components/seo/JsonLd";
+import { professionalListSchema } from "@/lib/seo/schema";
+import { categoryPath } from "@/utils/categoryPath";
 
 const PhotographyCategoryDetails = ({
   categories,
@@ -22,6 +25,20 @@ const PhotographyCategoryDetails = ({
 
   return (
     <main className="pb-20">
+      {categories?.length > 0 && (
+        <JsonLd
+          data={professionalListSchema(
+            data?.title as string,
+            categoryPath("photography", {
+              _id: data?.id,
+              title: data?.title as string,
+              image: data?.src as string,
+              subTitle: data?.subTitle as string,
+            }),
+            categories
+          )}
+        />
+      )}
       <BrowseHeader
         title={data?.title as string}
         description={data?.subTitle as string}

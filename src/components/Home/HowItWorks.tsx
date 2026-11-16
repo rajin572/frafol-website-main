@@ -3,7 +3,8 @@ import { CalendarCheck, Camera, Download, Search } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";
 
-const data = [
+// Also sent to search engines as HowTo JSON-LD (home page).
+export const howItWorksSteps = [
   {
     /* name: "Search" */
     name: "Hľadať",
@@ -37,7 +38,7 @@ const data = [
 // Dark band with 4 numbered steps as cards: icon + step number, title, text.
 const HowItWorks = () => {
   return (
-    <section className="bg-[#1f1d1c] py-20 sm:py-24">
+    <section id="ako-to-funguje" className="scroll-mt-24 bg-[#1f1d1c] py-20 sm:py-24">
       <Container>
         <SectionHeader
           tone="dark"
@@ -49,7 +50,7 @@ const HowItWorks = () => {
         />
 
         <ol className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-          {data.map(({ name, description, icon: Icon }, i) => (
+          {howItWorksSteps.map(({ name, description, icon: Icon }, i) => (
             <li key={name}>
               <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.06] sm:p-7">
                 <div className="flex items-center justify-between">

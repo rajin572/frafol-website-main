@@ -5,6 +5,8 @@ import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";
 import ReuseButton from "../ui/Button/ReuseButton";
 import FeaturedProfessionalSlider from "./FeaturedProfessionalSlider";
+import JsonLd from "@/components/seo/JsonLd";
+import { professionalListSchema } from "@/lib/seo/schema";
 
 const FrafolChoiceProfessional = async () => {
     const res = await fetchWithAuth(`/users/professionals?hasActiveSubscription=true`, {
@@ -22,6 +24,7 @@ const FrafolChoiceProfessional = async () => {
 
     return (
         <section className="bg-white py-20 sm:py-24">
+            <JsonLd data={professionalListSchema("Odporúča Frafol", "/", professionals, "frafol-choice")} />
             <Container>
                 <SectionHeader
                     eyebrow="Zvýraznení tvorcovia"
