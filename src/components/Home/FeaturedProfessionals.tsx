@@ -22,13 +22,13 @@ const FeaturedProfessionals = async () => {
   return (
     <section className="bg-white py-20 sm:py-24">
       {professionals?.length > 0 && (
-        <JsonLd data={professionalListSchema("Odporúčaní fotografi a kameramani", "/", professionals, "featured")} />
+        <JsonLd data={professionalListSchema("Vyberte si svojho tvorcu", "/", professionals, "featured")} />
       )}
       <Container>
         {/* title="Featured Professionals" */}
         {/* description="Discover our top-rated photographers and videographers" */}
         <SectionHeader
-          title="Odporúčaní fotografi a kameramani"
+          title="Vyberte si svojho tvorcu"
           description="Objavte našich najlepšie hodnotených fotografov a kameramanov"
         />
 

@@ -32,8 +32,8 @@ const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
       {/* title="Browse All Videography Categories" */}
       {/* description="Explore our complete range of specialized videography services to match your specific project needs." */}
       <BrowseHeader
-        title="Prezrite si všetky video kategórie"
-        description="Prezrite si našu ponuku video služieb a nájdite kameramana podľa toho, čo práve potrebujete."
+        title="Nájdite kameramana podľa svojich predstáv"
+        description="Svadobné video, záznam podujatia alebo reklama pre vašu značku? Vyberte si kategóriu, nájdite svojho kameramana a objednajte si natáčanie."
       >
         <PhotographyPageSearch />
       </BrowseHeader>

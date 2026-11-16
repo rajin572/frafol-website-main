@@ -34,8 +34,8 @@ const ExploreCategories = async ({
     <section className="bg-[#fbf7f4] py-20 sm:py-24">
       <Container>
         <SectionHeader
-          title="Preskúmajte kategórie"
-          description="Frafol vám uľahčí nájsť a objednať si ideálneho fotografa alebo videografa pre váš projekt."
+          title="Aké fotky či video si predstavujete?"
+          description="Plánujete svadbu, túžite po rodinných fotkách alebo potrebujete video pre svoju značku? Nájdite si fotografa alebo kameramana, ktorého štýl vám sadne."
         />
         <div className="mt-12">
           <Suspense

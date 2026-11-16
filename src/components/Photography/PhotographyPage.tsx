@@ -32,8 +32,8 @@ const PhotographyPage = async ({ searchParams }: { searchParams: any }) => {
       {/* title="Browse All Photography Categories" */}
       {/* description="Explore our complete range of specialized photography services to match your specific project needs." */}
       <BrowseHeader
-        title="Prezrite si všetky foto kategórie"
-        description="Prezrite si našu ponuku fotografických služieb a nájdite fotografa podľa toho, čo práve potrebujete."
+        title="Nájdite fotografa podľa svojich predstáv"
+        description="Svadba, rodinné fotenie alebo nové portréty? Vyberte si kategóriu, nájdite svojho fotografa a objednajte si fotenie."
       >
         <PhotographyPageSearch />
       </BrowseHeader>

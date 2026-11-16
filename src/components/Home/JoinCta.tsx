@@ -5,10 +5,10 @@ import Container from "../ui/Container";
 import { getAuthToken } from "@/lib/getAuthToken";
 import { AllImages } from "../../../public/assets/AllImages";
 
-// Call to action for creators, right above the footer. Copy comes from the About us page.
+// Call to action for creators, right above the footer. Copy from the client (Andrea).
 const points = [
-  "Získajte nových klientov a prezentujte svoju tvorbu na jednom mieste.",
-  "Z ceny, ktorú si stanovíte, vám FRAFOL nič neodpočítava.",
+  "Bezplatný profil, vaše portfólio a objednávky na jednom mieste.",
+  "Cenu si určujete Vy a Frafol vám z nej nič nestrháva.",
 ];
 
 // Only for visitors without an account: a logged-in user (client or creator) is never asked to
@@ -22,7 +22,7 @@ export default async function JoinCta() {
         <div className="grid overflow-hidden rounded-2xl bg-secondary-color lg:grid-cols-2">
           <div className="px-6 py-12 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white">
-              Ste fotograf alebo kameraman?
+              Fotíte alebo natáčate? Oslovte nových klientov.
             </h2>
             <ul className="mt-6 flex flex-col gap-3">
               {points.map((p) => (
@@ -37,7 +37,7 @@ export default async function JoinCta() {
                 href="/join"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm sm:text-base font-bold text-secondary-color transition-colors hover:bg-background-color"
               >
-                Pridajte sa ako fotograf/kameraman
+                Zaregistrovať sa bezplatne
                 <ArrowRight className="size-4" />
               </Link>
               <Link
