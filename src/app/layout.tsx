@@ -7,6 +7,8 @@ import { mainTheme } from "@/theme";
 import Providers from "@/providers/Providers";
 import ModalScrollLock from "@/components/shared/ModalScrollLock";
 import NavbarWraper from "@/components/shared/NavbarWraper";
+import Navbar from "@/components/shared/Navbar";
+import { Suspense } from "react";
 import JsonLd from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
 import {
@@ -80,7 +82,11 @@ export default function RootLayout({
           <AntdRegistry>
             <AntdLocaleProvider theme={mainTheme}>
               <div className="pointer-events-none sticky top-0 w-full z-[100]!">
-                <NavbarWraper />
+                {/* The navbar loads the user's notifications; until then it shows without them, so the
+                    page itself is never held back by that request. */}
+                <Suspense fallback={<Navbar notifications={[]} />}>
+                  <NavbarWraper />
+                </Suspense>
               </div>
               {children}
             </AntdLocaleProvider>

@@ -4,6 +4,7 @@ import cartReducer from "./features/cart/cartSlice"; // Import your auth slice
 import sidebarReducer from "./features/sidebar/sidebarSlice"; // Import your auth slice
 import conversationReducer from "./features/conversation/conversationSlice";
 import { baseApi } from "./api/baseApi";
+import { cartBroadcastMiddleware } from "./features/cart/cartChannel";
 import { persistStore, persistReducer } from "redux-persist";
 import type { PersistorOptions } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -70,7 +71,9 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware), // Add `baseApi` middleware
+    })
+      .concat(baseApi.middleware) // Add `baseApi` middleware
+      .concat(cartBroadcastMiddleware), // Sends cart changes to the other open tabs
 });
 
 // Create persistor for Redux store persistence. `manualPersist`: the saved cart / sidebar state is

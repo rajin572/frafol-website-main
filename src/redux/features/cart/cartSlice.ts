@@ -42,11 +42,16 @@ const cartSlice = createSlice({
       // Clear the entire cart
       state.products = [];
     },
+    // The cart changed in another browser tab (BroadcastChannel, see cartChannel.ts): take it over
+    // as is. No toast here, and this action is never broadcast again (no echo between tabs).
+    syncCartFromOtherTab: (state, action: PayloadAction<IGear[]>) => {
+      state.products = Array.isArray(action.payload) ? action.payload : [];
+    },
   },
 });
 
 // Actions
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, syncCartFromOtherTab } = cartSlice.actions;
 
 // Selectors
 export const selectSubTotalPrice = (state: { cart: CartState }) => {

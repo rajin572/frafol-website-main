@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { SocketProvider } from "@/context/SocketProvider";
 import { persistor, store } from "@/redux/store";
+import { listenToCartFromOtherTabs } from "@/redux/features/cart/cartChannel";
 import { Provider } from "react-redux";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
@@ -11,6 +12,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     persistor.persist();
   }, []);
+
+  // Cart changes made in another tab (add / remove / clear) show up here at once.
+  useEffect(() => listenToCartFromOtherTabs(store.dispatch), []);
 
   return (
     <Provider store={store}>

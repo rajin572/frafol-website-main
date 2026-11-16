@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import Banner from "@/components/Home/Banner";
+import HomeSectionSkeleton from "@/components/ui/Skeletons/HomeSectionSkeleton";
 import ExploreCategories from "@/components/Home/ExploreCategories";
 import FAQ from "@/components/Home/FAQ";
 import FeaturedProfessionals from "@/components/Home/FeaturedProfessionals";
@@ -39,16 +41,34 @@ const HomePage = ({
           }),
         ]}
       />
+      {/* The hero has no data, so it is sent at once. Every section that calls the API streams in
+          on its own (Suspense), instead of the whole page waiting behind the loading spinner. */}
       <Banner />
-      <FrafolChoiceProfessional />
-      <ExploreCategories searchParams={searchParams} />
-      <FeaturedProfessionals />
+      {/* No placeholder: this section is hidden when no creator has a subscription. */}
+      <Suspense fallback={null}>
+        <FrafolChoiceProfessional />
+      </Suspense>
+      <Suspense fallback={<HomeSectionSkeleton variant="categories" tone="cream" />}>
+        <ExploreCategories searchParams={searchParams} />
+      </Suspense>
+      <Suspense fallback={<HomeSectionSkeleton variant="professionals" />}>
+        <FeaturedProfessionals />
+      </Suspense>
       <HowItWorks />
-      <Marketplace />
-      <Testimonial />
+      <Suspense fallback={<HomeSectionSkeleton variant="products" />}>
+        <Marketplace />
+      </Suspense>
+      <Suspense fallback={<HomeSectionSkeleton variant="testimonials" tone="cream" />}>
+        <Testimonial />
+      </Suspense>
       <FAQ />
-      <TalentedProfessionalsImages />
-      <JoinCta />
+      <Suspense fallback={<HomeSectionSkeleton variant="gallery" tone="cream" />}>
+        <TalentedProfessionalsImages />
+      </Suspense>
+      {/* Reads the login cookie (async); outside a boundary it would hold the whole page back. */}
+      <Suspense fallback={null}>
+        <JoinCta />
+      </Suspense>
     </main>
   );
 };
