@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
+import { CRAWLER_UA_RE } from "./src/lib/seo/crawlers";
+
+// Crawlers that get the page metadata (title, description, canonical, robots) in <head> before the
+// body starts streaming. Next does this only for its own list of HTML-only bots; Googlebot and the
+// AI crawlers (which do not run JavaScript) are added. Visitors keep streaming metadata, so the page
+// skeleton still shows at once for them.
+const htmlLimitedBots = CRAWLER_UA_RE;
 
 const nextConfig: NextConfig = {
+  htmlLimitedBots,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

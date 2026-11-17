@@ -36,18 +36,26 @@ export const ORGANIZATION = {
   sameAs: ["https://www.instagram.com/frafol.sk", "https://www.tiktok.com/@frafol.sk"],
 };
 
-// Pages that must never be indexed (also listed in robots.txt).
-export const PRIVATE_PATHS = [
-  "/dashboard/",
-  "/message",
-  "/cart",
-  "/success",
-  "/notification",
-  "/notifications",
-  "/sign-in",
-  "/sign-up/",
-  "/forgot-password",
-  "/join",
+// Private pages (dashboard, messages, cart, sign-in, sign-up, join, notifications, success) are kept
+// out of search results by NOINDEX_METADATA in their layout or page, NOT by robots.txt: a URL that
+// robots.txt blocks is never fetched, so the crawler never sees its noindex and can still list it.
+
+// AI search / assistant crawlers (GEO). robots.ts gives them the same access as search engines, and
+// next.config.ts serves them the full metadata in <head> (they do not run JavaScript).
+export const AI_CRAWLERS = [
+  "GPTBot", // OpenAI (training)
+  "OAI-SearchBot", // ChatGPT search
+  "ChatGPT-User", // ChatGPT browsing on a user's request
+  "ClaudeBot", // Anthropic
+  "Claude-SearchBot",
+  "Claude-User",
+  "PerplexityBot",
+  "Perplexity-User",
+  "Google-Extended", // Gemini / AI Overviews grounding
+  "Applebot-Extended", // Apple Intelligence
+  "Bingbot", // Bing + Microsoft Copilot (also feeds ChatGPT search)
+  "CCBot", // Common Crawl (used by many AI models)
+  "meta-externalagent", // Meta AI
 ];
 
 export const absoluteUrl = (path = "/") => (/^https?:\/\//.test(path) ? path : `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`);

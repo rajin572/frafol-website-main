@@ -4,6 +4,8 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { IGear } from "@/types";
 import React from "react";
+import { notFound } from "next/navigation";
+import { isMissingRecord } from "@/lib/isMissingRecord";
 import { readJson } from "@/lib/readJson";
 import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbSchema, productSchema } from "@/lib/seo/schema";
@@ -16,24 +18,30 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  let status: number | undefined;
+  let gear: IGear | undefined;
   try {
     const res = await fetchWithAuth(`/marketPlace/${id}`, {
       next: {
         tags: [TagTypes.gear],
       },
     });
-    const gear: IGear | undefined = (await res.json())?.data;
-    if (gear?.name) {
-      const image = getMediaUrl(gear?.gallery?.[0]);
-      return pageMetadata({
-        title: `${gear.name} – Foto a video technika | Frafol`,
-        description: descriptionOf(gear),
-        path: `/marketplace/${id}`,
-        images: image ? [{ url: image, alt: gear.name }] : undefined,
-      });
-    }
+    status = res.status;
+    gear = (await res.json())?.data;
   } catch {
-    // no gear data, use the generic title below
+    // API not reachable, use the generic title below
+  }
+  // Outside the try: notFound() works by throwing. Unknown id → real 404, not an empty page.
+  if (status !== undefined && isMissingRecord(status, gear)) notFound();
+
+  if (gear?.name) {
+    const image = getMediaUrl(gear?.gallery?.[0]);
+    return pageMetadata({
+      title: `${gear.name} – Foto a video technika | Frafol`,
+      description: descriptionOf(gear),
+      path: `/marketplace/${id}`,
+      images: image ? [{ url: image, alt: gear.name }] : undefined,
+    });
   }
   return { title: "Bazár foto a video techniky | Frafol", alternates: { canonical: `/marketplace/${id}` } };
 }
@@ -59,6 +67,7 @@ const ProductDetailPage = async ({
     },
   });
   const data = await readJson(res, `/marketPlace/${id}`);
+  if (isMissingRecord(res.status, data?.data)) notFound();
   const gear: IGear = data?.data;
 
   return (

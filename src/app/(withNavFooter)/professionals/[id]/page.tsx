@@ -7,6 +7,8 @@ import { pageMetadata, toPlainText } from "@/lib/seo/site";
 import { IProfessionalUser } from "@/types";
 import { getMediaUrl } from "@/utils/mediaUrl";
 import React from "react";
+import { notFound } from "next/navigation";
+import { isMissingRecord } from "@/lib/isMissingRecord";
 
 // "Meno tvorcu – Fotograf | Frafol" (Kameraman for videographers, both for creators who do both).
 const ROLE_LABELS: Record<string, string> = {
@@ -28,15 +30,18 @@ const ROLE_LIST: Record<string, { name: string; path: string }> = {
   videographer: { name: "Kameramani", path: "/professionals?role=videographer" },
 };
 
-// Same request as the page (fetch memoization runs it only once per render).
-const getProfessional = async (id: string): Promise<IProfessionalUser | undefined> => {
+// Used by generateMetadata and the page (fetch memoization runs the request only once per render).
+// The profile does not depend on the review filter, yet the page re-renders on every sort / star tap
+// (the filter lives in the URL). A short cache keeps those taps from re-fetching the whole profile;
+// mutations still invalidate it through the tag.
+const getProfessional = async (id: string): Promise<{ status: number; user?: IProfessionalUser }> => {
   const res = await fetchWithAuth(`/users/${id}`, {
     next: {
       tags: [TagTypes.prfessional],
       revalidate: 60,
     },
   });
-  return (await res.json())?.data;
+  return { status: res.status, user: (await res.json())?.data };
 };
 
 const fullNameOf = (user?: IProfessionalUser) => [user?.name, user?.sureName].filter(Boolean).join(" ");
@@ -57,22 +62,27 @@ export async function generateMetadata({
 }) {
   const { id } = await params;
   const path = `/professionals/${id}`;
+  let result: Awaited<ReturnType<typeof getProfessional>> | undefined;
   try {
-    const user = await getProfessional(id);
-    const fullName = fullNameOf(user);
-    if (user && fullName) {
-      const roleLabel = ROLE_LABELS[user?.role ?? ""] ?? "Fotograf a kameraman";
-      const image = getMediaUrl(user?.profileImage);
-      return pageMetadata({
-        title: `${fullName} – ${roleLabel} | Frafol`,
-        description: descriptionOf(user),
-        path,
-        type: "profile",
-        images: image ? [{ url: image, alt: fullName }] : undefined,
-      });
-    }
+    result = await getProfessional(id);
   } catch {
-    // no profile data, use the generic title below
+    // API not reachable, use the generic title below
+  }
+  // Outside the try: notFound() works by throwing. Unknown id → real 404, not an empty profile.
+  if (result && isMissingRecord(result.status, result.user)) notFound();
+
+  const user = result?.user;
+  const fullName = fullNameOf(user);
+  if (user && fullName) {
+    const roleLabel = ROLE_LABELS[user?.role ?? ""] ?? "Fotograf a kameraman";
+    const image = getMediaUrl(user?.profileImage);
+    return pageMetadata({
+      title: `${fullName} – ${roleLabel} | Frafol`,
+      description: descriptionOf(user),
+      path,
+      type: "profile",
+      images: image ? [{ url: image, alt: fullName }] : undefined,
+    });
   }
   return { title: "Fotograf a kameraman | Frafol", alternates: { canonical: path } };
 }
@@ -90,17 +100,9 @@ const page = async ({
   const sort = (paramsData?.sort as string) || "newest";
   const rating = (paramsData?.rating as string) || "5";
 
-  // The profile does not depend on the review filter, yet this page re-renders on every sort / star
-  // tap (the filter lives in the URL). A short cache keeps those taps from re-fetching the whole
-  // profile each time; mutations still invalidate it through the tag.
-  const res = await fetchWithAuth(`/users/${id}`, {
-    next: {
-      tags: [TagTypes.prfessional],
-      revalidate: 60,
-    },
-  });
-  const data = await res.json();
-  const professionalUser: IProfessionalUser = data?.data;
+  const { status, user } = await getProfessional(id);
+  if (isMissingRecord(status, user)) notFound();
+  const professionalUser = user as IProfessionalUser;
 
   const path = `/professionals/${id}`;
   const fullName = fullNameOf(professionalUser);

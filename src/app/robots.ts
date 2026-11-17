@@ -1,33 +1,19 @@
 import type { MetadataRoute } from "next";
-import { IS_INDEXABLE, PRIVATE_PATHS, SITE_URL } from "@/lib/seo/site";
+import { AI_CRAWLERS, IS_INDEXABLE, SITE_URL } from "@/lib/seo/site";
 
-// AI search / assistant crawlers (GEO). They are allowed the same public pages as search engines,
-// so ChatGPT, Claude, Perplexity, Gemini, Copilot and Apple can read and recommend Frafol. A
-// crawler that matches its own group ignores "*", so each one gets the same rules.
-const AI_CRAWLERS = [
-  "GPTBot", // OpenAI (training)
-  "OAI-SearchBot", // ChatGPT search
-  "ChatGPT-User", // ChatGPT browsing on a user's request
-  "ClaudeBot", // Anthropic
-  "Claude-SearchBot",
-  "Claude-User",
-  "PerplexityBot",
-  "Perplexity-User",
-  "Google-Extended", // Gemini / AI Overviews grounding
-  "Applebot-Extended", // Apple Intelligence
-  "Bingbot", // Bing + Microsoft Copilot (also feeds ChatGPT search)
-  "CCBot", // Common Crawl (used by many AI models)
-  "meta-externalagent", // Meta AI
-];
+// AI crawlers (GEO) get the same public pages as search engines, so ChatGPT, Claude, Perplexity,
+// Gemini, Copilot and Apple can read and recommend Frafol. A crawler that matches its own group
+// ignores "*", so each one gets the same rules.
 
 // /robots.txt. Testing / preview deployments (NEXT_PUBLIC_ALLOW_INDEXING not "true") block every
-// crawler. The live site allows the public pages and keeps crawlers out of the private ones.
+// crawler. The live site lets crawlers fetch every page, private ones included: those carry a
+// noindex meta tag (NOINDEX_METADATA), and a crawler can only see it on a page it may fetch.
 export default function robots(): MetadataRoute.Robots {
   if (!IS_INDEXABLE) {
     return { rules: [{ userAgent: "*", disallow: "/" }] };
   }
 
-  const disallow = [...PRIVATE_PATHS, "/api/"];
+  const disallow = ["/api/"];
 
   return {
     rules: [

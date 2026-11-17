@@ -4,6 +4,8 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICommunityPost } from "@/types/communityForum.type";
 import React from "react";
+import { notFound } from "next/navigation";
+import { isMissingRecord } from "@/lib/isMissingRecord";
 import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbSchema, forumPostSchema } from "@/lib/seo/schema";
 import { pageMetadata, toPlainText } from "@/lib/seo/site";
@@ -15,25 +17,31 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  let status: number | undefined;
+  let post: ICommunityPost | undefined;
   try {
     const res = await fetchWithAuth(`/community/${id}`, {
       next: {
         tags: [TagTypes.communityForum],
       },
     });
-    const post: ICommunityPost | undefined = (await res.json())?.data;
-    if (post?.title) {
-      const image = getMediaUrl(post?.images?.[0]);
-      return pageMetadata({
-        title: `${post.title} – Fórum | Frafol`,
-        description: toPlainText(post?.text, 160) || `${post.title} – diskusia na fóre fotografov a kameramanov Frafol.`,
-        path: `/forums/${id}`,
-        type: "article",
-        images: image ? [{ url: image, alt: post.title }] : undefined,
-      });
-    }
+    status = res.status;
+    post = (await res.json())?.data;
   } catch {
-    // no post data, use the generic title below
+    // API not reachable, use the generic title below
+  }
+  // Outside the try: notFound() works by throwing. Unknown id → real 404, not an empty post.
+  if (status !== undefined && isMissingRecord(status, post)) notFound();
+
+  if (post?.title) {
+    const image = getMediaUrl(post?.images?.[0]);
+    return pageMetadata({
+      title: `${post.title} – Fórum | Frafol`,
+      description: toPlainText(post?.text, 160) || `${post.title} – diskusia na fóre fotografov a kameramanov Frafol.`,
+      path: `/forums/${id}`,
+      type: "article",
+      images: image ? [{ url: image, alt: post.title }] : undefined,
+    });
   }
   return { title: "Fórum fotografov a kameramanov | Frafol", alternates: { canonical: `/forums/${id}` } };
 }
@@ -54,6 +62,7 @@ const page = async ({
   });
 
   const data = await res.json();
+  if (isMissingRecord(res.status, data?.data)) notFound();
 
   const communityPosts: ICommunityPost = data?.data || {};
   return (

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { decodedToken } from "./utils/jwt";
+import { missingRecordForCrawlers } from "./lib/seo/missingRecordForCrawlers";
 
 // Define types for the request and response
 interface Request {
@@ -14,8 +15,12 @@ interface DecodedToken {
   role: string;
 }
 
-export async function proxy(request: Request) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Public detail pages (profile, product, forum post): only the 404 check for crawlers, no auth.
+  const detailResponse = await missingRecordForCrawlers(request);
+  if (detailResponse) return detailResponse;
 
   // Await cookies() to get the cookies object
   const accessToken = (await cookies()).get("frafolMainAccessToken")?.value;
@@ -97,6 +102,12 @@ export async function proxy(request: Request) {
 
 export const config = {
   matcher: [
+    // Public detail pages, see missingRecordForCrawlers
+    "/professionals/:id",
+    "/professionals/:id/works",
+    "/marketplace/:id",
+    "/forums/:id",
+
     "/message",
     "/cart",
     "/insurance",
