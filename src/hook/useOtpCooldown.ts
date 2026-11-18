@@ -11,23 +11,35 @@ export type OtpPurpose = "email-verification" | "forget-password";
 
 const storageKey = (purpose: OtpPurpose) => `frafol_otp_sent_at_${purpose}`;
 
+// Same time kept in memory too. Some browsers block site storage (strict privacy settings, some
+// private windows, embedded browsers): sessionStorage then throws or is not kept, and the countdown
+// used to vanish at once. The sign-up / forgot-password form and the OTP page are one client-side
+// navigation, so this copy survives the page change; only a full reload loses it there.
+const memorySentAt: Partial<Record<OtpPurpose, number>> = {};
+
 // Call when a code has been sent (sign-up / forgot-password submit, "send again").
 export const markOtpSent = (purpose: OtpPurpose) => {
+  const now = Date.now();
+  memorySentAt[purpose] = now;
   try {
-    sessionStorage.setItem(storageKey(purpose), String(Date.now()));
+    sessionStorage.setItem(storageKey(purpose), String(now));
   } catch {
-    // storage blocked (private mode): the countdown just starts from this page's state
+    // storage blocked: the in-memory time above is used
   }
 };
 
-const secondsLeftFor = (purpose: OtpPurpose) => {
-  let sentAt = 0;
+const sentAtFor = (purpose: OtpPurpose) => {
+  let stored = 0;
   try {
-    sentAt = Number(sessionStorage.getItem(storageKey(purpose))) || 0;
+    stored = Number(sessionStorage.getItem(storageKey(purpose))) || 0;
   } catch {
-    return 0;
+    // storage blocked: use the in-memory time only
   }
-  const left = Math.ceil((sentAt + OTP_COOLDOWN_SECONDS * 1000 - Date.now()) / 1000);
+  return Math.max(stored, memorySentAt[purpose] ?? 0);
+};
+
+const secondsLeftFor = (purpose: OtpPurpose) => {
+  const left = Math.ceil((sentAtFor(purpose) + OTP_COOLDOWN_SECONDS * 1000 - Date.now()) / 1000);
   // A wrong system clock must not lock the button for longer than the cooldown.
   return Math.min(Math.max(left, 0), OTP_COOLDOWN_SECONDS);
 };
@@ -45,7 +57,12 @@ export const useOtpCooldown = (purpose: OtpPurpose) => {
     const tick = () => setSecondsLeft(secondsLeftFor(purpose));
     tick();
     const timer = window.setInterval(tick, 1000);
-    return () => window.clearInterval(timer);
+    // Browsers slow timers down in background tabs; refresh at once when the tab is shown again.
+    document.addEventListener("visibilitychange", tick);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", tick);
+    };
   }, [purpose]);
 
   const restart = useCallback(() => {
